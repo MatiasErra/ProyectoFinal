@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33801.468
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proyecto", "Proyecto\Proyecto.csproj", "{7EB06E1A-DCC5-4CC5-BF0D-4560F0ACE39F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dominio", "Dominio", "{1D59FE45-77BE-4D4E-9623-7F6B0FE850CC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{40876FC6-817D-4A74-8856-F425EDBBA3A0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Controladoras", "Controladoras", "{67B6A416-0A31-4DD6-9ECF-6543C0C3013D}"
+	ProjectSection(SolutionItems) = preProject
+		ControladoraPersonas.cs = ControladoraPersonas.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clases", "Clases", "{25AC7FFE-AFBF-4201-8572-3E19BBA84920}"
+	ProjectSection(SolutionItems) = preProject
+		Admins.cs = Admins.cs
+		Camioneros.cs = Camioneros.cs
+		Clientes.cs = Clientes.cs
+		Personas.cs = Personas.cs
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7EB06E1A-DCC5-4CC5-BF0D-4560F0ACE39F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EB06E1A-DCC5-4CC5-BF0D-4560F0ACE39F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EB06E1A-DCC5-4CC5-BF0D-4560F0ACE39F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EB06E1A-DCC5-4CC5-BF0D-4560F0ACE39F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7EB06E1A-DCC5-4CC5-BF0D-4560F0ACE39F} = {40876FC6-817D-4A74-8856-F425EDBBA3A0}
+		{67B6A416-0A31-4DD6-9ECF-6543C0C3013D} = {1D59FE45-77BE-4D4E-9623-7F6B0FE850CC}
+		{25AC7FFE-AFBF-4201-8572-3E19BBA84920} = {1D59FE45-77BE-4D4E-9623-7F6B0FE850CC}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7C892C7A-E98F-427A-A30C-F963BC2197D0}
+	EndGlobalSection
+EndGlobal
