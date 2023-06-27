@@ -1,0 +1,82 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\Clases\\Proyecto Final\\Proyecto\\Clases\\Clases.csproj": {}
+  },
+  "projects": {
+    "D:\\Clases\\Proyecto Final\\Proyecto\\Clases\\Clases.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Clases\\Proyecto Final\\Proyecto\\Clases\\Clases.csproj",
+        "projectName": "Clases",
+        "projectPath": "D:\\Clases\\Proyecto Final\\Proyecto\\Clases\\Clases.csproj",
+        "packagesPath": "C:\\Users\\there\\.nuget\\packages\\",
+        "outputPath": "D:\\Clases\\Proyecto Final\\Proyecto\\Clases\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\there\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\Clases\\Proyecto Final\\Proyecto\\Proyecto\\Proyecto.csproj": {
+                "projectPath": "D:\\Clases\\Proyecto Final\\Proyecto\\Proyecto\\Proyecto.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Clases\\Proyecto Final\\Proyecto\\Proyecto\\Proyecto.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\Clases\\Proyecto Final\\Proyecto\\Proyecto\\Proyecto.csproj",
+        "projectName": "Proyecto",
+        "projectPath": "D:\\Clases\\Proyecto Final\\Proyecto\\Proyecto\\Proyecto.csproj",
+        "frameworks": {
+          "net48": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {}
+      }
+    }
+  }
+}
