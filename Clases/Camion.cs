@@ -14,6 +14,19 @@ namespace Clases
         private string _carga;
         private string _dispoinible;
 
+        public Camion()
+        {
+        }
+
+        public Camion(int idCamion, string marca, string modelo, string carga, string dispoinible)
+        {
+            IdCamion = idCamion;
+            Marca = marca;
+            Modelo = modelo;
+            Carga = carga;
+            Dispoinible = dispoinible;
+        }
+
         public int IdCamion { get => _idCamion; set => _idCamion = value; }
         public string Marca { get => _marca; set => _marca = value; }
         public string Modelo { get => _modelo; set => _modelo = value; }

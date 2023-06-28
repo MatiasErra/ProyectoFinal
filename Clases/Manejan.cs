@@ -6,7 +6,23 @@ using System.Threading.Tasks;
 
 namespace Clases
 {
-    internal class Manejan
+    public class Manejan
     {
+        private int _idCamion;
+        private int _idCamionero;
+
+    
+
+
+        public Manejan() { }
+
+        public Manejan(int idCamion, int idCamionero)
+        {
+            IdCamion = idCamion;
+            IdCamionero = idCamionero;
+        }
+
+        public int IdCamion { get => _idCamion; set => _idCamion = value; }
+        public int IdCamionero { get => _idCamionero; set => _idCamionero = value; }
     }
 }
