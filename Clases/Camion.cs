@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Clases
 {
-    internal class Camion
+    public class Camion
     {
         private int _idCamion;
         private string _marca;
@@ -14,9 +14,13 @@ namespace Clases
         private string _carga;
         private string _dispoinible;
 
-        public Camion()
-        {
-        }
+        public int IdCamion { get => _idCamion; set => _idCamion = value; }
+        public string Marca { get => _marca; set => _marca = value; }
+        public string Modelo { get => _modelo; set => _modelo = value; }
+        public string Carga { get => _carga; set => _carga = value; }
+        public string Dispoinible { get => _dispoinible; set => _dispoinible = value; }
+
+        public Camion() { }
 
         public Camion(int idCamion, string marca, string modelo, string carga, string dispoinible)
         {
@@ -27,10 +31,6 @@ namespace Clases
             Dispoinible = dispoinible;
         }
 
-        public int IdCamion { get => _idCamion; set => _idCamion = value; }
-        public string Marca { get => _marca; set => _marca = value; }
-        public string Modelo { get => _modelo; set => _modelo = value; }
-        public string Carga { get => _carga; set => _carga = value; }
-        public string Dispoinible { get => _dispoinible; set => _dispoinible = value; }
+        
     }
 }

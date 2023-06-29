@@ -11,8 +11,8 @@ namespace Clases
         private int _idCamion;
         private int _idCamionero;
 
-    
-
+        public int IdCamion { get => _idCamion; set => _idCamion = value; }
+        public int IdCamionero { get => _idCamionero; set => _idCamionero = value; }
 
         public Manejan() { }
 
@@ -22,7 +22,6 @@ namespace Clases
             IdCamionero = idCamionero;
         }
 
-        public int IdCamion { get => _idCamion; set => _idCamion = value; }
-        public int IdCamionero { get => _idCamionero; set => _idCamionero = value; }
+
     }
 }

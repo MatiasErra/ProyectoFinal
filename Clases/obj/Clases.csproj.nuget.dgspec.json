@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Clases\\Proyecto Final\\Proyecto\\Clases\\Clases.csproj": {}
+    "C:\\Users\\Mrgat\\source\\repos\\Proyecto\\Clases\\Clases.csproj": {}
   },
   "projects": {
-    "D:\\Clases\\Proyecto Final\\Proyecto\\Clases\\Clases.csproj": {
+    "C:\\Users\\Mrgat\\source\\repos\\Proyecto\\Clases\\Clases.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Clases\\Proyecto Final\\Proyecto\\Clases\\Clases.csproj",
+        "projectUniqueName": "C:\\Users\\Mrgat\\source\\repos\\Proyecto\\Clases\\Clases.csproj",
         "projectName": "Clases",
-        "projectPath": "D:\\Clases\\Proyecto Final\\Proyecto\\Clases\\Clases.csproj",
-        "packagesPath": "C:\\Users\\there\\.nuget\\packages\\",
-        "outputPath": "D:\\Clases\\Proyecto Final\\Proyecto\\Clases\\obj\\",
+        "projectPath": "C:\\Users\\Mrgat\\source\\repos\\Proyecto\\Clases\\Clases.csproj",
+        "packagesPath": "C:\\Users\\Mrgat\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Mrgat\\source\\repos\\Proyecto\\Clases\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\there\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Mrgat\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,8 +28,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\Clases\\Proyecto Final\\Proyecto\\Proyecto\\Proyecto.csproj": {
-                "projectPath": "D:\\Clases\\Proyecto Final\\Proyecto\\Proyecto\\Proyecto.csproj"
+              "C:\\Users\\Mrgat\\source\\repos\\Proyecto\\Proyecto\\Proyecto.csproj": {
+                "projectPath": "C:\\Users\\Mrgat\\source\\repos\\Proyecto\\Proyecto\\Proyecto.csproj"
               }
             }
           }
@@ -63,11 +63,11 @@
         }
       }
     },
-    "D:\\Clases\\Proyecto Final\\Proyecto\\Proyecto\\Proyecto.csproj": {
+    "C:\\Users\\Mrgat\\source\\repos\\Proyecto\\Proyecto\\Proyecto.csproj": {
       "restore": {
-        "projectUniqueName": "D:\\Clases\\Proyecto Final\\Proyecto\\Proyecto\\Proyecto.csproj",
+        "projectUniqueName": "C:\\Users\\Mrgat\\source\\repos\\Proyecto\\Proyecto\\Proyecto.csproj",
         "projectName": "Proyecto",
-        "projectPath": "D:\\Clases\\Proyecto Final\\Proyecto\\Proyecto\\Proyecto.csproj",
+        "projectPath": "C:\\Users\\Mrgat\\source\\repos\\Proyecto\\Proyecto\\Proyecto.csproj",
         "frameworks": {
           "net48": {
             "projectReferences": {}

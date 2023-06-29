@@ -16,5 +16,12 @@ namespace Clases
 		public string Direccion { get => _direccion; set => _direccion = value; }
 
 		public Cliente() { }
-	}
+
+        public Cliente(int idUsuario, string nombre, string apellido, string telefono, DateTime fchNacimiento, string email, string contraseña, string direccion) : base(idUsuario, nombre, apellido, telefono, fchNacimiento)
+        {
+            Email = email;
+            Contraseña = contraseña;
+            Direccion = direccion;
+        }
+    }
 }
