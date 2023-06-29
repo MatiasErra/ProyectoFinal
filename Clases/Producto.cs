@@ -12,23 +12,23 @@ namespace Clases
         private string _nombre;
         private string _tipo;
         private char _tipoVenta;
-        private double _precioUnidad;
+        private double _precio;
 
         public int IdProducto { get => _idProducto; set => _idProducto = value; }
         public string Nombre { get => _nombre; set => _nombre = value; }
         public string Tipo { get => _tipo; set => _tipo = value; }
         public char TipoVenta { get => _tipoVenta; set => _tipoVenta = value; }
-        public double PrecioUnidad { get => _precioUnidad; set => _precioUnidad = value; }
+        public double Precio { get => _precio; set => _precio = value; }
 
         public Producto() { }
 
-        public Producto(int idProducto, string nombre, string tipo, char tipoVenta, double precioUnidad)
+        public Producto(int idProducto, string nombre, string tipo, char tipoVenta, double precio)
         {
             IdProducto = idProducto;
             Nombre = nombre;
             Tipo = tipo;
             TipoVenta = tipoVenta;
-            PrecioUnidad = precioUnidad;
+            Precio = precio;
         }
     }
 }
