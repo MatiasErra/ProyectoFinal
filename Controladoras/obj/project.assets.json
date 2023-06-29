@@ -45,19 +45,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Mrgat\\.nuget\\packages\\": {}
+    "C:\\Users\\there\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Mrgat\\source\\repos\\Proyecto\\Controladoras\\Controladoras.csproj",
+      "projectUniqueName": "D:\\Clases\\Proyecto Final\\Proyecto\\Controladoras\\Controladoras.csproj",
       "projectName": "Controladoras",
-      "projectPath": "C:\\Users\\Mrgat\\source\\repos\\Proyecto\\Controladoras\\Controladoras.csproj",
-      "packagesPath": "C:\\Users\\Mrgat\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Mrgat\\source\\repos\\Proyecto\\Controladoras\\obj\\",
+      "projectPath": "D:\\Clases\\Proyecto Final\\Proyecto\\Controladoras\\Controladoras.csproj",
+      "packagesPath": "C:\\Users\\there\\.nuget\\packages\\",
+      "outputPath": "D:\\Clases\\Proyecto Final\\Proyecto\\Controladoras\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Mrgat\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\there\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -71,11 +71,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\Mrgat\\source\\repos\\Proyecto\\Clases\\Clases.csproj": {
-              "projectPath": "C:\\Users\\Mrgat\\source\\repos\\Proyecto\\Clases\\Clases.csproj"
+            "D:\\Clases\\Proyecto Final\\Proyecto\\Clases\\Clases.csproj": {
+              "projectPath": "D:\\Clases\\Proyecto Final\\Proyecto\\Clases\\Clases.csproj"
             },
-            "C:\\Users\\Mrgat\\source\\repos\\Proyecto\\Proyecto\\Proyecto.csproj": {
-              "projectPath": "C:\\Users\\Mrgat\\source\\repos\\Proyecto\\Proyecto\\Proyecto.csproj"
+            "D:\\Clases\\Proyecto Final\\Proyecto\\Proyecto\\Proyecto.csproj": {
+              "projectPath": "D:\\Clases\\Proyecto Final\\Proyecto\\Proyecto\\Proyecto.csproj"
             }
           }
         }
