@@ -1,0 +1,6 @@
+D:\Clases\Proyecto Final\Proyecto\Clases\bin\Debug\Clases.dll
+D:\Clases\Proyecto Final\Proyecto\Clases\bin\Debug\Clases.pdb
+D:\Clases\Proyecto Final\Proyecto\Clases\obj\Debug\Clases.csproj.AssemblyReference.cache
+D:\Clases\Proyecto Final\Proyecto\Clases\obj\Debug\Clases.csproj.CoreCompileInputs.cache
+D:\Clases\Proyecto Final\Proyecto\Clases\obj\Debug\Clases.dll
+D:\Clases\Proyecto Final\Proyecto\Clases\obj\Debug\Clases.pdb

@@ -7,18 +7,21 @@ namespace Clases
 
 	public class Cliente : Persona
 	{
-		private string _email;
+		private string _user;
 		private string _contraseña;
 		private string _direccion;
 
-		public string Email { get => _email; set => _email = value; }
 		public string Contraseña { get => _contraseña; set => _contraseña = value; }
 		public string Direccion { get => _direccion; set => _direccion = value; }
+        public string User { get => _user; set => _user = value; }
+   
 
-		public Cliente() { }
+        public Cliente() { }
 
-        public Cliente(int idUsuario, string nombre, string apellido, string telefono, DateTime fchNacimiento, string email, string contraseña, string direccion) : base(idUsuario, nombre, apellido, telefono, fchNacimiento)
+        public Cliente(int idPersona, string nombre, string apellido,string email, string telefono, string fchNacimiento, string user, string contraseña, string direccion) 
+            : base(idPersona, nombre, apellido, email, telefono, fchNacimiento)
         {
+            User = user;
             Email = email;
             Contraseña = contraseña;
             Direccion = direccion;

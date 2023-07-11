@@ -10,19 +10,19 @@ namespace Clases
     {
         private int _idGranja;
         private string _nombre;
-        private int _idUsuarioCliente;
+        private int _idCliente;
 
         public int IdGranja { get => _idGranja; set => _idGranja = value; }
         public string Nombre { get => _nombre; set => _nombre = value; }
-        public int IdUsuarioCliente { get => _idUsuarioCliente; set => _idUsuarioCliente = value; }
+        public int IdCliente { get => _idCliente; set => _idCliente = value; }
 
         public Granja() { }
 
-        public Granja(int idGranja, string nombre, int idUsuarioCliente)
+        public Granja(int idGranja, string nombre, int idCliente)
         {
             IdGranja = idGranja;
-            _nombre = nombre;
-            _idUsuarioCliente = idUsuarioCliente;
+            Nombre = nombre;
+            IdCliente = idCliente;
         }
     }
 }

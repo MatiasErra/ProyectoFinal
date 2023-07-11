@@ -6,21 +6,24 @@ namespace Clases
     public class Admin : Persona
     {
 
-        private string _email;
-        private string _contraseña;
-        private char _tipoDeAdmin;
 
-        public string Email { get => _email; set => _email = value; }
-        public string Contraseña { get => _contraseña; set => _contraseña = value; }
-        public char TipoDeAdmin { get => _tipoDeAdmin; set => _tipoDeAdmin = value; }
+        private string _user;
+        private string _contrasena;
+        private string _tipoDeAdmin;
+
+      
+        public string Contrasena { get => _contrasena; set => _contrasena = value; }
+        public string TipoDeAdmin { get => _tipoDeAdmin; set => _tipoDeAdmin = value; }
+        public string User { get => _user; set => _user = value; }
 
         public Admin() { }
 
-        public Admin(int idUsuario, string nombre, string apellido, string telefono, DateTime fchNacimiento, string email, string contraseña, char tipoDeAdmin) : base(idUsuario, nombre, apellido, telefono, fchNacimiento)
+        public Admin(int idPersona, string nombre, string apellido, string email, string telefono, string fchNacimiento, string user, string contrasena, string tipoDeAdmin )
+            : base(idPersona, nombre, apellido,email ,telefono, fchNacimiento)
         {
-            Email = email;
-            Contraseña = contraseña;
+           Contrasena = contrasena;
             TipoDeAdmin = tipoDeAdmin;
+            User = user;
         }
     }
 

@@ -9,7 +9,8 @@ namespace Clases {
 
         public string Cedula { get => _cedula; set => _cedula = value; }
 
-        public Camionero(int idUsuario, string nombre, string apellido, string telefono, DateTime fchNacimiento, string cedula) : base(idUsuario, nombre, apellido, telefono, fchNacimiento)
+        public Camionero(int idPersona, string nombre, string apellido, string email , string telefono, string fchNacimiento, string cedula) 
+            : base(idPersona, nombre, apellido, email, telefono, fchNacimiento)
         {
             Cedula = cedula;
         }
