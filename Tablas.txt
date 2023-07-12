@@ -4,7 +4,7 @@ nombre varchar(40) not null,
 apellido varchar(40) not null,
 email varchar(60) unique not null,
 telefono varchar(9) unique not null,
-fchNacimiento date check( fchNacimiento <  ( FORMAT (getdate(), 'dd/MM/yyyy ') )) not null 
+fchNacimiento varchar(15) check( fchNacimiento <  ( FORMAT (getdate(), 'dd/MM/yyyy ') )) not null 
 );
 
 Create table Admins(

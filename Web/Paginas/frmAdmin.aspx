@@ -26,8 +26,7 @@
     </p>
         <asp:Calendar ID="Calendar1" runat="server" SelectedDate="2023-07-11" PrevMonthText="&amp;lt; "></asp:Calendar>
     <p>
-        <asp:TextBox ID="txtfecha" runat="server"></asp:TextBox>
-    </p>
+        &nbsp;</p>
         <p>
         Usuario&nbsp;
         <asp:TextBox ID="txtUser" runat="server"></asp:TextBox>
@@ -37,8 +36,13 @@
         <asp:TextBox ID="txtPass" runat="server"></asp:TextBox>
     </p>
     <p>
-        Tipo de Admin&nbsp;
-        <asp:TextBox ID="txtTipoAdm" runat="server"></asp:TextBox>
+        Tipo de Admin
+
+
+        <asp:DropDownList ID="listTipoAdmin" runat="server" OnSelectedIndexChanged="listTipoAdmin_SelectedIndexChanged" AutoPostBack="true" Width="300">
+        </asp:DropDownList>
+
+
     </p>
     <p>
         <asp:Button ID="btnAlta" runat="server" Text="Alta" OnClick="btnAlta_Click" />

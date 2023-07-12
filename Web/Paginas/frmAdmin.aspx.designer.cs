@@ -69,15 +69,6 @@ namespace Web.Paginas
         protected global::System.Web.UI.WebControls.Calendar Calendar1;
 
         /// <summary>
-        /// Control txtfecha.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtfecha;
-
-        /// <summary>
         /// Control txtUser.
         /// </summary>
         /// <remarks>
@@ -96,13 +87,13 @@ namespace Web.Paginas
         protected global::System.Web.UI.WebControls.TextBox txtPass;
 
         /// <summary>
-        /// Control txtTipoAdm.
+        /// Control listTipoAdmin.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTipoAdm;
+        protected global::System.Web.UI.WebControls.DropDownList listTipoAdmin;
 
         /// <summary>
         /// Control btnAlta.
