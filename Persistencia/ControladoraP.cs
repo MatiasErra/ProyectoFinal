@@ -21,5 +21,10 @@ namespace Persistencia
         {
             return new pAdmin().altaAdmin(admin);
         }
+
+        public bool altaCamionero(Camionero camionero)
+        {
+            return new pCamionero().altaCamionero(camionero);
+        }
     }
 }

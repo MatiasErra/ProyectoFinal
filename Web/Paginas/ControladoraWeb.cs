@@ -37,5 +37,31 @@ namespace Web.Paginas
                 return false;
         }
 
+        public bool altaCamionero(Camionero camionero)
+        {
+            ControladoraPersona inst = ControladoraPersona.obtenerInstancia();
+            if (inst.altaCamionero(camionero))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /*public bool altaCamion(Camion camion)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            if (inst.altaCamion(camion))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }*/
+
     }
 }

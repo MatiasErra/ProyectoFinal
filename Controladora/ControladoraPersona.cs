@@ -34,6 +34,17 @@ namespace Controladoras
                 return false;
         }
 
-
+        public bool altaCamionero(Camionero Camionero)
+        {
+            ControladoraP inst = ControladoraP.obtenerInstancia();
+            if (inst.altaCamionero(Camionero))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

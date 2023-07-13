@@ -41,9 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ControladoraI.cs" />
     <Compile Include="ControladoraP.cs" />
     <Compile Include="Conexion.cs" />
     <Compile Include="pAdmin.cs" />
+    <Compile Include="pCamionero.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

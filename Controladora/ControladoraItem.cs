@@ -20,5 +20,18 @@ namespace Controladoras
             return _instancia;
 
         }
+
+        /*public bool altaCamion(Camion Camion)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+
+            if (inst.altaCamion(Camion))
+            {
+                return true;
+            }
+            else
+                return false;
+        }*/
     }
 }
