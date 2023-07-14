@@ -113,7 +113,6 @@ namespace Persistencia
                 if (connect.State == ConnectionState.Open)
                 {
                     connect.Close();
-                    resultado = true;
                 }
             }
             catch (Exception)

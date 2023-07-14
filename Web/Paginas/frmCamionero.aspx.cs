@@ -3,6 +3,7 @@ using Controladoras;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -14,7 +15,6 @@ namespace Web.Paginas
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Calendar1.SelectedDate = DateTime.Now;
             if (!IsPostBack)
             {
                 listar();
@@ -123,7 +123,7 @@ namespace Web.Paginas
                 string apellido = txtApell.Text;
                 string email = txtEmail.Text;
                 string tele = txtTel.Text;
-                string txtFc = Calendar1.SelectedDate.ToShortDateString();
+                string txtFc = Calendar1.SelectedDate.ToLongDateString();
                 string cedula = txtCedula.Text;
 
                 ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
@@ -161,7 +161,7 @@ namespace Web.Paginas
                 txtApell.Text = camionero.Apellido;
                 txtEmail.Text = camionero.Email;
                 txtTel.Text = camionero.Telefono;
-                Calendar1.SelectedDate =  DateTime.Parse(camionero.FchNacimiento);
+                Calendar1.SelectedDate = DateTime.Parse(camionero.FchNacimiento);
                 txtCedula.Text = camionero.Cedula;
             }
         }
