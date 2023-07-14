@@ -76,7 +76,7 @@ namespace Persistencia
                     resultado = true;
                 }
                 if (conect.State == ConnectionState.Open)
-                {
+                {   
                     conect.Close();
                     resultado = true;
                 }
@@ -84,13 +84,14 @@ namespace Persistencia
             }
             catch (Exception ex)
             {
-                throw ex;
+                    throw ex;
             }
 
             return resultado;
 
         }
 
+<<<<<<< HEAD
         public bool bajaAdmin(int id)
         {
             bool resultado = false;
@@ -187,6 +188,8 @@ namespace Persistencia
             return admin;
 
         }
+=======
+>>>>>>> c26bc18d9d525507cb46910ad5c5d4457465ebf4
 
 
     }

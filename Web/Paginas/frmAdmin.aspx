@@ -55,7 +55,13 @@
     &nbsp;<asp:Button ID="btnSeleccionar" runat="server" Text="Seleccionar" OnClick="btnSeleccionar_Click" />
     </p>
     <p>
+<<<<<<< HEAD
         <asp:ListBox ID="lstAdmin" runat="server" OnInit="lstAdmin_Init" OnSelectedIndexChanged="lstAdmin_SelectedIndexChanged"></asp:ListBox>
+=======
+        <asp:ListBox ID="lstAdmin" runat="server"></asp:ListBox>
+    </p>
+    <p>
+>>>>>>> c26bc18d9d525507cb46910ad5c5d4457465ebf4
     &nbsp;<asp:Label ID="lblMensajes" runat="server"></asp:Label>
     </p>
 </asp:Content>

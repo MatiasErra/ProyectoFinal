@@ -14,7 +14,7 @@ namespace persistenciaDB
             get
             {
 
-                return @"Server=DESKTOP-PMKO4KD\SQLEXPRESS;Database=Proyecto; User=sa; Password=12;";
+                return @"Server=DESKTOP-F29CTN7\SQLEXPRESS;Database=Proyecto; User=sa; Password=6122;";
             }
         }
 
@@ -25,7 +25,7 @@ namespace persistenciaDB
             {
                 conectar.Open();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception();
             }

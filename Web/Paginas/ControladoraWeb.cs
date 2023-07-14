@@ -25,6 +25,8 @@ namespace Web.Paginas
             return _instancia;
         }
 
+        
+
         public bool altaAdmin(Admin admin)
         {
             ControladoraPersona inst = ControladoraPersona.obtenerInstancia();
@@ -37,6 +39,7 @@ namespace Web.Paginas
                 return false;
         }
 
+<<<<<<< HEAD
         public bool bajaAdmin(int id)
         {
             ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
@@ -83,10 +86,50 @@ namespace Web.Paginas
 
 
 
+=======
+        public List<Camionero> listarCamioneros()
+        {
+            ControladoraPersona inst = ControladoraPersona.obtenerInstancia();
+            return inst.listarCamioneros();
+        }
+
+        public Camionero buscarCamionero(int id)
+        {
+            ControladoraPersona inst = ControladoraPersona.obtenerInstancia();
+            return inst.buscarCamionero(id);
+        }
+
+>>>>>>> c26bc18d9d525507cb46910ad5c5d4457465ebf4
         public bool altaCamionero(Camionero camionero)
         {
             ControladoraPersona inst = ControladoraPersona.obtenerInstancia();
             if (inst.altaCamionero(camionero))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool bajaCamionero(int id)
+        {
+            ControladoraPersona inst = ControladoraPersona.obtenerInstancia();
+            if (inst.bajaCamionero(id))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool modificarCamionero(Camionero camionero)
+        {
+            ControladoraPersona inst = ControladoraPersona.obtenerInstancia();
+            if (inst.modificarCamionero(camionero))
             {
                 return true;
             }
