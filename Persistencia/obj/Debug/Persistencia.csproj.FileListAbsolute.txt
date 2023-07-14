@@ -7,3 +7,12 @@ D:\Clases\Proyecto Final\Proyecto\Persistencia\obj\Debug\Persistencia.csproj.Cor
 D:\Clases\Proyecto Final\Proyecto\Persistencia\obj\Debug\Persistencia.csproj.CopyComplete
 D:\Clases\Proyecto Final\Proyecto\Persistencia\obj\Debug\Persistencia.dll
 D:\Clases\Proyecto Final\Proyecto\Persistencia\obj\Debug\Persistencia.pdb
+C:\Users\Mrgat\source\repos\Proyecto\Persistencia\bin\Debug\Persistencia.dll
+C:\Users\Mrgat\source\repos\Proyecto\Persistencia\bin\Debug\Persistencia.pdb
+C:\Users\Mrgat\source\repos\Proyecto\Persistencia\bin\Debug\Clases.dll
+C:\Users\Mrgat\source\repos\Proyecto\Persistencia\bin\Debug\Clases.pdb
+C:\Users\Mrgat\source\repos\Proyecto\Persistencia\obj\Debug\Persistencia.csproj.AssemblyReference.cache
+C:\Users\Mrgat\source\repos\Proyecto\Persistencia\obj\Debug\Persistencia.csproj.CoreCompileInputs.cache
+C:\Users\Mrgat\source\repos\Proyecto\Persistencia\obj\Debug\Persistencia.csproj.CopyComplete
+C:\Users\Mrgat\source\repos\Proyecto\Persistencia\obj\Debug\Persistencia.dll
+C:\Users\Mrgat\source\repos\Proyecto\Persistencia\obj\Debug\Persistencia.pdb

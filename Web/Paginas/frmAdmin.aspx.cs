@@ -129,8 +129,8 @@ namespace Web.Paginas
                 string tele = txtTel.Text;
                 string txtFc = Calendar1.SelectedDate.ToShortDateString();
 
-
-                string tipoAdm = listTipoAdmin.SelectedValue.ToString();
+                string tipoAdm = "Administrador de flota";
+                //string tipoAdm = listTipoAdmin.SelectedValue.ToString();
                 string user = txtUser.Text;
                 string pass = txtPass.Text;
 
@@ -138,7 +138,7 @@ namespace Web.Paginas
 
                 ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
                 Admin unAdmin = new Admin(id,nombre, apellido, email, tele, txtFc, pass, user, tipoAdm);
-                if (Web.altaAdmin(unAdmin))
+                if (Web.altaAdmin(unAdmin) == true)
                 {
                     lblMensajes.Text = "Admin dado de alta con exito.";
                     listar();
@@ -187,6 +187,9 @@ namespace Web.Paginas
 
         }
 
+        protected void btnBaja_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }

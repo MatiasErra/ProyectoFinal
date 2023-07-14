@@ -4,3 +4,9 @@ D:\Clases\Proyecto Final\Proyecto\Clases\obj\Debug\Clases.csproj.AssemblyReferen
 D:\Clases\Proyecto Final\Proyecto\Clases\obj\Debug\Clases.csproj.CoreCompileInputs.cache
 D:\Clases\Proyecto Final\Proyecto\Clases\obj\Debug\Clases.dll
 D:\Clases\Proyecto Final\Proyecto\Clases\obj\Debug\Clases.pdb
+C:\Users\Mrgat\source\repos\Proyecto\Clases\bin\Debug\Clases.dll
+C:\Users\Mrgat\source\repos\Proyecto\Clases\bin\Debug\Clases.pdb
+C:\Users\Mrgat\source\repos\Proyecto\Clases\obj\Debug\Clases.csproj.AssemblyReference.cache
+C:\Users\Mrgat\source\repos\Proyecto\Clases\obj\Debug\Clases.csproj.CoreCompileInputs.cache
+C:\Users\Mrgat\source\repos\Proyecto\Clases\obj\Debug\Clases.dll
+C:\Users\Mrgat\source\repos\Proyecto\Clases\obj\Debug\Clases.pdb

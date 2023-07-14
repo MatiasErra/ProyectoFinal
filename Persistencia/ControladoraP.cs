@@ -1,5 +1,5 @@
 ﻿using Clases;
-
+using System.Collections.Generic;
 
 namespace Persistencia
 {
@@ -22,9 +22,29 @@ namespace Persistencia
             return new pAdmin().altaAdmin(admin);
         }
 
+        public List<Camionero> listarCamioneros()
+        {
+            return new pCamionero().listarCamioneros();
+        }
+
+        public Camionero buscarCamionero(int id)
+        {
+            return new pCamionero().buscarCamionero(id);
+        }
+
         public bool altaCamionero(Camionero camionero)
         {
             return new pCamionero().altaCamionero(camionero);
+        }
+
+        public bool bajaCamionero(int id)
+        {
+            return new pCamionero().bajaCamionero(id);
+        }
+
+        public bool modificarCamionero(Camionero camionero)
+        {
+            return new pCamionero().modificarCamionero(camionero);
         }
     }
 }

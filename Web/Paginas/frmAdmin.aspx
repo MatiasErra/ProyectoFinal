@@ -47,7 +47,7 @@
     <p>
         <asp:Button ID="btnAlta" runat="server" Text="Alta" OnClick="btnAlta_Click" />
 &nbsp;
-        <asp:Button ID="Button2" runat="server" Text="Button" />
+        <asp:Button ID="btnBaja" runat="server" Text="Baja" OnClick="btnBaja_Click" />
 &nbsp;
         <asp:Button ID="Button3" runat="server" Text="Button" />
 &nbsp;
@@ -55,6 +55,8 @@
     </p>
     <p>
         <asp:ListBox ID="lstAdmin" runat="server"></asp:ListBox>
+    </p>
+    <p>
     &nbsp;<asp:Label ID="lblMensajes" runat="server"></asp:Label>
     </p>
 </asp:Content>

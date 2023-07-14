@@ -34,10 +34,49 @@ namespace Controladoras
                 return false;
         }
 
+        public List<Camionero> listarCamioneros()
+        {
+            ControladoraP inst = ControladoraP.obtenerInstancia();
+
+            return inst.listarCamioneros();
+        }
+
+        public Camionero buscarCamionero(int id)
+        {
+            ControladoraP inst = ControladoraP.obtenerInstancia();
+            return inst.buscarCamionero(id);
+        }
+
         public bool altaCamionero(Camionero Camionero)
         {
             ControladoraP inst = ControladoraP.obtenerInstancia();
             if (inst.altaCamionero(Camionero))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool bajaCamionero(int id)
+        {
+            ControladoraP inst = ControladoraP.obtenerInstancia();
+            if (inst.bajaCamionero(id))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool modificarCamionero(Camionero Camionero)
+        {
+            ControladoraP inst = ControladoraP.obtenerInstancia();
+            if (inst.modificarCamionero(Camionero))
             {
                 return true;
             }

@@ -9,3 +9,14 @@ D:\Clases\Proyecto Final\Proyecto\Controladora\bin\Debug\Persistencia.pdb
 D:\Clases\Proyecto Final\Proyecto\Controladora\obj\Debug\Controladoras.csproj.CopyComplete
 D:\Clases\Proyecto Final\Proyecto\Controladora\obj\Debug\Controladora.dll
 D:\Clases\Proyecto Final\Proyecto\Controladora\obj\Debug\Controladora.pdb
+C:\Users\Mrgat\source\repos\Proyecto\Controladora\bin\Debug\Controladora.dll
+C:\Users\Mrgat\source\repos\Proyecto\Controladora\bin\Debug\Controladora.pdb
+C:\Users\Mrgat\source\repos\Proyecto\Controladora\bin\Debug\Clases.dll
+C:\Users\Mrgat\source\repos\Proyecto\Controladora\bin\Debug\Persistencia.dll
+C:\Users\Mrgat\source\repos\Proyecto\Controladora\bin\Debug\Clases.pdb
+C:\Users\Mrgat\source\repos\Proyecto\Controladora\bin\Debug\Persistencia.pdb
+C:\Users\Mrgat\source\repos\Proyecto\Controladora\obj\Debug\Controladoras.csproj.AssemblyReference.cache
+C:\Users\Mrgat\source\repos\Proyecto\Controladora\obj\Debug\Controladoras.csproj.CoreCompileInputs.cache
+C:\Users\Mrgat\source\repos\Proyecto\Controladora\obj\Debug\Controladoras.csproj.CopyComplete
+C:\Users\Mrgat\source\repos\Proyecto\Controladora\obj\Debug\Controladora.dll
+C:\Users\Mrgat\source\repos\Proyecto\Controladora\obj\Debug\Controladora.pdb

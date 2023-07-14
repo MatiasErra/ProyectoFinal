@@ -38,7 +38,7 @@ namespace Persistencia
                     resultado = true;
                 }
                 if (conect.State == ConnectionState.Open)
-                {
+                {   
                     conect.Close();
 
                 }
@@ -46,12 +46,14 @@ namespace Persistencia
             }
             catch (Exception ex)
             {
-                throw ex;
+                    throw ex;
             }
 
             return resultado;
 
         }
+
+
 
     }
 }
