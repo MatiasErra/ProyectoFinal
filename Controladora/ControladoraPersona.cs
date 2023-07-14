@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Clases;
@@ -33,6 +34,52 @@ namespace Controladoras
             else
                 return false;
         }
+
+        public bool bajaAdmin(int id)
+        {
+            ControladoraP inst = ControladoraP.obtenerInstancia();
+
+
+            if (inst.bajaAdmin(id))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public Admin buscarAdm(int id)
+        {
+            ControladoraP inst = ControladoraP.obtenerInstancia();
+
+            Admin admin = inst.buscarAdm(id);
+            return admin;
+
+        }
+
+        public List<Admin> lstAdmin()
+        {
+            ControladoraP ins = ControladoraP.obtenerInstancia();
+            List<Admin> lst = ins.lstAdmin();
+            return lst;
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public bool altaCamionero(Camionero Camionero)
         {

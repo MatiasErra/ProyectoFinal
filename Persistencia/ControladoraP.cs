@@ -1,5 +1,5 @@
 ﻿using Clases;
-
+using System.Collections.Generic;
 
 namespace Persistencia
 {
@@ -21,6 +21,22 @@ namespace Persistencia
         {
             return new pAdmin().altaAdmin(admin);
         }
+
+        public bool bajaAdmin(int id)
+        {
+            return new pAdmin().bajaAdmin(id);
+        }
+
+        public Admin buscarAdm(int id)
+        {
+            return new pAdmin().buscarAdm(id);
+        }
+
+        public List<Admin> lstAdmin() 
+        {
+            return new pAdmin().lstAdmin();
+        }
+
 
         public bool altaCamionero(Camionero camionero)
         {

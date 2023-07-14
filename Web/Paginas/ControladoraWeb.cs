@@ -37,6 +37,52 @@ namespace Web.Paginas
                 return false;
         }
 
+        public bool bajaAdmin(int id)
+        {
+            ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
+
+            if (ins.bajaAdmin(id))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public Admin buscarAdm(int id)
+        {
+            ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
+
+                Admin admin = ins.buscarAdm(id);
+                return admin;
+            
+        }
+
+        public List<Admin> lstAdmin() 
+        {
+            ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
+            List <Admin> lst = ins.lstAdmin();
+            return lst;
+        
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public bool altaCamionero(Camionero camionero)
         {
             ControladoraPersona inst = ControladoraPersona.obtenerInstancia();

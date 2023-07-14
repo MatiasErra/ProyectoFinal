@@ -16,6 +16,13 @@ namespace Clases
         public string TipoDeAdmin { get => _tipoDeAdmin; set => _tipoDeAdmin = value; }
         public string User { get => _user; set => _user = value; }
 
+
+        public override string ToString()
+        {
+            return IdPersona + " - " + Nombre + " - " + Apellido +" - " + TipoDeAdmin + " - " + User.ToString();
+        }
+
+
         public Admin() { }
 
         public Admin(int idPersona, string nombre, string apellido, string email, string telefono, string fchNacimiento, string user, string contrasena, string tipoDeAdmin )

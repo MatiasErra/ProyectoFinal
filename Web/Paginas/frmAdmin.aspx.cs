@@ -1,10 +1,7 @@
-﻿using System;
+﻿using Clases;
+using System;
 using System.Collections;
 using System.Data;
-using System.Security.Cryptography;
-using System.Web.UI.WebControls;
-using Clases;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Web.Paginas
 {
@@ -15,11 +12,18 @@ namespace Web.Paginas
         private void listar()
         {
 
-            //   ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             lstAdmin.DataSource = null;
-            //  lstAdmin.DataSource = Web.lstAdmin();
+            lstAdmin.DataSource = Web.lstAdmin();
             lstAdmin.DataBind();
         }
+
+        protected void lstAdmin_Init(object sender, EventArgs e)
+        {
+            listar();
+        }
+
+
 
         private void limpiar()
         {
@@ -32,6 +36,7 @@ namespace Web.Paginas
             Calendar1.SelectedDate = DateTime.Now;
             txtUser.Text = "";
             txtPass.Text = "";
+            listTipoAdmin.SelectedValue = "Seleccionar tipo de Admin";
 
            // txtTipoAdm.Text = "";
 
@@ -39,7 +44,9 @@ namespace Web.Paginas
         private bool faltanDatos()
         {
             if (txtId.Text == "" || txtNombre.Text == "" || txtApell.Text == "" || txtEmail.Text == "" || txtTel.Text == ""
-             || txtUser.Text == "" || txtPass.Text == "" )//txtTipoAdm.Text ==""
+             || txtUser.Text == "" || txtPass.Text == "" || listTipoAdmin.SelectedValue.ToString() == "Seleccionar tipo de Admin")
+
+ 
             {
                 return true;
             }
@@ -47,6 +54,18 @@ namespace Web.Paginas
 
 
         }
+        private bool faltaIdAdm()
+        {
+            if (lstAdmin.SelectedIndex == -1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
 
         public void CargarTipoAdm()
         {
@@ -59,33 +78,26 @@ namespace Web.Paginas
             listTipoAdmin.DataValueField = "id";
             listTipoAdmin.DataBind();
 
-
-            //listTipoAdmin.Items.Insert(0, new ListItem("--Seleccionar--", "0"));
-            //listTipoAdmin.Items.Insert(1, new ListItem("Administrador global", "1"));
-            //listTipoAdmin.Items.Insert(2, new ListItem("Administrador de productos", "2"));
-            //listTipoAdmin.Items.Insert(3, new ListItem("Administrador de pedidos", "3"));
-            //listTipoAdmin.Items.Insert(4, new ListItem("Administrador de flota", "4"));
         }
 
         ICollection CreateDataSource()
         {
 
-            // Create a table to store data for the DropDownList control.
+          
             DataTable dt = new DataTable();
 
-            // Define the columns of the table.
+
             dt.Columns.Add(new DataColumn("nombre", typeof(String)));
             dt.Columns.Add(new DataColumn("id", typeof(String)));
 
             // Populate the table with sample values.
-            dt.Rows.Add(CreateRow("White", "White", dt));
-            dt.Rows.Add(CreateRow("Silver", "Silver", dt));
-            dt.Rows.Add(CreateRow("Dark Gray", "DarkGray", dt));
-            dt.Rows.Add(CreateRow("Khaki", "Khaki", dt));
-            dt.Rows.Add(CreateRow("Dark Khaki", "DarkKhaki", dt));
-
-            // Create a DataView from the DataTable to act as the data source
-            // for the DropDownList control.
+            dt.Rows.Add(CreateRow("Seleccionar tipo de Admin", "Seleccionar tipo de Admin", dt));
+            dt.Rows.Add(CreateRow("Administrador global", "Administrador global", dt));
+            dt.Rows.Add(CreateRow("Administrador de productos", "Administrador de productos", dt));
+            dt.Rows.Add(CreateRow("Administrador de pedidos", "Administrador de pedidos", dt));
+            dt.Rows.Add(CreateRow("Administrador de flota", "Administrador de flota", dt));
+        
+     
             DataView dv = new DataView(dt);
             return dv;
 
@@ -94,15 +106,9 @@ namespace Web.Paginas
         DataRow CreateRow(String Text, String Value, DataTable dt)
         {
 
-            // Create a DataRow using the DataTable defined in the 
-            // CreateDataSource method.
+        
             DataRow dr = dt.NewRow();
 
-            // This DataRow contains the ColorTextField and ColorValueField 
-            // fields, as defined in the CreateDataSource method. Set the 
-            // fields with the appropriate value. Remember that column 0 
-            // is defined as ColorTextField, and column 1 is defined as 
-            // ColorValueField.
             dr[0] = Text;
             dr[1] = Value;
 
@@ -115,8 +121,55 @@ namespace Web.Paginas
         protected void listTipoAdmin_SelectedIndexChanged(object sender, EventArgs e)
         {
             listTipoAdmin.SelectedIndexChanged -= listTipoAdmin_SelectedIndexChanged;
-            
+
         }
+
+
+        private int traerAdm()
+        {
+            if(!faltaIdAdm())
+            { 
+                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                string AdmSt = this.lstAdmin.SelectedItem.ToString();
+                string[] AdmArr = AdmSt.Split(' ');
+                int Id = Convert.ToInt16(AdmArr[0]);
+                Admin rep = Web.buscarAdm(Id);
+                if (rep != null)
+                {
+                    return Id;
+
+                }
+                else
+                {
+                    return 0;
+
+                }
+            }
+
+            else
+            {
+                return 0;
+
+            }
+
+        }
+
+        private void cargarAdm(int id)
+        {
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            Admin lstadm = Web.buscarAdm(id);
+
+            txtNombre.Text = lstadm.Nombre.ToString();
+            txtApell.Text = lstadm.Apellido.ToString();
+            txtEmail.Text = lstadm.Email.ToString();
+            txtTel.Text = lstadm.Telefono.ToString();
+            txtUser.Text = lstadm.User.ToString();
+            Calendar1.SelectedDate = Convert.ToDateTime( lstadm.FchNacimiento);
+            txtPass.Text = lstadm.Contrasena.ToString();
+            listTipoAdmin.SelectedValue = lstadm.TipoDeAdmin.ToString();
+        }
+
+
 
         protected void btnAlta_Click(object sender, EventArgs e)
         {
@@ -157,6 +210,61 @@ namespace Web.Paginas
         }
 
 
+    
+        protected void btnBaja_Click(object sender, EventArgs e)
+         {
+            if (!faltaIdAdm())
+            {
+
+                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                int Id = traerAdm();
+
+                if (Web.bajaAdmin(Id))
+                {
+                    lblMensajes.Text = "Cliente eliminado con exito.";
+                    listar();
+                    limpiar();
+                }
+                else
+                {
+                    lblMensajes.Text = "No se pudo eliminar el Cliente";
+                    limpiar();
+                }
+            }
+            else
+            {
+                lblMensajes.Text = "Faltan selecionar un Cliente de la lista";
+
+            }
+
+        }
+
+        protected void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            limpiar();
+        }
+
+        protected void btnSeleccionar_Click(object sender, EventArgs e)
+        {
+            if (this.lstAdmin.SelectedIndex > -1)
+            {
+                string linea = this.lstAdmin.SelectedItem.ToString();
+                string[] partes = linea.Split(' ');
+                short id = Convert.ToInt16(partes[0]);
+                this.cargarAdm(id);
+
+            }
+            else
+            {
+                this.lblMensajes.Text = "Debe seleccionar un admin de la lista.";
+
+
+            }
+        }
+
+
+
+
 
 
 
@@ -179,14 +287,22 @@ namespace Web.Paginas
 
         }
 
-
-        
-
-        protected void btnLimpiar_Click(object sender, EventArgs e)
+        protected void lstAdmin_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (this.lstAdmin.SelectedIndex > -1)
+            {
+                string linea = this.lstAdmin.SelectedItem.ToString();
+                string[] partes = linea.Split(' ');
+                short id = Convert.ToInt16(partes[0]);
+                this.cargarAdm(id);
 
+            }
+            else
+            {
+                this.lblMensajes.Text = "Debe seleccionar un admin de la lista.";
+
+
+            }
         }
-
-
     }
 }

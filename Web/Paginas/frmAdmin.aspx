@@ -24,7 +24,7 @@
     <p>
         Fecha de nacimiento&nbsp;&nbsp;&nbsp;
     </p>
-        <asp:Calendar ID="Calendar1" runat="server" SelectedDate="2023-07-11" PrevMonthText="&amp;lt; "></asp:Calendar>
+        <asp:Calendar ID="Calendar1" runat="server" SelectedDate= "2023-07-14" ></asp:Calendar>
     <p>
         &nbsp;</p>
         <p>
@@ -47,14 +47,15 @@
     <p>
         <asp:Button ID="btnAlta" runat="server" Text="Alta" OnClick="btnAlta_Click" />
 &nbsp;
-        <asp:Button ID="Button2" runat="server" Text="Button" />
+        <asp:Button ID="btnBaja" runat="server" Text="Baja" OnClick="btnBaja_Click" />
 &nbsp;
-        <asp:Button ID="Button3" runat="server" Text="Button" />
+        <asp:Button ID="btnModificar" runat="server" Text="Modificar" />
 &nbsp;
-        <asp:Button ID="Button5" runat="server" Text="Button" />
+        <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" />
+    &nbsp;<asp:Button ID="btnSeleccionar" runat="server" Text="Seleccionar" OnClick="btnSeleccionar_Click" />
     </p>
     <p>
-        <asp:ListBox ID="lstAdmin" runat="server"></asp:ListBox>
+        <asp:ListBox ID="lstAdmin" runat="server" OnInit="lstAdmin_Init" OnSelectedIndexChanged="lstAdmin_SelectedIndexChanged"></asp:ListBox>
     &nbsp;<asp:Label ID="lblMensajes" runat="server"></asp:Label>
     </p>
 </asp:Content>
