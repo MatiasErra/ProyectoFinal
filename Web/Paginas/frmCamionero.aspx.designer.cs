@@ -78,6 +78,24 @@ namespace Web.Paginas
         protected global::System.Web.UI.WebControls.TextBox txtCedula;
 
         /// <summary>
+        /// Control lstDisponible.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList lstDisponible;
+
+        /// <summary>
+        /// Control CalendarManejo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Calendar CalendarManejo;
+
+        /// <summary>
         /// Control btnAlta.
         /// </summary>
         /// <remarks>

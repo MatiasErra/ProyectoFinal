@@ -4,7 +4,7 @@ nombre varchar(40) not null,
 apellido varchar(40) not null,
 email varchar(60) unique not null,
 telefono varchar(9) unique not null,
-fchNacimiento varchar(15) check( fchNacimiento <  ( FORMAT (getdate(), 'dd/MM/yyyy ') )) not null 
+fchNacimiento date check( fchNacimiento < (CONVERT(date,getdate(),(103)) not null 
 );
 
 Create table Admins(
@@ -14,44 +14,13 @@ contrasena varchar(40) not null,
 tipoDeAdmin varchar(30) not null
 check(tipoDeAdmin in ('Administrador global','Administrador de productos','Administrador de pedidos','Administrador de flota'))
 
+
+Create table Camioneros(
+idCamionero int  references Personas(idPersona) primary key,
+cedula varchar(11) NOT NULL unique,
+disponible varchar(15) not null check(disponible in ('Disponible','No disponible')),
+fchManejo date check (fchManejo < (CONVERT(date,getdate(),(103)))) not null 
 );
 
-USE [Proyecto]
-GO
-/****** Object:  StoredProcedure [dbo].[AltaAdmin]    Script Date: 10/7/2023 23:35:54 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
--- =============================================
--- Author:		<Author,,Name>
--- Create date: <Create Date,,>
--- Description:	<Description,,>
--- =============================================
-ALTER PROCEDURE [dbo].[AltaAdmin]
-	-- Add the parameters for the stored procedure here
-	@id int,
-	@nombre varchar(40),
-	@apellido varchar(40),
-	@email varchar(40),
-	@tele varchar (40),
-	@fchNac varchar (40),
-	@user varchar(40),
-	@pass varchar(40),
-	@TipoAdm varchar(40),
-	@fecha varchar(40)
-	
-AS
- 
-BEGIN 
-set @fecha = SELECT  CONVERT(DATE,@fecha)
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-
-    -- Insert statements for procedure here
-	insert into Personas (idPersona, nombre, apellido, email, telefono, fchNacimiento) 
-	Values (@id, @nombre, @apellido ,  @email, @tele, @fchNac)
 
 
-END

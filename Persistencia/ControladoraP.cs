@@ -22,7 +22,6 @@ namespace Persistencia
             return new pAdmin().altaAdmin(admin);
         }
 
-<<<<<<< HEAD
         public bool bajaAdmin(int id)
         {
             return new pAdmin().bajaAdmin(id);
@@ -39,7 +38,18 @@ namespace Persistencia
         }
 
 
-=======
+        public bool modificarAdm(Admin admin)
+        {
+            return new pAdmin().modificarAdm(admin);
+        }
+
+        public List<Persona> lstIdPersonas()
+        {
+            return new pAdmin().lstIdPersonas();
+        }
+
+
+
         public List<Camionero> listarCamioneros()
         {
             return new pCamionero().listarCamioneros();
@@ -50,7 +60,7 @@ namespace Persistencia
             return new pCamionero().buscarCamionero(id);
         }
 
->>>>>>> c26bc18d9d525507cb46910ad5c5d4457465ebf4
+
         public bool altaCamionero(Camionero camionero)
         {
             return new pCamionero().altaCamionero(camionero);

@@ -35,7 +35,7 @@ namespace Controladoras
                 return false;
         }
 
-<<<<<<< HEAD
+
         public bool bajaAdmin(int id)
         {
             ControladoraP inst = ControladoraP.obtenerInstancia();
@@ -66,23 +66,17 @@ namespace Controladoras
 
         }
 
+        
+
+         public List<Persona> lstIdPersonas()
+        {
+            ControladoraP ins = ControladoraP.obtenerInstancia();
+            List<Persona> lst = ins.lstIdPersonas();
+            return lst;
+
+        }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
         public List<Camionero> listarCamioneros()
         {
             ControladoraP inst = ControladoraP.obtenerInstancia();
@@ -96,7 +90,20 @@ namespace Controladoras
             return inst.buscarCamionero(id);
         }
 
->>>>>>> c26bc18d9d525507cb46910ad5c5d4457465ebf4
+        public bool modificarAdm(Admin admin)
+        {
+            ControladoraP inst = ControladoraP.obtenerInstancia();
+            if (inst.modificarAdm(admin))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
         public bool altaCamionero(Camionero Camionero)
         {
             ControladoraP inst = ControladoraP.obtenerInstancia();

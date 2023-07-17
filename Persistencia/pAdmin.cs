@@ -20,7 +20,7 @@ namespace Persistencia
              
                 SqlConnection conect = Conexion.Conectar();
 
-                SqlCommand cmd = new SqlCommand("lstAdmin", conect);
+                SqlCommand cmd = new SqlCommand("LstAdmin", conect);
 
                 cmd.CommandType = CommandType.StoredProcedure;
 
@@ -47,6 +47,42 @@ namespace Persistencia
             }
             return resultado;
         }
+        public List<Persona> lstIdPersonas()
+        {
+            List<Persona> resultado = new List<Persona>();
+            try
+            {
+                Persona persona;
+
+
+                SqlConnection conect = Conexion.Conectar();
+
+                SqlCommand cmd = new SqlCommand("lstIdPersonas", conect);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        persona = new Admin();
+                        persona.IdPersona = int.Parse(reader["idPersona"].ToString());
+
+
+                        resultado.Add(persona);
+                    }
+                }
+
+                conect.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+            return resultado;
+        }
+
+
 
         public bool altaAdmin(Admin admin)
         {
@@ -91,7 +127,7 @@ namespace Persistencia
 
         }
 
-<<<<<<< HEAD
+
         public bool bajaAdmin(int id)
         {
             bool resultado = false;
@@ -99,7 +135,7 @@ namespace Persistencia
             {
                 SqlConnection conect = Conexion.Conectar();
 
-                SqlCommand cmd = new SqlCommand("bajaAdmin", conect);
+                SqlCommand cmd = new SqlCommand("BajaAdmin", conect);
 
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(new SqlParameter("@id", id));
@@ -133,6 +169,53 @@ namespace Persistencia
             return resultado;
         }
 
+        public bool modificarAdm(Admin admin)
+        {
+            bool resultado = true;
+
+            try
+            {
+                SqlConnection connect = Conexion.Conectar();
+                SqlCommand cmd = new SqlCommand("ModificarAdm", connect);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(new SqlParameter("@id", admin.IdPersona));
+                cmd.Parameters.Add(new SqlParameter("@nombre", admin.Nombre));
+                cmd.Parameters.Add(new SqlParameter("@apellido", admin.Apellido));
+                cmd.Parameters.Add(new SqlParameter("@email", admin.Email));
+                cmd.Parameters.Add(new SqlParameter("@tele", admin.Telefono));
+                cmd.Parameters.Add(new SqlParameter("@fchNac", admin.FchNacimiento));
+                cmd.Parameters.Add(new SqlParameter("@user", admin.User));
+                cmd.Parameters.Add(new SqlParameter("@TipoAdm", admin.TipoDeAdmin));
+
+
+
+
+                int resBD = cmd.ExecuteNonQuery();
+
+                if (resBD > 0)
+                {
+                    resultado = true;
+                }
+                if (connect.State == ConnectionState.Open)
+                {
+                    connect.Close();
+                    resultado = true;
+
+                }
+
+            }
+            catch (Exception)
+            {
+                resultado = false;
+                return resultado;
+
+            }
+
+            return resultado;
+
+        }
+
 
 
         public Admin buscarAdm (int id)
@@ -145,7 +228,7 @@ namespace Persistencia
 
                 SqlConnection conect = Conexion.Conectar();
 
-                SqlCommand cmd = new SqlCommand("buscarAdm", conect);
+                SqlCommand cmd = new SqlCommand("BuscarAdm", conect);
 
                 cmd.CommandType = CommandType.StoredProcedure;
 
@@ -188,8 +271,7 @@ namespace Persistencia
             return admin;
 
         }
-=======
->>>>>>> c26bc18d9d525507cb46910ad5c5d4457465ebf4
+
 
 
     }

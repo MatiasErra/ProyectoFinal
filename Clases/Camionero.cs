@@ -7,18 +7,25 @@ namespace Clases
     {
 
         private string _cedula;
+        private string _disponible;
+        private string _fchManejo;
 
         public string Cedula { get => _cedula; set => _cedula = value; }
+        public string Disponible { get => _disponible; set => _disponible = value; }
+        public string FchManejo { get => _fchManejo; set => _fchManejo = value; }
 
         public override string ToString()
         {
-            return this.IdPersona + " " + this.Nombre + " " + this.Apellido + " " + this.Email + " " + this.Telefono + " " + this.FchNacimiento + " " + this.Cedula;
+            return IdPersona + " - " + Nombre + " - " + Apellido + " - " + Disponible + " - " + FchManejo.ToString();
         }
 
-        public Camionero(int idPersona, string nombre, string apellido, string email, string telefono, string fchNacimiento, string cedula)
+        public Camionero(int idPersona, string nombre, string apellido, string email, string telefono, string fchNacimiento, string cedula,
+            string disponible, string fchManejo )
             : base(idPersona, nombre, apellido, email, telefono, fchNacimiento)
         {
             Cedula = cedula;
+            Disponible = disponible;
+            FchManejo = fchManejo;
         }
 
         public Camionero()

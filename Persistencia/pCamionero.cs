@@ -21,25 +21,32 @@ namespace Persistencia
             {
                 try
                 {
-                    SqlCommand cmd = new SqlCommand("ObtenerCamioneros", connect);
+                    SqlCommand cmd = new SqlCommand("LstCamioneros", connect);
                     cmd.CommandType = CommandType.StoredProcedure;
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
                             camionero = new Camionero();
-                            camionero.IdPersona = int.Parse(reader["idCamionero"].ToString());
+                            camionero.IdPersona = int.Parse(reader["idPersona"].ToString());
                             camionero.Nombre = reader["nombre"].ToString();
                             camionero.Apellido = reader["apellido"].ToString();
                             camionero.Email = reader["email"].ToString();
                             camionero.Telefono = reader["telefono"].ToString();
                             camionero.FchNacimiento = reader["fchNacimiento"].ToString();
                             camionero.Cedula = reader["cedula"].ToString();
+                            camionero.Disponible = reader["disponible"].ToString();
+                            
+                             string Fecha2   = reader["fchManejo"].ToString();
+                            string[] fechaArr = Fecha2.Split(' ');
+
+                            camionero.FchManejo = fechaArr[0];
+
                             listaCamioneros.Add(camionero);
                         }
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
 
                     return listaCamioneros;
@@ -73,6 +80,8 @@ namespace Persistencia
                             camionero.Telefono = reader["telefono"].ToString();
                             camionero.FchNacimiento = reader["fchNacimiento"].ToString();
                             camionero.Cedula = reader["cedula"].ToString();
+                            camionero.Disponible = reader["disponible"].ToString();
+                            camionero.FchManejo = reader["fchManejo"].ToString();
                         }
                     }
                 }
@@ -103,6 +112,9 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@tele", camionero.Telefono));
                 cmd.Parameters.Add(new SqlParameter("@fchNac", camionero.FchNacimiento));
                 cmd.Parameters.Add(new SqlParameter("@cedula", camionero.Cedula));
+                cmd.Parameters.Add(new SqlParameter("@disp", camionero.Disponible));
+                cmd.Parameters.Add(new SqlParameter("@manejo", camionero.FchManejo));
+           
 
                 int resBD = cmd.ExecuteNonQuery();
 
@@ -113,11 +125,12 @@ namespace Persistencia
                 if (connect.State == ConnectionState.Open)
                 {
                     connect.Close();
+                    resultado = true;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return resultado;
+                throw ex;
             }
             return resultado;
         }
@@ -173,6 +186,8 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@tele", camionero.Telefono));
                 cmd.Parameters.Add(new SqlParameter("@fchNac", camionero.FchNacimiento));
                 cmd.Parameters.Add(new SqlParameter("@cedula", camionero.Cedula));
+                cmd.Parameters.Add(new SqlParameter("@disp", camionero.Disponible));
+                cmd.Parameters.Add(new SqlParameter("@manejo", camionero.FchManejo));
 
                 int resBD = cmd.ExecuteNonQuery();
 
@@ -183,6 +198,7 @@ namespace Persistencia
                 if (connect.State == ConnectionState.Open)
                 {
                     connect.Close();
+                    resultado = true;
 
                 }
 
@@ -190,6 +206,7 @@ namespace Persistencia
             catch (Exception)
             {
                 return resultado;
+
             }
 
             return resultado;
