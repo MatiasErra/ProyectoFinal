@@ -30,7 +30,7 @@ namespace Web.Paginas
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             lstCamionero.DataSource = null;
-            lstCamionero.DataSource = Web.listarCamioneros();
+            lstCamionero.DataSource = Web.listCamionero();
 
             lstCamionero.DataBind();
             cargarDisponible();
@@ -113,6 +113,11 @@ namespace Web.Paginas
             Guid guid = Guid.NewGuid();
             int intGuid = guid.GetHashCode();
             int i = 0;
+
+            while (intGuid < 0)
+            {
+                return GenerateUniqueId();
+            }
 
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             List<Persona> lstPer = Web.lstIdPersonas();
@@ -271,7 +276,7 @@ namespace Web.Paginas
 
                 ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
                 Camionero unCamionero = new Camionero(id, nombre, apellido, email, tele, txtFc, cedula, disponible, txtFchManejo);
-                if (Web.modificarCamionero(unCamionero))
+                if (Web.modCamionero(unCamionero))
                 {
                     lblMensajes.Text = "Camionero modificado con exito.";
                     listar();

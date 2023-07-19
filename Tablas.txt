@@ -4,23 +4,30 @@ nombre varchar(40) not null,
 apellido varchar(40) not null,
 email varchar(60) unique not null,
 telefono varchar(9) unique not null,
-fchNacimiento date check( fchNacimiento < (CONVERT(date,getdate(),(103)) not null 
+fchNacimiento date check(fchNacimiento < CONVERT(date,getdate(),(103))) not null
 );
-
 Create table Admins(
 idAdmin int  references Personas(idPersona) primary key,
 usuario varchar(40) unique not null,
 contrasena varchar(40) not null,
-tipoDeAdmin varchar(30) not null
+tipoDeAdmin varchar(30) not null,
 check(tipoDeAdmin in ('Administrador global','Administrador de productos','Administrador de pedidos','Administrador de flota'))
+);
 
 
 Create table Camioneros(
 idCamionero int  references Personas(idPersona) primary key,
-cedula varchar(11) NOT NULL unique,
+cedula varchar(11) not null unique,
 disponible varchar(15) not null check(disponible in ('Disponible','No disponible')),
 fchManejo date check (fchManejo < (CONVERT(date,getdate(),(103)))) not null 
 );
 
+Create table Depositos(
+idDeposito int primary key,
+capacidad varchar(20) not null,
+ubicacion varchar(50) not null unique,
+temperatura numeric(2,0) not null,
+condiciones varchar(80) not null
+);
 
 

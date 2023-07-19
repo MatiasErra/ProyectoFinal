@@ -209,6 +209,11 @@ namespace Web.Paginas
             int intGuid = guid.GetHashCode();
             int i = 0;
 
+            while (intGuid < 0)
+            {
+                return GenerateUniqueId();
+            }
+
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             List<Persona> lstPer = Web.lstIdPersonas();
           foreach (Persona persona in lstPer )

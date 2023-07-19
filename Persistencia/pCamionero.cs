@@ -12,7 +12,7 @@ namespace Persistencia
 {
      class pCamionero
     {
-        public List<Camionero> listarCamioneros()
+        public List<Camionero> listCamionero()
         {
             List<Camionero> listaCamioneros = new List<Camionero>();
 
@@ -46,7 +46,7 @@ namespace Persistencia
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
 
                     return listaCamioneros;
@@ -169,7 +169,7 @@ namespace Persistencia
 
         }
 
-        public bool modificarCamionero(Camionero camionero)
+        public bool modCamionero(Camionero camionero)
         {
             bool resultado = false;
 

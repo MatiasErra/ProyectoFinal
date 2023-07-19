@@ -11,21 +11,54 @@ namespace Controladoras
 {
     public class ControladoraPersona
     {
+
+        #region Instancia
+
         private static ControladoraPersona _instancia;
 
         public static ControladoraPersona obtenerInstancia()
         {
-            if(_instancia == null)
+            if (_instancia == null)
             {
                 _instancia = new ControladoraPersona();
             }
             return _instancia;
         }
 
+        #endregion
+
+        #region Personas
+
+        public List<Persona> lstIdPersonas()
+        {
+            ControladoraP inst = ControladoraP.obtenerInstancia();
+            List<Persona> lst = inst.lstIdPersonas();
+            return lst;
+
+        }
+
+        #region Admins
+
+        public List<Admin> lstAdmin()
+        {
+            ControladoraP inst = ControladoraP.obtenerInstancia();
+            List<Admin> lst = inst.lstAdmin();
+            return lst;
+        }
+
+        public Admin buscarAdm(int id)
+        {
+            ControladoraP inst = ControladoraP.obtenerInstancia();
+
+            Admin admin = inst.buscarAdm(id);
+            return admin;
+
+        }
+
         public bool altaAdmin(Admin Admin)
         {
             ControladoraP inst = ControladoraP.obtenerInstancia();
-    
+
 
             if (inst.altaAdmin(Admin))
             {
@@ -49,47 +82,6 @@ namespace Controladoras
                 return false;
         }
 
-        public Admin buscarAdm(int id)
-        {
-            ControladoraP inst = ControladoraP.obtenerInstancia();
-
-            Admin admin = inst.buscarAdm(id);
-            return admin;
-
-        }
-
-        public List<Admin> lstAdmin()
-        {
-            ControladoraP ins = ControladoraP.obtenerInstancia();
-            List<Admin> lst = ins.lstAdmin();
-            return lst;
-
-        }
-
-        
-
-         public List<Persona> lstIdPersonas()
-        {
-            ControladoraP ins = ControladoraP.obtenerInstancia();
-            List<Persona> lst = ins.lstIdPersonas();
-            return lst;
-
-        }
-
-
-        public List<Camionero> listarCamioneros()
-        {
-            ControladoraP inst = ControladoraP.obtenerInstancia();
-
-            return inst.listarCamioneros();
-        }
-
-        public Camionero buscarCamionero(int id)
-        {
-            ControladoraP inst = ControladoraP.obtenerInstancia();
-            return inst.buscarCamionero(id);
-        }
-
         public bool modificarAdm(Admin admin)
         {
             ControladoraP inst = ControladoraP.obtenerInstancia();
@@ -103,6 +95,22 @@ namespace Controladoras
             }
         }
 
+        #endregion
+
+        #region Camioneros
+
+        public List<Camionero> listCamionero()
+        {
+            ControladoraP inst = ControladoraP.obtenerInstancia();
+
+            return inst.listCamionero();
+        }
+
+        public Camionero buscarCamionero(int id)
+        {
+            ControladoraP inst = ControladoraP.obtenerInstancia();
+            return inst.buscarCamionero(id);
+        }
 
         public bool altaCamionero(Camionero Camionero)
         {
@@ -130,10 +138,10 @@ namespace Controladoras
             }
         }
 
-        public bool modificarCamionero(Camionero Camionero)
+        public bool modCamionero(Camionero Camionero)
         {
             ControladoraP inst = ControladoraP.obtenerInstancia();
-            if (inst.modificarCamionero(Camionero))
+            if (inst.modCamionero(Camionero))
             {
                 return true;
             }
@@ -142,5 +150,10 @@ namespace Controladoras
                 return false;
             }
         }
+
+        #endregion
+
+        #endregion
+
     }
 }

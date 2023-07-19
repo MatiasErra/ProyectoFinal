@@ -6,15 +6,38 @@ namespace Persistencia
     public class ControladoraP
     {
 
+        #region Instancia
+
         private static ControladoraP _instancia;
-        
+
         public static ControladoraP obtenerInstancia()
         {
-            if( _instancia == null )
+            if (_instancia == null)
             {
                 _instancia = new ControladoraP();
             }
             return _instancia;
+        }
+
+        #endregion
+
+        #region Personas
+
+        public List<Persona> lstIdPersonas()
+        {
+            return new pAdmin().lstIdPersonas();
+        }
+
+        #region Admins
+
+        public List<Admin> lstAdmin()
+        {
+            return new pAdmin().lstAdmin();
+        }
+
+        public Admin buscarAdm(int id)
+        {
+            return new pAdmin().buscarAdm(id);
         }
 
         public bool altaAdmin(Admin admin)
@@ -27,32 +50,18 @@ namespace Persistencia
             return new pAdmin().bajaAdmin(id);
         }
 
-        public Admin buscarAdm(int id)
-        {
-            return new pAdmin().buscarAdm(id);
-        }
-
-        public List<Admin> lstAdmin() 
-        {
-            return new pAdmin().lstAdmin();
-        }
-
-
         public bool modificarAdm(Admin admin)
         {
             return new pAdmin().modificarAdm(admin);
         }
 
-        public List<Persona> lstIdPersonas()
+        #endregion
+
+        #region Camioneros
+
+        public List<Camionero> listCamionero()
         {
-            return new pAdmin().lstIdPersonas();
-        }
-
-
-
-        public List<Camionero> listarCamioneros()
-        {
-            return new pCamionero().listarCamioneros();
+            return new pCamionero().listCamionero();
         }
 
         public Camionero buscarCamionero(int id)
@@ -71,9 +80,14 @@ namespace Persistencia
             return new pCamionero().bajaCamionero(id);
         }
 
-        public bool modificarCamionero(Camionero camionero)
+        public bool modCamionero(Camionero camionero)
         {
-            return new pCamionero().modificarCamionero(camionero);
+            return new pCamionero().modCamionero(camionero);
         }
+
+        #endregion
+
+        #endregion
+
     }
 }
