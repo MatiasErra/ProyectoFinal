@@ -126,6 +126,7 @@
     <Content Include="Global.asax" />
     <Content Include="Paginas\frmAdmin.aspx" />
     <Content Include="Paginas\frmCamionero.aspx" />
+    <Content Include="Paginas\frmDeposito.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -228,6 +229,13 @@
     </Compile>
     <Compile Include="Paginas\frmCamionero.aspx.designer.cs">
       <DependentUpon>frmCamionero.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\frmDeposito.aspx.cs">
+      <DependentUpon>frmDeposito.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\frmDeposito.aspx.designer.cs">
+      <DependentUpon>frmDeposito.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">

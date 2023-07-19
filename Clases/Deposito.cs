@@ -7,13 +7,18 @@ using System.Threading.Tasks;
 
 namespace Clases
 {
-    internal class Deposito
+    public class Deposito
     {
         private int _idDeposito;
         private string _capacidad;
         private string _ubicacion;
         private short _temperatura;
         private string _condiciones;
+
+        public override string ToString()
+        {
+            return IdDeposito + " - " + Capacidad + " - " + Ubicacion + " - " + Temperatura + " - " + Condiciones;
+        }
 
         public Deposito(int idDeposito, string capacidad, string ubicacion, short temperatura, string condiciones)
         {
@@ -23,6 +28,9 @@ namespace Clases
             Temperatura = temperatura;
             Condiciones = condiciones;
         }
+
+
+        public Deposito() { }
 
         public int IdDeposito { get => _idDeposito; set => _idDeposito = value; }
         public string Capacidad { get => _capacidad; set => _capacidad = value; }

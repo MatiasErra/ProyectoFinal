@@ -9,6 +9,9 @@ namespace Web.Paginas
 {
     public class ControladoraWeb
     {
+
+        #region Instancia
+
         private static Controladora _controladora;
         private static ControladoraWeb _instancia;
 
@@ -16,7 +19,7 @@ namespace Web.Paginas
 
         public static ControladoraWeb obtenerInstancia()
         {
-            if(_instancia == null)
+            if (_instancia == null)
             {
                 _instancia = new ControladoraWeb();
                 _controladora = Controladora.obtenerInstancia();
@@ -25,7 +28,36 @@ namespace Web.Paginas
             return _instancia;
         }
 
-        
+        #endregion
+
+        #region Personas
+
+        public List<Persona> lstIdPersonas()
+        {
+            ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
+            List<Persona> lst = ins.lstIdPersonas();
+            return lst;
+
+        }
+
+        #region Admins
+
+        public List<Admin> lstAdmin()
+        {
+            ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
+            List<Admin> lst = ins.lstAdmin();
+            return lst;
+
+        }
+
+        public Admin buscarAdm(int id)
+        {
+            ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
+
+            Admin admin = ins.buscarAdm(id);
+            return admin;
+
+        }
 
         public bool altaAdmin(Admin admin)
         {
@@ -39,7 +71,6 @@ namespace Web.Paginas
                 return false;
         }
 
-
         public bool bajaAdmin(int id)
         {
             ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
@@ -51,33 +82,6 @@ namespace Web.Paginas
             else
                 return false;
         }
-
-        public Admin buscarAdm(int id)
-        {
-            ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
-
-                Admin admin = ins.buscarAdm(id);
-                return admin;
-            
-        }
-
-        public List<Admin> lstAdmin() 
-        {
-            ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
-            List <Admin> lst = ins.lstAdmin();
-            return lst;
-        
-        }
-
-        public List<Persona> lstIdPersonas()
-        {
-            ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
-            List<Persona> lst = ins.lstIdPersonas();
-            return lst;
-
-        }
-
-
 
         public bool modificarAdm(Admin admin)
         {
@@ -92,12 +96,14 @@ namespace Web.Paginas
             }
         }
 
+        #endregion
 
+        #region Camioneros
 
-        public List<Camionero> listarCamioneros()
+        public List<Camionero> listCamionero()
         {
             ControladoraPersona inst = ControladoraPersona.obtenerInstancia();
-            return inst.listarCamioneros();
+            return inst.listCamionero();
         }
 
         public Camionero buscarCamionero(int id)
@@ -133,10 +139,10 @@ namespace Web.Paginas
             }
         }
 
-        public bool modificarCamionero(Camionero camionero)
+        public bool modCamionero(Camionero camionero)
         {
             ControladoraPersona inst = ControladoraPersona.obtenerInstancia();
-            if (inst.modificarCamionero(camionero))
+            if (inst.modCamionero(camionero))
             {
                 return true;
             }
@@ -145,6 +151,76 @@ namespace Web.Paginas
                 return false;
             }
         }
+
+        #endregion
+
+        #endregion
+
+        #region Depositos
+
+        public List<Deposito> listIdDeps()
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            List<Deposito> lst = inst.listIdDeps();
+            return lst;
+
+        }
+
+        public List<Deposito> listDeps()
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            List<Deposito> lst = inst.listDeps();
+            return lst;
+
+        }
+
+        public Deposito buscarDeps(int id)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+            Deposito deposito = inst.buscarDeps(id);
+            return deposito;
+
+        }
+
+        public bool altaDeps(Deposito deposito)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+            if (inst.altaDeps(deposito))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool bajaDeps(int id)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+            if (inst.bajaDeps(id))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool modDeps(Deposito deposito)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            if (inst.modDeps(deposito))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        #endregion
 
         /*public bool altaCamion(Camion camion)
         {
@@ -158,6 +234,8 @@ namespace Web.Paginas
                 return false;
             }
         }*/
+
+
 
     }
 }
