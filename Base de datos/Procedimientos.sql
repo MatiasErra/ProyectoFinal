@@ -94,6 +94,39 @@ BEGIN
 END
 GO
 
+USE [Proyecto]
+GO
+/****** Object:  StoredProcedure [dbo].[AltaDeposito]    Script Date: 18/7/2023 21:40:06 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[AltaDeposito]
+	@id int,
+	@capacidad varchar(20),
+	@ubicacion varchar(50),
+	@temperatura numeric(2,0),
+	@condiciones varchar(80)
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+BEGIN TRANSACTION
+	insert into Depositos values (@id, @capacidad, @ubicacion, @temperatura, @condiciones) 
+
+	If not exists (Select * From Depositos Where idDeposito = @id)
+	Begin
+	raiserror('No se pudo crear el Deposito',1,1);
+		rollback;
+	End
+
+		Commit tran
+	
+
+END
+GO
+
 
 USE [Proyecto]
 GO
@@ -175,6 +208,35 @@ BEGIN
 END
 GO
 
+USE [Proyecto]
+GO
+/****** Object:  StoredProcedure [dbo].[BajaDeposito]    Script Date: 18/7/2023 21:40:50 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE  [dbo].[BajaDeposito] @id int
+As
+BEGIN
+
+	SET NOCOUNT ON;
+
+	BEGIN TRANSACTION
+	Delete from Depositos where idDeposito = @id
+
+	If exists (Select * From Depositos Where idDeposito = @id)
+	Begin
+	raiserror('No se pudo borrar el deposito',1,1);
+		rollback;
+	End
+
+	Commit tran
+	
+
+End
+GO
+
 
 USE [Proyecto]
 GO
@@ -228,10 +290,35 @@ BEGIN
 
 END
 GO
+USE [Proyecto]
+GO
+/****** Object:  StoredProcedure [dbo].[BuscarDeposito]    Script Date: 18/7/2023 21:41:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 
+
+
+
+
+
+
+CREATE PROCEDURE [dbo].[BuscarDeposito] 
+@id int
+AS
+BEGIN
+	
+	SET NOCOUNT ON;
+	 	Select idDeposito, capacidad, ubicacion, temperatura, condiciones from Depositos Where idDeposito = @id
+END
+
+GO
 
 USE [Proyecto]
 GO
+
+
 
 /****** Object:  StoredProcedure [dbo].[LstAdmin]    Script Date: 17/7/2023 12:12:42 ******/
 SET ANSI_NULLS ON
@@ -314,7 +401,24 @@ BEGIN
 END
 GO
 
+USE [Proyecto]
+GO
+/****** Object:  StoredProcedure [dbo].[ListIdDepositos]    Script Date: 18/7/2023 21:42:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 
+CREATE PROCEDURE [dbo].[ListIdDepositos]
+
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	Select idDeposito from Depositos
+END
+
+GO
 USE [Proyecto]
 GO
 
@@ -374,6 +478,29 @@ BEGIN
 
 		UPDATE Personas SET nombre = @nombre, apellido = @apellido, email = @email, telefono = @tele, fchNacimiento =CONVERT(DATE,@fchNac,103) where idPersona = @id
 
+END
+GO
+
+USE [Proyecto]
+GO
+/****** Object:  StoredProcedure [dbo].[ModificarDeposito]    Script Date: 18/7/2023 21:45:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+CREATE PROCEDURE [dbo].[ModificarDeposito]
+	@id int,
+	@capacidad varchar(20),
+	@ubicacion varchar(50),
+	@temperatura numeric(2,0),
+	@condiciones varchar(80)
+
+AS
+BEGIN
+    UPDATE Depositos SET capacidad = @capacidad, ubicacion = @ubicacion, temperatura = @temperatura, condiciones = @condiciones  where idDeposito = @id
 END
 GO
 
