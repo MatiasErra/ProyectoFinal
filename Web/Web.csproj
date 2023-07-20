@@ -44,6 +44,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AspNet.ScriptManager.jQuery, Version=3.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AspNet.ScriptManager.jQuery.3.6.0\lib\net45\AspNet.ScriptManager.jQuery.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
@@ -64,9 +67,6 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.2.0.1\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
-    <Reference Include="AspNet.ScriptManager.jQuery">
-      <HintPath>..\packages\AspNet.ScriptManager.jQuery.3.4.1\lib\net45\AspNet.ScriptManager.jQuery.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ScriptManager.MSAjax">
       <HintPath>..\packages\Microsoft.AspNet.ScriptManager.MSAjax.5.0.0\lib\net45\Microsoft.ScriptManager.MSAjax.dll</HintPath>
@@ -118,10 +118,15 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\Estilos.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Paginas\Camioneros\frmAltaCamionero.aspx" />
+    <Content Include="Paginas\Camioneros\frmBajaCamionero.aspx" />
+    <Content Include="Paginas\Camioneros\frmListarCamioneros.aspx" />
+    <Content Include="Paginas\Camioneros\frmModCamionero.aspx" />
     <Content Include="Paginas\frmAdmin.aspx" />
     <Content Include="Paginas\frmCamionero.aspx" />
     <Content Include="Paginas\frmCliente.aspx" />
@@ -154,11 +159,17 @@
     <Content Include="Content\bootstrap-grid.rtl.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
-    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
-    <Content Include="Scripts\jquery-3.4.1.js" />
-    <Content Include="Scripts\jquery-3.4.1.min.js" />
-    <Content Include="Scripts\jquery-3.4.1.slim.js" />
-    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <Content Include="Default.Master" />
+    <Content Include="AGlobal.Master" />
+    <Content Include="AProductos.Master" />
+    <Content Include="APedidos.Master" />
+    <Content Include="AFlota.Master" />
+    <Content Include="MCliente.Master" />
+    <None Include="Scripts\jquery-3.6.0.intellisense.js" />
+    <Content Include="Scripts\jquery-3.6.0.js" />
+    <Content Include="Scripts\jquery-3.6.0.min.js" />
+    <Content Include="Scripts\jquery-3.6.0.slim.js" />
+    <Content Include="Scripts\jquery-3.6.0.slim.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\WebForms\DetailsView.js" />
     <Content Include="Scripts\WebForms\Focus.js" />
@@ -188,8 +199,36 @@
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AFlota.Master.cs">
+      <DependentUpon>AFlota.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AFlota.Master.designer.cs">
+      <DependentUpon>AFlota.Master</DependentUpon>
+    </Compile>
+    <Compile Include="AGlobal.Master.cs">
+      <DependentUpon>AGlobal.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AGlobal.Master.designer.cs">
+      <DependentUpon>AGlobal.Master</DependentUpon>
+    </Compile>
+    <Compile Include="APedidos.Master.cs">
+      <DependentUpon>APedidos.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="APedidos.Master.designer.cs">
+      <DependentUpon>APedidos.Master</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="AProductos.Master.cs">
+      <DependentUpon>AProductos.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AProductos.Master.designer.cs">
+      <DependentUpon>AProductos.Master</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -197,8 +236,50 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Default.Master.cs">
+      <DependentUpon>Default.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.Master.designer.cs">
+      <DependentUpon>Default.Master</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="MCliente.Master.cs">
+      <DependentUpon>MCliente.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MCliente.Master.designer.cs">
+      <DependentUpon>MCliente.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Camioneros\frmAltaCamionero.aspx.cs">
+      <DependentUpon>frmAltaCamionero.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Camioneros\frmAltaCamionero.aspx.designer.cs">
+      <DependentUpon>frmAltaCamionero.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Camioneros\frmBajaCamionero.aspx.cs">
+      <DependentUpon>frmBajaCamionero.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Camioneros\frmBajaCamionero.aspx.designer.cs">
+      <DependentUpon>frmBajaCamionero.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Camioneros\frmListarCamioneros.aspx.cs">
+      <DependentUpon>frmListarCamioneros.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Camioneros\frmListarCamioneros.aspx.designer.cs">
+      <DependentUpon>frmListarCamioneros.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Camioneros\frmModCamionero.aspx.cs">
+      <DependentUpon>frmModCamionero.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Camioneros\frmModCamionero.aspx.designer.cs">
+      <DependentUpon>frmModCamionero.aspx</DependentUpon>
     </Compile>
     <Compile Include="Paginas\ControladoraWeb.cs" />
     <Compile Include="Paginas\frmAdmin.aspx.cs">
@@ -257,8 +338,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <Content Include="Scripts\jquery-3.6.0.slim.min.map" />
+    <Content Include="Scripts\jquery-3.6.0.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

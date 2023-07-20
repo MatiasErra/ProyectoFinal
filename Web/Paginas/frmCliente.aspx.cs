@@ -1,11 +1,11 @@
-﻿using Clases;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Clases;
 
 namespace Web.Paginas
 {
@@ -123,7 +123,7 @@ namespace Web.Paginas
             txtDirr.Text = cliente.Direccion.ToString();
         }
 
-
+        
         static int GenerateUniqueId()
         {
             Guid guid = Guid.NewGuid();

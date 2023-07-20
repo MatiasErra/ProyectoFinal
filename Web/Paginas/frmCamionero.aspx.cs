@@ -15,6 +15,11 @@ namespace Web.Paginas
 {
     public partial class frmCamionero : System.Web.UI.Page
     {
+        protected void Page_PreInit(object sender, EventArgs e)
+        {
+            this.MasterPageFile = "~/AGlobal.Master";
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)

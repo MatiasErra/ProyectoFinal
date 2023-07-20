@@ -1,0 +1,15 @@
+﻿.CamList {
+    margin: 10px;
+    border-radius: 20px;
+    background-color: #f2f0f0;
+    width: auto;
+    height: auto;
+    display: grid;
+    justify-content: center;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.CamList div{
+    margin: 10px;
+}
