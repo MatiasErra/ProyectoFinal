@@ -587,7 +587,7 @@
 											"font": "Arial;13;1",
 											"left": 357,
 											"top": 735,
-											"width": 111.26806640625,
+											"width": 117.76806640625,
 											"height": 13,
 											"text": "Admin"
 										},
@@ -620,7 +620,7 @@
 									"font": "Arial;13;0",
 									"left": 352,
 									"top": 728,
-									"width": 121.26806640625,
+									"width": 127.76806640625,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGIxgPCCUkrdQY="
@@ -657,7 +657,7 @@
 											"font": "Arial;13;0",
 											"left": 357,
 											"top": 758,
-											"width": 111.26806640625,
+											"width": 117.76806640625,
 											"height": 13,
 											"text": "-usuario: string",
 											"horizontalAlignment": 0
@@ -674,7 +674,7 @@
 											"font": "Arial;13;0",
 											"left": 357,
 											"top": 773,
-											"width": 111.26806640625,
+											"width": 117.76806640625,
 											"height": 13,
 											"text": "-contraseña: string",
 											"horizontalAlignment": 0
@@ -691,16 +691,16 @@
 											"font": "Arial;13;0",
 											"left": 357,
 											"top": 788,
-											"width": 111.26806640625,
+											"width": 117.76806640625,
 											"height": 13,
-											"text": "-tipoDeAdmin: char",
+											"text": "-tipoDeAdmin: string",
 											"horizontalAlignment": 0
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 352,
 									"top": 753,
-									"width": 121.26806640625,
+									"width": 127.76806640625,
 									"height": 53
 								},
 								{
@@ -715,7 +715,7 @@
 									"font": "Arial;13;0",
 									"left": 352,
 									"top": 806,
-									"width": 121.26806640625,
+									"width": 127.76806640625,
 									"height": 10
 								},
 								{
@@ -753,7 +753,7 @@
 							"containerChangeable": true,
 							"left": 352,
 							"top": 728,
-							"width": 121.26806640625,
+							"width": 127.76806640625,
 							"height": 103,
 							"nameCompartment": {
 								"$ref": "AAAAAAGIxgPCCUkqnj4="
@@ -9323,8 +9323,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 500,
-									"top": 780,
+									"left": 507,
+									"top": 779,
 									"height": 13,
 									"alpha": -0.5235987755982988,
 									"distance": 30,
@@ -9343,8 +9343,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 503,
-									"top": 793,
+									"left": 510,
+									"top": 792,
 									"height": 13,
 									"alpha": -0.7853981633974483,
 									"distance": 40,
@@ -9362,8 +9362,8 @@
 										"$ref": "AAAAAAGI1ojXxebXFRk="
 									},
 									"font": "Arial;13;0",
-									"left": 484,
-									"top": 753,
+									"left": 491,
+									"top": 752,
 									"width": 19.5126953125,
 									"height": 13,
 									"alpha": 0.5235987755982988,
@@ -9410,7 +9410,7 @@
 								"$ref": "AAAAAAGI1nWkLTOaBxw="
 							},
 							"lineStyle": 1,
-							"points": "591:557;536:608;536:768;473:774",
+							"points": "591:557;536:608;536:768;480:773",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAGI1ojXxebau6Q="
@@ -11533,7 +11533,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 398,
+									"left": 400,
 									"top": 667,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -11554,7 +11554,7 @@
 									},
 									"visible": null,
 									"font": "Arial;13;0",
-									"left": 383,
+									"left": 385,
 									"top": 667,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -11575,7 +11575,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 427,
+									"left": 429,
 									"top": 668,
 									"height": 13,
 									"alpha": -1.5707963267948966,
@@ -11594,7 +11594,7 @@
 								"$ref": "AAAAAAGIxgPCCUkpCDI="
 							},
 							"lineStyle": 1,
-							"points": "413:727;414:621",
+							"points": "415:727;415:621",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAGJHZraTye+p0s="
@@ -14204,7 +14204,7 @@
 							},
 							"name": "tipoDeAdmin",
 							"visibility": "private",
-							"type": "char"
+							"type": "string"
 						}
 					]
 				},
@@ -14532,7 +14532,8 @@
 								"$ref": "AAAAAAGIxgQ7U0mlZ+w="
 							},
 							"name": "ubicacion string",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -16659,7 +16660,8 @@
 								"$ref": "AAAAAAGJayuvSbDI3j8="
 							},
 							"name": "fchProduccion",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
