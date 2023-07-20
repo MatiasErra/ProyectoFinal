@@ -98,6 +98,67 @@ namespace Web.Paginas
 
         #endregion
 
+
+        #region Clientes
+
+        public List<Cliente> lstCli()
+        {
+            ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
+            List<Cliente> lst = ins.lstCli();
+            return lst;
+        }
+
+        public Cliente buscarCli(int id)
+        {
+            ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
+
+            Cliente cli = ins.buscarCli(id);
+            return cli;
+
+        }
+
+        public bool altaCli(Cliente cli)
+        {
+            ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
+            if (ins.altaCli(cli))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+
+        public bool bajaCli(int id)
+        {
+            ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
+
+
+            if (ins.bajaCli(id))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool modificarCli(Cliente cli)
+        {
+            ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
+            if (ins.modificarCli(cli))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
+
+
         #region Camioneros
 
         public List<Camionero> listCamionero()

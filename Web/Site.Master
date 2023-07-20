@@ -50,6 +50,8 @@
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/">Inicio</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Paginas/frmAdmin">ABM Admins</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Paginas/frmCamionero">ABM Camionero</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Paginas/frmDeposito">ABM Deposito</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Paginas/frmCliente">ABM Cliente</a></li>
                     </ul>
                 </div>
             </div>

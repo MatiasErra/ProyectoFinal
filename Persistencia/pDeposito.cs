@@ -12,42 +12,6 @@ namespace Persistencia
 {
     class pDeposito
     {
-
-        public List<Persona> lstIdPersonas()
-        {
-            List<Persona> resultado = new List<Persona>();
-            try
-            {
-                Persona persona;
-
-
-                SqlConnection conect = Conexion.Conectar();
-
-                SqlCommand cmd = new SqlCommand("lstIdPersonas", conect);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        persona = new Admin();
-                        persona.IdPersona = int.Parse(reader["idPersona"].ToString());
-
-
-                        resultado.Add(persona);
-                    }
-                }
-
-                conect.Close();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.ToString());
-            }
-            return resultado;
-        }
-
         public List<Deposito> listIdDeps()
         {
             List<Deposito> resultado = new List<Deposito>();
@@ -58,7 +22,7 @@ namespace Persistencia
 
                 SqlConnection connect = Conexion.Conectar();
 
-                SqlCommand cmd = new SqlCommand("ListIdDepositos", connect);
+                SqlCommand cmd = new SqlCommand("LstIdDepositos", connect);
 
                 cmd.CommandType = CommandType.StoredProcedure;
 
@@ -211,6 +175,7 @@ namespace Persistencia
                 if (connect.State == ConnectionState.Open)
                 {
                     connect.Close();
+                    resultado = true;
 
                 }
 

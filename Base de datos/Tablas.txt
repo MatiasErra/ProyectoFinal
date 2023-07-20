@@ -31,3 +31,14 @@ condiciones varchar(80) not null
 );
 
 
+
+Create table Clientes(
+idCliente int  references Personas(idPersona) primary key,
+usuario varchar(40) unique not null,
+contrasena varchar(40) not null,
+Direccion varchar(40) not null,
+);
+
+
+
+

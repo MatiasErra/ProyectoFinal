@@ -61,7 +61,7 @@ namespace Web.Paginas
         private bool faltanDatos()
         {
             if ( txtNombre.Text == "" || txtApell.Text == "" || txtEmail.Text == "" || txtTel.Text == ""
-             || txtUser.Text == "" || txtPass.Text == "" )
+             || txtUser.Text == "")
 
  
             {
@@ -137,34 +137,7 @@ namespace Web.Paginas
 
 
 
-        //private int traerAdm()
-        //{
-        //    if(!faltaIdAdm())
-        //    { 
-        //        ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-        //        string AdmSt = this.lstAdmin.SelectedItem.ToString();
-        //        string[] AdmArr = AdmSt.Split(' ');
-        //        int Id = Convert.ToInt32(AdmArr[0]);
-        //        Admin rep = Web.buscarAdm(Id);
-        //        if (rep != null)
-        //        {
-        //            return Id;
 
-        //        }
-        //        else
-        //        {
-        //            return 0;
-
-        //        }
-        //    }
-
-        //    else
-        //    {
-        //        return 0;
-
-        //    }
-
-        //}
 
         protected void lstAdmin_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -230,7 +203,7 @@ namespace Web.Paginas
             }
             else return GenerateUniqueId();
         }
-
+        
 
     
         #endregion
@@ -240,40 +213,48 @@ namespace Web.Paginas
         {
             if (!faltanDatos())
             {
-                if (listTipoAdmin.SelectedValue.ToString() != "Seleccionar tipo de Admin")
+                if (txtPass.Text != "")
                 {
-                    int id = GenerateUniqueId();
-                    string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
-                    string apellido = HttpUtility.HtmlEncode(txtApell.Text);
-                    string email = HttpUtility.HtmlEncode(txtEmail.Text);
-                    string tele = HttpUtility.HtmlEncode(txtTel.Text);
-                    string txtFc = HttpUtility.HtmlEncode(Calendar1.SelectedDate.ToShortDateString());
-                    string tipoAdm = HttpUtility.HtmlEncode(listTipoAdmin.SelectedValue.ToString());
-                    string user = HttpUtility.HtmlEncode(txtUser.Text);
-                    string pass = HttpUtility.HtmlEncode(txtPass.Text);
-
-                    string hashedPassword = FormsAuthentication.HashPasswordForStoringInConfigFile(pass, "SHA1");
-
-
-
-                    ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                    Admin unAdmin = new Admin(id, nombre, apellido, email, tele, txtFc, user, hashedPassword, tipoAdm);
-                    if (Web.altaAdmin(unAdmin) == true)
+                    if (listTipoAdmin.SelectedValue.ToString() != "Seleccionar tipo de Admin")
                     {
-                        lblMensajes.Text = "Admin dado de alta con exito.";
-                        listar();
-                        limpiar();
+                        int id = GenerateUniqueId();
+                        string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
+                        string apellido = HttpUtility.HtmlEncode(txtApell.Text);
+                        string email = HttpUtility.HtmlEncode(txtEmail.Text);
+                        string tele = HttpUtility.HtmlEncode(txtTel.Text);
+                        string txtFc = HttpUtility.HtmlEncode(Calendar1.SelectedDate.ToShortDateString());
+                        string tipoAdm = HttpUtility.HtmlEncode(listTipoAdmin.SelectedValue.ToString());
+                        string user = HttpUtility.HtmlEncode(txtUser.Text);
+                        string pass = HttpUtility.HtmlEncode(txtPass.Text);
+
+                        string hashedPassword = FormsAuthentication.HashPasswordForStoringInConfigFile(pass, "SHA1");
+
+
+
+                        ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                        Admin unAdmin = new Admin(id, nombre, apellido, email, tele, txtFc, user, hashedPassword, tipoAdm);
+                        if (Web.altaAdmin(unAdmin))
+                        {
+                            lblMensajes.Text = "Admin dado de alta con exito.";
+                            listar();
+                            limpiar();
+                        }
+                        else
+                        {
+                            lblMensajes.Text = "No se pudo dar de alta el Administrador";
+                            limpiar();
+                        }
                     }
-                    else
-                    {
-                        lblMensajes.Text = "No se pudo dar de alta el Administrador";
-                        limpiar();
-                    }
+                     else
+                     {
+                         lblMensajes.Text = "Falta seleccionar el tipo de admin";
+                     }
                 }
                 else
                 {
-                    lblMensajes.Text = "Faltan seleccionar el tipo de admin";
+                    lblMensajes.Text = "Falta la Contraseña";
                 }
+
             }
             else
             {
@@ -325,47 +306,55 @@ namespace Web.Paginas
         {
             if (!faltanDatos())
             {
-                if (listTipoAdmin.SelectedValue.ToString() != "Seleccionar tipo de Admin")
+                if (txtPass.Text == "")
                 {
-                    int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text.ToString()));
-                    string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
-                    string apellido = HttpUtility.HtmlEncode(txtApell.Text);
-                    string email = HttpUtility.HtmlEncode(txtEmail.Text);
-                    string tele = HttpUtility.HtmlEncode(txtTel.Text);
-                    string txtFc = HttpUtility.HtmlEncode(Calendar1.SelectedDate.ToShortDateString());
-                    string tipoAdm = HttpUtility.HtmlEncode(listTipoAdmin.SelectedValue.ToString());
-                    string user = HttpUtility.HtmlEncode(txtUser.Text);
-
-
-
-                    ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                    Admin unAdmin = new Admin();
-                    unAdmin.IdPersona = id;
-                    unAdmin.Nombre = nombre;
-                    unAdmin.Apellido = apellido;
-                    unAdmin.Email = email;
-                    unAdmin.Telefono = tele;
-                    unAdmin.FchNacimiento = txtFc;
-                    unAdmin.TipoDeAdmin = tipoAdm;
-                    unAdmin.User = user;
-
-                    if (Web.modificarAdm(unAdmin))
+                    if (listTipoAdmin.SelectedValue.ToString() != "Seleccionar tipo de Admin")
                     {
-                        lblMensajes.Text = "Administrador modificado con exito.";
-                        listar();
-                        limpiar();
+                        int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text.ToString()));
+                        string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
+                        string apellido = HttpUtility.HtmlEncode(txtApell.Text);
+                        string email = HttpUtility.HtmlEncode(txtEmail.Text);
+                        string tele = HttpUtility.HtmlEncode(txtTel.Text);
+                        string txtFc = HttpUtility.HtmlEncode(Calendar1.SelectedDate.ToShortDateString());
+                        string tipoAdm = HttpUtility.HtmlEncode(listTipoAdmin.SelectedValue.ToString());
+                        string user = HttpUtility.HtmlEncode(txtUser.Text);
+
+
+
+                        ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                        Admin unAdmin = new Admin();
+                        unAdmin.IdPersona = id;
+                        unAdmin.Nombre = nombre;
+                        unAdmin.Apellido = apellido;
+                        unAdmin.Email = email;
+                        unAdmin.Telefono = tele;
+                        unAdmin.FchNacimiento = txtFc;
+                        unAdmin.TipoDeAdmin = tipoAdm;
+                        unAdmin.User = user;
+
+                        if (Web.modificarAdm(unAdmin))
+                        {
+                            lblMensajes.Text = "Administrador modificado con exito.";
+                            listar();
+                            limpiar();
+                        }
+                        else
+                        {
+                            lblMensajes.Text = "No se pudo modificar el Administrador.";
+                            limpiar();
+                        }
                     }
                     else
                     {
-                        lblMensajes.Text = "No se pudo modificar el Administrador.";
-                        limpiar();
+                        lblMensajes.Text = "Falta selecionar un tipo de Admin";
+
                     }
                 }
                 else
                 {
-                    lblMensajes.Text = "Faltan selecionar un Admin de la lista";
-
+                    lblMensajes.Text = "El administrador no puede cambiar la contraseña del admin";
                 }
+                
             }
             else
             {

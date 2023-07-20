@@ -57,6 +57,38 @@ namespace Persistencia
 
         #endregion
 
+        #region Clientes
+
+        public List<Cliente> lstCliente()
+        {
+            return new pCliente().lstCli();
+        }
+
+        public Cliente buscarCli(int id)
+        {
+            return new pCliente().buscarCli(id);
+        }
+
+        public bool altaCli(Cliente cli)
+        {
+            return new pCliente().altaCli(cli);
+        }
+
+        public bool bajaCli(int id)
+        {
+            return new pCliente().bajaCli(id);
+        }
+
+        public bool modificarCli(Cliente cli)
+        {
+            return new pCliente().modificarCli(cli);
+        }
+
+
+
+
+        #endregion
+
         #region Camioneros
 
         public List<Camionero> listCamionero()

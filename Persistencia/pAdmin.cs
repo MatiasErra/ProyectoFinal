@@ -118,9 +118,9 @@ namespace Persistencia
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                    throw ex;
+                resultado = false;
             }
 
             return resultado;

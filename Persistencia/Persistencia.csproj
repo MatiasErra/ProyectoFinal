@@ -46,6 +46,7 @@
     <Compile Include="Conexion.cs" />
     <Compile Include="pAdmin.cs" />
     <Compile Include="pCamionero.cs" />
+    <Compile Include="pCliente.cs" />
     <Compile Include="pDeposito.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

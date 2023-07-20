@@ -264,30 +264,30 @@ namespace Web.Paginas
             {
                 if (lstDisponible.SelectedValue.ToString() != "Seleccionar disponibilidad")
                 {
-                    int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text));
-                string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
-                string apellido = HttpUtility.HtmlEncode(txtApell.Text);
-                string email = HttpUtility.HtmlEncode(txtEmail.Text);
-                string tele = HttpUtility.HtmlEncode(txtTel.Text);
-                string txtFc = HttpUtility.HtmlEncode(Calendar1.SelectedDate.ToShortDateString());
-                string cedula = HttpUtility.HtmlEncode(txtCedula.Text);
-                string disponible = HttpUtility.HtmlEncode(lstDisponible.SelectedValue.ToString());
-                string txtFchManejo = HttpUtility.HtmlEncode(CalendarManejo.SelectedDate.ToShortDateString());
+                        int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text));
+                    string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
+                    string apellido = HttpUtility.HtmlEncode(txtApell.Text);
+                    string email = HttpUtility.HtmlEncode(txtEmail.Text);
+                    string tele = HttpUtility.HtmlEncode(txtTel.Text);
+                    string txtFc = HttpUtility.HtmlEncode(Calendar1.SelectedDate.ToShortDateString());
+                    string cedula = HttpUtility.HtmlEncode(txtCedula.Text);
+                    string disponible = HttpUtility.HtmlEncode(lstDisponible.SelectedValue.ToString());
+                    string txtFchManejo = HttpUtility.HtmlEncode(CalendarManejo.SelectedDate.ToShortDateString());
 
-                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                Camionero unCamionero = new Camionero(id, nombre, apellido, email, tele, txtFc, cedula, disponible, txtFchManejo);
-                if (Web.modCamionero(unCamionero))
-                {
-                    lblMensajes.Text = "Camionero modificado con exito.";
-                    listar();
-                    limpiar();
-                }
-                else
-                {
-                    lblMensajes.Text = "No se pudo modificar el Camionero";
-                    limpiar();
-                }
-                }
+                        ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                        Camionero unCamionero = new Camionero(id, nombre, apellido, email, tele, txtFc, cedula, disponible, txtFchManejo);
+                        if (Web.modCamionero(unCamionero))
+                        {
+                            lblMensajes.Text = "Camionero modificado con exito.";
+                            listar();
+                            limpiar();
+                        }
+                        else
+                        {
+                            lblMensajes.Text = "No se pudo modificar el Camionero";
+                            limpiar();
+                        }
+                        }
                 else
                 {
                     lblMensajes.Text = "Falta Seleccionar la disponibilidad";

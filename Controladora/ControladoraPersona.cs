@@ -97,6 +97,69 @@ namespace Controladoras
 
         #endregion
 
+        #region Clientes
+
+        public List<Cliente> lstCli()
+        {
+            ControladoraP inst = ControladoraP.obtenerInstancia();
+            List<Cliente> lst = inst.lstCliente();
+            return lst;
+        }
+
+        public Cliente buscarCli(int id)
+        {
+            ControladoraP inst = ControladoraP.obtenerInstancia();
+
+            Cliente cli = inst.buscarCli(id);
+            return cli;
+
+        }
+
+        public bool altaCli(Cliente cli)
+        {
+            ControladoraP inst = ControladoraP.obtenerInstancia();
+
+
+            if (inst.altaCli(cli))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+
+        public bool bajaCli(int id)
+        {
+            ControladoraP inst = ControladoraP.obtenerInstancia();
+
+
+            if (inst.bajaCli(id))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool modificarCli(Cliente cli)
+        {
+            ControladoraP inst = ControladoraP.obtenerInstancia();
+            if (inst.modificarCli(cli))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
+
+
+
         #region Camioneros
 
         public List<Camionero> listCamionero()
