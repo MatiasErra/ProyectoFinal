@@ -26,7 +26,7 @@ Create table Depositos(
 idDeposito int primary key,
 capacidad varchar(20) not null,
 ubicacion varchar(50) not null unique,
-temperatura numeric(2,0) not null,
+temperatura numeric(3,0) not null,
 condiciones varchar(80) not null
 );
 
@@ -36,7 +36,7 @@ Create table Clientes(
 idCliente int  references Personas(idPersona) primary key,
 usuario varchar(40) unique not null,
 contrasena varchar(40) not null,
-Direccion varchar(40) not null,
+Direccion varchar(60) not null,
 );
 
 
