@@ -50,7 +50,9 @@ namespace Web.Paginas.Camioneros
             txtCedula.Text = "";
             lstDisponible.SelectedValue = "Seleccionar disponibilidad";
             CalendarManejo.SelectedDate = DateTime.Today;
+            txtBuscar.Text = "";
             lstCamionero.SelectedIndex = -1;
+            listar();
         }
 
         private bool faltanDatos()
@@ -167,7 +169,7 @@ namespace Web.Paginas.Camioneros
             {
                 if (lstDisponible.SelectedValue.ToString() != "Seleccionar disponibilidad")
                 {
-                    int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text));
+                    int id = GenerateUniqueId();
                     string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
                     string apellido = HttpUtility.HtmlEncode(txtApell.Text);
                     string email = HttpUtility.HtmlEncode(txtEmail.Text);
@@ -179,21 +181,70 @@ namespace Web.Paginas.Camioneros
 
                     ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
                     Camionero unCamionero = new Camionero(id, nombre, apellido, email, tele, txtFc, cedula, disponible, txtFchManejo);
-                    if (Web.modCamionero(unCamionero))
+                    if (Web.altaCamionero(unCamionero))
                     {
-                        lblMensajes.Text = "Camionero modificado con exito.";
+                        lblMensajes.Text = "Camionero dado de alta con exito.";
                         listar();
                         limpiar();
                     }
                     else
                     {
-                        lblMensajes.Text = "No se pudo modificar el Camionero";
+                        lblMensajes.Text = "No se pudo dar de alta el Camionero.";
                         limpiar();
                     }
                 }
                 else
                 {
-                    lblMensajes.Text = "Falta Seleccionar la disponibilidad";
+                    lblMensajes.Text = "Falta seleccionar la disponibilidad.";
+                }
+            }
+            else
+            {
+                lblMensajes.Text = "Faltan datos.";
+            }
+        }
+
+        protected void btnModificar_Click(object sender, EventArgs e)
+        {
+            if (!faltanDatos())
+            {
+                if (lstDisponible.SelectedValue.ToString() != "Seleccionar disponibilidad")
+                {
+                    if (!txtId.Text.Equals(""))
+                    {
+                        int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text));
+                        string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
+                        string apellido = HttpUtility.HtmlEncode(txtApell.Text);
+                        string email = HttpUtility.HtmlEncode(txtEmail.Text);
+                        string tele = HttpUtility.HtmlEncode(txtTel.Text);
+                        string txtFc = HttpUtility.HtmlEncode(Calendar1.SelectedDate.ToShortDateString());
+                        string cedula = HttpUtility.HtmlEncode(txtCedula.Text);
+                        string disponible = HttpUtility.HtmlEncode(lstDisponible.SelectedValue.ToString());
+                        string txtFchManejo = HttpUtility.HtmlEncode(CalendarManejo.SelectedDate.ToShortDateString());
+
+                        ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                        Camionero unCamionero = new Camionero(id, nombre, apellido, email, tele, txtFc, cedula, disponible, txtFchManejo);
+                        if (Web.modCamionero(unCamionero))
+                        {
+                            lblMensajes.Text = "Camionero modificado con exito.";
+                            listar();
+                            limpiar();
+                        }
+                        else
+                        {
+                            lblMensajes.Text = "No se pudo modificar el Camionero.";
+                            limpiar();
+                        }
+                    }
+                    else
+                    {
+                        lblMensajes.Text = "Debe seleccionar a un Camionero.";
+                    }
+                    
+                }
+                else
+                {
+                    lblMensajes.Text = "Falta seleccionar la disponibilidad.";
                 }
             }
             else
@@ -220,6 +271,48 @@ namespace Web.Paginas.Camioneros
             }
             else
                 lblMensajes.Text = "Debe seleccionar un camionero de la lista";
+        }
+
+        private void buscar()
+        {
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            List<Camionero> camioneros = Web.listCamionero();
+            lstCamionero.DataSource = null;
+            string value = txtBuscar.Text;
+            List<Camionero> camioneroslst = new List<Camionero>();
+            if (value == "")
+            {
+                camioneroslst = camioneros;
+            }
+            else
+            {
+                foreach (Camionero unCamionero in camioneros)
+                {
+
+                    if (unCamionero.Nombre == value || unCamionero.Apellido == value || unCamionero.Email == value || unCamionero.Telefono == value || unCamionero.Cedula == value)
+                    {
+                        camioneroslst.Add(unCamionero);
+                    }
+                }
+            }
+
+            if (camioneroslst.Count > 0)
+            {
+                lstCamionero.Visible = true;
+                lblMensajes.Text = "";
+                lstCamionero.DataSource = camioneroslst;
+                lstCamionero.DataBind();
+            }
+            else
+            {
+                lstCamionero.Visible = false;
+                lblMensajes.Text = "No se encontro ningun camionero";
+            }
+        }
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            buscar();
         }
     }
 }

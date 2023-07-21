@@ -1,20 +1,20 @@
-﻿using System;
+﻿using Clases;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Clases;
 
-namespace Web.Paginas.Camioneros
+namespace Web.Paginas.Depositos
 {
-    public partial class frmListarCamioneros : System.Web.UI.Page
+    public partial class frmListarDepositos : System.Web.UI.Page
     {
         protected void Page_PreInit(object sender, EventArgs e)
         {
             this.MasterPageFile = "~/AGlobal.Master";
         }
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -26,56 +26,56 @@ namespace Web.Paginas.Camioneros
         private void listar()
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            lstCamionero.DataSource = null;
-            lstCamionero.DataSource = Web.listCamionero();
+            lstDeposito.DataSource = null;
+            lstDeposito.DataSource = Web.listDeps();
 
-            lstCamionero.DataBind();
+            lstDeposito.DataBind();
         }
 
-        protected void lstCamionero_SelectedIndexChanged(object sender, EventArgs e)
+        protected void lstDeposito_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (lstCamionero.SelectedIndex != -1)
+            if (lstDeposito.SelectedIndex != -1)
             {
-                string linea = this.lstCamionero.SelectedItem.ToString();
+                string linea = this.lstDeposito.SelectedItem.ToString();
                 string[] partes = linea.Split(' ');
                 string id = partes[0];
-                txtId.Text= id;
+                txtId.Text = id;
             }
         }
 
         private void buscar()
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            List<Camionero> camioneros = Web.listCamionero();
-            lstCamionero.DataSource = null;
+            List<Deposito> depositos = Web.listDeps();
+            lstDeposito.DataSource = null;
             string value = txtBuscar.Text;
-            List<Camionero> camioneroslst = new List<Camionero>();
+            List<Deposito> depositolst = new List<Deposito>();
             if (value == "")
             {
-                camioneroslst = camioneros;
+                depositolst = depositos;
             }
             else
             {
-                foreach (Camionero unCamionero in camioneros)
+                foreach (Deposito unDeposito in depositos)
                 {
 
-                    if (unCamionero.Nombre == value || unCamionero.Apellido == value || unCamionero.Email == value || unCamionero.Telefono == value || unCamionero.Cedula == value)
+                    if (unDeposito.Condiciones == value || unDeposito.Capacidad == value || unDeposito.Temperatura.ToString() == value)
                     {
-                        camioneroslst.Add(unCamionero);
+                        depositolst.Add(unDeposito);
                     }
                 }
             }
-            if (camioneroslst.Count > 0)
+            if (depositolst.Count > 0)
             {
-                lstCamionero.Visible = true;
+                lstDeposito.Visible = true;
                 lblMensajes.Text = "";
-                lstCamionero.DataSource = camioneroslst;
-                lstCamionero.DataBind();
+                lstDeposito.DataSource = depositolst;
+                lstDeposito.DataBind();
             }
             else
             {
-                lstCamionero.Visible = false;
-                lblMensajes.Text = "No se encontro ningun camionero";
+                lstDeposito.Visible = false;
+                lblMensajes.Text = "No se encontro ningun deposito";
             }
         }
 
@@ -89,29 +89,29 @@ namespace Web.Paginas.Camioneros
             if (txtId.Text != "")
             {
                 ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                Camionero unCamionero = Web.buscarCamionero(int.Parse(HttpUtility.HtmlEncode(txtId.Text)));
-                if (unCamionero != null)
+                Deposito unDeposito = Web.buscarDeps(int.Parse(HttpUtility.HtmlEncode(txtId.Text)));
+                if (unDeposito != null)
                 {
-                    if (Web.bajaCamionero(int.Parse(txtId.Text)))
+                    if (Web.bajaDeps(int.Parse(txtId.Text)))
                     {
-                        lblMensajes.Text = "Se ha borrado el Camionero.";
+                        lblMensajes.Text = "Se ha borrado el Deposito.";
                         txtId.Text = "";
                         txtBuscar.Text = "";
                         listar();
                     }
                     else
                     {
-                        lblMensajes.Text = "No se ha podido borrar el Camionero.";
+                        lblMensajes.Text = "No se ha podido borrar el Deposito.";
                     }
                 }
                 else
                 {
-                    lblMensajes.Text = "El Camionero no existe.";
+                    lblMensajes.Text = "El Deposito no existe.";
                 }
             }
             else
             {
-                lblMensajes.Text = "Seleccione un camionero para eliminar. ";
+                lblMensajes.Text = "Seleccione un Deposito para eliminar. ";
             }
         }
     }

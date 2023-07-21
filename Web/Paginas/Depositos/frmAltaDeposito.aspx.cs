@@ -1,16 +1,22 @@
 ﻿using Clases;
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Web.Paginas
+namespace Web.Paginas.Depositos
 {
-    public partial class frmDeposito : System.Web.UI.Page
+    public partial class frmAltaDeposito : System.Web.UI.Page
     {
+        protected void Page_PreInit(object sender, EventArgs e)
+        {
+            this.MasterPageFile = "~/AGlobal.Master";
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -36,7 +42,9 @@ namespace Web.Paginas
             txtCondiciones.Text = "";
             txtTemperatura.Text = "";
             txtUbicacion.Text = "";
+            txtBuscar.Text = "";
             lstDeposito.SelectedIndex = -1;
+            listar();
         }
 
         private bool faltanDatos()
@@ -49,103 +57,6 @@ namespace Web.Paginas
             {
                 return false;
             }
-        }
-
-        protected void btnAlta_Click(object sender, EventArgs e)
-        {
-            if (!faltanDatos())
-            {
-
-                int id = GenerateUniqueId();
-                string capacidad = HttpUtility.HtmlEncode(txtCapacidad.Text);
-                string ubicacion = HttpUtility.HtmlEncode(txtUbicacion.Text);
-                short temperatura = short.Parse(HttpUtility.HtmlEncode(txtTemperatura.Text));
-                string condiciones = HttpUtility.HtmlEncode(txtCondiciones.Text);
-
-                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                Deposito unDeposito = new Deposito(id, capacidad, ubicacion, temperatura, condiciones);
-                if (Web.altaDeps(unDeposito))
-                {
-                    lblMensajes.Text = "Deposito dado de alta con exito.";
-                    listar();
-                    limpiar();
-                }
-                else
-                {
-                    lblMensajes.Text = "No se pudo dar de alta el Deposito.";
-                    limpiar();
-                }
-            }
-            else
-            {
-                lblMensajes.Text = "Faltan datos";
-            }
-        }
-
-        protected void btnBaja_Click(object sender, EventArgs e)
-        {
-            if (txtId.Text != "")
-            {
-                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                Deposito unDeposito = Web.buscarDeps(int.Parse(HttpUtility.HtmlEncode(txtId.Text)));
-                if (unDeposito != null)
-                {
-                    if (Web.bajaDeps(int.Parse(txtId.Text)))
-                    {
-                        lblMensajes.Text = "Se ha borrado el Deposito.";
-                        limpiar();
-                        listar();
-                    }
-                    else
-                    {
-                        lblMensajes.Text = "Error. No se pubo borrar el Deposito.";
-                    }
-                }
-                else
-                {
-                    lblMensajes.Text = "Error. El Deposito no existe.";
-                }
-            }
-            else
-            {
-                lblMensajes.Text = "Faltan selecionar un Deposito de la lista";
-
-            }
-        }
-
-        protected void btnModificar_Click(object sender, EventArgs e)
-        {
-            if (!faltanDatos())
-            {
-                int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text));
-                string capacidad = HttpUtility.HtmlEncode(txtCapacidad.Text);
-                string ubicacion = HttpUtility.HtmlEncode(txtUbicacion.Text);
-                short temperatura = short.Parse(HttpUtility.HtmlEncode(txtTemperatura.Text));
-                string condiciones = HttpUtility.HtmlEncode(txtCondiciones.Text);
-
-                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                Deposito unDeposito = new Deposito(id, capacidad, ubicacion, temperatura, condiciones);
-                if (Web.modDeps(unDeposito))
-                {
-                    lblMensajes.Text = "Deposito modificado con exito.";
-                    listar();
-                    limpiar();
-                }
-                else
-                {
-                    lblMensajes.Text = "No se pudo modificar el Deposito";
-                    limpiar();
-                }
-            }
-            else
-            {
-                lblMensajes.Text = "Faltan datos.";
-            }
-        }
-
-        protected void btnLimpiar_Click(object sender, EventArgs e)
-        {
-            limpiar();
         }
 
         static int GenerateUniqueId()
@@ -200,7 +111,7 @@ namespace Web.Paginas
                 lstDeposito.SelectedIndex = -1;
             }
             else
-                lblMensajes.Text = "Debe seleccionar un camionero de la lista";
+                lblMensajes.Text = "Debe seleccionar un Deposito de la lista.";
         }
 
         private void cargarDep(int id)
@@ -213,5 +124,122 @@ namespace Web.Paginas
             txtTemperatura.Text = deposito.Temperatura.ToString();
             txtUbicacion.Text = deposito.Ubicacion;
         }
+
+
+        protected void btnAlta_Click(object sender, EventArgs e)
+        {
+            if (!faltanDatos())
+            {
+
+                int id = GenerateUniqueId();
+                string capacidad = HttpUtility.HtmlEncode(txtCapacidad.Text);
+                string ubicacion = HttpUtility.HtmlEncode(txtUbicacion.Text);
+                short temperatura = short.Parse(HttpUtility.HtmlEncode(txtTemperatura.Text));
+                string condiciones = HttpUtility.HtmlEncode(txtCondiciones.Text);
+
+                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                Deposito unDeposito = new Deposito(id, capacidad, ubicacion, temperatura, condiciones);
+                if (Web.altaDeps(unDeposito))
+                {
+                    lblMensajes.Text = "Deposito dado de alta con exito.";
+                    listar();
+                    limpiar();
+                }
+                else
+                {
+                    lblMensajes.Text = "No se pudo dar de alta el Deposito.";
+                    limpiar();
+                }
+            }
+            else
+            {
+                lblMensajes.Text = "Faltan datos.";
+            }
+        }
+
+        protected void btnModificar_Click(object sender, EventArgs e)
+        {
+            if (!faltanDatos())
+            {
+                int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text));
+                string capacidad = HttpUtility.HtmlEncode(txtCapacidad.Text);
+                string ubicacion = HttpUtility.HtmlEncode(txtUbicacion.Text);
+                short temperatura = short.Parse(HttpUtility.HtmlEncode(txtTemperatura.Text));
+                string condiciones = HttpUtility.HtmlEncode(txtCondiciones.Text);
+
+                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                Deposito unDeposito = new Deposito(id, capacidad, ubicacion, temperatura, condiciones);
+                if (Web.modDeps(unDeposito))
+                {
+                    lblMensajes.Text = "Deposito modificado con exito.";
+                    listar();
+                    limpiar();
+                }
+                else
+                {
+                    lblMensajes.Text = "No se pudo modificar el Deposito";
+                    limpiar();
+                }
+            }
+            else
+            {
+                lblMensajes.Text = "Faltan datos.";
+            }
+        }
+
+        protected void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            limpiar();
+        }
+
+        private void buscar()
+        {
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            List<Deposito> depositos = Web.listDeps();
+            lstDeposito.DataSource = null;
+            string value = txtBuscar.Text;
+            List<Deposito> depositolst = new List<Deposito>();
+            if (value == "")
+            {
+                depositolst = depositos;
+            }
+            else
+            {
+                foreach (Deposito unDeposito in depositos)
+                {
+
+                    if (unDeposito.Condiciones == value || unDeposito.Capacidad == value || unDeposito.Temperatura.ToString() == value)
+                    {
+                        depositolst.Add(unDeposito);
+                    }
+                }
+            }
+            if (depositolst.Count > 0)
+            {
+                lstDeposito.Visible = true;
+                lblMensajes.Text = "";
+                lstDeposito.DataSource = depositolst;
+                lstDeposito.DataBind();
+            }
+            else
+            {
+                lstDeposito.Visible = false;
+                lblMensajes.Text = "No se encontro ningun Deposito";
+            }
+        }
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            buscar();
+        }
+
+
+
+        
+
+        
+
+
+        
     }
 }

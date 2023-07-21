@@ -4,19 +4,20 @@
 
 <html lang="es">
 <head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%: Page.Title %> - Frutas y Verduras S.A.</title>
     <link href="~/Content/Estilos.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+
     <script src="https://kit.fontawesome.com/35e140fb72.js" crossorigin="anonymous"></script>
 
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
 
-    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
 </head>
@@ -44,14 +45,14 @@
         </asp:ScriptManager>
         <a name="arriba"></a>
         <nav class="navbar navbar-expand-lg bg-dark">
-            
+
             <div class="container-fluid">
                 <a class="navbar-brand text-light h1" href="~/Paginas/Inicio">Frutas y Verduras S.A.</a>
                 <button class="navbar-toggler bg-body-tertiary" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Menu">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
@@ -70,37 +71,23 @@
 
                     <ul class="navbar-nav mb-2 mb-lg-0">
                         <li class="nav-item dropdown">
-                            <select class="nav-link dropdown-toggle text-light bg-dark me-1" onchange="location = this.value;">
-                                <option selected value="#">Gestion de Clientes</option>
-                                <option value="/Paginas/frmCliente">Listar Clientes</option>
-                                <option value="/Paginas/frmCliente">Eliminar Clientes</option>
-                            </select>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <select class="nav-link dropdown-toggle text-light bg-dark me-1" onchange="location = this.value;">
-                                <option selected value="#">Gestion de Admins</option>
-                                <option value="/Paginas/frmAdmin">Listar Admins</option>
-                                <option value="/Paginas/frmAdmin">Ingresar Admin</option>
-                                <option value="/Paginas/frmAdmin">Eliminar Admin</option>
-                                <option value="/Paginas/frmAdmin">Modificar Admin</option>
-                            </select>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <select class="nav-link dropdown-toggle text-light bg-dark me-1" onchange="location = this.value;">
-                                <option selected value="#">Gestion de Camioneros</option>
-                                <option value="/Paginas/Camioneros/frmListarCamioneros">Listar Camioneros</option>
-                                <option value="/Paginas/Camioneros/frmAltaCamionero">Ingresar Camionero</option>
-                                <option value="/Paginas/Camioneros/frmBajaCamionero">Eliminar Camionero</option>
-                                <option value="/Paginas/Camioneros/frmModCamionero">Modificar Camionero</option>
-                            </select>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <select class="nav-link dropdown-toggle text-light bg-dark me-1" onchange="location = this.value;">
-                                <option selected value="#">Gestion de Depositos</option>
-                                <option value="/Paginas/frmDeposito">Listar Depositos</option>
-                                <option value="/Paginas/frmDeposito">Ingresar Depositos</option>
-                                <option value="/Paginas/frmDeposito">Eliminar Depositos</option>
-                                <option value="/Paginas/frmDeposito">Modificar Depositos</option>
+                            <select name="Gestion" class="nav-link dropdown-toggle text-light bg-dark me-1" onchange="location = this.value;">
+                                <option style="display:none">Gestion</option>
+                                <optgroup label="Clientes">
+                                    <option value="/Paginas/Clientes/frmListarClientes">Listar o eliminar Clientes</option>
+                                </optgroup>
+                                <optgroup label="Admins">
+                                    <option value="/Paginas/Admins/frmListarAdmins">Listar o eliminar Admins</option>
+                                    <option value="/Paginas/Admins/frmAltaAdmin">Ingresar o modificar Admins</option>
+                                </optgroup>
+                                <optgroup label="Camioneros">
+                                    <option value="/Paginas/Camioneros/frmListarCamioneros">Listar o eliminar Camioneros</option>
+                                    <option value="/Paginas/Camioneros/frmAltaCamionero">Ingresar o modificar Camioneros</option>
+                                </optgroup>
+                                <optgroup label="Depositos">
+                                    <option value="/Paginas/Depositos/frmListarDepositos">Listar o eliminar Depositos</option>
+                                    <option value="/Paginas/Depositos/frmAltaDeposito">Ingresar o modificar Depositos</option>
+                                </optgroup>
                             </select>
                         </li>
                         <li class="me-2">
@@ -111,7 +98,7 @@
                 </div>
             </div>
         </nav>
-        <div class="body-content">
+        <div class="body-content container">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
         </div>
@@ -124,54 +111,54 @@
                         <div class="">
                             <h5>Información de Contacto:</h5>
                         </div>
-                        <div>
-                            <p><i class="fas fa-home text-grayish">&nbsp;</i>Rosario, Colonia, Uruguay </p>
-                        </div>
-        
-                        <div>
-                            <p>
-                                <i class="fas fa-envelope text-grayish">&nbsp;</i>
-                                rosario@ctc.edu.uy
-                            </p>
-                        </div>
-        
-                        <div>
-                            <p><i class="fas fa-phone text-grayish">&nbsp;</i> +598 92 039 523</p>
-                        </div>
-                        <div>
-                            <p><i class="fas fa-fax text-grayish">&nbsp;</i> 4531 5623</p>
+                        <div class="row">
+                            <div class="col-6">
+                                <p class="float-end"><i class="fas fa-home text-grayish">&nbsp;</i>Rosario, Colonia, Uruguay </p>
+                            </div>
+                            <div class="col-6">
+                                <p class="float-start">
+                                    <i class="fas fa-envelope text-grayish">&nbsp;</i>
+                                    rosario@ctc.edu.uy
+                                </p>
+                            </div>
+                            <div class="col-6">
+                                <p class="float-end"><i class="fas fa-phone text-grayish">&nbsp;</i> +598 92 039 523</p>
+                            </div>
+                            <div class="col-6">
+                                <p class="float-start"><i class="fas fa-fax text-grayish">&nbsp;</i> 4531 5623</p>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6 col-12">
                         <div>
                             <h5>Nuestras Redes:</h5>
                         </div>
-                        <div>
-                            <a class="btn btn-dark" href="https://www.linkedin.com" target="_blank">
-                                <i class="fab fa-linkedin">&nbsp;</i>Linkedin</a>
-                        </div>
-        
-                        <div>
-                            <a class="btn btn-dark" href="https://www.instagram.com" target="_blank">
-                                <i class="fab fa-instagram">&nbsp;</i> 
-                                Instagram
-                            </a>
-                        </div>
-        
-                        <div>
-                            <a class="btn btn-dark" href="https://www.facebook.com" target="_blank">
-                                <i class="fab fa-facebook">&nbsp;</i> 
-                                Facebook
-                            </a>
-                        </div>
-                        <div>
-                            <a class="btn btn-dark" href="https://www.youtube.com" target="_blank">
-                                <i class="fab fa-youtube">&nbsp;</i> 
-                                Youtube
-                            </a>
+                        <div class="row">
+                            <div class="col-6">
+                                <a class="btn btn-dark float-end" href="https://www.linkedin.com" target="_blank">
+                                    <i class="fab fa-linkedin">&nbsp;</i>Linkedin</a>
+                            </div>
+                            <div class="col-6">
+                                <a class="btn btn-dark float-start" href="https://www.instagram.com" target="_blank">
+                                    <i class="fab fa-instagram">&nbsp;</i>
+                                    Instagram
+                                </a>
+                            </div>
+                            <div class="col-6">
+                                <a class="btn btn-dark float-end" href="https://www.facebook.com" target="_blank">
+                                    <i class="fab fa-facebook">&nbsp;</i>
+                                    Facebook
+                                </a>
+                            </div>
+                            <div class="col-6">
+                                <a class="btn btn-dark float-start" href="https://www.youtube.com" target="_blank">
+                                    <i class="fab fa-youtube">&nbsp;</i>
+                                    Youtube
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>  
+                </div>
             </div>
         </footer>
     </form>

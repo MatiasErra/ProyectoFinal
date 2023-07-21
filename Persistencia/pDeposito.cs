@@ -22,7 +22,7 @@ namespace Persistencia
 
                 SqlConnection connect = Conexion.Conectar();
 
-                SqlCommand cmd = new SqlCommand("LstIdDepositos", connect);
+                SqlCommand cmd = new SqlCommand("ListIdDepositos", connect);
 
                 cmd.CommandType = CommandType.StoredProcedure;
 

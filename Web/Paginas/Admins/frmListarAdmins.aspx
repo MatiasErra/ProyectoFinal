@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Listado y eliminacion de camioneros" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="frmListarCamioneros.aspx.cs" Inherits="Web.Paginas.Camioneros.frmListarCamioneros" %>
+﻿<%@ Page Title="Listado y eliminacion de admins" Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="frmListarAdmins.aspx.cs" Inherits="Web.Paginas.Admins.frmListarAdmins" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container row m-2 text-center">
@@ -18,7 +18,7 @@
                         <asp:Label ID="lblMensajes" runat="server"></asp:Label>
                     </div>
                 </div>
-                <asp:ListBox ID="lstCamionero" runat="server" AutoPostBack="true" CssClass="w-auto h-auto" OnSelectedIndexChanged="lstCamionero_SelectedIndexChanged"></asp:ListBox>
+                <asp:ListBox ID="lstAdmin" runat="server" AutoPostBack="true" CssClass="w-auto h-auto" OnSelectedIndexChanged="lstAdmin_SelectedIndexChanged"></asp:ListBox>
             </div>
         </div>
     </div>

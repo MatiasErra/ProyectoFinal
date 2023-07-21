@@ -1,20 +1,20 @@
-﻿using System;
+﻿using Clases;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Clases;
 
-namespace Web.Paginas.Camioneros
+namespace Web.Paginas.Clientes
 {
-    public partial class frmListarCamioneros : System.Web.UI.Page
+    public partial class frmListarClientes : System.Web.UI.Page
     {
         protected void Page_PreInit(object sender, EventArgs e)
         {
             this.MasterPageFile = "~/AGlobal.Master";
         }
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -26,56 +26,56 @@ namespace Web.Paginas.Camioneros
         private void listar()
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            lstCamionero.DataSource = null;
-            lstCamionero.DataSource = Web.listCamionero();
+            lstCliente.DataSource = null;
+            lstCliente.DataSource = Web.lstCli();
 
-            lstCamionero.DataBind();
+            lstCliente.DataBind();
         }
 
-        protected void lstCamionero_SelectedIndexChanged(object sender, EventArgs e)
+        protected void lstCliente_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (lstCamionero.SelectedIndex != -1)
+            if (lstCliente.SelectedIndex != -1)
             {
-                string linea = this.lstCamionero.SelectedItem.ToString();
+                string linea = this.lstCliente.SelectedItem.ToString();
                 string[] partes = linea.Split(' ');
                 string id = partes[0];
-                txtId.Text= id;
+                txtId.Text = id;
             }
         }
 
         private void buscar()
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            List<Camionero> camioneros = Web.listCamionero();
-            lstCamionero.DataSource = null;
+            List<Cliente> clientes = Web.lstCli();
+            lstCliente.DataSource = null;
             string value = txtBuscar.Text;
-            List<Camionero> camioneroslst = new List<Camionero>();
+            List<Cliente> clienteslst = new List<Cliente>();
             if (value == "")
             {
-                camioneroslst = camioneros;
+                clienteslst = clientes;
             }
             else
             {
-                foreach (Camionero unCamionero in camioneros)
+                foreach (Cliente unCliente in clientes)
                 {
 
-                    if (unCamionero.Nombre == value || unCamionero.Apellido == value || unCamionero.Email == value || unCamionero.Telefono == value || unCamionero.Cedula == value)
+                    if (unCliente.Nombre == value || unCliente.Apellido == value || unCliente.Email == value || unCliente.Telefono == value || unCliente.User == value)
                     {
-                        camioneroslst.Add(unCamionero);
+                        clienteslst.Add(unCliente);
                     }
                 }
             }
-            if (camioneroslst.Count > 0)
+            if (clienteslst.Count > 0)
             {
-                lstCamionero.Visible = true;
+                lstCliente.Visible = true;
                 lblMensajes.Text = "";
-                lstCamionero.DataSource = camioneroslst;
-                lstCamionero.DataBind();
+                lstCliente.DataSource = clienteslst;
+                lstCliente.DataBind();
             }
             else
             {
-                lstCamionero.Visible = false;
-                lblMensajes.Text = "No se encontro ningun camionero";
+                lstCliente.Visible = false;
+                lblMensajes.Text = "No se encontro ningun Cliente.";
             }
         }
 
@@ -89,29 +89,29 @@ namespace Web.Paginas.Camioneros
             if (txtId.Text != "")
             {
                 ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                Camionero unCamionero = Web.buscarCamionero(int.Parse(HttpUtility.HtmlEncode(txtId.Text)));
-                if (unCamionero != null)
+                Cliente unCliente = Web.buscarCli(int.Parse(HttpUtility.HtmlEncode(txtId.Text)));
+                if (unCliente != null)
                 {
-                    if (Web.bajaCamionero(int.Parse(txtId.Text)))
+                    if (Web.bajaCli(int.Parse(txtId.Text)))
                     {
-                        lblMensajes.Text = "Se ha borrado el Camionero.";
+                        lblMensajes.Text = "Se ha borrado el Cliente.";
                         txtId.Text = "";
                         txtBuscar.Text = "";
                         listar();
                     }
                     else
                     {
-                        lblMensajes.Text = "No se ha podido borrar el Camionero.";
+                        lblMensajes.Text = "No se ha podido borrar el Cliente.";
                     }
                 }
                 else
                 {
-                    lblMensajes.Text = "El Camionero no existe.";
+                    lblMensajes.Text = "El Cliente no existe.";
                 }
             }
             else
             {
-                lblMensajes.Text = "Seleccione un camionero para eliminar. ";
+                lblMensajes.Text = "Seleccione un Cliente para eliminar. ";
             }
         }
     }

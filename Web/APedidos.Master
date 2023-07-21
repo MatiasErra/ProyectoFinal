@@ -43,14 +43,14 @@
         </asp:ScriptManager>
         <a name="arriba"></a>
         <nav class="navbar navbar-expand-lg bg-dark">
-            
+
             <div class="container-fluid">
                 <a class="navbar-brand text-light h1" href="~/Paginas/Inicio">Frutas y Verduras S.A.</a>
                 <button class="navbar-toggler bg-body-tertiary" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Menu">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
@@ -65,19 +65,21 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" aria-current="page" href="#contacto">Contacto</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <select class="nav-link dropdown-toggle text-light bg-dark" onchange="location = this.value;">
-                                <option selected value="#">Gestion de Camioneros</option>
-                                <option value="/Paginas/frmCamionero">Listar Camioneros</option>
-                                <option value="/Paginas/frmCamionero">Ingresar Camionero</option>
-                                <option value="/Paginas/frmCamionero">Eliminar Camionero</option>
-                                <option value="/Paginas/frmCamionero">Modificar Camionero</option>
-                            </select>
-                        </li>
                     </ul>
 
                     <ul class="navbar-nav mb-2 mb-lg-0">
-
+                        <li class="nav-item dropdown">
+                            <select name="Gestion" class="nav-link dropdown-toggle text-light bg-dark me-1" onchange="location = this.value;">
+                                <option style="display:none">Gestion</option>
+                                <optgroup label="Clientes">
+                                    <option value="/Paginas/Clientes/frmListarClientes">Listar o eliminar Clientes</option>
+                                </optgroup>
+                                <optgroup label="Depositos">
+                                    <option value="/Paginas/Depositos/frmListarDepositos">Listar o eliminar Depositos</option>
+                                    <option value="/Paginas/Depositos/frmAltaDeposito">Ingresar o modificar Depositos</option>
+                                </optgroup>
+                            </select>
+                        </li>
                         <li class="me-2">
                             <a class="btn btn-outline-light" href="~/Paginas/">Iniciar sesion</a>
                         </li>
@@ -86,7 +88,7 @@
                 </div>
             </div>
         </nav>
-        <div class="body-content">
+        <div class="body-content container">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
         </div>
@@ -99,54 +101,54 @@
                         <div class="">
                             <h5>Información de Contacto:</h5>
                         </div>
-                        <div>
-                            <p><i class="fas fa-home text-grayish">&nbsp;</i>Rosario, Colonia, Uruguay </p>
-                        </div>
-        
-                        <div>
-                            <p>
-                                <i class="fas fa-envelope text-grayish">&nbsp;</i>
-                                rosario@ctc.edu.uy
-                            </p>
-                        </div>
-        
-                        <div>
-                            <p><i class="fas fa-phone text-grayish">&nbsp;</i> +598 92 039 523</p>
-                        </div>
-                        <div>
-                            <p><i class="fas fa-fax text-grayish">&nbsp;</i> 4531 5623</p>
+                        <div class="row">
+                            <div class="col-6">
+                                <p class="float-end"><i class="fas fa-home text-grayish">&nbsp;</i>Rosario, Colonia, Uruguay </p>
+                            </div>
+                            <div class="col-6">
+                                <p class="float-start">
+                                    <i class="fas fa-envelope text-grayish">&nbsp;</i>
+                                    rosario@ctc.edu.uy
+                                </p>
+                            </div>
+                            <div class="col-6">
+                                <p class="float-end"><i class="fas fa-phone text-grayish">&nbsp;</i> +598 92 039 523</p>
+                            </div>
+                            <div class="col-6">
+                                <p class="float-start"><i class="fas fa-fax text-grayish">&nbsp;</i> 4531 5623</p>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6 col-12">
                         <div>
                             <h5>Nuestras Redes:</h5>
                         </div>
-                        <div>
-                            <a class="btn btn-dark" href="https://www.linkedin.com" target="_blank">
-                                <i class="fab fa-linkedin">&nbsp;</i>Linkedin</a>
-                        </div>
-        
-                        <div>
-                            <a class="btn btn-dark" href="https://www.instagram.com" target="_blank">
-                                <i class="fab fa-instagram">&nbsp;</i> 
-                                Instagram
-                            </a>
-                        </div>
-        
-                        <div>
-                            <a class="btn btn-dark" href="https://www.facebook.com" target="_blank">
-                                <i class="fab fa-facebook">&nbsp;</i> 
-                                Facebook
-                            </a>
-                        </div>
-                        <div>
-                            <a class="btn btn-dark" href="https://www.youtube.com" target="_blank">
-                                <i class="fab fa-youtube">&nbsp;</i> 
-                                Youtube
-                            </a>
+                        <div class="row">
+                            <div class="col-6">
+                                <a class="btn btn-dark float-end" href="https://www.linkedin.com" target="_blank">
+                                    <i class="fab fa-linkedin">&nbsp;</i>Linkedin</a>
+                            </div>
+                            <div class="col-6">
+                                <a class="btn btn-dark float-start" href="https://www.instagram.com" target="_blank">
+                                    <i class="fab fa-instagram">&nbsp;</i>
+                                    Instagram
+                                </a>
+                            </div>
+                            <div class="col-6">
+                                <a class="btn btn-dark float-end" href="https://www.facebook.com" target="_blank">
+                                    <i class="fab fa-facebook">&nbsp;</i>
+                                    Facebook
+                                </a>
+                            </div>
+                            <div class="col-6">
+                                <a class="btn btn-dark float-start" href="https://www.youtube.com" target="_blank">
+                                    <i class="fab fa-youtube">&nbsp;</i>
+                                    Youtube
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>  
+                </div>
             </div>
         </footer>
     </form>

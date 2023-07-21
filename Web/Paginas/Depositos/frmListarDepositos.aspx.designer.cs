@@ -7,11 +7,11 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace Web.Paginas.Camioneros
+namespace Web.Paginas.Depositos
 {
 
 
-    public partial class frmListarCamioneros
+    public partial class frmListarDepositos
     {
 
         /// <summary>
@@ -51,13 +51,13 @@ namespace Web.Paginas.Camioneros
         protected global::System.Web.UI.WebControls.Label lblMensajes;
 
         /// <summary>
-        /// Control lstCamionero.
+        /// Control lstDeposito.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lstCamionero;
+        protected global::System.Web.UI.WebControls.ListBox lstDeposito;
 
         /// <summary>
         /// Control txtId.

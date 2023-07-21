@@ -123,14 +123,13 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Paginas\Admins\frmAltaAdmin.aspx" />
+    <Content Include="Paginas\Admins\frmListarAdmins.aspx" />
     <Content Include="Paginas\Camioneros\frmAltaCamionero.aspx" />
-    <Content Include="Paginas\Camioneros\frmBajaCamionero.aspx" />
     <Content Include="Paginas\Camioneros\frmListarCamioneros.aspx" />
-    <Content Include="Paginas\Camioneros\frmModCamionero.aspx" />
-    <Content Include="Paginas\frmAdmin.aspx" />
-    <Content Include="Paginas\frmCamionero.aspx" />
-    <Content Include="Paginas\frmCliente.aspx" />
-    <Content Include="Paginas\frmDeposito.aspx" />
+    <Content Include="Paginas\Clientes\frmListarClientes.aspx" />
+    <Content Include="Paginas\Depositos\frmAltaDeposito.aspx" />
+    <Content Include="Paginas\Depositos\frmListarDepositos.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -253,19 +252,26 @@
     <Compile Include="MCliente.Master.designer.cs">
       <DependentUpon>MCliente.Master</DependentUpon>
     </Compile>
+    <Compile Include="Paginas\Admins\frmAltaAdmin.aspx.cs">
+      <DependentUpon>frmAltaAdmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Admins\frmAltaAdmin.aspx.designer.cs">
+      <DependentUpon>frmAltaAdmin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Admins\frmListarAdmins.aspx.cs">
+      <DependentUpon>frmListarAdmins.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Admins\frmListarAdmins.aspx.designer.cs">
+      <DependentUpon>frmListarAdmins.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Paginas\Camioneros\frmAltaCamionero.aspx.cs">
       <DependentUpon>frmAltaCamionero.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Paginas\Camioneros\frmAltaCamionero.aspx.designer.cs">
       <DependentUpon>frmAltaCamionero.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Paginas\Camioneros\frmBajaCamionero.aspx.cs">
-      <DependentUpon>frmBajaCamionero.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Paginas\Camioneros\frmBajaCamionero.aspx.designer.cs">
-      <DependentUpon>frmBajaCamionero.aspx</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Camioneros\frmListarCamioneros.aspx.cs">
       <DependentUpon>frmListarCamioneros.aspx</DependentUpon>
@@ -274,41 +280,27 @@
     <Compile Include="Paginas\Camioneros\frmListarCamioneros.aspx.designer.cs">
       <DependentUpon>frmListarCamioneros.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Camioneros\frmModCamionero.aspx.cs">
-      <DependentUpon>frmModCamionero.aspx</DependentUpon>
+    <Compile Include="Paginas\Clientes\frmListarClientes.aspx.cs">
+      <DependentUpon>frmListarClientes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\Camioneros\frmModCamionero.aspx.designer.cs">
-      <DependentUpon>frmModCamionero.aspx</DependentUpon>
+    <Compile Include="Paginas\Clientes\frmListarClientes.aspx.designer.cs">
+      <DependentUpon>frmListarClientes.aspx</DependentUpon>
     </Compile>
     <Compile Include="Paginas\ControladoraWeb.cs" />
-    <Compile Include="Paginas\frmAdmin.aspx.cs">
-      <DependentUpon>frmAdmin.aspx</DependentUpon>
+    <Compile Include="Paginas\Depositos\frmAltaDeposito.aspx.cs">
+      <DependentUpon>frmAltaDeposito.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\frmAdmin.aspx.designer.cs">
-      <DependentUpon>frmAdmin.aspx</DependentUpon>
+    <Compile Include="Paginas\Depositos\frmAltaDeposito.aspx.designer.cs">
+      <DependentUpon>frmAltaDeposito.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\frmCamionero.aspx.cs">
-      <DependentUpon>frmCamionero.aspx</DependentUpon>
+    <Compile Include="Paginas\Depositos\frmListarDepositos.aspx.cs">
+      <DependentUpon>frmListarDepositos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\frmCamionero.aspx.designer.cs">
-      <DependentUpon>frmCamionero.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Paginas\frmCliente.aspx.cs">
-      <DependentUpon>frmCliente.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Paginas\frmCliente.aspx.designer.cs">
-      <DependentUpon>frmCliente.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Paginas\frmDeposito.aspx.cs">
-      <DependentUpon>frmDeposito.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Paginas\frmDeposito.aspx.designer.cs">
-      <DependentUpon>frmDeposito.aspx</DependentUpon>
+    <Compile Include="Paginas\Depositos\frmListarDepositos.aspx.designer.cs">
+      <DependentUpon>frmListarDepositos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">

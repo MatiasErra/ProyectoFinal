@@ -1,20 +1,20 @@
-﻿using System;
+﻿using Clases;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Clases;
 
-namespace Web.Paginas.Camioneros
+namespace Web.Paginas.Admins
 {
-    public partial class frmListarCamioneros : System.Web.UI.Page
+    public partial class frmListarAdmins : System.Web.UI.Page
     {
         protected void Page_PreInit(object sender, EventArgs e)
         {
             this.MasterPageFile = "~/AGlobal.Master";
         }
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -26,56 +26,55 @@ namespace Web.Paginas.Camioneros
         private void listar()
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            lstCamionero.DataSource = null;
-            lstCamionero.DataSource = Web.listCamionero();
+            lstAdmin.DataSource = null;
+            lstAdmin.DataSource = Web.lstAdmin();
 
-            lstCamionero.DataBind();
+            lstAdmin.DataBind();
         }
 
-        protected void lstCamionero_SelectedIndexChanged(object sender, EventArgs e)
+        protected void lstAdmin_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (lstCamionero.SelectedIndex != -1)
+            if (lstAdmin.SelectedIndex != -1)
             {
-                string linea = this.lstCamionero.SelectedItem.ToString();
+                string linea = this.lstAdmin.SelectedItem.ToString();
                 string[] partes = linea.Split(' ');
                 string id = partes[0];
-                txtId.Text= id;
+                txtId.Text = id;
             }
         }
 
         private void buscar()
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            List<Camionero> camioneros = Web.listCamionero();
-            lstCamionero.DataSource = null;
+            List<Admin> admins = Web.lstAdmin();
+            lstAdmin.DataSource = null;
             string value = txtBuscar.Text;
-            List<Camionero> camioneroslst = new List<Camionero>();
+            List<Admin> adminslst = new List<Admin>();
             if (value == "")
             {
-                camioneroslst = camioneros;
+                adminslst = admins;
             }
             else
             {
-                foreach (Camionero unCamionero in camioneros)
+                foreach (Admin unAdmin in admins)
                 {
-
-                    if (unCamionero.Nombre == value || unCamionero.Apellido == value || unCamionero.Email == value || unCamionero.Telefono == value || unCamionero.Cedula == value)
+                    if (unAdmin.Nombre == value || unAdmin.Apellido == value || unAdmin.Email == value || unAdmin.Telefono == value || unAdmin.User == value)
                     {
-                        camioneroslst.Add(unCamionero);
+                        adminslst.Add(unAdmin);
                     }
                 }
             }
-            if (camioneroslst.Count > 0)
+            if (adminslst.Count > 0)
             {
-                lstCamionero.Visible = true;
+                lstAdmin.Visible = true;
                 lblMensajes.Text = "";
-                lstCamionero.DataSource = camioneroslst;
-                lstCamionero.DataBind();
+                lstAdmin.DataSource = adminslst;
+                lstAdmin.DataBind();
             }
             else
             {
-                lstCamionero.Visible = false;
-                lblMensajes.Text = "No se encontro ningun camionero";
+                lstAdmin.Visible = false;
+                lblMensajes.Text = "No se encontro ningun admin.";
             }
         }
 
@@ -89,29 +88,29 @@ namespace Web.Paginas.Camioneros
             if (txtId.Text != "")
             {
                 ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                Camionero unCamionero = Web.buscarCamionero(int.Parse(HttpUtility.HtmlEncode(txtId.Text)));
-                if (unCamionero != null)
+                Admin unAdmin = Web.buscarAdm(int.Parse(HttpUtility.HtmlEncode(txtId.Text)));
+                if (unAdmin != null)
                 {
-                    if (Web.bajaCamionero(int.Parse(txtId.Text)))
+                    if (Web.bajaAdmin(int.Parse(txtId.Text)))
                     {
-                        lblMensajes.Text = "Se ha borrado el Camionero.";
+                        lblMensajes.Text = "Se ha borrado el Admin.";
                         txtId.Text = "";
                         txtBuscar.Text = "";
                         listar();
                     }
                     else
                     {
-                        lblMensajes.Text = "No se ha podido borrar el Camionero.";
+                        lblMensajes.Text = "No se ha podido borrar el Admin.";
                     }
                 }
                 else
                 {
-                    lblMensajes.Text = "El Camionero no existe.";
+                    lblMensajes.Text = "El Admin no existe.";
                 }
             }
             else
             {
-                lblMensajes.Text = "Seleccione un camionero para eliminar. ";
+                lblMensajes.Text = "Seleccione un Admin para eliminar. ";
             }
         }
     }
