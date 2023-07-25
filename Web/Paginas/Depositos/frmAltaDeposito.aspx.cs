@@ -14,13 +14,14 @@ namespace Web.Paginas.Depositos
     {
         protected void Page_PreInit(object sender, EventArgs e)
         {
-            this.MasterPageFile = "~/AGlobal.Master";
+            this.MasterPageFile = "~/Master/AGlobal.Master";
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                limpiar();
                 listar();
             }
         }
@@ -34,6 +35,9 @@ namespace Web.Paginas.Depositos
             lstDeposito.DataBind();
 
         }
+
+
+
 
         private void limpiar()
         {
@@ -141,14 +145,16 @@ namespace Web.Paginas.Depositos
                 Deposito unDeposito = new Deposito(id, capacidad, ubicacion, temperatura, condiciones);
                 if (Web.altaDeps(unDeposito))
                 {
+                    limpiar();
                     lblMensajes.Text = "Deposito dado de alta con exito.";
                     listar();
-                    limpiar();
+                    
                 }
                 else
-                {
-                    lblMensajes.Text = "No se pudo dar de alta el Deposito.";
+                { 
                     limpiar();
+                    lblMensajes.Text = "No se pudo dar de alta el Deposito.";
+                   
                 }
             }
             else

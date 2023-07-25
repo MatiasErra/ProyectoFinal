@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -12,15 +13,23 @@ namespace Web.Paginas.Camioneros
     {
         protected void Page_PreInit(object sender, EventArgs e)
         {
-            this.MasterPageFile = "~/AGlobal.Master";
+            this.MasterPageFile = "~/Master/AGlobal.Master";
         }
         
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                limpiar();
                 listar();
             }
+        }
+
+        private void limpiar()
+        {
+            lblMensajes.Text = "";
+            txtId.Text = "";
+            txtBuscar.Text = "";
         }
 
         private void listar()
@@ -94,23 +103,25 @@ namespace Web.Paginas.Camioneros
                 {
                     if (Web.bajaCamionero(int.Parse(txtId.Text)))
                     {
+                        limpiar();
                         lblMensajes.Text = "Se ha borrado el Camionero.";
-                        txtId.Text = "";
-                        txtBuscar.Text = "";
                         listar();
                     }
                     else
                     {
+                        limpiar();
                         lblMensajes.Text = "No se ha podido borrar el Camionero.";
                     }
                 }
                 else
                 {
+                    
                     lblMensajes.Text = "El Camionero no existe.";
                 }
             }
             else
             {
+                
                 lblMensajes.Text = "Seleccione un camionero para eliminar. ";
             }
         }

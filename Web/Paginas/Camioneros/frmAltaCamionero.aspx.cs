@@ -14,15 +14,15 @@ namespace Web.Paginas.Camioneros
     {
         protected void Page_PreInit(object sender, EventArgs e)
         {
-            this.MasterPageFile = "~/AGlobal.Master";
+            this.MasterPageFile = "~/Master/AGlobal.Master";
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
-            {
+            { 
+                limpiar();
                 listar();
-
                 Calendar1.SelectedDate = DateTime.Today;
                 CalendarManejo.SelectedDate = DateTime.Today;
             }
@@ -41,6 +41,7 @@ namespace Web.Paginas.Camioneros
 
         private void limpiar()
         {
+            lblMensajes.Text = "";
             txtId.Text = "";
             txtNombre.Text = "";
             txtApell.Text = "";
@@ -52,7 +53,7 @@ namespace Web.Paginas.Camioneros
             CalendarManejo.SelectedDate = DateTime.Today;
             txtBuscar.Text = "";
             lstCamionero.SelectedIndex = -1;
-            listar();
+          
         }
 
         private bool faltanDatos()
@@ -182,15 +183,17 @@ namespace Web.Paginas.Camioneros
                     ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
                     Camionero unCamionero = new Camionero(id, nombre, apellido, email, tele, txtFc, cedula, disponible, txtFchManejo);
                     if (Web.altaCamionero(unCamionero))
-                    {
+                    { 
+                        limpiar();
                         lblMensajes.Text = "Camionero dado de alta con exito.";
                         listar();
-                        limpiar();
+                       
                     }
                     else
-                    {
-                        lblMensajes.Text = "No se pudo dar de alta el Camionero.";
+                    {  
                         limpiar();
+                        lblMensajes.Text = "No se pudo dar de alta el Camionero.";
+                      
                     }
                 }
                 else
@@ -225,15 +228,18 @@ namespace Web.Paginas.Camioneros
                         ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
                         Camionero unCamionero = new Camionero(id, nombre, apellido, email, tele, txtFc, cedula, disponible, txtFchManejo);
                         if (Web.modCamionero(unCamionero))
-                        {
+                        {                            
+                 
+                            limpiar();
                             lblMensajes.Text = "Camionero modificado con exito.";
                             listar();
-                            limpiar();
+
                         }
                         else
                         {
-                            lblMensajes.Text = "No se pudo modificar el Camionero.";
                             limpiar();
+                            lblMensajes.Text = "No se pudo modificar el Camionero.";
+                            
                         }
                     }
                     else

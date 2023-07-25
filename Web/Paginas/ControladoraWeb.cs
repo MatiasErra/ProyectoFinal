@@ -47,8 +47,16 @@ namespace Web.Paginas
             ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
             List<Admin> lst = ins.lstAdmin();
             return lst;
-
         }
+
+        public List<Admin> buscarVarAdmin(string var)
+        {
+            ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
+            List<Admin> lst = ins.buscarVarAdmin(var);
+            return lst;
+        }
+
+
 
         public Admin buscarAdm(int id)
         {

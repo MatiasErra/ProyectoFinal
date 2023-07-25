@@ -15,7 +15,7 @@ namespace Web.Paginas.Admins
     {
         protected void Page_PreInit(object sender, EventArgs e)
         {
-            this.MasterPageFile = "~/AGlobal.Master";
+            this.MasterPageFile = "~/Master/AGlobal.Master";
         }
 
         #region Utilidad
@@ -23,9 +23,10 @@ namespace Web.Paginas.Admins
         {
             if (!IsPostBack)
             {
+                limpiar();
                 listar();
 
-                Calendar1.SelectedDate = DateTime.Today;
+                txtFchNac.Text = DateTime.Today.ToString();
             }
         }
 
@@ -49,22 +50,18 @@ namespace Web.Paginas.Admins
 
         private void limpiar()
         {
-
+            lblMensajes.Text = "";
             txtId.Text = "";
             txtNombre.Text = "";
             txtApell.Text = "";
             txtEmail.Text = "";
             txtTel.Text = "";
-            Calendar1.SelectedDate = DateTime.Today;
+            txtFchNac.Text = DateTime.Today.ToString();
             txtUser.Text = "";
             txtPass.Text = "";
             listTipoAdmin.SelectedValue = "Seleccionar tipo de Admin";
             txtBuscar.Text = "";
             lstAdmin.SelectedIndex = -1;
-            listar();
-
-
-
 
         }
         private bool faltanDatos()
@@ -165,6 +162,7 @@ namespace Web.Paginas.Admins
 
 
 
+
         private void cargarAdm(int id)
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
@@ -176,7 +174,7 @@ namespace Web.Paginas.Admins
             txtEmail.Text = lstadm.Email.ToString();
             txtTel.Text = lstadm.Telefono.ToString();
             txtUser.Text = lstadm.User.ToString();
-            Calendar1.SelectedDate = Convert.ToDateTime(lstadm.FchNacimiento);
+            txtFchNac.Text = lstadm.FchNacimiento.ToString();
             txtPass.Text = lstadm.Contrasena.ToString();
             listTipoAdmin.SelectedValue = lstadm.TipoDeAdmin.ToString();
         }
@@ -227,7 +225,7 @@ namespace Web.Paginas.Admins
                         string apellido = HttpUtility.HtmlEncode(txtApell.Text);
                         string email = HttpUtility.HtmlEncode(txtEmail.Text);
                         string tele = HttpUtility.HtmlEncode(txtTel.Text);
-                        string txtFc = HttpUtility.HtmlEncode(Calendar1.SelectedDate.ToShortDateString());
+                        string txtFc = HttpUtility.HtmlEncode(txtFchNac.Text);
                         string tipoAdm = HttpUtility.HtmlEncode(listTipoAdmin.SelectedValue.ToString());
                         string user = HttpUtility.HtmlEncode(txtUser.Text);
                         string pass = HttpUtility.HtmlEncode(txtPass.Text);
@@ -240,14 +238,15 @@ namespace Web.Paginas.Admins
                         Admin unAdmin = new Admin(id, nombre, apellido, email, tele, txtFc, user, hashedPassword, tipoAdm);
                         if (Web.altaAdmin(unAdmin))
                         {
+                            limpiar();
                             lblMensajes.Text = "Admin dado de alta con exito.";
                             listar();
-                            limpiar();
+                            
                         }
                         else
-                        {
+                        {   limpiar();
                             lblMensajes.Text = "No se pudo dar de alta el Admin.";
-                            limpiar();
+                           
                         }
                     }
                     else
@@ -282,7 +281,7 @@ namespace Web.Paginas.Admins
                             string apellido = HttpUtility.HtmlEncode(txtApell.Text);
                             string email = HttpUtility.HtmlEncode(txtEmail.Text);
                             string tele = HttpUtility.HtmlEncode(txtTel.Text);
-                            string txtFc = HttpUtility.HtmlEncode(Calendar1.SelectedDate.ToShortDateString());
+                            string txtFc = HttpUtility.HtmlEncode(txtFchNac.Text);
                             string tipoAdm = HttpUtility.HtmlEncode(listTipoAdmin.SelectedValue.ToString());
                             string user = HttpUtility.HtmlEncode(txtUser.Text);
 
@@ -346,23 +345,7 @@ namespace Web.Paginas.Admins
             List<Admin> admins = Web.lstAdmin();
             lstAdmin.DataSource = null;
             string value = txtBuscar.Text.ToLower();
-            List<Admin> adminslst = new List<Admin>();
-            if (value == "")
-            {
-                adminslst = admins;
-            }
-            else
-            {
-                foreach (Admin unAdmin in admins)
-                {
-
-                    if (unAdmin.Nombre.ToLower() == value || unAdmin.Apellido.ToLower() == value || unAdmin.Email.ToLower() == value || unAdmin.Telefono.ToLower() == value || unAdmin.User.ToLower() == value)
-                    {
-                        adminslst.Add(unAdmin);
-                    }
-                }
-            }
-
+         List<Admin> adminslst = new List<Admin>();
             if (adminslst.Count > 0)
             {
                 lstAdmin.Visible = true;
@@ -380,6 +363,11 @@ namespace Web.Paginas.Admins
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
             buscar();
+        }
+
+        protected void listTipoAdmin_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

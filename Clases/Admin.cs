@@ -19,7 +19,7 @@ namespace Clases
 
         public override string ToString()
         {
-            return IdPersona + " - " + Nombre + " - " + Apellido +" - " + TipoDeAdmin + " - " + User.ToString();
+            return IdPersona + " - " + Nombre + " - " + Apellido +" - " + Email +" - " + Telefono + " - " + DateTime.Parse(FchNacimiento).ToString("dd-MM-yyyy") + " - " + User + " - " + TipoDeAdmin.ToString();
         }
 
 

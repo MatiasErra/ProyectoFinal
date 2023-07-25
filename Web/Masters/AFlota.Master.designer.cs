@@ -11,7 +11,7 @@ namespace Web
 {
 
 
-    public partial class SiteMaster
+    public partial class AFlota
     {
 
         /// <summary>

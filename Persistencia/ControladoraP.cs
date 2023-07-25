@@ -34,6 +34,11 @@ namespace Persistencia
         {
             return new pAdmin().lstAdmin();
         }
+        public List<Admin> buscarVarAdmin(string var)
+        {
+            return new pAdmin().buscarVarAdmin(var);
+        }
+
 
         public Admin buscarAdm(int id)
         {

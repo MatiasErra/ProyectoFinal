@@ -20,14 +20,18 @@
     <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
+
+    
+
 </head>
 <body>
     <form runat="server">
         <asp:ScriptManager runat="server">
             <Scripts>
                 <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
-                <%--Framework Scripts--%>
-                <asp:ScriptReference Path="~/Scripts/jquery-3.6.0.min.js" />
+                <%--Framework Scripts--%> 
+
+                            <asp:ScriptReference Path="~/Scripts/jquery-3.6.0.min.js" />
                 <asp:ScriptReference Path="~/Scripts/bootstrap.min.js" />
                 <asp:ScriptReference Name="MsAjaxBundle" />
                 <asp:ScriptReference Name="jquery" />
@@ -47,6 +51,7 @@
         <nav class="navbar navbar-expand-lg bg-dark">
 
             <div class="container-fluid">
+                             
                 <a class="navbar-brand text-light h1" href="~/Paginas/Inicio">Frutas y Verduras S.A.</a>
                 <button class="navbar-toggler bg-body-tertiary" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -74,19 +79,19 @@
                             <select name="Gestion" class="nav-link dropdown-toggle text-light bg-dark me-1" onchange="location = this.value;">
                                 <option style="display:none">Gestion</option>
                                 <optgroup label="Clientes">
-                                    <option value="/Paginas/Clientes/frmListarClientes">Listar o eliminar Clientes</option>
+                                    <option value="/Paginas/Clientes/frmListarClientes">Listar/eliminar Clientes</option>
                                 </optgroup>
                                 <optgroup label="Admins">
-                                    <option value="/Paginas/Admins/frmListarAdmins">Listar o eliminar Admins</option>
-                                    <option value="/Paginas/Admins/frmAltaAdmin">Ingresar o modificar Admins</option>
+                                    <option value="/Paginas/Admins/frmAdmins">Listar/eliminar Admins</option>
+                                    <option value="/Paginas/Admins/frmAltaAdmin">Ingresar/modificar Admins</option>
                                 </optgroup>
                                 <optgroup label="Camioneros">
-                                    <option value="/Paginas/Camioneros/frmListarCamioneros">Listar o eliminar Camioneros</option>
-                                    <option value="/Paginas/Camioneros/frmAltaCamionero">Ingresar o modificar Camioneros</option>
+                                    <option value="/Paginas/Camioneros/frmListarCamioneros">Listar/eliminar Camioneros</option>
+                                    <option value="/Paginas/Camioneros/frmAltaCamionero">Ingresar/modificar Camioneros</option>
                                 </optgroup>
                                 <optgroup label="Depositos">
-                                    <option value="/Paginas/Depositos/frmListarDepositos">Listar o eliminar Depositos</option>
-                                    <option value="/Paginas/Depositos/frmAltaDeposito">Ingresar o modificar Depositos</option>
+                                    <option value="/Paginas/Depositos/frmListarDepositos">Listar/eliminar Depósitos</option>
+                                    <option value="/Paginas/Depositos/frmAltaDeposito">Ingresar/modificar Depósitos</option>
                                 </optgroup>
                             </select>
                         </li>
@@ -99,7 +104,12 @@
             </div>
         </nav>
         <div class="body-content container">
+
+   
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
+
+
+
             </asp:ContentPlaceHolder>
         </div>
         <footer class="bg-dark text-center text-light">
@@ -136,24 +146,24 @@
                         <div class="row">
                             <div class="col-6">
                                 <a class="btn btn-dark float-end" href="https://www.linkedin.com" target="_blank">
-                                    <i class="fab fa-linkedin">&nbsp;</i>Linkedin</a>
+                                    <i class="fab fa-linkedin">&nbsp;</i></a>
                             </div>
                             <div class="col-6">
                                 <a class="btn btn-dark float-start" href="https://www.instagram.com" target="_blank">
                                     <i class="fab fa-instagram">&nbsp;</i>
-                                    Instagram
+                                
                                 </a>
                             </div>
                             <div class="col-6">
                                 <a class="btn btn-dark float-end" href="https://www.facebook.com" target="_blank">
                                     <i class="fab fa-facebook">&nbsp;</i>
-                                    Facebook
+                                   
                                 </a>
                             </div>
                             <div class="col-6">
                                 <a class="btn btn-dark float-start" href="https://www.youtube.com" target="_blank">
                                     <i class="fab fa-youtube">&nbsp;</i>
-                                    Youtube
+                                
                                 </a>
                             </div>
                         </div>

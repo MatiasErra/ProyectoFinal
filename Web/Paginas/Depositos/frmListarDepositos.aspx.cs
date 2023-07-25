@@ -12,13 +12,14 @@ namespace Web.Paginas.Depositos
     {
         protected void Page_PreInit(object sender, EventArgs e)
         {
-            this.MasterPageFile = "~/AGlobal.Master";
+            this.MasterPageFile = "~/Master/AGlobal.Master";
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                limpiar();
                 listar();
             }
         }
@@ -31,6 +32,14 @@ namespace Web.Paginas.Depositos
 
             lstDeposito.DataBind();
         }
+
+        private void limpiar()
+        {
+            lblMensajes.Text = "";
+            txtId.Text = "";
+            txtBuscar.Text = "";
+        }
+
 
         protected void lstDeposito_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -94,6 +103,7 @@ namespace Web.Paginas.Depositos
                 {
                     if (Web.bajaDeps(int.Parse(txtId.Text)))
                     {
+                        limpiar();
                         lblMensajes.Text = "Se ha borrado el Deposito.";
                         txtId.Text = "";
                         txtBuscar.Text = "";
@@ -101,6 +111,7 @@ namespace Web.Paginas.Depositos
                     }
                     else
                     {
+                        limpiar();
                         lblMensajes.Text = "No se ha podido borrar el Deposito.";
                     }
                 }

@@ -17,7 +17,7 @@ namespace Persistencia
             {
                 Admin admin;
 
-             
+
                 SqlConnection conect = Conexion.Conectar();
 
                 SqlCommand cmd = new SqlCommand("LstAdmin", conect);
@@ -32,9 +32,12 @@ namespace Persistencia
                         admin.IdPersona = int.Parse(reader["idPersona"].ToString());
                         admin.Nombre = reader["nombre"].ToString();
                         admin.Apellido = reader["apellido"].ToString();
+                        admin.Email = reader["email"].ToString();
+                        admin.Telefono = reader["telefono"].ToString();
+                        admin.FchNacimiento = reader["fchNacimiento"].ToString();
                         admin.User = reader["usuario"].ToString();
                         admin.TipoDeAdmin = reader["tipoDeAdmin"].ToString();
-                   
+
                         resultado.Add(admin);
                     }
                 }
@@ -47,6 +50,51 @@ namespace Persistencia
             }
             return resultado;
         }
+
+        public List<Admin> buscarVarAdmin(string var)
+        {
+            List<Admin> resultado = new List<Admin>();
+            try
+            {
+                Admin admin;
+
+
+                SqlConnection conect = Conexion.Conectar();
+
+                SqlCommand cmd = new SqlCommand("BuscarVarAdmin", conect);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter("@var", var));
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        admin = new Admin();
+                        admin.IdPersona = int.Parse(reader["idPersona"].ToString());
+                        admin.Nombre = reader["nombre"].ToString();
+                        admin.Apellido = reader["apellido"].ToString();
+                        admin.Email = reader["email"].ToString();
+                        admin.Telefono = reader["telefono"].ToString();
+                        admin.FchNacimiento = reader["fchNacimiento"].ToString();
+                        admin.User = reader["usuario"].ToString();
+                        admin.TipoDeAdmin = reader["tipoDeAdmin"].ToString();
+
+                        resultado.Add(admin);
+                    }
+                }
+
+                conect.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+            return resultado;
+        }
+
+
+
         public List<Persona> lstIdPersonas()
         {
             List<Persona> resultado = new List<Persona>();

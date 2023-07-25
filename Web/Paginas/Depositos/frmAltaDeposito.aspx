@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Ingreso y modificacion de depositos" MasterPageFile="~/Site.Master" Language="C#" AutoEventWireup="true" CodeBehind="frmAltaDeposito.aspx.cs" Inherits="Web.Paginas.Depositos.frmAltaDeposito" %>
+﻿<%@ Page Title="Ingreso y modificacion de depositos" MasterPageFile="~/Master/AGlobal.Master" Language="C#" AutoEventWireup="true" CodeBehind="frmAltaDeposito.aspx.cs" Inherits="Web.Paginas.Depositos.frmAltaDeposito" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container row m-2 text-center">
@@ -6,6 +6,8 @@
             <div class="col-12 m-3 p-2 text-center" style="border-radius: 20px; background-color: #f2f0f0;">
                 <div class="row">
                     <div class="col-12">
+                     <h5>Agregar o modificar un Camionero</h5>  
+
                         Capacidad
                         <asp:TextBox ID="txtCapacidad" CssClass="form-control mt-1 mb-1 w-25 m-auto" runat="server" placeholder="Capacidad" onkeydown="return(!(event.keyCode>=91) && event.keyCode!=32);"></asp:TextBox>
                     </div>
@@ -25,7 +27,7 @@
                         <asp:Button ID="btnAlta" CssClass="btn btn-outline-dark w-25 m-1 align-self-center" runat="server" Text="Alta" OnClick="btnAlta_Click" />
                     </div>
                     <div class="col-12">
-                        <asp:Button ID="btnModificar" CssClass="btn btn-outline-dark w-25 m-1 align-self-center" runat="server" Text="Modificar" OnClick="btnModificar_Click" />
+                        <asp:Button ID="btnModificar" CssClass="btn btn-outline-dark w-25 m-1 align-self-center" runat="server" Text="Modificar"  OnClientClick="return confirm('¿Desea modificar este Deposito?')" OnClick="btnModificar_Click" />
                     </div>
                     <div class="col-12">
                         <asp:TextBox CssClass="form-control mt-1 mb-1 w-25 m-auto" ID="txtBuscar" runat="server" placeholder="Buscar" onkeydown="return(!(event.keyCode>=91) && event.keyCode!=32);"></asp:TextBox>

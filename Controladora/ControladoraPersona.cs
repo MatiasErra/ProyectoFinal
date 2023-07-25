@@ -46,6 +46,15 @@ namespace Controladoras
             return lst;
         }
 
+
+        public List<Admin> buscarVarAdmin(string var)
+        {
+            ControladoraP inst = ControladoraP.obtenerInstancia();
+            List<Admin> lst = inst.buscarVarAdmin(var);
+            return lst;
+        }
+
+
         public Admin buscarAdm(int id)
         {
             ControladoraP inst = ControladoraP.obtenerInstancia();

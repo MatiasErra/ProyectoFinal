@@ -12,13 +12,14 @@ namespace Web.Paginas.Clientes
     {
         protected void Page_PreInit(object sender, EventArgs e)
         {
-            this.MasterPageFile = "~/AGlobal.Master";
+            this.MasterPageFile = "~/Master/AGlobal.Master";
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                limpiar();
                 listar();
             }
         }
@@ -41,6 +42,13 @@ namespace Web.Paginas.Clientes
                 string id = partes[0];
                 txtId.Text = id;
             }
+        }
+
+        private void limpiar()
+        {
+            lblMensajes.Text = "";
+            txtId.Text = "";
+            txtBuscar.Text = "";
         }
 
         private void buscar()
@@ -94,6 +102,7 @@ namespace Web.Paginas.Clientes
                 {
                     if (Web.bajaCli(int.Parse(txtId.Text)))
                     {
+                        limpiar();
                         lblMensajes.Text = "Se ha borrado el Cliente.";
                         txtId.Text = "";
                         txtBuscar.Text = "";
@@ -101,6 +110,7 @@ namespace Web.Paginas.Clientes
                     }
                     else
                     {
+                        limpiar();
                         lblMensajes.Text = "No se ha podido borrar el Cliente.";
                     }
                 }
