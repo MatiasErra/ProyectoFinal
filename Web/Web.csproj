@@ -122,11 +122,11 @@
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Paginas\Admins\frmAltaAdmin.aspx" />
     <Content Include="Paginas\Admins\frmAdmins.aspx" />
     <Content Include="Paginas\Camioneros\frmAltaCamionero.aspx" />
     <Content Include="Paginas\Camioneros\frmListarCamioneros.aspx" />
     <Content Include="Paginas\Clientes\frmListarClientes.aspx" />
+    <Content Include="Paginas\Clientes\RegCliente.aspx" />
     <Content Include="Paginas\Depositos\frmAltaDeposito.aspx" />
     <Content Include="Paginas\Depositos\frmListarDepositos.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -243,13 +243,6 @@
     <Compile Include="Master\MCliente.Master.designer.cs">
       <DependentUpon>MCliente.Master</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Admins\frmAltaAdmin.aspx.cs">
-      <DependentUpon>frmAltaAdmin.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Paginas\Admins\frmAltaAdmin.aspx.designer.cs">
-      <DependentUpon>frmAltaAdmin.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Paginas\Admins\frmAdmins.aspx.cs">
       <DependentUpon>frmAdmins.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -277,6 +270,13 @@
     </Compile>
     <Compile Include="Paginas\Clientes\frmListarClientes.aspx.designer.cs">
       <DependentUpon>frmListarClientes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Clientes\RegCliente.aspx.cs">
+      <DependentUpon>RegCliente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Clientes\RegCliente.aspx.designer.cs">
+      <DependentUpon>RegCliente.aspx</DependentUpon>
     </Compile>
     <Compile Include="Paginas\ControladoraWeb.cs" />
     <Compile Include="Paginas\Depositos\frmAltaDeposito.aspx.cs">

@@ -54,38 +54,33 @@ namespace Web.Paginas.Clientes
         private void buscar()
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            List<Cliente> clientes = Web.lstCli();
-            lstCliente.DataSource = null;
             string value = txtBuscar.Text;
+            string val = value.ToLower();
             List<Cliente> clienteslst = new List<Cliente>();
-            if (value == "")
+             clienteslst = Web.buscarVarCli(val);
+            lstCliente.DataSource = null;
+            if (txtBuscar.Text != "")
             {
-                clienteslst = clientes;
-            }
-            else
-            {
-                foreach (Cliente unCliente in clientes)
+                if (clienteslst.Count > 0)
                 {
-
-                    if (unCliente.Nombre == value || unCliente.Apellido == value || unCliente.Email == value || unCliente.Telefono == value || unCliente.User == value)
-                    {
-                        clienteslst.Add(unCliente);
-                    }
+                    lstCliente.Visible = true;
+                    lblMensajes.Text = "";
+                    lstCliente.DataSource = clienteslst;
+                    lstCliente.DataBind();
+                }
+                else
+                {
+                    lstCliente.Visible = false;
+                    lblMensajes.Text = "No se encontro ningun Cliente.";
                 }
             }
-            if (clienteslst.Count > 0)
-            {
-                lstCliente.Visible = true;
-                lblMensajes.Text = "";
-                lstCliente.DataSource = clienteslst;
-                lstCliente.DataBind();
-            }
             else
             {
-                lstCliente.Visible = false;
-                lblMensajes.Text = "No se encontro ningun Cliente.";
+                lblMensajes.Text = "Debe poner algun dato en el buscador.";
             }
         }
+
+
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {

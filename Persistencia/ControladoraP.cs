@@ -69,6 +69,12 @@ namespace Persistencia
             return new pCliente().lstCli();
         }
 
+        public List<Cliente> buscarVarCli(string var)
+        {
+            return new pCliente().buscarVarCli(var);
+        }
+
+
         public Cliente buscarCli(int id)
         {
             return new pCliente().buscarCli(id);

@@ -96,7 +96,7 @@
                             </select>
                         </li>
                         <li class="me-2">
-                            <a class="btn btn-outline-light" href="~/Paginas/">Iniciar sesion</a>
+                            <a class="btn btn-outline-light" href="/Paginas/Clientes/RegCliente">Iniciar sesion</a>
                         </li>
 
                     </ul>

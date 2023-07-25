@@ -115,6 +115,16 @@ namespace Controladoras
             return lst;
         }
 
+        public List<Cliente> buscarVarCli(string var)
+        {
+            ControladoraP inst = ControladoraP.obtenerInstancia();
+            List<Cliente> lst = inst.buscarVarCli(var);
+            return lst;
+        }
+
+
+
+
         public Cliente buscarCli(int id)
         {
             ControladoraP inst = ControladoraP.obtenerInstancia();

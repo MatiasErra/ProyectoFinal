@@ -50,7 +50,51 @@ namespace Persistencia
             }
             return resultado;
         }
- 
+
+        public List<Cliente> buscarVarCli (string var)
+        {
+            List<Cliente> resultado = new List<Cliente>();
+            try
+            {
+                Cliente cli;
+
+
+                SqlConnection conect = Conexion.Conectar();
+
+                SqlCommand cmd = new SqlCommand("BuscarVarCli", conect);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter("@var", var));
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        cli = new Cliente();
+                        cli.IdPersona = int.Parse(reader["idPersona"].ToString());
+                        cli.Nombre = reader["nombre"].ToString();
+                        cli.Apellido = reader["apellido"].ToString();
+                        cli.Email = reader["email"].ToString();
+                        cli.Telefono = reader["telefono"].ToString();
+                        cli.FchNacimiento = reader["fchNacimiento"].ToString();
+                        cli.User = reader["usuario"].ToString();
+                        cli.Direccion = reader["direccion"].ToString();
+                
+                        resultado.Add(cli);
+                    }
+                }
+
+                conect.Close();
+            }
+            catch (Exception)
+            {
+                return resultado;
+            }
+            return resultado;
+        }
+
+
+
 
 
 
@@ -88,9 +132,10 @@ namespace Persistencia
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception )
             {
-                throw ex;
+                resultado = false;
+                return resultado;
             }
 
             return resultado;

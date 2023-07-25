@@ -214,24 +214,34 @@ namespace Web.Paginas.Admins
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             string value = txtBuscar.Text;
-            List<Admin> adminslst = Web.buscarVarAdmin(value);
+            string val = value.ToLower();
+            List<Admin> adminslst = new List<Admin>();
+            adminslst = Web.buscarVarAdmin(value);
             lstAdmin.DataSource = null;
 
-       
-    
-            if (adminslst.Count > 0)
+            if (txtBuscar.Text != "")
             {
-                lstAdmin.Visible = true;
-                lblMensajes.Text = "";
-                lstAdmin.DataSource = adminslst;
-                lstAdmin.DataBind();
-            }
+                if (adminslst.Count > 0)
+                {
+                    lstAdmin.Visible = true;
+                    lblMensajes.Text = "";
+                    lstAdmin.DataSource = adminslst;
+                    lstAdmin.DataBind();
+                }
+                else
+                {
+                    lstAdmin.Visible = false;
+                    lblMensajes.Text = "No se encontro ningun admin.";
+                }
+            } 
             else
             {
-                lstAdmin.Visible = false;
-                lblMensajes.Text = "No se encontro ningun admin.";
+                lblMensajes.Text = "Debe poner algun dato en el buscador.";
             }
         }
+
+
+
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {

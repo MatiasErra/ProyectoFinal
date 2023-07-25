@@ -7,11 +7,11 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace Web.Paginas.Admins
+namespace Web.Paginas.Clientes
 {
 
 
-    public partial class frmAltaAdmin
+    public partial class RegCliente
     {
 
         /// <summary>
@@ -87,58 +87,13 @@ namespace Web.Paginas.Admins
         protected global::System.Web.UI.WebControls.TextBox txtPass;
 
         /// <summary>
-        /// Control listTipoAdmin.
+        /// Control txtDir.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList listTipoAdmin;
-
-        /// <summary>
-        /// Control btnAlta.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAlta;
-
-        /// <summary>
-        /// Control btnModificar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnModificar;
-
-        /// <summary>
-        /// Control txtBuscar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtBuscar;
-
-        /// <summary>
-        /// Control btnBuscar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBuscar;
-
-        /// <summary>
-        /// Control btnLimpiar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLimpiar;
+        protected global::System.Web.UI.WebControls.TextBox txtDir;
 
         /// <summary>
         /// Control lblMensajes.
@@ -150,21 +105,12 @@ namespace Web.Paginas.Admins
         protected global::System.Web.UI.WebControls.Label lblMensajes;
 
         /// <summary>
-        /// Control lstAdmin.
+        /// Control btnAlta.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lstAdmin;
-
-        /// <summary>
-        /// Control txtId.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtId;
+        protected global::System.Web.UI.WebControls.Button btnAlta;
     }
 }

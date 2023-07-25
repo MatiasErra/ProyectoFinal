@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="col-12">
                         <h5>ABM Administrador </h5>
-                        <asp:TextBox CssClass="form-control mt-1 mb-1 w-25 m-auto" ID="txtBuscar" runat="server" placeholder="Buscar" onkeydown="return(!(event.keyCode>=91) && event.keyCode!=32);"></asp:TextBox>
+                        <asp:TextBox CssClass="form-control mt-1 mb-1 w-25 m-auto" ID="txtBuscar" runat="server" placeholder="Buscar" onkeydown="return(!(event.keyCode>=91);"></asp:TextBox>
                     </div>
                     <div class="col-12">
                         <asp:Button CssClass="btn btn-outline-dark m-1 w-25" ID="btnBuscar" runat="server" Text="Buscar" OnClick="btnBuscar_Click" />
@@ -58,7 +58,7 @@
                                
                                 <div class="col-12">
                                     Email
-                        <asp:TextBox ID="txtEmail" CssClass="form-control mt-1 mb-1 w-75 m-auto" runat="server" placeholder="Email"></asp:TextBox>
+                        <asp:TextBox ID="txtEmail" CssClass="form-control mt-1 mb-1 w-75 m-auto" runat="server"  placeholder="Email"  onkeydown="return(event.keyCode!=32);"></asp:TextBox>
 
                                     <asp:RegularExpressionValidator Display="Dynamic" runat="server"
                                         ControlToValidate="txtEmail"
@@ -92,7 +92,7 @@
                                 </div>
                                 <div class="col-12">
                                     Contraseña
-                        <asp:TextBox ID="txtPass" runat="server" CssClass="form-control mt-1 mb-1 w-75 m-auto" TextMode="Password" MaxLength="40" placeholder="Contraseña"></asp:TextBox>
+                        <asp:TextBox ID="txtPass" runat="server" CssClass="form-control mt-1 mb-1 w-75 m-auto" TextMode="Password" MaxLength="40" placeholder="Contraseña"   onkeydown="return(!(event.keyCode>=91) && event.keyCode!=32);"></asp:TextBox>
                                 </div>
                                 <div class="col-12">
                                     Tipo de Admin

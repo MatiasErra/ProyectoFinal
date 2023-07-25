@@ -115,6 +115,15 @@ namespace Web.Paginas
             List<Cliente> lst = ins.lstCli();
             return lst;
         }
+        public List<Cliente> buscarVarCli(string var)
+        {
+            ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
+            List<Cliente> lst = ins.buscarVarCli(var);
+            return lst;
+        }
+
+
+
 
         public Cliente buscarCli(int id)
         {
