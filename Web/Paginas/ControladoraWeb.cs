@@ -114,15 +114,15 @@ namespace Web.Paginas
             ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
             List<Cliente> lst = ins.lstCli();
             return lst;
+
         }
-        public List<Cliente> buscarVarCli(string var)
+
+         public List<Cliente> buscarVarCli(string var)
         {
             ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
             List<Cliente> lst = ins.buscarVarCli(var);
             return lst;
         }
-
-
 
 
         public Cliente buscarCli(int id)
@@ -182,6 +182,13 @@ namespace Web.Paginas
         {
             ControladoraPersona inst = ControladoraPersona.obtenerInstancia();
             return inst.listCamionero();
+        }
+
+        public List<Camionero> buscarVarCamionero(string var)
+        {
+            ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
+            List<Camionero> lst = ins.buscarVarCamionero(var);
+            return lst;
         }
 
         public Camionero buscarCamionero(int id)
@@ -252,6 +259,13 @@ namespace Web.Paginas
 
         }
 
+        public List<Deposito> buscarVarDeps(string var)
+        {
+            ControladoraItem ins = ControladoraItem.obtenerInstancia();
+            List<Deposito> lst = ins.buscarVarDeps(var);
+            return lst;
+        }
+
         public Deposito buscarDeps(int id)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
@@ -297,6 +311,85 @@ namespace Web.Paginas
                 return false;
             }
         }
+
+     
+
+        #endregion
+
+        #region Fertilizantes
+
+        public List<Fertilizante> listIdFert()
+        {
+           
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            List<Fertilizante> lst = inst.listIdFert();
+            return lst;
+
+        }
+
+        public List<Fertilizante> lstFerti()
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            List<Fertilizante> lst = inst.lstFerti();
+            return lst;
+        }
+
+        public List<Fertilizante> buscarVarFerti(string var)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            List<Fertilizante> lst = inst.buscarVarFerti(var);
+            return lst;
+        }
+
+        public Fertilizante buscarFerti(int id)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+            Fertilizante fertilizante = inst.buscarFerti(id);
+            return fertilizante;
+
+        }
+
+        public bool altaFerti(Fertilizante fertilizante)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+            if (inst.altaFerti(fertilizante))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool bajaFerti(int id)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+
+            if (inst.bajaFerti(id))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool modFerti(Fertilizante fertilizante)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            if (inst.modFerti(fertilizante))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+
 
         #endregion
 

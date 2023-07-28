@@ -123,12 +123,11 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Paginas\Admins\frmAdmins.aspx" />
-    <Content Include="Paginas\Camioneros\frmAltaCamionero.aspx" />
-    <Content Include="Paginas\Camioneros\frmListarCamioneros.aspx" />
+    <Content Include="Paginas\Camioneros\frmCamioneros.aspx" />
     <Content Include="Paginas\Clientes\frmListarClientes.aspx" />
     <Content Include="Paginas\Clientes\RegCliente.aspx" />
-    <Content Include="Paginas\Depositos\frmAltaDeposito.aspx" />
-    <Content Include="Paginas\Depositos\frmListarDepositos.aspx" />
+    <Content Include="Paginas\Depositos\frmDepositos.aspx" />
+    <Content Include="Paginas\Fertilizante\frmFertilizante.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -250,19 +249,12 @@
     <Compile Include="Paginas\Admins\frmAdmins.aspx.designer.cs">
       <DependentUpon>frmAdmins.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Camioneros\frmAltaCamionero.aspx.cs">
-      <DependentUpon>frmAltaCamionero.aspx</DependentUpon>
+    <Compile Include="Paginas\Camioneros\frmCamioneros.aspx.cs">
+      <DependentUpon>frmCamioneros.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\Camioneros\frmAltaCamionero.aspx.designer.cs">
-      <DependentUpon>frmAltaCamionero.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Paginas\Camioneros\frmListarCamioneros.aspx.cs">
-      <DependentUpon>frmListarCamioneros.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Paginas\Camioneros\frmListarCamioneros.aspx.designer.cs">
-      <DependentUpon>frmListarCamioneros.aspx</DependentUpon>
+    <Compile Include="Paginas\Camioneros\frmCamioneros.aspx.designer.cs">
+      <DependentUpon>frmCamioneros.aspx</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Clientes\frmListarClientes.aspx.cs">
       <DependentUpon>frmListarClientes.aspx</DependentUpon>
@@ -279,19 +271,19 @@
       <DependentUpon>RegCliente.aspx</DependentUpon>
     </Compile>
     <Compile Include="Paginas\ControladoraWeb.cs" />
-    <Compile Include="Paginas\Depositos\frmAltaDeposito.aspx.cs">
-      <DependentUpon>frmAltaDeposito.aspx</DependentUpon>
+    <Compile Include="Paginas\Depositos\frmDepositos.aspx.cs">
+      <DependentUpon>frmDepositos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\Depositos\frmAltaDeposito.aspx.designer.cs">
-      <DependentUpon>frmAltaDeposito.aspx</DependentUpon>
+    <Compile Include="Paginas\Depositos\frmDepositos.aspx.designer.cs">
+      <DependentUpon>frmDepositos.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Depositos\frmListarDepositos.aspx.cs">
-      <DependentUpon>frmListarDepositos.aspx</DependentUpon>
+    <Compile Include="Paginas\Fertilizante\frmFertilizante.aspx.cs">
+      <DependentUpon>frmFertilizante.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\Depositos\frmListarDepositos.aspx.designer.cs">
-      <DependentUpon>frmListarDepositos.aspx</DependentUpon>
+    <Compile Include="Paginas\Fertilizante\frmFertilizante.aspx.designer.cs">
+      <DependentUpon>frmFertilizante.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Mobile.Master.cs">

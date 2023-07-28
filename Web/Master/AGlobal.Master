@@ -9,6 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%: Page.Title %> - Frutas y Verduras S.A.</title>
     <link href="~/Content/Estilos.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://drive.google.com/uc?export=view&id=1yTLwNiCZhIdCWolQldwq4spHQkgZDqkG">
+
 
 
     <script src="https://kit.fontawesome.com/35e140fb72.js" crossorigin="anonymous"></script>
@@ -31,7 +33,7 @@
                 <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
                 <%--Framework Scripts--%> 
 
-                            <asp:ScriptReference Path="~/Scripts/jquery-3.6.0.min.js" />
+                <asp:ScriptReference Path="~/Scripts/jquery-3.6.0.min.js" />
                 <asp:ScriptReference Path="~/Scripts/bootstrap.min.js" />
                 <asp:ScriptReference Name="MsAjaxBundle" />
                 <asp:ScriptReference Name="jquery" />
@@ -82,16 +84,13 @@
                                     <option value="/Paginas/Clientes/frmListarClientes">Listar/eliminar Clientes</option>
                                 </optgroup>
                                 <optgroup label="Admins">
-                                    <option value="/Paginas/Admins/frmAdmins">Listar/eliminar Admins</option>
-                                    <option value="/Paginas/Admins/frmAltaAdmin">Ingresar/modificar Admins</option>
+                                    <option value="/Paginas/Admins/frmAdmins">ABM Admins</option>
                                 </optgroup>
                                 <optgroup label="Camioneros">
-                                    <option value="/Paginas/Camioneros/frmListarCamioneros">Listar/eliminar Camioneros</option>
-                                    <option value="/Paginas/Camioneros/frmAltaCamionero">Ingresar/modificar Camioneros</option>
+                                    <option value="/Paginas/Camioneros/frmCamioneros">ABM camioneros</option>
                                 </optgroup>
                                 <optgroup label="Depositos">
-                                    <option value="/Paginas/Depositos/frmListarDepositos">Listar/eliminar Depósitos</option>
-                                    <option value="/Paginas/Depositos/frmAltaDeposito">Ingresar/modificar Depósitos</option>
+                                    <option value="/Paginas/Depositos/frmDepositos">ABM Depositos</option>
                                 </optgroup>
                             </select>
                         </li>
@@ -112,7 +111,7 @@
 
             </asp:ContentPlaceHolder>
         </div>
-        <footer class="bg-dark text-center text-light">
+        <footer class="bg-dark text-center text-light" style="position:absolute; bottom:0; width:100%;">
             <div class="container-fluid">
                 <a class="text-light btn btn-dark" href="#arriba">Volver arriba</a>
                 <a name="contacto"></a>

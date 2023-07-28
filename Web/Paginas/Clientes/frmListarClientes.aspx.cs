@@ -49,6 +49,7 @@ namespace Web.Paginas.Clientes
             lblMensajes.Text = "";
             txtId.Text = "";
             txtBuscar.Text = "";
+            listar();
         }
 
         private void buscar()

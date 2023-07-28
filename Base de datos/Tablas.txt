@@ -40,5 +40,15 @@ Direccion varchar(60) not null,
 );
 
 
+Create table Fertilizantes(
+idFerti int primary key, 
+nombre varchar(40) not null,
+origen  varchar(40) not null,
+compQuimica varchar(60) unique not null,
+pH  numeric(2) check(ph>-1 and ph<15) not null,
+impacto varchar(30) check(impacto 
+in ('Alto','Medio','Bajo')) not null
+);
+
 
 

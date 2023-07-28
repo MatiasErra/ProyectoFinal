@@ -20,3 +20,25 @@ C:\Users\Mrgat\source\repos\Proyecto\Controladora\obj\Debug\Controladoras.csproj
 C:\Users\Mrgat\source\repos\Proyecto\Controladora\obj\Debug\Controladoras.csproj.CopyComplete
 C:\Users\Mrgat\source\repos\Proyecto\Controladora\obj\Debug\Controladora.dll
 C:\Users\Mrgat\source\repos\Proyecto\Controladora\obj\Debug\Controladora.pdb
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Controladora\bin\Debug\Controladora.dll
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Controladora\bin\Debug\Controladora.pdb
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Controladora\bin\Debug\Clases.dll
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Controladora\bin\Debug\Persistencia.dll
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Controladora\bin\Debug\Clases.pdb
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Controladora\bin\Debug\Persistencia.pdb
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Controladora\obj\Debug\Controladoras.csproj.AssemblyReference.cache
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Controladora\obj\Debug\Controladoras.csproj.CoreCompileInputs.cache
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Controladora\obj\Debug\Controladoras.csproj.CopyComplete
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Controladora\obj\Debug\Controladora.dll
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Controladora\obj\Debug\Controladora.pdb
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Controladora\bin\Debug\Controladora.dll
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Controladora\bin\Debug\Controladora.pdb
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Controladora\bin\Debug\Clases.dll
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Controladora\bin\Debug\Persistencia.dll
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Controladora\bin\Debug\Clases.pdb
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Controladora\bin\Debug\Persistencia.pdb
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Controladora\obj\Debug\Controladoras.csproj.AssemblyReference.cache
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Controladora\obj\Debug\Controladoras.csproj.CoreCompileInputs.cache
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Controladora\obj\Debug\Controladoras.csproj.CopyComplete
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Controladora\obj\Debug\Controladora.dll
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Controladora\obj\Debug\Controladora.pdb

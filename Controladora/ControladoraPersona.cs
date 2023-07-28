@@ -115,13 +115,15 @@ namespace Controladoras
             return lst;
         }
 
+
+
+
         public List<Cliente> buscarVarCli(string var)
         {
             ControladoraP inst = ControladoraP.obtenerInstancia();
             List<Cliente> lst = inst.buscarVarCli(var);
             return lst;
         }
-
 
 
 
@@ -133,6 +135,9 @@ namespace Controladoras
             return cli;
 
         }
+
+
+
 
         public bool altaCli(Cliente cli)
         {
@@ -176,9 +181,6 @@ namespace Controladoras
 
         #endregion
 
-
-
-
         #region Camioneros
 
         public List<Camionero> listCamionero()
@@ -186,6 +188,13 @@ namespace Controladoras
             ControladoraP inst = ControladoraP.obtenerInstancia();
 
             return inst.listCamionero();
+        }
+
+        public List<Camionero> buscarVarCamionero(string var)
+        {
+            ControladoraP inst = ControladoraP.obtenerInstancia();
+            List<Camionero> lst = inst.buscarVarCamionero(var);
+            return lst;
         }
 
         public Camionero buscarCamionero(int id)

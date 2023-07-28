@@ -35,6 +35,9 @@ namespace Persistencia
                         cliente.IdPersona = int.Parse(reader["idPersona"].ToString());
                         cliente.Nombre = reader["nombre"].ToString();
                         cliente.Apellido = reader["apellido"].ToString();
+                        cliente.Email = reader["email"].ToString();
+                        cliente.Telefono = reader["telefono"].ToString() ;
+                        cliente.FchNacimiento = reader["fchNacimiento"].ToString();
                         cliente.User = reader["usuario"].ToString();
                         cliente.Direccion = reader["direccion"].ToString();
 

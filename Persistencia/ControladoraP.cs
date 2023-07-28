@@ -68,18 +68,18 @@ namespace Persistencia
         {
             return new pCliente().lstCli();
         }
-
         public List<Cliente> buscarVarCli(string var)
         {
             return new pCliente().buscarVarCli(var);
         }
 
+    
 
         public Cliente buscarCli(int id)
         {
             return new pCliente().buscarCli(id);
         }
-
+       
         public bool altaCli(Cliente cli)
         {
             return new pCliente().altaCli(cli);
@@ -105,6 +105,11 @@ namespace Persistencia
         public List<Camionero> listCamionero()
         {
             return new pCamionero().listCamionero();
+        }
+
+        public List<Camionero> buscarVarCamionero(string var)
+        {
+            return new pCamionero().buscarVarCamionero(var);
         }
 
         public Camionero buscarCamionero(int id)

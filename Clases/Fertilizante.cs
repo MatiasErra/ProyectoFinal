@@ -22,6 +22,12 @@ namespace Clases
         public short PH { get => _pH; set => _pH = value; }
         public string Impacto { get => _impacto; set => _impacto = value; }
 
+
+        public override string ToString()
+        {
+            return IdFertilizante + " - " + Nombre + " - " + Origen + " - " + CompQuimica + " - " + PH + " - " + Impacto;
+        }
+
         public Fertilizante () { }
 
         public Fertilizante(int idFertilizante, string nombre, string origen, string compQuimica, short pH, string impacto)

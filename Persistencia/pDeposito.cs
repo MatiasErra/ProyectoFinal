@@ -22,7 +22,7 @@ namespace Persistencia
 
                 SqlConnection connect = Conexion.Conectar();
 
-                SqlCommand cmd = new SqlCommand("ListIdDepositos", connect);
+                SqlCommand cmd = new SqlCommand("LstIdDepositos", connect);
 
                 cmd.CommandType = CommandType.StoredProcedure;
 
@@ -56,7 +56,7 @@ namespace Persistencia
             {
                 try
                 {
-                    SqlCommand cmd = new SqlCommand("ListDepositos", connect);
+                    SqlCommand cmd = new SqlCommand("LstDepositos", connect);
                     cmd.CommandType = CommandType.StoredProcedure;
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -81,6 +81,45 @@ namespace Persistencia
                 }
             }
             return listaDepositos;
+        }
+
+        public List<Deposito> buscarVarDeps(string var)
+        {
+            List<Deposito> resultado = new List<Deposito>();
+            try
+            {
+                Deposito deposito;
+
+
+                SqlConnection conect = Conexion.Conectar();
+
+                SqlCommand cmd = new SqlCommand("BuscarVarDeposito", conect);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter("@var", var));
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        deposito = new Deposito();
+                        deposito.IdDeposito = int.Parse(reader["idDeposito"].ToString());
+                        deposito.Capacidad = reader["capacidad"].ToString();
+                        deposito.Ubicacion = reader["ubicacion"].ToString();
+                        deposito.Temperatura = short.Parse(reader["temperatura"].ToString());
+                        deposito.Condiciones = reader["condiciones"].ToString();
+
+                        resultado.Add(deposito);
+                    }
+                }
+
+                conect.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+            return resultado;
         }
 
         public Deposito buscarDeps(int id)

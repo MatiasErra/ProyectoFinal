@@ -35,6 +35,10 @@ namespace Persistencia
         {
             return new pDeposito().listDeps();
         }
+        public List<Deposito> buscarVarDeps(string var)
+        {
+            return new pDeposito().buscarVarDeps(var);
+        }
 
         public Deposito buscarDeps(int id)
         {
@@ -57,6 +61,45 @@ namespace Persistencia
         }
 
         #endregion
+
+        #region Fertilizantes
+
+        public List<Fertilizante> listIdFert()
+        {
+            return new pFertilizante().listIdFert();
+        }
+
+        public List<Fertilizante> lstFerti()
+        {
+            return new pFertilizante().lstFerti();
+        }
+        public List<Fertilizante> buscarVarFerti(string var)
+        {
+            return new pFertilizante().buscarVarFerti(var);
+        }
+
+        public Fertilizante buscarFerti(int id)
+        {
+            return new pFertilizante().buscarFerti(id);
+        }
+
+        public bool altaFerti(Fertilizante fertilizante)
+        {
+            return new pFertilizante().altaFerti(fertilizante);
+        }
+
+        public bool bajaFerti(int id)
+        {
+            return new pFertilizante().bajaFerti(id);
+        }
+
+        public bool modFerti(Fertilizante fertilizante)
+        {
+            return new pFertilizante().modFerti(fertilizante);
+        }
+
+        #endregion
+
 
         /*public bool altaCamion(Camion camion)
         {

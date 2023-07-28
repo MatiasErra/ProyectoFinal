@@ -44,6 +44,13 @@ namespace Controladoras
             return lst;
         }
 
+        public List<Deposito> buscarVarDeps(string var)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Deposito> lst = inst.buscarVarDeps(var);
+            return lst;
+        }
+
         public Deposito buscarDeps(int id)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
@@ -92,6 +99,83 @@ namespace Controladoras
         }
 
         #endregion
+
+        #region Fertilizantes
+
+        public List<Fertilizante> listIdFert()
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Fertilizante> lst = inst.listIdFert();
+            return lst;
+
+        }
+
+        public List<Fertilizante> lstFerti()
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Fertilizante> lst = inst.lstFerti();
+            return lst;
+        }
+
+        public List<Fertilizante> buscarVarFerti(string var)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Fertilizante> lst = inst.buscarVarFerti(var);
+            return lst;
+        }
+
+        public Fertilizante buscarFerti(int id)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            Fertilizante fertilizante = inst.buscarFerti(id);
+            return fertilizante;
+
+        }
+
+        public bool altaFerti(Fertilizante fertilizante)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            if (inst.altaFerti(fertilizante))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool bajaFerti(int id)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+
+            if (inst.bajaFerti(id))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool modFerti(Fertilizante fertilizante)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            if (inst.modFerti(fertilizante))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+
+
+        #endregion
+
 
         /*public bool altaCamion(Camion Camion)
         {

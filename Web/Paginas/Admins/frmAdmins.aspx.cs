@@ -23,7 +23,7 @@ namespace Web.Paginas.Admins
             if (!IsPostBack)
             {
                 limpiar();
-                listar();
+
             }
         }
 
@@ -126,7 +126,7 @@ namespace Web.Paginas.Admins
 
         private void limpiar()
         {
-            lblMensajes.Text = "";
+           
             txtId.Text = "";
             txtBuscar.Text = "";
 
@@ -140,6 +140,7 @@ namespace Web.Paginas.Admins
             listTipoAdmin.SelectedValue = "Seleccionar tipo de Admin";
             txtBuscar.Text = "";
             lstAdmin.SelectedIndex = -1;
+            listar();
         }
 
         private void cargarAdm(int id)
@@ -232,6 +233,7 @@ namespace Web.Paginas.Admins
                 {
                     lstAdmin.Visible = false;
                     lblMensajes.Text = "No se encontro ningun admin.";
+                 
                 }
             } 
             else

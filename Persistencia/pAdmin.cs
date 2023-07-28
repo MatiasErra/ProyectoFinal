@@ -86,9 +86,9 @@ namespace Persistencia
 
                 conect.Close();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return resultado;
+                throw new Exception(ex.ToString());
             }
             return resultado;
         }

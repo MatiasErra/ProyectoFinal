@@ -10,3 +10,15 @@ C:\Users\Mrgat\source\repos\Proyecto\Clases\obj\Debug\Clases.csproj.AssemblyRefe
 C:\Users\Mrgat\source\repos\Proyecto\Clases\obj\Debug\Clases.csproj.CoreCompileInputs.cache
 C:\Users\Mrgat\source\repos\Proyecto\Clases\obj\Debug\Clases.dll
 C:\Users\Mrgat\source\repos\Proyecto\Clases\obj\Debug\Clases.pdb
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Clases\bin\Debug\Clases.dll
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Clases\bin\Debug\Clases.pdb
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Clases\obj\Debug\Clases.csproj.AssemblyReference.cache
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Clases\obj\Debug\Clases.csproj.CoreCompileInputs.cache
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Clases\obj\Debug\Clases.dll
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Clases\obj\Debug\Clases.pdb
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Clases\bin\Debug\Clases.dll
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Clases\bin\Debug\Clases.pdb
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Clases\obj\Debug\Clases.csproj.AssemblyReference.cache
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Clases\obj\Debug\Clases.csproj.CoreCompileInputs.cache
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Clases\obj\Debug\Clases.dll
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Clases\obj\Debug\Clases.pdb

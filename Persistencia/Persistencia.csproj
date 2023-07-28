@@ -48,6 +48,7 @@
     <Compile Include="pCamionero.cs" />
     <Compile Include="pCliente.cs" />
     <Compile Include="pDeposito.cs" />
+    <Compile Include="pFertilizante.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

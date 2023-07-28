@@ -56,6 +56,49 @@ namespace Persistencia
             return listaCamioneros;
         }
 
+        public List<Camionero> buscarVarCamionero(string var)
+        {
+            List<Camionero> resultado = new List<Camionero>();
+            try
+            {
+                Camionero camionero;
+
+
+                SqlConnection conect = Conexion.Conectar();
+
+                SqlCommand cmd = new SqlCommand("BuscarVarCamionero", conect);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter("@var", var));
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        camionero = new Camionero();
+                        camionero.IdPersona = int.Parse(reader["idPersona"].ToString());
+                        camionero.Nombre = reader["nombre"].ToString();
+                        camionero.Apellido = reader["apellido"].ToString();
+                        camionero.Email = reader["email"].ToString();
+                        camionero.Telefono = reader["telefono"].ToString();
+                        camionero.FchNacimiento = reader["fchNacimiento"].ToString();
+                        camionero.Cedula = reader["cedula"].ToString();
+                        camionero.Disponible = reader["disponible"].ToString();
+                        camionero.FchManejo = reader["fchManejo"].ToString();
+
+                        resultado.Add(camionero);
+                    }
+                }
+
+                conect.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+            return resultado;
+        }
+
         public Camionero buscarCamionero(int id)
         {
             Camionero camionero = new Camionero();
@@ -128,9 +171,9 @@ namespace Persistencia
                     resultado = true;
                 }
             }
-            catch (Exception ex)
+            catch (Exception )
             {
-                throw ex;
+                resultado = false;
             }
             return resultado;
         }

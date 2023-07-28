@@ -19,7 +19,7 @@
                         <asp:Label ID="lblMensajes" runat="server"></asp:Label>
                     </div>
                 </div>
-                <asp:ListBox ID="lstCliente" runat="server" AutoPostBack="true" CssClass="w-auto h-auto" OnSelectedIndexChanged="lstCliente_SelectedIndexChanged"></asp:ListBox>
+                <asp:ListBox ID="lstCliente" runat="server" AutoPostBack="true" CssClass="w-75 h-auto" OnSelectedIndexChanged="lstCliente_SelectedIndexChanged"></asp:ListBox>
             </div>
         </div>
     </div>

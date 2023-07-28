@@ -16,7 +16,7 @@ namespace Clases
 
         public override string ToString()
         {
-            return IdPersona + " - " + Nombre + " - " + Apellido + " - " + Disponible + " - " + FchManejo.ToString();
+            return IdPersona + " - " + Nombre + " - " + Apellido + " - " + Email + " - " + Telefono + " - " + DateTime.Parse(FchNacimiento).ToString("dd-MM-yyyy") + " - " + Cedula + " - " + Disponible + " - " + DateTime.Parse(FchManejo).ToString("dd-MM-yyyy");
         }
 
         public Camionero(int idPersona, string nombre, string apellido, string email, string telefono, string fchNacimiento, string cedula,
