@@ -6,22 +6,30 @@ using System.Threading.Tasks;
 
 namespace Clases
 {
-    public class Granja 
+    public class Granja
     {
         private int _idGranja;
         private string _nombre;
+        private string _ubicacion;
         private int _idCliente;
 
         public int IdGranja { get => _idGranja; set => _idGranja = value; }
         public string Nombre { get => _nombre; set => _nombre = value; }
+        public string Ubicacion { get => _ubicacion; set => _ubicacion = value; }
         public int IdCliente { get => _idCliente; set => _idCliente = value; }
+
+        public override string ToString()
+        {
+            return IdGranja + " - " + Nombre + " - " + Ubicacion + " - " + IdCliente;
+        }
 
         public Granja() { }
 
-        public Granja(int idGranja, string nombre, int idCliente)
+        public Granja(int idGranja, string nombre, string ubicacion, int idCliente)
         {
             IdGranja = idGranja;
             Nombre = nombre;
+            Ubicacion = ubicacion;
             IdCliente = idCliente;
         }
     }

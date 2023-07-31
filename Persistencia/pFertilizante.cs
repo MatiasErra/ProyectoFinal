@@ -65,8 +65,7 @@ namespace Persistencia
                             fertilizante = new Fertilizante();
                             fertilizante.IdFertilizante = int.Parse(reader["idFerti"].ToString());
                             fertilizante.Nombre = reader["nombre"].ToString();
-                            fertilizante.Origen = reader["origen"].ToString();
-                            fertilizante.CompQuimica = reader["compQuimica"].ToString();
+                            fertilizante.Tipo = reader["tipo"].ToString();
                             fertilizante.PH = short.Parse(reader["pH"].ToString());
                             fertilizante.Impacto = reader["impacto"].ToString();
 
@@ -105,8 +104,7 @@ namespace Persistencia
                         fertilizante = new Fertilizante();
                         fertilizante.IdFertilizante = int.Parse(reader["idFerti"].ToString());
                         fertilizante.Nombre = reader["nombre"].ToString();
-                        fertilizante.Origen = reader["origen"].ToString();
-                        fertilizante.CompQuimica = reader["compQuimica"].ToString();
+                        fertilizante.Tipo = reader["tipo"].ToString();
                         fertilizante.PH = short.Parse(reader["pH"].ToString());
                         fertilizante.Impacto = reader["impacto"].ToString();
 
@@ -142,8 +140,7 @@ namespace Persistencia
                         {
                             fertilizante.IdFertilizante = int.Parse(reader["idFerti"].ToString());
                             fertilizante.Nombre = reader["nombre"].ToString();
-                            fertilizante.Origen = reader["origen"].ToString();
-                            fertilizante.CompQuimica = reader["compQuimica"].ToString();
+                            fertilizante.Tipo = reader["tipo"].ToString();
                             fertilizante.PH = short.Parse(reader["pH"].ToString());
                             fertilizante.Impacto = reader["impacto"].ToString();
                         }
@@ -171,8 +168,7 @@ namespace Persistencia
 
                 cmd.Parameters.Add(new SqlParameter("@id", fertilizante.IdFertilizante));
                 cmd.Parameters.Add(new SqlParameter("@nombre", fertilizante.Nombre));
-                cmd.Parameters.Add(new SqlParameter("@origen", fertilizante.Origen));
-                cmd.Parameters.Add(new SqlParameter("@compQuimica", fertilizante.CompQuimica));
+                cmd.Parameters.Add(new SqlParameter("@tipo", fertilizante.Tipo));
                 cmd.Parameters.Add(new SqlParameter("@pH", fertilizante.PH));
                 cmd.Parameters.Add(new SqlParameter("@impacto", fertilizante.Impacto));
 
@@ -243,8 +239,7 @@ namespace Persistencia
 
                 cmd.Parameters.Add(new SqlParameter("@id", fertilizante.IdFertilizante));
                 cmd.Parameters.Add(new SqlParameter("@nombre", fertilizante.Nombre));
-                cmd.Parameters.Add(new SqlParameter("@origen", fertilizante.Origen));
-                cmd.Parameters.Add(new SqlParameter("@compQuimica", fertilizante.CompQuimica));
+                cmd.Parameters.Add(new SqlParameter("@tipo", fertilizante.Tipo));
                 cmd.Parameters.Add(new SqlParameter("@pH", fertilizante.PH));
                 cmd.Parameters.Add(new SqlParameter("@impacto", fertilizante.Impacto));
 

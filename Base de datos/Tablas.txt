@@ -40,6 +40,35 @@ Direccion varchar(60) not null,
 );
 
 
+create table Granjas(
+idGranja int primary key,
+nombre varchar(30) not null unique,
+ubicacion varchar(50) not null unique,
+idCliente int foreign key references Clientes(idCliente)
+);
+
+create table Productos(
+idProducto int primary key,
+nombre varchar(30) not null unique,
+tipo varchar(30) not null,
+tipoVenta varchar(15) not null,
+imagen varchar(MAX) not null
+);
+
+
+create table Producen(
+idGranja int,
+idProducto int,
+fchProduccion date check(fchProduccion <= CONVERT(date,getdate(),(103))),
+stock numeric(10,0) not null,
+precio numeric(10,2) not null,
+idDeposito int,
+primary key(idGranja, idProducto, fchProduccion),
+foreign key (idGranja) references Granjas(idGranja),
+foreign key (idProducto) references Productos(idProducto),
+foreign key (idDeposito) references Depositos(idDeposito)
+);
+
 Create table Fertilizantes(
 idFerti int primary key, 
 nombre varchar(40) not null,

@@ -22,7 +22,7 @@ namespace Web.Paginas.Admins
         {
             if (!IsPostBack)
             {
-                limpiar();
+                listar();
 
             }
         }
@@ -32,7 +32,7 @@ namespace Web.Paginas.Admins
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             lstAdmin.DataSource = null;
             lstAdmin.DataSource = Web.lstAdmin();
-            CargarTipoAdm();
+
             lstAdmin.DataBind();
         }
 
@@ -163,23 +163,7 @@ namespace Web.Paginas.Admins
 
 
 
-        protected void lstAdmin_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (!faltaIdAdm())
-            {
-                string linea = this.lstAdmin.SelectedItem.ToString();
-                string[] partes = linea.Split(' ');
-                int id = Convert.ToInt32(partes[0]);
-                this.cargarAdm(id);
-            
-            }
-            else
-            {
-                this.lblMensajes.Text = "Debe seleccionar un admin de la lista.";
-
-
-            }
-        }
+    
 
 
         static int GenerateUniqueId()
@@ -316,13 +300,16 @@ namespace Web.Paginas.Admins
 
         protected void btnBaja_Click(object sender, EventArgs e)
         {
-            if (txtId.Text != "")
-            {
-                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                Admin unAdmin = Web.buscarAdm(int.Parse(HttpUtility.HtmlEncode(txtId.Text)));
+            int id;
+            Button btnConstultar = (Button)sender;
+            GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
+            id = int.Parse(selectedrow.Cells[0].Text);
+
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                Admin unAdmin = Web.buscarAdm(id);
                 if (unAdmin != null)
                 {
-                    if (Web.bajaAdmin(int.Parse(txtId.Text)))
+                    if (Web.bajaAdmin(id))
                     {
                         limpiar();
                         lblMensajes.Text = "Se ha borrado el Admin.";
@@ -340,85 +327,93 @@ namespace Web.Paginas.Admins
                 {
                     lblMensajes.Text = "El Admin no existe.";
                 }
-            }
-            else
-            {
-                lblMensajes.Text = "Seleccione un Admin para eliminar. ";
-            }
+          
         }
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
-            if (!faltanDatos())
-            {
-                if (!txtId.Text.Equals(""))
-                {
-                    if (txtPass.Text == "")
-                    {
-                        if (listTipoAdmin.SelectedValue.ToString() != "Seleccionar tipo de Admin")
-                        {
-                            if (fchNotToday())
-                            {
-                                int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text.ToString()));
-                                string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
-                                string apellido = HttpUtility.HtmlEncode(txtApell.Text);
-                                string email = HttpUtility.HtmlEncode(txtEmail.Text);
-                                string tele = HttpUtility.HtmlEncode(txtTel.Text);
-                                string txtFc = HttpUtility.HtmlEncode(txtFchNac.Text);
-                                string tipoAdm = HttpUtility.HtmlEncode(listTipoAdmin.SelectedValue.ToString());
-                                string user = HttpUtility.HtmlEncode(txtUser.Text);
+
+            int id;
+            Button btnConstultar = (Button)sender;
+            GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
+            id = int.Parse(selectedrow.Cells[0].Text);
+
+            System.Web.HttpContext.Current.Session["idAdminSel"] = id;
+            Response.Redirect("/Paginas/Admins/modAdmin");
 
 
 
-                                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                                Admin unAdmin = new Admin();
-                                unAdmin.IdPersona = id;
-                                unAdmin.Nombre = nombre;
-                                unAdmin.Apellido = apellido;
-                                unAdmin.Email = email;
-                                unAdmin.Telefono = tele;
-                                unAdmin.FchNacimiento = txtFc;
-                                unAdmin.TipoDeAdmin = tipoAdm;
-                                unAdmin.User = user;
 
-                                if (Web.modificarAdm(unAdmin))
-                                {
-                                    lblMensajes.Text = "Admin modificado con exito.";
-                                    listar();
-                                    limpiar();
-                                }
-                                else
-                                {
-                                    lblMensajes.Text = "No se pudo modificar el Administrador.";
-                                    limpiar();
-                                }
-                            }
-                            else
-                            {
-                                lblMensajes.Text = "Seleccionar una fecha menor a hoy.";
-                            }
-                        }
-                        else
-                        {
-                            lblMensajes.Text = "Falta selecionar un tipo de Admin.";
+            //if (!faltanDatos())
+            //{
+            //    if (!txtId.Text.Equals(""))
+            //    {
+            //        if (txtPass.Text == "")
+            //        {
+            //            if (listTipoAdmin.SelectedValue.ToString() != "Seleccionar tipo de Admin")
+            //            {
+            //                if (fchNotToday())
+            //                {
+            //                    int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text.ToString()));
+            //                    string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
+            //                    string apellido = HttpUtility.HtmlEncode(txtApell.Text);
+            //                    string email = HttpUtility.HtmlEncode(txtEmail.Text);
+            //                    string tele = HttpUtility.HtmlEncode(txtTel.Text);
+            //                    string txtFc = HttpUtility.HtmlEncode(txtFchNac.Text);
+            //                    string tipoAdm = HttpUtility.HtmlEncode(listTipoAdmin.SelectedValue.ToString());
+            //                    string user = HttpUtility.HtmlEncode(txtUser.Text);
 
-                        }
-                    }
-                    else
-                    {
-                        lblMensajes.Text = "El administrador no puede cambiar la contraseña del Admin.";
-                    }
-                }
-                else
-                {
-                    lblMensajes.Text = "Debe seleccionar un Admin.";
-                }
 
-            }
-            else
-            {
-                lblMensajes.Text = "Faltan datos.";
-            }
+
+            //                    ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            //                    Admin unAdmin = new Admin();
+            //                    unAdmin.IdPersona = id;
+            //                    unAdmin.Nombre = nombre;
+            //                    unAdmin.Apellido = apellido;
+            //                    unAdmin.Email = email;
+            //                    unAdmin.Telefono = tele;
+            //                    unAdmin.FchNacimiento = txtFc;
+            //                    unAdmin.TipoDeAdmin = tipoAdm;
+            //                    unAdmin.User = user;
+
+            //                    if (Web.modificarAdm(unAdmin))
+            //                    {
+            //                        lblMensajes.Text = "Admin modificado con exito.";
+            //                        listar();
+            //                        limpiar();
+            //                    }
+            //                    else
+            //                    {
+            //                        lblMensajes.Text = "No se pudo modificar el Administrador.";
+            //                        limpiar();
+            //                    }
+            //                }
+            //                else
+            //                {
+            //                    lblMensajes.Text = "Seleccionar una fecha menor a hoy.";
+            //                }
+            //            }
+            //            else
+            //            {
+            //                lblMensajes.Text = "Falta selecionar un tipo de Admin.";
+
+            //            }
+            //        }
+            //        else
+            //        {
+            //            lblMensajes.Text = "El administrador no puede cambiar la contraseña del Admin.";
+            //        }
+            //    }
+            //    else
+            //    {
+            //        lblMensajes.Text = "Debe seleccionar un Admin.";
+            //    }
+
+            //}
+            //else
+            //{
+            //    lblMensajes.Text = "Faltan datos.";
+            //}
         }
 
         protected void btnLimpiar_Click(object sender, EventArgs e)

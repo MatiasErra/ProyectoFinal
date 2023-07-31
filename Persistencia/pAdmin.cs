@@ -34,7 +34,10 @@ namespace Persistencia
                         admin.Apellido = reader["apellido"].ToString();
                         admin.Email = reader["email"].ToString();
                         admin.Telefono = reader["telefono"].ToString();
-                        admin.FchNacimiento = reader["fchNacimiento"].ToString();
+                       string Date = reader["fchNacimiento"].ToString();
+                       string [] DateArr = Date.Split(' ');
+                        admin.FchNacimiento = DateArr[0];
+                           
                         admin.User = reader["usuario"].ToString();
                         admin.TipoDeAdmin = reader["tipoDeAdmin"].ToString();
 
@@ -233,7 +236,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@email", admin.Email));
                 cmd.Parameters.Add(new SqlParameter("@tele", admin.Telefono));
                 cmd.Parameters.Add(new SqlParameter("@fchNac", admin.FchNacimiento));
-                cmd.Parameters.Add(new SqlParameter("@user", admin.User));
+   
                 cmd.Parameters.Add(new SqlParameter("@TipoAdm", admin.TipoDeAdmin));
 
 

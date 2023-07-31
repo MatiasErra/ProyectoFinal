@@ -30,7 +30,7 @@ namespace Web.Paginas.Fertilizantes
             txtId.Text = "";
             txtBuscar.Text = "";
             txtNombre.Text = "";
-            txtOrigen.Text = "";
+            txtTipo.Text = "";
             txtQuimica.Text = "";
             txtPH.Text = "";
             lstImpacto.SelectedValue = "Seleccionar tipo de impacto";
@@ -48,7 +48,7 @@ namespace Web.Paginas.Fertilizantes
 
         private bool faltanDatos()
         {
-            if (txtNombre.Text == "" || txtOrigen.Text == "" || txtQuimica.Text == "" || txtPH.Text == "")
+            if (txtNombre.Text == "" || txtTipo.Text == "" || txtQuimica.Text == "" || txtPH.Text == "")
             {
                 return true;
             }
@@ -163,8 +163,8 @@ namespace Web.Paginas.Fertilizantes
             
             txtId.Text = fer.IdFertilizante.ToString();
             txtNombre.Text = fer.Nombre.ToString();
-            txtOrigen.Text = fer.Origen.ToString();
-            txtQuimica.Text = fer.CompQuimica.ToString();
+           txtTipo.Text = fer.Tipo.ToString();
+
             txtPH.Text = fer.PH.ToString();
             lstImpacto.SelectedValue = fer.Impacto.ToString();
             
@@ -236,7 +236,7 @@ namespace Web.Paginas.Fertilizantes
 
                         int id = GenerateUniqueId();
                         string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
-                        string origen = HttpUtility.HtmlEncode(txtOrigen.Text);
+                        string tipo = HttpUtility.HtmlEncode(txtTipo.Text);
                         string quimica = HttpUtility.HtmlEncode(txtQuimica.Text);
                         short pH = short.Parse(HttpUtility.HtmlEncode(txtPH.Text));
                         string impacto = HttpUtility.HtmlEncode(lstImpacto.SelectedValue.ToString());
@@ -246,7 +246,7 @@ namespace Web.Paginas.Fertilizantes
 
 
                         ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                        Fertilizante fertilizante = new Fertilizante(id, nombre, origen, quimica, pH, impacto);
+                        Fertilizante fertilizante = new Fertilizante(id, nombre, tipo, pH, impacto);
                         if (Web.altaFerti(fertilizante))
                         {
                             limpiar();
@@ -329,7 +329,7 @@ namespace Web.Paginas.Fertilizantes
 
                             int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text.ToString()));
                             string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
-                            string origen = HttpUtility.HtmlEncode(txtOrigen.Text);
+                            string tipo = HttpUtility.HtmlEncode(txtTipo.Text);
                             string quimica = HttpUtility.HtmlEncode(txtQuimica.Text);
                             short pH = short.Parse(HttpUtility.HtmlEncode(txtPH.Text));
                             string impacto = HttpUtility.HtmlEncode(lstImpacto.SelectedValue.ToString());
@@ -339,7 +339,7 @@ namespace Web.Paginas.Fertilizantes
 
 
                             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                            Fertilizante fertilizante = new Fertilizante(id, nombre, origen, quimica, pH, impacto);
+                            Fertilizante fertilizante = new Fertilizante(id, nombre, tipo, pH, impacto);
                             if (Web.modFerti(fertilizante))
                             {
                                 limpiar();

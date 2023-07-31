@@ -53,11 +53,11 @@
                                     </div>
 
                                     <div class="col-12">
-                                        origen
-                        <asp:TextBox ID="txtOrigen" CssClass="form-control mt-1 mb-1 w-75 m-auto" runat="server" placeholder="Origen" MaxLength="40" onkeydown="return(!(event.keyCode>=91) && event.keyCode!=32);"></asp:TextBox>
+                                        Tipo
+                        <asp:TextBox ID="txtTipo" CssClass="form-control mt-1 mb-1 w-75 m-auto" runat="server" placeholder="Tipo" MaxLength="40" onkeydown="return(!(event.keyCode>=91) && event.keyCode!=32);"></asp:TextBox>
                                     </div>
                                     <asp:RegularExpressionValidator Display="Dynamic" runat="server"
-                                        ControlToValidate="txtOrigen"
+                                        ControlToValidate="txtTipo"
                                         ValidationExpression="^[a-zA-Z ]*$"
                                         ErrorMessage="No es una letra valida" />
 

@@ -1,15 +1,480 @@
 ﻿.CamList {
-    margin: 10px;
-    border-radius: 20px;
-    background-color: red;
-    width: auto;
-    height: auto;
-    display: grid;
-    justify-content: center;
-    margin-left: 15%;
-    margin-right: 15%;
+
 }
 
 .CamList div{
     margin: 10px;
 }
+
+.row{
+justify-content :center;
+}
+
+.bodyStyl {
+    background-color: #fa4251;
+    height: 100%;
+    min-height: 100%;
+        
+    overflow: auto;
+    padding-bottom: 180px;
+}
+
+.myFooter {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    margin-top: -180px;
+    min-height: 70px;
+    clear: both;
+    background-color: black
+}
+
+
+
+/* ==========================================================================
+   #BUTTON
+   ========================================================================== */
+.btnE {
+    text-align: center;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    color: #fff;
+    font-family: "Roboto", "Arial", "Helvetica Neue", sans-serif;
+    -webkit-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.btn--radius {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.btn--green {
+    background: #57b846;
+}
+
+.btn--blue {
+    background: #2c6ed5;
+}
+
+.btn--gray {
+    background: #808080;
+}
+
+.btn--red {
+    background: #fa4251;
+}
+
+.btn--yellow {
+    background: #ff7500
+}
+
+
+
+.btn--green:hover {
+    background: #4dae3c;
+}
+
+.btn--lst {
+    margin-bottom: 1rem !important;
+    margin-top: 1rem !important;
+    width: 200px;
+}
+
+.btn--srch {
+    width: 150px;
+}
+
+
+
+
+/* ==========================================================================
+   #FORM
+   ========================================================================== */
+input {
+    outline: none;
+    margin: 0;
+    border: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    font-size: 14px;
+    font-family: inherit;
+}
+
+/* input group 1 */
+/* end input group 1 */
+.input-group {
+    position: relative;
+    margin-bottom: 32px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.input-icon {
+    position: absolute;
+    font-size: 18px;
+    color: #ccc;
+    right: 8px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.input--style-2 {
+    padding: 9px 0;
+    color: #666;
+    align-items: center;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: transparent !important;
+}
+
+.size75 {
+    width: 75%;
+}
+
+
+.input--style-2::-webkit-input-placeholder {
+    /* WebKit, Blink, Edge */
+    color: #808080;
+}
+
+.input--style-2:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: #808080;
+    opacity: 1;
+}
+
+.input--style-2::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: #808080;
+    opacity: 1;
+}
+
+.input--style-2:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #808080;
+}
+
+.input--style-2:-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: #808080;
+}
+
+
+/*.input-group {
+    position: center;
+    margin-bottom: 33px;
+    border-bottom: 1.5px solid rgb(169 32 216)
+}
+
+*/
+
+
+
+/*.form-control-search {
+    margin-bottom: 0.25rem !important;
+    margin-top: 0.25rem !important;
+    margin: auto !important;
+    width: 25% !important;
+}*/
+
+
+
+
+
+
+
+/* ==========================================================================
+   #FONT
+   ========================================================================== */
+.font-robo {
+    font-family: "Roboto", "Arial", "Helvetica Neue", sans-serif;
+}
+
+/* ==========================================================================
+   #GRID
+   ========================================================================== */
+.row {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.row-space {
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -moz-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+
+@media (max-width: 767px) {
+    .col-2 {
+        width: 100%;
+    }
+}
+
+.GridStl {
+    vertical-align: middle;
+    height: 50px;
+    overflow: hidden;
+}
+th {
+    vertical-align: middle;
+}
+
+
+
+/* ==========================================================================
+   #BOX-SIZING
+   ========================================================================== */
+/**
+ * More sensible default box-sizing:
+ * css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice
+ */
+html {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+    *, *:before, *:after {
+        -webkit-box-sizing: inherit;
+        -moz-box-sizing: inherit;
+        box-sizing: inherit;
+    }
+
+/* ==========================================================================
+   #RESET
+   ========================================================================== */
+/**
+ * A very simple reset that sits on top of Normalize.css.
+ */
+body,
+h1, h2, h3, h4, h5, h6,
+blockquote, p, pre,
+dl, dd, ol, ul,
+figure,
+hr,
+fieldset, legend {
+    margin: 0;
+    padding: 0;
+}
+
+/**
+ * Remove trailing margins from nested lists.
+ */
+li > ol,
+li > ul {
+    margin-bottom: 0;
+}
+
+/**
+ * Remove default table spacing.
+ */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/**
+ * 1. Reset Chrome and Firefox behaviour which sets a `min-width: min-content;`
+ *    on fieldsets.
+ */
+fieldset {
+    min-width: 0;
+    /* [1] */
+    border: 0;
+}
+
+button {
+    outline: none;
+    background: none;
+    border: none;
+}
+
+/* ==========================================================================
+   #PAGE WRAPPER
+   ========================================================================== */
+.page-wrapper {
+    min-height: 100vh;
+}
+
+body {
+    font-family: "Roboto", "Arial", "Helvetica Neue", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 400;
+}
+
+h1 {
+    font-size: 36px;
+}
+
+h2 {
+    font-size: 30px;
+}
+
+h3 {
+    font-size: 24px;
+}
+
+h4 {
+    font-size: 18px;
+}
+
+h5 {
+    font-size: 15px;
+}
+
+h6 {
+    font-size: 13px;
+}
+
+/* ==========================================================================
+   #BACKGROUND
+   ========================================================================== */
+.bg-blue {
+    background: #2c6ed5;
+}
+
+.bg-red {
+    background: #fa4251;
+}
+
+/* ==========================================================================
+   #SPACING
+   ========================================================================== */
+.p-t-100 {
+    padding-top: 100px;
+}
+
+.p-t-180 {
+    padding-top: 180px;
+}
+
+.p-t-20 {
+    padding-top: 20px;
+}
+
+.p-t-30 {
+    padding-top: 30px;
+}
+
+.p-b-100 {
+    padding-bottom: 100px;
+}
+
+/* ==========================================================================
+   #WRAPPER
+   ========================================================================== */
+.wrapper {
+    margin: 0 auto;
+}
+
+.wrapper--w960 {
+    max-width: 960px;
+}
+
+.wrapper--w680 {
+    max-width: 680px;
+}
+
+
+/* ==========================================================================
+   #DATE PICKER
+   ========================================================================== */
+td.active {
+    background-color: #2c6ed5;
+}
+
+input[type="date" i] {
+    padding: 14px;
+}
+
+.table-condensed td, .table-condensed th {
+    font-size: 14px;
+    font-family: "Roboto", "Arial", "Helvetica Neue", sans-serif;
+    vertical-align: middle;
+}
+
+.daterangepicker td {
+    width: 40px;
+    height: 30px;
+}
+
+.daterangepicker {
+    border: none;
+    -webkit-box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
+    display: none;
+    border: 1px solid #e0e0e0;
+    margin-top: 5px;
+}
+
+    .daterangepicker::after, .daterangepicker::before {
+        display: none;
+    }
+
+    .daterangepicker thead tr th {
+        padding: 10px 0;
+    }
+
+    .daterangepicker .table-condensed th select {
+        border: 1px solid #ccc;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        font-size: 14px;
+        padding: 5px;
+        outline: none;
+    }
+
+
+
+
+/* ==========================================================================
+   #TITLE
+   ========================================================================== */
+
+.title {
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 37px;
+}
+select {
+    word-wrap: normal;
+    border: none;
+}
+
+
+

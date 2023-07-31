@@ -123,10 +123,12 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Paginas\Admins\frmAdmins.aspx" />
+    <Content Include="Paginas\Admins\modAdmin.aspx" />
     <Content Include="Paginas\Camioneros\frmCamioneros.aspx" />
     <Content Include="Paginas\Clientes\frmListarClientes.aspx" />
     <Content Include="Paginas\Clientes\RegCliente.aspx" />
     <Content Include="Paginas\Depositos\frmDepositos.aspx" />
+    <Content Include="Paginas\Depositos\modDep.aspx" />
     <Content Include="Paginas\Fertilizante\frmFertilizante.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -249,6 +251,13 @@
     <Compile Include="Paginas\Admins\frmAdmins.aspx.designer.cs">
       <DependentUpon>frmAdmins.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Paginas\Admins\modAdmin.aspx.cs">
+      <DependentUpon>modAdmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Admins\modAdmin.aspx.designer.cs">
+      <DependentUpon>modAdmin.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Paginas\Camioneros\frmCamioneros.aspx.cs">
       <DependentUpon>frmCamioneros.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -277,6 +286,13 @@
     </Compile>
     <Compile Include="Paginas\Depositos\frmDepositos.aspx.designer.cs">
       <DependentUpon>frmDepositos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Depositos\modDep.aspx.cs">
+      <DependentUpon>modDep.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Depositos\modDep.aspx.designer.cs">
+      <DependentUpon>modDep.aspx</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Fertilizante\frmFertilizante.aspx.cs">
       <DependentUpon>frmFertilizante.aspx</DependentUpon>

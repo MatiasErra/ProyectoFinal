@@ -17,6 +17,7 @@ namespace Web.Paginas.Depositos
 
         protected void Page_Load(object sender, EventArgs e)
         {
+        
             if (!IsPostBack)
             {
                 limpiar();
@@ -25,11 +26,11 @@ namespace Web.Paginas.Depositos
         }
 
         private void listar()
-        {
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            lstDeposito.DataSource = null;
-            lstDeposito.DataSource = Web.listDeps();
+        {  ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            List<Deposito> lst = Web.listDeps();
+            lstDeposito.DataSource = lst;
             lstDeposito.DataBind();
+
         }
 
 
@@ -84,22 +85,18 @@ namespace Web.Paginas.Depositos
             txtUbicacion.Text = deposito.Ubicacion;
         }
 
-        protected void lstDeposito_SelectedIndexChanged(object sender, EventArgs e)
+        protected void Select_Click(object sender, EventArgs e)
         {
-            if (!faltaIdDep())
-            {
 
-                string linea = this.lstDeposito.SelectedItem.ToString();
-                string[] partes = linea.Split(' ');
-                int id = Convert.ToInt32(partes[0]);
+            int id;
+            Button btnConstultar = (Button)sender;
+            GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
+            id = int.Parse(selectedrow.Cells[0].Text);
+     
                 cargarDep(id);
-                
-            }
-            else
-            {
-                lblMensajes.Text = "Debe seleccionar un deposito de la lista.";
-            }
-                
+
+        
+
         }
 
         static int GenerateUniqueId()
@@ -135,7 +132,7 @@ namespace Web.Paginas.Depositos
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             string value = txtBuscar.Text;
             List<Deposito> depositos = new List<Deposito>();
-             depositos = Web.buscarVarDeps(value);
+            depositos = Web.buscarVarDeps(value);
             lstDeposito.DataSource = null;
 
             if (txtBuscar.Text != "")
@@ -151,7 +148,7 @@ namespace Web.Paginas.Depositos
                 else
                 {
                     lstDeposito.Visible = false;
-                    lblMensajes.Text = "No se encontro ningun deposito.";
+                    lblMensajes.Text = "No se encontro ningun Depósito.";
                 }
             }
             else
@@ -180,14 +177,14 @@ namespace Web.Paginas.Depositos
                 if (Web.altaDeps(unDeposito))
                 {
                     limpiar();
-                    lblMensajes.Text = "Deposito dado de alta con exito.";
+                    lblMensajes.Text = "Depósito dado de alta con éxito.";
                     listar();
 
                 }
                 else
                 {
                     limpiar();
-                    lblMensajes.Text = "No se pudo dar de alta el deposito.";
+                    lblMensajes.Text = "No se pudo dar de alta el Depósito.";
 
                 }
             }
@@ -201,16 +198,19 @@ namespace Web.Paginas.Depositos
 
         protected void btnBaja_Click(object sender, EventArgs e)
         {
-            if (!txtId.Text.Equals(""))
-            {
+            int id;
+            Button btnConstultar = (Button)sender;
+            GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
+            id = int.Parse(selectedrow.Cells[0].Text);
+
                 ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                Deposito unDeposito = Web.buscarDeps(int.Parse(HttpUtility.HtmlEncode(txtId.Text)));
+                Deposito unDeposito = Web.buscarDeps(id);
                 if (unDeposito != null)
                 {
-                    if (Web.bajaDeps(int.Parse(txtId.Text)))
+                    if (Web.bajaDeps(id))
                     {
                         limpiar();
-                        lblMensajes.Text = "Se ha borrado el deposito.";
+                        lblMensajes.Text = "Se ha borrado el Depósito.";
                         txtId.Text = "";
                         txtBuscar.Text = "";
                         listar();
@@ -218,55 +218,24 @@ namespace Web.Paginas.Depositos
                     else
                     {
                         limpiar();
-                        lblMensajes.Text = "No se ha podido borrar el deposito.";
+                        lblMensajes.Text = "No se ha podido borrar el Depósito.";
                     }
-                }
-                else
-                {
-                    lblMensajes.Text = "El deposito no existe.";
-                }
+           
             }
-            else
-            {
-                lblMensajes.Text = "Seleccione un deposito para eliminar. ";
-            }
+
         }
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
-            if (!faltanDatos())
-            {
-                if (!txtId.Text.Equals(""))
-                {
-                    int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text));
-                    string capacidad = HttpUtility.HtmlEncode(txtCapacidad.Text);
-                    string ubicacion = HttpUtility.HtmlEncode(txtUbicacion.Text);
-                    short temperatura = short.Parse(HttpUtility.HtmlEncode(txtTemperatura.Text));
-                    string condiciones = HttpUtility.HtmlEncode(txtCondiciones.Text);
 
-                    ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                    Deposito unDeposito = new Deposito(id, capacidad, ubicacion, temperatura, condiciones);
-                    if (Web.modDeps(unDeposito))
-                    {
-                        listar();
-                        lblMensajes.Text = "Deposito modificado con exito.";
-                        limpiar();
-                    }
-                    else
-                    {
-                        lblMensajes.Text = "No se pudo modificar el deposito";
-                        limpiar();
-                    }
-                }
-                else
-                {
-                    lblMensajes.Text = "Debe seleccionar un deposito.";
-                }
-            }
-            else
-            {
-                lblMensajes.Text = "Faltan datos.";
-            }
+            int id;
+            Button btnConstultar = (Button)sender;
+            GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
+            id = int.Parse(selectedrow.Cells[0].Text);
+
+            System.Web.HttpContext.Current.Session["idDep"] = id;
+            Response.Redirect("/Paginas/Depositos/modDep");
+
         }
 
         protected void btnLimpiar_Click(object sender, EventArgs e)

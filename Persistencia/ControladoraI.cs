@@ -62,6 +62,82 @@ namespace Persistencia
 
         #endregion
 
+        #region Granjas
+
+        public List<Granja> listIdGranjas()
+        {
+            return new pGranja().listIdGranjas();
+        }
+
+        public List<Granja> listGranjas()
+        {
+            return new pGranja().listGranjas();
+        }
+        public List<Granja> buscarVarGranjas(string var)
+        {
+            return new pGranja().buscarVarGranjas(var);
+        }
+
+        public Granja buscarGranja(int id)
+        {
+            return new pGranja().buscarGranja(id);
+        }
+
+        public bool altaGranja(Granja granja)
+        {
+            return new pGranja().altaGranja(granja);
+        }
+
+        public bool bajaGranja(int id)
+        {
+            return new pGranja().bajaGranja(id);
+        }
+
+        public bool modGranja(Granja granja)
+        {
+            return new pGranja().modGranja(granja);
+        }
+
+        #endregion
+
+        #region Productos
+
+        public List<Producto> listIdProductos()
+        {
+            return new pProducto().listIdProductos();
+        }
+
+        public List<Producto> listProductos()
+        {
+            return new pProducto().listProductos();
+        }
+        public List<Producto> buscarVarProductos(string var)
+        {
+            return new pProducto().buscarVarProductos(var);
+        }
+
+        public Producto buscarProducto(int id)
+        {
+            return new pProducto().buscarProducto(id);
+        }
+
+        public bool altaProducto(Producto producto)
+        {
+            return new pProducto().altaProducto(producto);
+        }
+
+        public bool bajaProducto(int id)
+        {
+            return new pProducto().bajaProducto(id);
+        }
+
+        public bool modProducto(Producto producto)
+        {
+            return new pProducto().modProducto(producto);
+        }
+
+        #endregion
+
         #region Fertilizantes
 
         public List<Fertilizante> listIdFert()
@@ -98,6 +174,44 @@ namespace Persistencia
             return new pFertilizante().modFerti(fertilizante);
         }
 
+        #endregion
+
+        #region Producen
+        /*
+        public List<Produce> listIdProducen()
+        {
+            return new pProduce().listIdProducen();
+        }
+
+        public List<Produce> listProducen()
+        {
+            return new pProduce().listProducen();
+        }
+        public List<Produce> buscarVarProducen(string var)
+        {
+            return new pProduce().buscarVarProducen(var);
+        }
+
+        public Produce buscarProduce(int idGranja, int idProducto, string fchProduccion)
+        {
+            return new pProduce().buscarProduce(idGranja, idProducto, fchProduccion);
+        }
+
+        public bool altaProduce(Produce produce)
+        {
+            return new pProduce().altaProduce(produce);
+        }
+
+        public bool bajaProduce(int idGranja, int idProducto, string fchProduccion)
+        {
+            return new pProduce().bajaProduce(idGranja, idProducto, fchProduccion);
+        }
+
+        public bool modProduce(Produce produce)
+        {
+            return new pProduce().modProduce(produce);
+        }
+        */
         #endregion
 
 

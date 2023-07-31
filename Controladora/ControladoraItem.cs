@@ -100,6 +100,152 @@ namespace Controladoras
 
         #endregion
 
+        #region Granjas
+
+        public List<Granja> listIdGranjas()
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Granja> lst = inst.listIdGranjas();
+            return lst;
+
+        }
+
+        public List<Granja> listGranjas()
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Granja> lst = inst.listGranjas();
+            return lst;
+        }
+
+        public List<Granja> buscarVarGranjas(string var)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Granja> lst = inst.buscarVarGranjas(var);
+            return lst;
+        }
+
+        public Granja buscarGranja(int id)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            Granja granja = inst.buscarGranja(id);
+            return granja;
+
+        }
+
+        public bool altaGranja(Granja granja)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            if (inst.altaGranja(granja))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool bajaGranja(int id)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+
+            if (inst.bajaGranja(id))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool modGranja(Granja granja)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            if (inst.modGranja(granja))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
+        #region Productos
+
+        public List<Producto> listIdProductos()
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Producto> lst = inst.listIdProductos();
+            return lst;
+
+        }
+
+        public List<Producto> listProductos()
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Producto> lst = inst.listProductos();
+            return lst;
+        }
+
+        public List<Producto> buscarVarProductos(string var)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Producto> lst = inst.buscarVarProductos(var);
+            return lst;
+        }
+
+        public Producto buscarProducto(int id)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            Producto producto = inst.buscarProducto(id);
+            return producto;
+
+        }
+
+        public bool altaProducto(Producto producto)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            if (inst.altaProducto(producto))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool bajaProducto(int id)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+
+            if (inst.bajaProducto(id))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool modProducto(Producto producto)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            if (inst.modProducto(producto))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
         #region Fertilizantes
 
         public List<Fertilizante> listIdFert()
@@ -174,6 +320,79 @@ namespace Controladoras
 
 
 
+        #endregion
+
+        #region Producen
+        /*
+        public List<Produce> listIdProducen()
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Produce> lst = inst.listIdProducen();
+            return lst;
+
+        }
+
+        public List<Produce> listProducen()
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Produce> lst = inst.listProducen();
+            return lst;
+        }
+
+        public List<Produce> buscarVarProducen(string var)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Produce> lst = inst.buscarVarProducen(var);
+            return lst;
+        }
+
+        public Produce buscarProduce(int idGranja, int idProducto, string fchProduccion)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            Produce produce = inst.buscarProduce(idGranja, idProducto, fchProduccion);
+            return produce;
+
+        }
+
+        public bool altaProduce(Produce produce)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            if (inst.altaProduce(produce))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool bajaProduce(int idGranja, int idProducto, string fchProduccion)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+
+            if (inst.bajaProduce(idGranja, idProducto, fchProduccion))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool modProduce(Produce produce)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            if (inst.modProduce(produce))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        */
         #endregion
 
 

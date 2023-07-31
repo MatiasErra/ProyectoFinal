@@ -9,6 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%: Page.Title %> - Frutas y Verduras S.A.</title>
     <link href="~/Content/Estilos.css" rel="stylesheet" type="text/css" />
+     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    
+
     <link rel="stylesheet" href="https://drive.google.com/uc?export=view&id=1yTLwNiCZhIdCWolQldwq4spHQkgZDqkG">
 
 
@@ -26,7 +29,7 @@
     
 
 </head>
-<body>
+<body class="bodyStyl">
     <form runat="server">
         <asp:ScriptManager runat="server">
             <Scripts>
@@ -87,10 +90,19 @@
                                     <option value="/Paginas/Admins/frmAdmins">ABM Admins</option>
                                 </optgroup>
                                 <optgroup label="Camioneros">
-                                    <option value="/Paginas/Camioneros/frmCamioneros">ABM camioneros</option>
+                                    <option value="/Paginas/Camioneros/frmCamioneros">ABM Camioneros</option>
                                 </optgroup>
                                 <optgroup label="Depositos">
                                     <option value="/Paginas/Depositos/frmDepositos">ABM Depositos</option>
+                                </optgroup>
+                                <optgroup label="Granjas">
+                                    <option value="/Paginas/Granjas/frmGranjas">ABM Granjas</option>
+                                </optgroup>
+                                <optgroup label="Productos">
+                                    <option value="/Paginas/Productos/frmProductos">ABM Productos</option>
+                                </optgroup>
+                                <optgroup label="Fertilizantes">
+                                    <option value="/Paginas/Fertilizante/frmFertilizante">ABM Fertilizantes</option>
                                 </optgroup>
                             </select>
                         </li>
@@ -111,9 +123,9 @@
 
             </asp:ContentPlaceHolder>
         </div>
-        <footer class="bg-dark text-center text-light" style="position:absolute; bottom:0; width:100%;">
+        <footer class="myFooter bg-dark text-center text-light" >
             <div class="container-fluid">
-                <a class="text-light btn btn-dark" href="#arriba">Volver arriba</a>
+               
                 <a name="contacto"></a>
                 <div class="row">
                     <div class="col-md-6 col-12">
@@ -168,9 +180,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>   
+
         </footer>
-    </form>
+            </form>
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/Scripts/bootstrap.js") %>
     </asp:PlaceHolder>
