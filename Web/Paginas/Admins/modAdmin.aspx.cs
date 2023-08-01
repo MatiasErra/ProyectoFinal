@@ -85,7 +85,7 @@ namespace Web.Paginas.Admins
             txtEmail.Text = "";
             txtTel.Text = "";
             txtFchNac.Text = "";
- 
+            lblMensajes.Text = "";
             listTipoAdmin.SelectedValue = "Seleccionar tipo de Admin";
     
 
@@ -198,16 +198,17 @@ namespace Web.Paginas.Admins
 
                             if (Web.modificarAdm(unAdmin))
                             {
-                                lblMensajes.Text = "Admin modificado con exito.";
-
                                 limpiar();
+                                
+                                lblMensajes.Text = "Admin modificado con éxito.";
                                 limpiarIdSession();
+                                
                                 Response.Redirect("/Paginas/Admins/frmAdmins");
                             }
                             else
                             {
                                 lblMensajes.Text = "No se pudo modificar el Administrador.";
-                                limpiar();
+                                
                             }
                         }
                         else

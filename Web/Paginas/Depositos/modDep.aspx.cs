@@ -61,7 +61,7 @@ namespace Web.Paginas.Depositos
         {
 
             txtId.Text = "";
-
+            lblMensajes.Text = "";
             txtCapacidad.Text = "";
             txtCondiciones.Text = "";
             txtTemperatura.Text = "";
@@ -100,16 +100,17 @@ namespace Web.Paginas.Depositos
                     Deposito unDeposito = new Deposito(id, capacidad, ubicacion, temperatura, condiciones);
                     if (Web.modDeps(unDeposito))
                     {
-
-                        lblMensajes.Text = "Depósito modificado con éxito.";
                         limpiar();
+                        lblMensajes.Text = "Depósito modificado con éxito.";
+                       
                         limpiarIdSession();
                         Response.Redirect("/Paginas/Depositos/frmDepositos");
                     }
                     else
-                    {
+                    {   
+        
                         lblMensajes.Text = "No se pudo modificar el Depósito";
-                        limpiar();
+                       
                     }
                 }
                 else

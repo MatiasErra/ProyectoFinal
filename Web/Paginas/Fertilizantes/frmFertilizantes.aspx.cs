@@ -18,7 +18,7 @@ namespace Web.Paginas.Fertilizantes
             if (!IsPostBack)
             {
                 limpiar();
-
+                listar();
             }
         }
 
@@ -27,15 +27,16 @@ namespace Web.Paginas.Fertilizantes
 
         private void limpiar()
         {
+            lblMensajes.Text = "";
             txtId.Text = "";
             txtBuscar.Text = "";
             txtNombre.Text = "";
             txtTipo.Text = "";
-            txtQuimica.Text = "";
+
             txtPH.Text = "";
             lstImpacto.SelectedValue = "Seleccionar tipo de impacto";
             lstFert.SelectedIndex = -1;
-            listar();
+         
         }
         private void listar()
         {
@@ -48,7 +49,7 @@ namespace Web.Paginas.Fertilizantes
 
         private bool faltanDatos()
         {
-            if (txtNombre.Text == "" || txtTipo.Text == "" || txtQuimica.Text == "" || txtPH.Text == "")
+            if (txtNombre.Text == "" || txtTipo.Text == "" || txtPH.Text == "")
             {
                 return true;
             }
@@ -171,18 +172,7 @@ namespace Web.Paginas.Fertilizantes
 
         }
 
-        private bool faltaIdFer()
-        {
-            if (lstFert.SelectedIndex == -1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
+    
         private bool phValid()
         {
             short ph = short.Parse(txtPH.Text.ToString());
@@ -198,24 +188,6 @@ namespace Web.Paginas.Fertilizantes
 
 
         #endregion
-
-        protected void lstFert_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (!faltaIdFer())
-            {
-                string linea = this.lstFert.SelectedItem.ToString();
-                string[] partes = linea.Split(' ');
-                int id = Convert.ToInt32(partes[0]);
-                this.cargarFert(id);
-
-            }
-            else
-            {
-                this.lblMensajes.Text = "Debe seleccionar un admin de la lista.";
-
-
-            }
-        }
 
 
 
@@ -237,7 +209,7 @@ namespace Web.Paginas.Fertilizantes
                         int id = GenerateUniqueId();
                         string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
                         string tipo = HttpUtility.HtmlEncode(txtTipo.Text);
-                        string quimica = HttpUtility.HtmlEncode(txtQuimica.Text);
+
                         short pH = short.Parse(HttpUtility.HtmlEncode(txtPH.Text));
                         string impacto = HttpUtility.HtmlEncode(lstImpacto.SelectedValue.ToString());
 
@@ -250,13 +222,13 @@ namespace Web.Paginas.Fertilizantes
                         if (Web.altaFerti(fertilizante))
                         {
                             limpiar();
-                            lblMensajes.Text = "Fertilizante dado de alta con exito.";
+                            lblMensajes.Text = "Fertilizante dado de alta con éxito.";
                             listar();
 
                         }
                         else
                         {
-                            limpiar();
+                        
                             lblMensajes.Text = "No se pudo dar de alta el Fertilizante.";
 
                         }
@@ -282,100 +254,48 @@ namespace Web.Paginas.Fertilizantes
 
         protected void btnBaja_Click(object sender, EventArgs e)
         {
-            if (txtId.Text != "")
-            {
-                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                Fertilizante fertilizante = Web.buscarFerti(int.Parse(HttpUtility.HtmlEncode(txtId.Text)));
+            int id;
+            Button btnConstultar = (Button)sender;
+            GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
+            id = int.Parse(selectedrow.Cells[0].Text);
+
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                Fertilizante fertilizante = Web.buscarFerti(id);
                 if (fertilizante != null)
                 {
-                    if (Web.bajaAdmin(int.Parse(txtId.Text)))
+                    if (Web.bajaFerti(id))
                     {
                         limpiar();
-                        lblMensajes.Text = "Se ha borrado el Admin.";
-                        txtId.Text = "";
-                        txtBuscar.Text = "";
+                        lblMensajes.Text = "Se ha eliminado el Fertilizante.";
                         listar();
                     }
                     else
                     {
                         limpiar();
-                        lblMensajes.Text = "No se ha podido borrar el Admin.";
+                        lblMensajes.Text = "No se ha podido eliminar el Fertilizante.";
                     }
                 }
                 else
                 {
                     lblMensajes.Text = "El Fertilizante no existe.";
                 }
-            }
-            else
-            {
-                lblMensajes.Text = "Seleccione un Fertilizante para eliminar. ";
-            }
+          
 
         }
 
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
-            if (!faltanDatos())
-            {
-                if (phValid())
-                {
-                    if (!txtId.Text.Equals(""))
-                    {
 
-                        if (lstImpacto.SelectedValue.ToString() != "Seleccionar tipo de impacto")
-                        {
+            int id;
+            Button btnConstultar = (Button)sender;
+            GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
+            id = int.Parse(selectedrow.Cells[0].Text);
 
-                            int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text.ToString()));
-                            string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
-                            string tipo = HttpUtility.HtmlEncode(txtTipo.Text);
-                            string quimica = HttpUtility.HtmlEncode(txtQuimica.Text);
-                            short pH = short.Parse(HttpUtility.HtmlEncode(txtPH.Text));
-                            string impacto = HttpUtility.HtmlEncode(lstImpacto.SelectedValue.ToString());
+            System.Web.HttpContext.Current.Session["idFert"] = id;
+            Response.Redirect("/Paginas/Fertilizantes/modFert");
 
 
-
-
-
-                            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                            Fertilizante fertilizante = new Fertilizante(id, nombre, tipo, pH, impacto);
-                            if (Web.modFerti(fertilizante))
-                            {
-                                limpiar();
-                                lblMensajes.Text = "Fertilizante modificado con éxito.";
-                                listar();
-
-                            }
-                            else
-                            {
-                                limpiar();
-                                lblMensajes.Text = "No se pudo modificar el Fertilizante.";
-
-                            }
-
-                        }
-                        else
-                        {
-                            lblMensajes.Text = "Falta seleccionar el tipo de impacto.";
-                        }
-                    }
-                    else
-                    {
-                        lblMensajes.Text = "Debe seleccionar un fertilizante.";
-                    }
-                }
-                else
-                {
-                    lblMensajes.Text = "El PH debe estar entre 0-14.";
-                }
-
-
-            }
-            else
-            {
-                lblMensajes.Text = "Faltan Datos.";
-            }
         }
 
         protected void btnLimpiar_Click(object sender, EventArgs e)

@@ -70,7 +70,7 @@ namespace Web.Paginas.Depositos
             txtTemperatura.Text = "";
             txtUbicacion.Text = "";
             lstDeposito.SelectedIndex = -1;
-            listar();
+            lblMensajes.Text = "";
         }
 
 
@@ -183,7 +183,7 @@ namespace Web.Paginas.Depositos
                 }
                 else
                 {
-                    limpiar();
+                   
                     lblMensajes.Text = "No se pudo dar de alta el Depósito.";
 
                 }
@@ -210,15 +210,12 @@ namespace Web.Paginas.Depositos
                     if (Web.bajaDeps(id))
                     {
                         limpiar();
-                        lblMensajes.Text = "Se ha borrado el Depósito.";
-                        txtId.Text = "";
-                        txtBuscar.Text = "";
+                        lblMensajes.Text = "Se ha eliminado el Depósito.";
                         listar();
                     }
                     else
                     {
-                        limpiar();
-                        lblMensajes.Text = "No se ha podido borrar el Depósito.";
+                        lblMensajes.Text = "No se ha podido eliminar el Depósito.";
                     }
            
             }

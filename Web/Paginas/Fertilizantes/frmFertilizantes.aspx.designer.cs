@@ -33,15 +33,6 @@ namespace Web.Paginas.Fertilizantes
         protected global::System.Web.UI.WebControls.Button btnBuscar;
 
         /// <summary>
-        /// Control btnBaja.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBaja;
-
-        /// <summary>
         /// Control btnLimpiar.
         /// </summary>
         /// <remarks>
@@ -49,15 +40,6 @@ namespace Web.Paginas.Fertilizantes
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnLimpiar;
-
-        /// <summary>
-        /// Control lblMensajes.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMensajes;
 
         /// <summary>
         /// Control txtNombre.
@@ -76,15 +58,6 @@ namespace Web.Paginas.Fertilizantes
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtTipo;
-
-        /// <summary>
-        /// Control txtQuimica.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtQuimica;
 
         /// <summary>
         /// Control txtPH.
@@ -114,13 +87,13 @@ namespace Web.Paginas.Fertilizantes
         protected global::System.Web.UI.WebControls.Button btnAlta;
 
         /// <summary>
-        /// Control btnModificar.
+        /// Control lblMensajes.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnModificar;
+        protected global::System.Web.UI.WebControls.Label lblMensajes;
 
         /// <summary>
         /// Control lstFert.
@@ -129,7 +102,7 @@ namespace Web.Paginas.Fertilizantes
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lstFert;
+        protected global::System.Web.UI.WebControls.GridView lstFert;
 
         /// <summary>
         /// Control txtId.

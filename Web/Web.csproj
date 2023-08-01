@@ -129,7 +129,10 @@
     <Content Include="Paginas\Clientes\RegCliente.aspx" />
     <Content Include="Paginas\Depositos\frmDepositos.aspx" />
     <Content Include="Paginas\Depositos\modDep.aspx" />
-    <Content Include="Paginas\Fertilizante\frmFertilizante.aspx" />
+    <Content Include="Paginas\Fertilizantes\frmFertilizantes.aspx" />
+    <Content Include="Paginas\Fertilizantes\modFert.aspx" />
+    <Content Include="Paginas\Granjas\frmGranjas.aspx" />
+    <Content Include="Paginas\Productos\frmProductos.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -294,12 +297,33 @@
     <Compile Include="Paginas\Depositos\modDep.aspx.designer.cs">
       <DependentUpon>modDep.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Fertilizante\frmFertilizante.aspx.cs">
-      <DependentUpon>frmFertilizante.aspx</DependentUpon>
+    <Compile Include="Paginas\Fertilizantes\frmFertilizantes.aspx.cs">
+      <DependentUpon>frmFertilizantes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\Fertilizante\frmFertilizante.aspx.designer.cs">
-      <DependentUpon>frmFertilizante.aspx</DependentUpon>
+    <Compile Include="Paginas\Fertilizantes\frmFertilizantes.aspx.designer.cs">
+      <DependentUpon>frmFertilizantes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Fertilizantes\modFert.aspx.cs">
+      <DependentUpon>modFert.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Fertilizantes\modFert.aspx.designer.cs">
+      <DependentUpon>modFert.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Granjas\frmGranjas.aspx.cs">
+      <DependentUpon>frmGranjas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Granjas\frmGranjas.aspx.designer.cs">
+      <DependentUpon>frmGranjas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Productos\frmProductos.aspx.cs">
+      <DependentUpon>frmProductos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Productos\frmProductos.aspx.designer.cs">
+      <DependentUpon>frmProductos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Mobile.Master.cs">
