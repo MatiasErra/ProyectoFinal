@@ -52,6 +52,7 @@
     <Compile Include="Pedido_Producto.cs" />
     <Compile Include="Persona.cs" />
     <Compile Include="Pesticida.cs" />
+    <Compile Include="Produce.cs" />
     <Compile Include="Producto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -177,7 +177,6 @@ namespace Persistencia
         #endregion
 
         #region Producen
-        /*
         public List<Produce> listIdProducen()
         {
             return new pProduce().listIdProducen();
@@ -211,7 +210,6 @@ namespace Persistencia
         {
             return new pProduce().modProduce(produce);
         }
-        */
         #endregion
 
 

@@ -1,8 +1,11 @@
 ﻿using Clases;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -19,7 +22,6 @@ namespace Web.Paginas.Granjass
         {
             if (!IsPostBack)
             {
-                limpiar();
                 listar();
             }
         }
@@ -30,15 +32,12 @@ namespace Web.Paginas.Granjass
             lstGranja.DataSource = null;
             lstGranja.DataSource = Web.listGranjas();
             lstGranja.DataBind();
-            lstCliente.DataSource = null;
-            lstCliente.DataSource = Web.lstCli();
-            lstCliente.DataBind();
+            limpiar();
         }
-
 
         private bool faltanDatos()
         {
-            if (txtNombre.Text == "" || txtUbicacion.Text == "" || txtIdCliente.Text == "")
+            if (txtNombre.Text == "" || txtUbicacion.Text == "" || listDueño.SelectedValue == "Seleccione un Dueño")
             {
                 return true;
             }
@@ -47,70 +46,86 @@ namespace Web.Paginas.Granjass
                 return false;
             }
         }
-
-        private bool faltaIdGranja()
-        {
-            if (lstGranja.SelectedIndex == -1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
 
         private void limpiar()
         {
             lblMensajes.Text = "";
             txtId.Text = "";
             txtBuscar.Text = "";
-            
 
             txtNombre.Text = "";
             txtUbicacion.Text = "";
-            txtIdCliente.Text = "";
+            txtBuscarDueño.Text = "";
             lstGranja.SelectedIndex = -1;
-            lstCliente.SelectedIndex = -1;
+            CargarListDueño();
         }
 
 
-        private void cargarGranja(int id)
+
+        public void CargarListDueño()
+        {
+            listDueño.DataSource = null;
+            listDueño.DataSource = createDataSource();
+            listDueño.DataTextField = "nombre";
+            listDueño.DataValueField = "id";
+            listDueño.DataBind();
+
+        }
+
+
+
+        ICollection createDataSource()
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            Granja granja = Web.buscarGranja(id);
-            txtId.Text = granja.IdGranja.ToString();
-            txtNombre.Text = granja.Nombre;
-            txtUbicacion.Text = granja.Ubicacion;
-            txtIdCliente.Text = granja.IdCliente.ToString();
-
-        }
-
-        protected void lstGranja_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (!faltaIdGranja())
+            List<Cliente> clientes = new List<Cliente>();
+            if (txtBuscarDueño.Text == "")
             {
-                string linea = this.lstGranja.SelectedItem.ToString();
-                string[] partes = linea.Split(' ');
-                int id = Convert.ToInt32(partes[0]);
-                cargarGranja(id);
-                lstGranja.SelectedIndex = -1;
+                clientes = Web.lstCli();
             }
             else
             {
-                lblMensajes.Text = "Debe seleccionar una granja de la lista.";
+                string value = txtBuscarDueño.Text.ToLower();
+                clientes = Web.buscarVarCli(value);
+                if (clientes.Count == 0)
+                {
+                    lblMensajes.Text = "No se encontro ningun Cliente.";
+                }
+            }
+
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+            dt.Columns.Add(new DataColumn("id", typeof(String)));
+
+            dt.Rows.Add(createRow("Seleccione un Dueño", "Seleccione un Dueño", dt));
+
+            cargarDueños(clientes, dt);
+
+            DataView dv = new DataView(dt);
+            return dv;
+
+        }
+
+        private void cargarDueños(List<Cliente> clientes, DataTable dt)
+        {
+            foreach (Cliente unCliente in clientes)
+            {
+                dt.Rows.Add(createRow(unCliente.IdPersona + " " + unCliente.Nombre + " " + unCliente.Apellido, unCliente.IdPersona.ToString(), dt));
             }
         }
 
-        protected void lstCliente_SelectedIndexChanged(object sender, EventArgs e)
+        DataRow createRow(String Text, String Value, DataTable dt)
         {
-            if (lstCliente.SelectedIndex != -1)
-            {
-                string linea = this.lstCliente.SelectedItem.ToString();
-                string[] partes = linea.Split(' ');
-                txtIdCliente.Text = partes[0];
-            }
+
+
+            DataRow dr = dt.NewRow();
+
+            dr[0] = Text;
+            dr[1] = Value;
+
+            return dr;
+
         }
 
         static int GenerateUniqueId()
@@ -144,10 +159,9 @@ namespace Web.Paginas.Granjass
         private void buscar()
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            string value = txtBuscar.Text;
+            string value = txtBuscar.Text.ToLower();
             List<Granja> granjas = Web.buscarVarGranjas(value);
             lstGranja.DataSource = null;
-
 
 
             if (granjas.Count > 0)
@@ -164,33 +178,14 @@ namespace Web.Paginas.Granjass
             }
         }
 
-        /*private void buscarCliente()
-        {
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            string value = txtBuscar.Text;
-            List<Cliente> clientes = Web.buscarVarCli(value);
-            lstCliente.DataSource = null;
-
-            if (clientes.Count > 0)
-            {
-                lstCliente.Visible = true;
-                lstCliente.DataSource = clientes;
-                lstCliente.DataBind();
-            }
-            else
-            {
-                lstCliente.Visible = false;
-            }
-        }*/
-
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
             buscar();
         }
 
-        protected void btnBuscarCliente_Click(object sender, EventArgs e)
+        protected void btnBuscarDueño_Click(object sender, EventArgs e)
         {
-            //buscarCliente();
+            CargarListDueño();
         }
 
         protected void btnAlta_Click(object sender, EventArgs e)
@@ -200,22 +195,19 @@ namespace Web.Paginas.Granjass
                 int id = GenerateUniqueId();
                 string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
                 string ubicacion = HttpUtility.HtmlEncode(txtUbicacion.Text);
-                int idCliente = int.Parse(HttpUtility.HtmlEncode(txtIdCliente.Text));
+                int idCliente = int.Parse(HttpUtility.HtmlEncode(listDueño.SelectedValue));
 
                 ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
                 Granja unaGranja = new Granja(id, nombre, ubicacion, idCliente);
                 if (Web.altaGranja(unaGranja))
                 {
-                    limpiar();
-                    lblMensajes.Text = "Granja dada de alta con exito.";
                     listar();
+                    lblMensajes.Text = "Granja dada de alta con exito.";
 
                 }
                 else
                 {
-                    limpiar();
                     lblMensajes.Text = "No se pudo dar de alta la granja.";
-
                 }
             }
             else
@@ -224,27 +216,38 @@ namespace Web.Paginas.Granjass
             }
         }
 
-
+        private bool comprobarProducen(int id)
+        {
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            List<Produce> producen = Web.listProducen();
+            foreach(Produce unProduce in producen)
+            {
+                if (unProduce.IdGranja.Equals(id))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         protected void btnBaja_Click(object sender, EventArgs e)
         {
-            if (!txtId.Text.Equals(""))
+            Button btnConstultar = (Button)sender;
+            GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
+            int id = int.Parse(HttpUtility.HtmlEncode(selectedrow.Cells[0].Text));
+            if (!comprobarProducen(id))
             {
-
-                //if existe producen
                 ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                Granja unaGranja = Web.buscarGranja(int.Parse(HttpUtility.HtmlEncode(txtId.Text)));
+                Granja unaGranja = Web.buscarGranja(id);
                 if (unaGranja != null)
                 {
-                    if (Web.bajaGranja(int.Parse(txtId.Text)))
+                    if (Web.bajaGranja(id))
                     {
-                        limpiar();
-                        lblMensajes.Text = "Se ha borrado la granja.";
                         listar();
+                        lblMensajes.Text = "Se ha borrado la granja.";
                     }
                     else
                     {
-                        limpiar();
                         lblMensajes.Text = "No se ha podido borrar la granja.";
                     }
                 }
@@ -255,49 +258,27 @@ namespace Web.Paginas.Granjass
             }
             else
             {
-                lblMensajes.Text = "Seleccione una granja para eliminar. ";
-            }
+                lblMensajes.Text = "Esta granja esta asociada a un produce.";
+            }          
         }
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
-            if (!faltanDatos())
-            {
-                if (!txtId.Text.Equals(""))
-                {
-                    int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text));
-                    string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
-                    string ubicacion = HttpUtility.HtmlEncode(txtUbicacion.Text);
-                    int idCliente = int.Parse(HttpUtility.HtmlEncode(txtIdCliente.Text));
 
-                    ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                    Granja unaGraja = new Granja(id, nombre, ubicacion, idCliente);
-                    if (Web.modGranja(unaGraja))
-                    {
-                        limpiar();
-                        lblMensajes.Text = "Granja modificada con exito.";
-                        listar();
-                    }
-                    else
-                    {
-                        lblMensajes.Text = "No se pudo modificar la granja";
-                        limpiar();
-                    }
-                }
-                else
-                {
-                    lblMensajes.Text = "Debe seleccionar una granja.";
-                }
-            }
-            else
-            {
-                lblMensajes.Text = "Faltan datos.";
-            }
+            int id;
+            Button btnConstultar = (Button)sender;
+            GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
+            id = int.Parse(selectedrow.Cells[0].Text);
+
+            System.Web.HttpContext.Current.Session["idGranjaSel"] = id;
+            Response.Redirect("/Paginas/Granjas/modGranja");
+
         }
 
         protected void btnLimpiar_Click(object sender, EventArgs e)
         {
             limpiar();
         }
+
     }
 }

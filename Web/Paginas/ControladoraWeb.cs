@@ -540,7 +540,6 @@ namespace Web.Paginas
         #endregion
 
         #region Producen
-        /*
         public List<Produce> listIdProducen()
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
@@ -609,7 +608,6 @@ namespace Web.Paginas
                 return false;
             }
         }
-        */
         #endregion
 
         /*public bool altaCamion(Camion camion)

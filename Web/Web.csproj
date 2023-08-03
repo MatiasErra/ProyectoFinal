@@ -132,6 +132,9 @@
     <Content Include="Paginas\Fertilizantes\frmFertilizantes.aspx" />
     <Content Include="Paginas\Fertilizantes\modFert.aspx" />
     <Content Include="Paginas\Granjas\frmGranjas.aspx" />
+    <Content Include="Paginas\Granjas\modGranja.aspx" />
+    <Content Include="Paginas\Producen\frmProducen.aspx" />
+    <Content Include="Paginas\Producen\modProduce.aspx" />
     <Content Include="Paginas\Productos\frmProductos.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -317,6 +320,27 @@
     </Compile>
     <Compile Include="Paginas\Granjas\frmGranjas.aspx.designer.cs">
       <DependentUpon>frmGranjas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Granjas\modGranja.aspx.cs">
+      <DependentUpon>modGranja.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Granjas\modGranja.aspx.designer.cs">
+      <DependentUpon>modGranja.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Producen\frmProducen.aspx.cs">
+      <DependentUpon>frmProducen.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Producen\frmProducen.aspx.designer.cs">
+      <DependentUpon>frmProducen.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Producen\modProduce.aspx.cs">
+      <DependentUpon>modProduce.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Producen\modProduce.aspx.designer.cs">
+      <DependentUpon>modProduce.aspx</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Productos\frmProductos.aspx.cs">
       <DependentUpon>frmProductos.aspx</DependentUpon>

@@ -323,7 +323,6 @@ namespace Controladoras
         #endregion
 
         #region Producen
-        /*
         public List<Produce> listIdProducen()
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
@@ -392,7 +391,6 @@ namespace Controladoras
                 return false;
             }
         }
-        */
         #endregion
 
 
