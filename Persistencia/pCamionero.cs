@@ -33,14 +33,19 @@ namespace Persistencia
                             camionero.Apellido = reader["apellido"].ToString();
                             camionero.Email = reader["email"].ToString();
                             camionero.Telefono = reader["telefono"].ToString();
-                            camionero.FchNacimiento = reader["fchNacimiento"].ToString();
+
+                            string Fecha = reader["fchNacimiento"].ToString();
+                            string []fechaArr = Fecha.Split(' ');
+                            camionero.FchNacimiento = fechaArr[0];
+
+                        
                             camionero.Cedula = reader["cedula"].ToString();
                             camionero.Disponible = reader["disponible"].ToString();
                             
                              string Fecha2   = reader["fchManejo"].ToString();
-                            string[] fechaArr = Fecha2.Split(' ');
+                            string[] fecha2Arr = Fecha2.Split(' ');
 
-                            camionero.FchManejo = fechaArr[0];
+                            camionero.FchManejo = fecha2Arr[0];
 
                             listaCamioneros.Add(camionero);
                         }

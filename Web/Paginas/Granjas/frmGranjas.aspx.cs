@@ -174,7 +174,7 @@ namespace Web.Paginas.Granjass
             else
             {
                 lstGranja.Visible = false;
-                lblMensajes.Text = "No se encontro ninguna granja.";
+                lblMensajes.Text = "No se encontró ninguna granja.";
             }
         }
 

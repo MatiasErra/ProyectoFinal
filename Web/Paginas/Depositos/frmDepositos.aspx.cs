@@ -46,17 +46,6 @@ namespace Web.Paginas.Depositos
             }
         }
 
-        private bool faltaIdDep()
-        {
-            if (lstDeposito.SelectedIndex == -1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
 
 
         private void limpiar()
@@ -71,6 +60,7 @@ namespace Web.Paginas.Depositos
             txtUbicacion.Text = "";
             lstDeposito.SelectedIndex = -1;
             lblMensajes.Text = "";
+            listar();
         }
 
 
@@ -184,7 +174,7 @@ namespace Web.Paginas.Depositos
                 else
                 {
                    
-                    lblMensajes.Text = "No se pudo dar de alta el Depósito.";
+                    lblMensajes.Text = "Ya existe un Depósito con estos datos. Estos son los posibles datos repetidos (Ubicación).";
 
                 }
             }

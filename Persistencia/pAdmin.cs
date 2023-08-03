@@ -10,6 +10,78 @@ namespace Persistencia
     class pAdmin
     {
 
+        public int iniciarSesionAdm(string user, string pass)
+        {
+            int id = 0;
+
+
+            try
+            {
+                SqlConnection conect = Conexion.Conectar();
+                SqlCommand cmd = new SqlCommand("IniciarSesionAdm", conect);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(new SqlParameter("@User", user));
+                cmd.Parameters.Add(new SqlParameter("@Pass", pass));
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+
+                        id = int.Parse(reader["idAdmin"].ToString());
+
+                    }
+                }
+                conect.Close();
+            }
+            catch (Exception)
+            {
+                id = 0;
+
+            }
+            return id;
+
+        }
+
+        public List<string> userRepetidoAdm()
+        {
+            List<string> resultado = new List<string>();
+            try
+            {
+                string user = "";
+
+                SqlConnection conect = Conexion.Conectar();
+
+                SqlCommand cmd = new SqlCommand("userRepetidoAdm", conect);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        user = "";
+                        user = reader["usuario"].ToString();
+
+
+                        resultado.Add(user);
+
+                    }
+                }
+
+                conect.Close();
+            }
+            catch (Exception)
+            {
+                return resultado;
+            }
+            return resultado;
+
+
+
+        }
+
         public List<Admin> lstAdmin()
         {
             List<Admin> resultado = new List<Admin>();
@@ -37,9 +109,9 @@ namespace Persistencia
                        string Date = reader["fchNacimiento"].ToString();
                        string [] DateArr = Date.Split(' ');
                         admin.FchNacimiento = DateArr[0];
-                           
                         admin.User = reader["usuario"].ToString();
                         admin.TipoDeAdmin = reader["tipoDeAdmin"].ToString();
+                        admin.Estado = reader["estado"].ToString();
 
                         resultado.Add(admin);
                     }
@@ -47,9 +119,9 @@ namespace Persistencia
 
                 conect.Close();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception(ex.ToString());
+                return resultado;
             }
             return resultado;
         }
@@ -79,19 +151,22 @@ namespace Persistencia
                         admin.Apellido = reader["apellido"].ToString();
                         admin.Email = reader["email"].ToString();
                         admin.Telefono = reader["telefono"].ToString();
-                        admin.FchNacimiento = reader["fchNacimiento"].ToString();
+                        string Date = reader["fchNacimiento"].ToString();
+                        string[] DateArr = Date.Split(' ');
+
+                        admin.FchNacimiento = DateArr[0];
                         admin.User = reader["usuario"].ToString();
                         admin.TipoDeAdmin = reader["tipoDeAdmin"].ToString();
-
+                        admin.Estado = reader["estado"].ToString();
                         resultado.Add(admin);
                     }
                 }
 
                 conect.Close();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception(ex.ToString());
+                return resultado;
             }
             return resultado;
         }
@@ -126,9 +201,9 @@ namespace Persistencia
 
                 conect.Close();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception(ex.ToString());
+                return resultado;
             }
             return resultado;
         }
@@ -154,6 +229,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@user", admin.User));
                 cmd.Parameters.Add(new SqlParameter("@pass", admin.Contrasena));
                 cmd.Parameters.Add(new SqlParameter("@TipoAdm", admin.TipoDeAdmin));
+                cmd.Parameters.Add(new SqlParameter("@estado", admin.Estado));
 
                 int resBD = cmd.ExecuteNonQuery();
 
@@ -172,6 +248,7 @@ namespace Persistencia
             catch (Exception)
             {
                 resultado = false;
+                return resultado;
             }
 
             return resultado;
@@ -213,9 +290,10 @@ namespace Persistencia
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                resultado = false;
+                return resultado;
             }
             return resultado;
         }
@@ -233,12 +311,11 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@id", admin.IdPersona));
                 cmd.Parameters.Add(new SqlParameter("@nombre", admin.Nombre));
                 cmd.Parameters.Add(new SqlParameter("@apellido", admin.Apellido));
-                cmd.Parameters.Add(new SqlParameter("@email", admin.Email));
-                cmd.Parameters.Add(new SqlParameter("@tele", admin.Telefono));
+    
                 cmd.Parameters.Add(new SqlParameter("@fchNac", admin.FchNacimiento));
    
                 cmd.Parameters.Add(new SqlParameter("@TipoAdm", admin.TipoDeAdmin));
-
+                cmd.Parameters.Add(new SqlParameter("@estado", admin.Estado));
 
 
 
@@ -272,7 +349,7 @@ namespace Persistencia
         public Admin buscarAdm (int id)
         {
             Admin admin = new Admin();
-
+              
             try
             {
 
@@ -300,10 +377,12 @@ namespace Persistencia
                         string User = reader["usuario"].ToString();
                         string Password = reader["contrasena"].ToString();
                           string tpoAdm = reader["tipoDeAdmin"].ToString();
+                        string estado = reader["estado"].ToString();
+                       
 
                         
   
-                        Admin resultado = new Admin(idAdm, nombre, apellido, eMail , tel, fchNacimiento, User, Password, tpoAdm);
+                        Admin resultado = new Admin(idAdm, nombre, apellido, eMail , tel, fchNacimiento, User, Password, tpoAdm, estado);
                         admin = resultado;
                     }
 
@@ -315,9 +394,9 @@ namespace Persistencia
 
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                return admin;
             }
             return admin;
 

@@ -33,16 +33,16 @@ namespace Web.Paginas.Clientes
             lstCliente.DataBind();
         }
 
-        protected void lstCliente_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (lstCliente.SelectedIndex != -1)
-            {
-                string linea = this.lstCliente.SelectedItem.ToString();
-                string[] partes = linea.Split(' ');
-                string id = partes[0];
-                txtId.Text = id;
-            }
-        }
+        //protected void lstCliente_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    if (lstCliente.SelectedIndex != -1)
+        //    {
+        //        string linea = this.lstCliente.SelectedItem.ToString();
+        //        string[] partes = linea.Split(' ');
+        //        string id = partes[0];
+        //        txtId.Text = id;
+        //    }
+        //}
 
         private void limpiar()
         {
@@ -50,7 +50,17 @@ namespace Web.Paginas.Clientes
             txtId.Text = "";
             txtBuscar.Text = "";
             listar();
+         
         }
+
+    
+        
+
+        protected void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            limpiar();
+        }
+
 
         private void buscar()
         {

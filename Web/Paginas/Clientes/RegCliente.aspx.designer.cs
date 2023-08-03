@@ -60,15 +60,6 @@ namespace Web.Paginas.Clientes
         protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator2;
 
         /// <summary>
-        /// Control txtFchNac.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFchNac;
-
-        /// <summary>
         /// Control txtUser.
         /// </summary>
         /// <remarks>
@@ -94,6 +85,15 @@ namespace Web.Paginas.Clientes
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDir;
+
+        /// <summary>
+        /// Control txtFchNac.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFchNac;
 
         /// <summary>
         /// Control lblMensajes.

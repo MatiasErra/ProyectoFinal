@@ -28,7 +28,18 @@ namespace Persistencia
             return new pAdmin().lstIdPersonas();
         }
 
+
         #region Admins
+
+        public List<string> userRepetidoAdm()
+        {
+            return new pAdmin().userRepetidoAdm();
+        }
+
+        public int iniciarSesionAdm(string user, string pass)
+        {
+            return new pAdmin().iniciarSesionAdm(user, pass);
+        }
 
         public List<Admin> lstAdmin()
         {
@@ -64,6 +75,18 @@ namespace Persistencia
 
         #region Clientes
 
+
+
+        public int iniciarSesionCli(string user, string pass)
+        {
+            return new pCliente().iniciarSesionCli(user, pass);
+        }
+        public List<string> userRepetidoCli()
+        {
+            return new pCliente().userRepetidoCli();
+        }
+
+
         public List<Cliente> lstCliente()
         {
             return new pCliente().lstCli();
@@ -72,6 +95,7 @@ namespace Persistencia
         {
             return new pCliente().buscarVarCli(var);
         }
+
 
     
 

@@ -125,7 +125,9 @@
     <Content Include="Paginas\Admins\frmAdmins.aspx" />
     <Content Include="Paginas\Admins\modAdmin.aspx" />
     <Content Include="Paginas\Camioneros\frmCamioneros.aspx" />
+    <Content Include="Paginas\Camioneros\modCamionero.aspx" />
     <Content Include="Paginas\Clientes\frmListarClientes.aspx" />
+    <Content Include="Paginas\Clientes\iniciarSesion.aspx" />
     <Content Include="Paginas\Clientes\RegCliente.aspx" />
     <Content Include="Paginas\Depositos\frmDepositos.aspx" />
     <Content Include="Paginas\Depositos\modDep.aspx" />
@@ -271,12 +273,26 @@
     <Compile Include="Paginas\Camioneros\frmCamioneros.aspx.designer.cs">
       <DependentUpon>frmCamioneros.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Paginas\Camioneros\modCamionero.aspx.cs">
+      <DependentUpon>modCamionero.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Camioneros\modCamionero.aspx.designer.cs">
+      <DependentUpon>modCamionero.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Paginas\Clientes\frmListarClientes.aspx.cs">
       <DependentUpon>frmListarClientes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Paginas\Clientes\frmListarClientes.aspx.designer.cs">
       <DependentUpon>frmListarClientes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Clientes\iniciarSesion.aspx.cs">
+      <DependentUpon>iniciarSesion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Clientes\iniciarSesion.aspx.designer.cs">
+      <DependentUpon>iniciarSesion.aspx</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Clientes\RegCliente.aspx.cs">
       <DependentUpon>RegCliente.aspx</DependentUpon>

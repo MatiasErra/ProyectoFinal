@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Web;
 using Clases;
@@ -40,8 +41,23 @@ namespace Web.Paginas
 
         }
 
+
+
         #region Admins
 
+        public List<string> userRepetidoAdm()
+        {
+            ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
+            List<string> lst = ins.userRepetidoAdm();
+            return lst;
+        }
+
+        public int iniciarSesionAdm(string user, string pass)
+        {
+            ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
+            int id = ins.iniciarSesionAdm(user, pass);
+            return id;
+        }
         public List<Admin> lstAdmin()
         {
             ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
@@ -109,6 +125,23 @@ namespace Web.Paginas
 
         #region Clientes
 
+        public List<string> userRepetidoCli()
+        {
+            ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
+            List<string> lst = ins.userRepetidoCli();
+            return lst;
+        }
+
+
+
+
+
+        public int iniciarSesionCli(string user, string pass)
+        {
+        ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
+        int id = ins. iniciarSesionCli(user, pass);
+            return id;
+        }
         public List<Cliente> lstCli()
         {
             ControladoraPersona ins = ControladoraPersona.obtenerInstancia();

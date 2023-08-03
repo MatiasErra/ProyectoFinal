@@ -5,7 +5,7 @@
 
     <div class="card mt-1 mb-1 w-50 m-auto  text-center">
         <div class="card-header" style="background-color: white">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Modificar Deposito</h1>
+         <h2 class="title">Modificar Depósito </h2>
         </div>
         <div class="card-body">
             <div class="input-group">

@@ -4,7 +4,7 @@
     <div class="container row m-2 text-center">
         <div class="row justify-content-center">
             <div class="col-12 m-3 p-2 text-center" style="border-radius: 20px; background-color: #f2f0f0;">
-                <div class="row">
+                <div class="row ">
                     <div class="col-12">
                         <h2 class="title">ABM Administradores </h2>
                     </div>
@@ -87,9 +87,15 @@
                                     </div>
                                     <div class="input-group">
                                     
-                        <asp:TextBox ID="txtPass" runat="server" CssClass="input--style-2" TextMode="Password" MaxLength="40" placeholder="Contraseña" onkeydown="return(!(event.keyCode>=91) && event.keyCode!=32);"></asp:TextBox>
-                                    </div>
-                                 
+                        <asp:TextBox ID="txtPass" runat="server" CssClass="input--style-2" TextMode="Password" MaxLength="40" placeholder="Contraseña" onkeydown="event.keyCode!=32);"></asp:TextBox>
+                                      <asp:RegularExpressionValidator Display="Dynamic" runat="server"
+                                            ControlToValidate="txtPass"
+                                            ValidationExpression="[a-zA-Z0-9-_.,]*$"
+                                            ErrorMessage="No es una letra valida" />
+
+                                        </div>
+                                
+                                  
                                  
 
                                <div class="input-group">
@@ -97,17 +103,23 @@
                                    </asp:DropDownList>
                                </div>
 
+
+                                       <div class="input-group">
+                                   <asp:DropDownList ID="lstEstado" CssClass="input--style-2" runat="server">
+                                   </asp:DropDownList>
+                               </div>
+
                                       <div class="input-group">
                                         Fecha de nacimiento<br />
-                                        <asp:TextBox ID="txtFchNac" runat="server" CssClass="input--style-2 js-datepicker" placeholder="Telefono" TextMode="Date"></asp:TextBox>
+                                        <asp:TextBox ID="txtFchNac" runat="server" CssClass="input--style-2 js-datepicker px-0 py-2" placeholder="Telefono" TextMode="Date"></asp:TextBox>
                                     </div>
 
 
 
                                     <div class="modal-footer">
-                                        <asp:Button ID="btnAlta" class="btn btn-primary" runat="server" Text="Alta" OnClick="btnAlta_Click" />
+                                        <asp:Button ID="btnAlta" class="btnE btn--radius btn--green" runat="server" Text="Alta" OnClick="btnAlta_Click" />
 
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                        <button type="button" class="btnE btn--radius btn--gray" data-bs-dismiss="modal">Cerrar</button>
 
                                     </div>
                                 </div>
@@ -129,14 +141,14 @@
 
                 <div class="col-md-12 align-self-center">
                     <div class="row align-self-center">
-                        <div class="col-md-10 col-md-offset-1">
+                        <div class="col-md-11 col-md-offset-1">
                             <div class="form-group">
                                 <div class="table-responsive">
                                     <asp:GridView ID="lstAdmin" Width="100%" SelectedIndex="1" AutoGenerateColumns="false"
                                         CssClass="table table-bordered table-condensed table-responsive table-hover"
                                         runat="server">
                                         <AlternatingRowStyle BackColor="White" />
-                                        <HeaderStyle BackColor="#6B696B" Font-Bold="true" Font-Size="Medium" ForeColor="White" />
+                                        <HeaderStyle BackColor="#6B696B" Font-Bold="true" Font-Size="Large" ForeColor="White" />
                                         <RowStyle BackColor="#f5f5f5" />
                                         <Columns>
 
@@ -155,7 +167,7 @@
                                                 HeaderText="E-Mail" ItemStyle-CssClass="GridStl" />
 
                                             <asp:BoundField DataField="Telefono"
-                                                HeaderText="Telefono" ItemStyle-CssClass="GridStl" />
+                                                HeaderText="Teléfono" ItemStyle-CssClass="GridStl" />
 
                                             <asp:BoundField DataField="FchNacimiento"
                                                 HeaderText="Fecha de Nacimiento" ItemStyle-CssClass="GridStl" />
@@ -166,6 +178,8 @@
                                             <asp:BoundField DataField="TipoDeAdmin"
                                                 HeaderText="Tipo de Admin" ItemStyle-CssClass="GridStl" />
 
+                                             <asp:BoundField DataField="Estado"
+                                                HeaderText="Estado" ItemStyle-CssClass="GridStl" />
 
                                             <asp:TemplateField HeaderText="Opciones del administrador"
                                                 ItemStyle-CssClass="GridStl">

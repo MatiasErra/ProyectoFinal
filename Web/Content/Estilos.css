@@ -1,4 +1,4 @@
-﻿.CamList {
+.CamList {
 
 }
 
@@ -133,6 +133,8 @@ input {
 }
 
 .input--style-2 {
+    /* align-items: normal; */
+    align-content: center;
     padding: 9px 0;
     color: #666;
     align-items: center;

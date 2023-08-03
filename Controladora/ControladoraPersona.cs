@@ -29,6 +29,7 @@ namespace Controladoras
 
         #region Personas
 
+
         public List<Persona> lstIdPersonas()
         {
             ControladoraP inst = ControladoraP.obtenerInstancia();
@@ -37,7 +38,23 @@ namespace Controladoras
 
         }
 
+        public List<string> userRepetidoAdm()
+        {
+            ControladoraP inst = ControladoraP.obtenerInstancia();
+            List<string> lst = inst.userRepetidoAdm();
+            return lst;
+        }
+
+
+     
         #region Admins
+
+        public int iniciarSesionAdm(string user, string pass)
+        {
+            ControladoraP ins = ControladoraP.obtenerInstancia();
+            int id = ins.iniciarSesionAdm(user, pass);
+            return id;
+        }
 
         public List<Admin> lstAdmin()
         {
@@ -108,6 +125,20 @@ namespace Controladoras
 
         #region Clientes
 
+
+
+        public List<string> userRepetidoCli()
+        {
+            ControladoraP inst = ControladoraP.obtenerInstancia();
+            List<string> lst = inst.userRepetidoCli();
+            return lst;
+        }
+
+
+
+
+
+
         public List<Cliente> lstCli()
         {
             ControladoraP inst = ControladoraP.obtenerInstancia();
@@ -115,6 +146,12 @@ namespace Controladoras
             return lst;
         }
 
+        public int iniciarSesionCli(string user, string pass)
+        {
+            ControladoraP ins = ControladoraP.obtenerInstancia();
+            int id = ins.iniciarSesionCli(user, pass);
+            return id;
+        }
 
 
 

@@ -11,26 +11,24 @@ namespace Clases
         private int _idPesticida;
         private string _nombre;
         private string _tipo;
-        private string _toxicidad;
-        private string _resistencia;
+        private short _pH;       
         private string _impacto;
 
         public int IdPesticida { get => _idPesticida; set => _idPesticida = value; }
         public string Nombre { get => _nombre; set => _nombre = value; }
         public string Tipo { get => _tipo; set => _tipo = value; }
-        public string Toxicidad { get => _toxicidad; set => _toxicidad = value; }
-        public string Resistencia { get => _resistencia; set => _resistencia = value; }
+     
         public string Impacto { get => _impacto; set => _impacto = value; }
+        public short PH { get => _pH; set => _pH = value; }
 
         public Pesticida() { }
 
-        public Pesticida(int idPesticida, string nombre, string tipo, string toxicidad, string resistencia, string impacto)
+        public Pesticida(int idPesticida, string nombre, string tipo, short ph, string impacto)
         {
             IdPesticida = idPesticida;
             Nombre = nombre;
             Tipo = tipo;
-            Toxicidad = toxicidad;
-            Resistencia = resistencia;
+            PH = ph;
             Impacto = impacto;
         }
     }

@@ -10,16 +10,16 @@ Create table Admins(
 idAdmin int  references Personas(idPersona) primary key,
 usuario varchar(40) unique not null,
 contrasena varchar(40) not null,
+estado varchar(40) not null, check(estado in ('Habilitado', 'No Habilitado')),
 tipoDeAdmin varchar(30) not null,
 check(tipoDeAdmin in ('Administrador global','Administrador de productos','Administrador de pedidos','Administrador de flota'))
 );
-
 
 Create table Camioneros(
 idCamionero int  references Personas(idPersona) primary key,
 cedula varchar(11) not null unique,
 disponible varchar(15) not null check(disponible in ('Disponible','No disponible')),
-fchManejo date check (fchManejo < (CONVERT(date,getdate(),(103)))) not null 
+fchManejo date check (fchManejo > (CONVERT(date,getdate(),(103)))) not null 
 );
 
 Create table Depositos(
@@ -40,9 +40,38 @@ Direccion varchar(60) not null,
 );
 
 
+create table Granjas(
+idGranja int primary key,
+nombre varchar(30) not null unique,
+ubicacion varchar(50) not null unique,
+idCliente int foreign key references Clientes(idCliente)
+);
+
+create table Productos(
+idProducto int primary key,
+nombre varchar(30) not null unique,
+tipo varchar(30) not null,
+tipoVenta varchar(15) not null,
+imagen varchar(MAX) not null
+);
+
+
+create table Producen(
+idGranja int,
+idProducto int,
+fchProduccion date check(fchProduccion <= CONVERT(date,getdate(),(103))),
+stock numeric(10,0) not null,
+precio numeric(10,2) not null,
+idDeposito int,
+primary key(idGranja, idProducto, fchProduccion),
+foreign key (idGranja) references Granjas(idGranja),
+foreign key (idProducto) references Productos(idProducto),
+foreign key (idDeposito) references Depositos(idDeposito)
+);
+
 Create table Fertilizantes(
 idFerti int primary key, 
-nombre varchar(40) not null,
+nombre varchar(40) not null unique,
 tipo varchar(40) not null,
 pH  numeric(2) check(ph>-1 and ph<15) not null,
 impacto varchar(30) check(impacto 
@@ -50,12 +79,14 @@ in ('Alto','Medio','Bajo')) not null
 );
 
 Create table Pesticidas(
-idPest int primary key, 
-nombre varchar(40) not null,
-tipo  varchar(40) not null,
+idPesti int primary key, 
+nombre varchar(40) not null unique,
+tipo varchar(40) not null,
 pH  numeric(2) check(ph>-1 and ph<15) not null,
 impacto varchar(30) check(impacto 
 in ('Alto','Medio','Bajo')) not null
 );
+
+
 
 

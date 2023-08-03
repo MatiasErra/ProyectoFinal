@@ -24,7 +24,7 @@ namespace Web.Paginas.Admins
             {
                 limpiar();
                 listar();
-
+                CargarTipos();
             }
         }
 
@@ -78,18 +78,23 @@ namespace Web.Paginas.Admins
         }
 
 
-        public void CargarTipoAdm()
+        public void CargarTipos()
         {
-            listTipoAdmin.DataSource = createDataSource();
+            listTipoAdmin.DataSource = createDataSourceTip();
             listTipoAdmin.DataTextField = "nombre";
             listTipoAdmin.DataValueField = "id";
             listTipoAdmin.DataBind();
+
+            lstEstado.DataSource = createDataSourceEstado();
+            lstEstado.DataTextField = "nombre";
+            lstEstado.DataValueField = "id";
+            lstEstado.DataBind();
 
         }
 
 
 
-        ICollection createDataSource()
+        ICollection createDataSourceTip()
         {
 
 
@@ -112,7 +117,24 @@ namespace Web.Paginas.Admins
 
         }
 
-        DataRow createRow(String Text, String Value, DataTable dt)
+        ICollection createDataSourceEstado()
+        {
+
+            DataTable dt = new DataTable();
+
+
+            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+            dt.Columns.Add(new DataColumn("id", typeof(String)));
+
+            dt.Rows.Add(createRow("Seleccionar estado de Admin", "Seleccionar estado de Admin", dt));
+            dt.Rows.Add(createRow("Habilitado", "Habilitado", dt));
+            dt.Rows.Add(createRow("No Habilitado", "No Habilitado", dt));
+
+            DataView dv = new DataView(dt);
+            return dv;
+        }
+
+            DataRow createRow(String Text, String Value, DataTable dt)
         {
 
 
@@ -141,30 +163,52 @@ namespace Web.Paginas.Admins
             listTipoAdmin.SelectedValue = "Seleccionar tipo de Admin";
             txtBuscar.Text = "";
             lstAdmin.SelectedIndex = -1;
+            listar();
 
         }
 
-        private void cargarAdm(int id)
+        private bool ValidUser()
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            Admin lstadm = Web.buscarAdm(id);
+            List<string> users = Web.userRepetidoCli();
+            List<string> admins = Web.userRepetidoAdm();
+            int pep = 0;
+            string user = txtUser.Text;
+            string Luser = user.ToLower();
+            for (int i = 0; i < users.Count; i++)
+            {
+                if(Luser.Equals (users[i].ToString().ToLower()))
+                {
+                    pep++;
+                }
+               string u = users[i].ToString();
 
-            txtId.Text = lstadm.IdPersona.ToString();
-            txtNombre.Text = lstadm.Nombre.ToString();
-            txtApell.Text = lstadm.Apellido.ToString();
-            txtEmail.Text = lstadm.Email.ToString();
-            txtTel.Text = lstadm.Telefono.ToString();
-            txtUser.Text = lstadm.User.ToString();
+            }
 
-            txtFchNac.Text = DateTime.Parse(lstadm.FchNacimiento).ToString("yyyy-MM-dd");
-    
-            txtPass.Text = lstadm.Contrasena.ToString();
-            listTipoAdmin.SelectedValue = lstadm.TipoDeAdmin.ToString();
+            for (int i = 0; i < admins.Count; i++)
+            {
+                if (Luser.Equals(admins[i].ToString().ToLower()))
+                {
+                    pep++;
+                }
+                string u = admins[i].ToString();
+
+            }
+
+
+
+
+            if (pep>0)
+            {
+                return false;
+            }
+            else { return true; }
+
+
         }
 
 
 
-    
 
 
         static int GenerateUniqueId()
@@ -243,41 +287,58 @@ namespace Web.Paginas.Admins
                 {
                     if (listTipoAdmin.SelectedValue.ToString() != "Seleccionar tipo de Admin")
                     {
-                        if (fchNotToday())
+                        if (lstEstado.SelectedValue.ToString() != "Seleccionar estado de Admin")
                         {
-                            int id = GenerateUniqueId();
-                            string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
-                            string apellido = HttpUtility.HtmlEncode(txtApell.Text);
-                            string email = HttpUtility.HtmlEncode(txtEmail.Text);
-                            string tele = HttpUtility.HtmlEncode(txtTel.Text);
-                            string txtFc = HttpUtility.HtmlEncode(txtFchNac.Text);
-                            string tipoAdm = HttpUtility.HtmlEncode(listTipoAdmin.SelectedValue.ToString());
-                            string user = HttpUtility.HtmlEncode(txtUser.Text);
-                            string pass = HttpUtility.HtmlEncode(txtPass.Text);
-
-                            string hashedPassword = FormsAuthentication.HashPasswordForStoringInConfigFile(pass, "SHA1");
-
-
-
-                            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                            Admin unAdmin = new Admin(id, nombre, apellido, email, tele, txtFc, user, hashedPassword, tipoAdm);
-                            if (Web.altaAdmin(unAdmin))
+                            if (ValidUser())
                             {
-                                limpiar();
-                                lblMensajes.Text = "Admin dado de alta con éxito.";
-                                listar();
+                                if (fchNotToday())
+                                {
+                                    int id = GenerateUniqueId();
+                                    string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
+                                    string apellido = HttpUtility.HtmlEncode(txtApell.Text);
+                                    string email = HttpUtility.HtmlEncode(txtEmail.Text);
+                                    string tele = HttpUtility.HtmlEncode(txtTel.Text);
+                                    string txtFc = HttpUtility.HtmlEncode(txtFchNac.Text);
+                                    string tipoAdm = HttpUtility.HtmlEncode(listTipoAdmin.SelectedValue.ToString());
+                                    string user = HttpUtility.HtmlEncode(txtUser.Text);
+                                    string pass = HttpUtility.HtmlEncode(txtPass.Text);
+                                    string estado = HttpUtility.HtmlEncode(lstEstado.SelectedValue.ToString());
 
+                                    string hashedPassword = FormsAuthentication.HashPasswordForStoringInConfigFile(pass, "SHA1");
+
+
+
+                                    ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                                    Admin unAdmin = new Admin(id, nombre, apellido, email, tele, txtFc, user, hashedPassword, tipoAdm, estado);
+                                    if (Web.altaAdmin(unAdmin))
+                                    {
+                                        limpiar();
+                                        lblMensajes.Text = "Admin dado de alta con éxito.";
+                                        listar();
+
+                                    }
+                                    else
+                                    {
+
+                                        lblMensajes.Text = "Ya existe un admin con estos datos. Estos son los posibles datos repetidos (Email / Teléfono).";
+
+
+                                    }
+
+                                }
+                                else
+                                {
+                                    lblMensajes.Text = "La fecha debe ser menor a hoy";
+                                }
                             }
                             else
                             {
-                                
-                                lblMensajes.Text = "No se pudo dar de alta el Admin.";
-
+                                lblMensajes.Text = "El nombre de usuario ya existe.";
                             }
                         }
                         else
                         {
-                            lblMensajes.Text = "Seleccionar una fecha menor a hoy.";
+                            lblMensajes.Text = "Falta seleccionar el estado de admin.";
                         }
                     }
                     else
@@ -340,7 +401,7 @@ namespace Web.Paginas.Admins
             id = int.Parse(selectedrow.Cells[0].Text);
 
             System.Web.HttpContext.Current.Session["idAdminSel"] = id;
-            Response.Redirect("/Paginas/Admins/modAdmin");
+            
 
         }
 

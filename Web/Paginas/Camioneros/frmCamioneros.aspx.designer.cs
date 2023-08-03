@@ -33,15 +33,6 @@ namespace Web.Paginas.Camioneros
         protected global::System.Web.UI.WebControls.Button btnBuscar;
 
         /// <summary>
-        /// Control btnBaja.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBaja;
-
-        /// <summary>
         /// Control btnLimpiar.
         /// </summary>
         /// <remarks>
@@ -96,15 +87,6 @@ namespace Web.Paginas.Camioneros
         protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator2;
 
         /// <summary>
-        /// Control txtFchNac.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFchNac;
-
-        /// <summary>
         /// Control txtCedula.
         /// </summary>
         /// <remarks>
@@ -132,6 +114,15 @@ namespace Web.Paginas.Camioneros
         protected global::System.Web.UI.WebControls.DropDownList lstDisponible;
 
         /// <summary>
+        /// Control txtFchNac.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFchNac;
+
+        /// <summary>
         /// Control txtFchManejo.
         /// </summary>
         /// <remarks>
@@ -150,15 +141,6 @@ namespace Web.Paginas.Camioneros
         protected global::System.Web.UI.WebControls.Button btnAlta;
 
         /// <summary>
-        /// Control btnModificar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnModificar;
-
-        /// <summary>
         /// Control lblMensajes.
         /// </summary>
         /// <remarks>
@@ -174,7 +156,7 @@ namespace Web.Paginas.Camioneros
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lstCamionero;
+        protected global::System.Web.UI.WebControls.GridView lstCamionero;
 
         /// <summary>
         /// Control txtId.

@@ -36,7 +36,7 @@ namespace Web.Paginas.Fertilizantes
             txtPH.Text = "";
             lstImpacto.SelectedValue = "Seleccionar tipo de impacto";
             lstFert.SelectedIndex = -1;
-         
+            listar();
         }
         private void listar()
         {
@@ -229,7 +229,7 @@ namespace Web.Paginas.Fertilizantes
                         else
                         {
                         
-                            lblMensajes.Text = "No se pudo dar de alta el Fertilizante.";
+                            lblMensajes.Text = "Ya existe un Fertilizante con estos datos. Estos son los posibles datos repetidos (Nombre).";
 
                         }
 

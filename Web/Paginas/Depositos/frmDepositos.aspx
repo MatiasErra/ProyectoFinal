@@ -107,14 +107,14 @@
                                             <Columns>
 
                                                 <asp:BoundField DataField="IdDeposito"
-                                                    HeaderText="Id de Deposito"
+                                                    HeaderText="Id de Depósito"
                                                     ItemStyle-CssClass="GridStl" />
 
                                                 <asp:BoundField DataField="Capacidad"
                                                     HeaderText="Capacidad"
                                                     ItemStyle-CssClass="GridStl" />
                                                 <asp:BoundField DataField="Ubicacion"
-                                                    HeaderText="Ubicacion" ItemStyle-CssClass="GridStl" />
+                                                    HeaderText="Ubicación" ItemStyle-CssClass="GridStl" />
 
                                                 <asp:BoundField DataField="Temperatura"
                                                     HeaderText="Temperatura" ItemStyle-CssClass="GridStl" />

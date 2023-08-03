@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
+using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -50,7 +51,46 @@ namespace Web.Paginas.Clientes
         }
 
 
+        private bool ValidUser()
+        {
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            List<string> users = Web.userRepetidoCli();
+           
+            List<string> admins = Web.userRepetidoAdm();
+            int pep = 0;
+            string user = txtUser.Text;
+            string Luser = user.ToLower();
+            for (int i = 0; i < users.Count; i++)
+            {
+                if (Luser.Equals(users[i].ToString().ToLower()))
+                {
+                    pep++;
+                }
+                string u = users[i].ToString();
 
+            }
+
+            for (int i = 0; i < admins.Count; i++)
+            {
+                if (Luser.Equals(admins[i].ToString().ToLower()))
+                {
+                    pep++;
+                }
+                string u = admins[i].ToString();
+
+            }
+
+
+
+
+            if (pep > 0)
+            {
+                return false;
+            }
+            else { return true; }
+
+
+        }
 
 
         private bool faltanDatos()
@@ -112,40 +152,48 @@ namespace Web.Paginas.Clientes
         {
             if (!faltanDatos())
             {
-                if (fchNotToday())
+                if (ValidUser())
                 {
-                    int id = GenerateUniqueId();
-                    string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
-                    string apellido = HttpUtility.HtmlEncode(txtApell.Text);
-                    string email = HttpUtility.HtmlEncode(txtEmail.Text);
-                    string tele = HttpUtility.HtmlEncode(txtTel.Text);
-                    string txtFc = HttpUtility.HtmlEncode(txtFchNac.Text);
-                    string user = HttpUtility.HtmlEncode(txtUser.Text);
-                    string pass = HttpUtility.HtmlEncode(txtPass.Text);
-                    string dirr = HttpUtility.HtmlEncode(txtDir.Text);
 
-                    string hashedPassword = FormsAuthentication.HashPasswordForStoringInConfigFile(pass, "SHA1");
-
-
-
-                    ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                    Cliente unCli = new Cliente(id, nombre, apellido, email, tele, txtFc, user, hashedPassword, dirr);
-                    if (Web.altaCli(unCli))
+                    if (fchNotToday())
                     {
-                        lblMensajes.Text = "Cliente dado de alta con exito.";
+                        int id = GenerateUniqueId();
+                        string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
+                        string apellido = HttpUtility.HtmlEncode(txtApell.Text);
+                        string email = HttpUtility.HtmlEncode(txtEmail.Text);
+                        string tele = HttpUtility.HtmlEncode(txtTel.Text);
+                        string txtFc = HttpUtility.HtmlEncode(txtFchNac.Text);
+                        string user = HttpUtility.HtmlEncode(txtUser.Text);
+                        string pass = HttpUtility.HtmlEncode(txtPass.Text);
+                        string dirr = HttpUtility.HtmlEncode(txtDir.Text);
 
-                        limpiar();
+                        string hashedPassword = FormsAuthentication.HashPasswordForStoringInConfigFile(pass, "SHA1");
+
+
+
+                        ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                        Cliente unCli = new Cliente(id, nombre, apellido, email, tele, txtFc, user, hashedPassword, dirr);
+                        if (Web.altaCli(unCli))
+                        {
+                            lblMensajes.Text = "Cliente dado de alta con exito.";
+                            Response.Redirect("/Paginas/Clientes/iniciarSesion");
+                            limpiar();
+                        }
+                        else
+                        {
+                            lblMensajes.Text = "No se pudo dar de alta el Cliente, dado que el Email o telefono ya fueron registrados";
+                            
+                        }
+
                     }
                     else
                     {
-                        lblMensajes.Text = "No se pudo dar de alta el Cliente, Usuario o Email ya fueron registrados";
-                        limpiar();
+                        lblMensajes.Text = "Seleccionar una fecha menor a hoy.";
                     }
-
                 }
                 else
                 {
-                    lblMensajes.Text = "Seleccionar una fecha menor a hoy.";
+                    lblMensajes.Text = "El nombre de usuario ya existe.";
                 }
 
             }

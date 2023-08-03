@@ -172,7 +172,7 @@ namespace Web.Paginas.Fertilizantes
                             else
                             {
 
-                                lblMensajes.Text = "No se pudo modificar el Fertilizante.";
+                            lblMensajes.Text = "Ya existe un Fertilizante con estos datos. Estos son los posibles datos repetidos(Nombre).";
 
                             }
 

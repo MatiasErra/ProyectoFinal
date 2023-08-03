@@ -109,8 +109,9 @@ namespace Web.Paginas.Depositos
                     else
                     {   
         
-                        lblMensajes.Text = "No se pudo modificar el Depósito";
-                       
+                        lblMensajes.Text = "Ya existe un Depósito con estos datos. Estos son los posibles datos repetidos (Ubicación).";
+
+
                     }
                 }
                 else

@@ -37,7 +37,9 @@ namespace Persistencia
                         cliente.Apellido = reader["apellido"].ToString();
                         cliente.Email = reader["email"].ToString();
                         cliente.Telefono = reader["telefono"].ToString() ;
-                        cliente.FchNacimiento = reader["fchNacimiento"].ToString();
+                        string Date = reader["fchNacimiento"].ToString();
+                        string[] DateArr = Date.Split(' ');
+                        cliente.FchNacimiento = DateArr[0];
                         cliente.User = reader["usuario"].ToString();
                         cliente.Direccion = reader["direccion"].ToString();
 
@@ -47,11 +49,52 @@ namespace Persistencia
 
                 conect.Close();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception(ex.ToString());
+                return resultado;
             }
             return resultado;
+        }
+
+
+        public List<string> userRepetidoCli()
+        {
+            List<string> resultado = new List<string>();
+            try
+            {
+                string user = "";
+            
+             SqlConnection conect = Conexion.Conectar();
+
+                SqlCommand cmd = new SqlCommand("userRepetidoCli", conect);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        user = "";
+                        user = reader["usuario"].ToString();
+
+
+                        resultado.Add(user);
+
+                    
+
+                    }
+                }
+
+                conect.Close();
+            }
+            catch (Exception)
+            {
+                return resultado;
+            }
+            return resultado;
+
+
+
         }
 
         public List<Cliente> buscarVarCli (string var)
@@ -79,7 +122,10 @@ namespace Persistencia
                         cli.Apellido = reader["apellido"].ToString();
                         cli.Email = reader["email"].ToString();
                         cli.Telefono = reader["telefono"].ToString();
-                        cli.FchNacimiento = reader["fchNacimiento"].ToString();
+                        string Date = reader["fchNacimiento"].ToString();
+                        string[] DateArr = Date.Split(' ');
+
+                        cli.FchNacimiento = DateArr[0];
                         cli.User = reader["usuario"].ToString();
                         cli.Direccion = reader["direccion"].ToString();
                 
@@ -96,9 +142,39 @@ namespace Persistencia
             return resultado;
         }
 
+        public int iniciarSesionCli(string user, string pass)
+        {
+            int id = 0;
 
+          
+            try
+            {
+                SqlConnection conect = Conexion.Conectar();
+                SqlCommand cmd = new SqlCommand("IniciarSesionCli", conect);
+                cmd.CommandType = CommandType.StoredProcedure;
 
+                cmd.Parameters.Add(new SqlParameter("@User", user));
+                cmd.Parameters.Add(new SqlParameter("@Pass", pass));
 
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        
+                            id = int.Parse(reader["idCliente"].ToString());
+                        
+                    }
+                }
+                conect.Close();
+            }
+            catch (Exception)
+            {
+                id = 0;
+                
+            }
+            return id;
+
+         }
 
 
         public bool altaCli(Cliente cli)
@@ -223,7 +299,7 @@ namespace Persistencia
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 resultado = false;
                 return resultado;
