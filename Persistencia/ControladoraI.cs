@@ -100,6 +100,45 @@ namespace Persistencia
 
         #endregion
 
+        #region Camiones
+
+        public List<Camion> listIdCam()
+        {
+            return new pCamion().listIdCam();
+        }
+
+        public List<Camion> lstCam()
+        {
+            return new pCamion().lstCam();
+        }
+        public List<Camion> buscarVarCam(string var)
+        {
+            return new pCamion().buscarVarCam(var);
+        }
+
+        public Camion buscarCam(int id)
+        {
+            return new pCamion().buscarCam(id);
+        }
+
+        public bool altaCam(Camion camion)
+        {
+            return new pCamion().altaCam(camion);
+        }
+
+        public bool bajaCam(int id)
+        {
+            return new pCamion().bajaCam(id);
+        }
+
+        public bool modCam(Camion camion)
+        {
+            return new pCamion().modCam(camion);
+        }
+
+        #endregion
+
+
         #region Productos
 
         public List<Producto> listIdProductos()
@@ -137,6 +176,45 @@ namespace Persistencia
         }
 
         #endregion
+
+        #region Pesticida
+
+        public List<Pesticida> listIdPesti()
+        {
+            return new pPesticida().listIdPesti();
+        }
+
+        public List<Pesticida> lstPesti()
+        {
+            return new pPesticida().lstPesti();
+        }
+        public List<Pesticida> buscarVarPesti(string var)
+        {
+            return new pPesticida().buscarVarPesti(var);
+        }
+
+        public Pesticida buscarPesti(int id)
+        {
+            return new pPesticida().buscarPesti(id);
+        }
+
+        public bool altaPesti(Pesticida pesticida)
+        {
+            return new pPesticida().altaPesti(pesticida);
+        }
+
+        public bool bajaPesti(int id)
+        {
+            return new pPesticida().bajaPesti(id);
+        }
+
+        public bool modPesti(Pesticida pesticida)
+        {
+            return new pPesticida().modPesti(pesticida);
+        }
+
+        #endregion
+
 
         #region Fertilizantes
 

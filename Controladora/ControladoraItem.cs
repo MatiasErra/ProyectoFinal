@@ -246,6 +246,82 @@ namespace Controladoras
 
         #endregion
 
+        #region Pesticida
+
+        public List<Pesticida> listIdPesti()
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Pesticida> lst = inst.listIdPesti();
+            return lst;
+
+        }
+
+        public List<Pesticida> lstPesti()
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Pesticida> lst = inst.lstPesti();
+            return lst;
+        }
+
+        public List<Pesticida> buscarVarPesti(string var)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Pesticida> lst = inst.buscarVarPesti(var);
+            return lst;
+        }
+
+        public Pesticida buscarPesti(int id)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            Pesticida pesti = inst.buscarPesti(id);
+            return pesti;
+
+        }
+
+        public bool altaPesti(Pesticida pesticida)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            if (inst.altaPesti(pesticida))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool bajaPesti(int id)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+
+            if (inst.bajaPesti(id))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool modPesti(Pesticida pesticida)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            if (inst.modPesti(pesticida))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+
+
+        #endregion
+
         #region Fertilizantes
 
         public List<Fertilizante> listIdFert()
@@ -393,18 +469,76 @@ namespace Controladoras
         }
         #endregion
 
-        /*public bool altaCamion(Camion Camion)
+        #region Camiones
+        public List<Camion> listIdCam()
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Camion> lst = inst.listIdCam();
+            return lst;
+
+        }
+
+        public List<Camion> lstCam()
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Camion> lst = inst.lstCam();
+            return lst;
+        }
+
+        public List<Camion> buscarVarCam(string var)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Camion> lst = inst.buscarVarCam(var);
+            return lst;
+        }
+
+        public Camion buscarCam(int id)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
 
+            Camion pesti = inst.buscarCam(id);
+            return pesti;
 
-            if (inst.altaCamion(Camion))
+        }
+
+        public bool altaCam(Camion camion)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            if (inst.altaCam(camion))
             {
                 return true;
             }
             else
                 return false;
-        }*/
+        }
+
+        public bool bajaCam(int id)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+
+            if (inst.bajaCam(id))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool modCam(Camion camion)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            if (inst.modCam(camion))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        #endregion
 
     }
 }

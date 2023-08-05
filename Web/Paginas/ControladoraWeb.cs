@@ -495,6 +495,82 @@ namespace Web.Paginas
 
         #endregion
 
+        #region Pesticida
+
+        public List<Pesticida> listIdPesti()
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            List<Pesticida> lst = inst.listIdPesti();
+            return lst;
+
+        }
+
+        public List<Pesticida> lstPesti()
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            List<Pesticida> lst = inst.lstPesti();
+            return lst;
+        }
+
+        public List<Pesticida> buscarVarPesti(string var)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            List<Pesticida> lst = inst.buscarVarPesti(var);
+            return lst;
+        }
+
+        public Pesticida buscarPesti(int id)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+            Pesticida pesti = inst.buscarPesti(id);
+            return pesti;
+
+        }
+
+        public bool altaPesti(Pesticida pesticida)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+            if (inst.altaPesti(pesticida))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool bajaPesti(int id)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+
+            if (inst.bajaPesti(id))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool modPesti(Pesticida pesticida)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            if (inst.modPesti(pesticida))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+
+
+        #endregion
+
         #region Fertilizantes
 
         public List<Fertilizante> listIdFert()
@@ -643,10 +719,67 @@ namespace Web.Paginas
         }
         #endregion
 
-        /*public bool altaCamion(Camion camion)
+        #region Camiones
+        public List<Camion> listIdCam()
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            if (inst.altaCamion(camion))
+            List<Camion> lst = inst.listIdCam();
+            return lst;
+
+        }
+
+        public List<Camion> lstCam()
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            List<Camion> lst = inst.lstCam();
+            return lst;
+        }
+
+        public List<Camion> buscarVarCam(string var)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            List<Camion> lst = inst.buscarVarCam(var);
+            return lst;
+        }
+
+        public Camion buscarCam(int id)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+            Camion pesti = inst.buscarCam(id);
+            return pesti;
+
+        }
+
+        public bool altaCam(Camion camion)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+            if (inst.altaCam(camion))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool bajaCam(int id)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+
+            if (inst.bajaCam(id))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool modCam(Camion camion)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            if (inst.modCam(camion))
             {
                 return true;
             }
@@ -654,7 +787,9 @@ namespace Web.Paginas
             {
                 return false;
             }
-        }*/
+        }
+        #endregion
+
 
 
 

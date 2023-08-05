@@ -126,6 +126,8 @@
     <Content Include="Paginas\Admins\modAdmin.aspx" />
     <Content Include="Paginas\Camioneros\frmCamioneros.aspx" />
     <Content Include="Paginas\Camioneros\modCamionero.aspx" />
+    <Content Include="Paginas\Camiones\frmCamiones.aspx" />
+    <Content Include="Paginas\Camiones\modCamiones.aspx" />
     <Content Include="Paginas\Clientes\frmListarClientes.aspx" />
     <Content Include="Paginas\Clientes\iniciarSesion.aspx" />
     <Content Include="Paginas\Clientes\RegCliente.aspx" />
@@ -135,6 +137,8 @@
     <Content Include="Paginas\Fertilizantes\modFert.aspx" />
     <Content Include="Paginas\Granjas\frmGranjas.aspx" />
     <Content Include="Paginas\Granjas\modGranja.aspx" />
+    <Content Include="Paginas\Pesticidas\frmPesticidas.aspx" />
+    <Content Include="Paginas\Pesticidas\modPest.aspx" />
     <Content Include="Paginas\Producen\frmProducen.aspx" />
     <Content Include="Paginas\Producen\modProduce.aspx" />
     <Content Include="Paginas\Productos\frmProductos.aspx" />
@@ -280,6 +284,20 @@
     <Compile Include="Paginas\Camioneros\modCamionero.aspx.designer.cs">
       <DependentUpon>modCamionero.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Paginas\Camiones\frmCamiones.aspx.cs">
+      <DependentUpon>frmCamiones.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Camiones\frmCamiones.aspx.designer.cs">
+      <DependentUpon>frmCamiones.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Camiones\modCamiones.aspx.cs">
+      <DependentUpon>modCamiones.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Camiones\modCamiones.aspx.designer.cs">
+      <DependentUpon>modCamiones.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Paginas\Clientes\frmListarClientes.aspx.cs">
       <DependentUpon>frmListarClientes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -343,6 +361,20 @@
     </Compile>
     <Compile Include="Paginas\Granjas\modGranja.aspx.designer.cs">
       <DependentUpon>modGranja.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Pesticidas\frmPesticidas.aspx.cs">
+      <DependentUpon>frmPesticidas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Pesticidas\frmPesticidas.aspx.designer.cs">
+      <DependentUpon>frmPesticidas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Pesticidas\modPest.aspx.cs">
+      <DependentUpon>modPest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Pesticidas\modPest.aspx.designer.cs">
+      <DependentUpon>modPest.aspx</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Producen\frmProducen.aspx.cs">
       <DependentUpon>frmProducen.aspx</DependentUpon>

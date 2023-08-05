@@ -1,10 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="modFert.aspx.cs" Inherits="Web.Paginas.Fertilizantes.modFert" %>
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="modPest.aspx.cs" Inherits="Web.Paginas.Pesticidas.modPest" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="card mt-1 mb-1 w-50 m-auto  text-center">
         <div class="card-header" style="background-color: white">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Modificar Depósito</h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Modificar Pesticida</h1>
         </div>
         <div class="card-body">
 
@@ -60,4 +59,5 @@
 
         </div>
         </div>
+
 </asp:Content>

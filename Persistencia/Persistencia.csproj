@@ -45,6 +45,7 @@
     <Compile Include="ControladoraP.cs" />
     <Compile Include="Conexion.cs" />
     <Compile Include="pAdmin.cs" />
+    <Compile Include="pCamion.cs" />
     <Compile Include="pCamionero.cs" />
     <Compile Include="pCliente.cs" />
     <Compile Include="pDeposito.cs" />

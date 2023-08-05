@@ -22,12 +22,21 @@ disponible varchar(15) not null check(disponible in ('Disponible','No disponible
 fchManejo date check (fchManejo > (CONVERT(date,getdate(),(103)))) not null 
 );
 
+
 Create table Depositos(
 idDeposito int primary key,
 capacidad varchar(20) not null,
 ubicacion varchar(50) not null unique,
 temperatura numeric(3,0) not null,
 condiciones varchar(80) not null
+);
+
+Create table Camiones(
+idCamion int primary key,
+marca varchar(30) not null,
+modelo varchar(30) not null,
+carga numeric(10,2) not null,
+disponible varchar(30) not null check(disponible in ('Disponible','No disponible'))
 );
 
 

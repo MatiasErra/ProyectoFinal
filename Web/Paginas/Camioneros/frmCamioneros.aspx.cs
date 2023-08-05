@@ -260,7 +260,7 @@ namespace Web.Paginas.Camioneros
                             if (Web.altaCamionero(unCamionero))
                             {
                                 limpiar();
-                                lblMensajes.Text = "Camionero dado de alta con exito.";
+                                lblMensajes.Text = "Camionero dado de alta con éxito.";
                                 listar();
                             }
                             else
