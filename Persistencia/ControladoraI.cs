@@ -254,39 +254,60 @@ namespace Persistencia
 
         #endregion
 
-        #region Producen
-        public List<Produce> listIdProducen()
+        #region Lotes
+        public List<Lote> listIdLotes()
         {
-            return new pProduce().listIdProducen();
+            return new pLote().listIdLotes();
         }
 
-        public List<Produce> listProducen()
+        public List<Lote_Ferti> listIdLotes_Fertis()
         {
-            return new pProduce().listProducen();
-        }
-        public List<Produce> buscarVarProducen(string var)
-        {
-            return new pProduce().buscarVarProducen(var);
+            return new pLote().listIdLotes_Fertis();
         }
 
-        public Produce buscarProduce(int idGranja, int idProducto, string fchProduccion)
+        public List<Lote> listLotes()
         {
-            return new pProduce().buscarProduce(idGranja, idProducto, fchProduccion);
+            return new pLote().listLotes();
         }
 
-        public bool altaProduce(Produce produce)
+        public List<Lote_Ferti> listLotes_Fertis()
         {
-            return new pProduce().altaProduce(produce);
+            return new pLote().listLotes_Fertis();
         }
 
-        public bool bajaProduce(int idGranja, int idProducto, string fchProduccion)
+        public List<Lote> buscarVarLotes(string var)
         {
-            return new pProduce().bajaProduce(idGranja, idProducto, fchProduccion);
+            return new pLote().buscarVarLotes(var);
         }
 
-        public bool modProduce(Produce produce)
+        public List<Lote_Ferti> buscarVarLotes_Fertis(string var)
         {
-            return new pProduce().modProduce(produce);
+            return new pLote().buscarVarLotes_Fertis(var);
+        }
+
+        public Lote buscarLote(int idGranja, int idProducto, string fchProduccion)
+        {
+            return new pLote().buscarLote(idGranja, idProducto, fchProduccion);
+        }
+
+        public Lote_Ferti buscarLote_Ferti(int idFertilizante, int idGranja, int idProducto, string fchProduccion)
+        {
+            return new pLote().buscarLote_Ferti(idFertilizante, idGranja, idProducto, fchProduccion);
+        }
+
+        public bool altaLote(Lote lote)
+        {
+            return new pLote().altaLote(lote);
+        }
+
+        public bool bajaLote(int idFertilizante, int idGranja, int idProducto, string fchProduccion)
+        {
+            return new pLote().bajaLote(idFertilizante, idGranja, idProducto, fchProduccion);
+        }
+
+        public bool modLote(Lote lote, Lote_Ferti loteF)
+        {
+            return new pLote().modLote(lote, loteF);
         }
         #endregion
 

@@ -33,13 +33,13 @@ namespace Web.Paginas.Productos
         protected global::System.Web.UI.WebControls.Button btnBuscar;
 
         /// <summary>
-        /// Control btnBaja.
+        /// Control btnVolver.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBaja;
+        protected global::System.Web.UI.WebControls.Button btnVolver;
 
         /// <summary>
         /// Control btnLimpiar.
@@ -60,22 +60,22 @@ namespace Web.Paginas.Productos
         protected global::System.Web.UI.WebControls.TextBox txtNombre;
 
         /// <summary>
-        /// Control txtTipo.
+        /// Control listTipo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTipo;
+        protected global::System.Web.UI.WebControls.DropDownList listTipo;
 
         /// <summary>
-        /// Control txtTipoVenta.
+        /// Control listTipoVenta.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTipoVenta;
+        protected global::System.Web.UI.WebControls.DropDownList listTipoVenta;
 
         /// <summary>
         /// Control fileImagen.
@@ -87,15 +87,6 @@ namespace Web.Paginas.Productos
         protected global::System.Web.UI.WebControls.FileUpload fileImagen;
 
         /// <summary>
-        /// Control imgImagen.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image imgImagen;
-
-        /// <summary>
         /// Control btnAlta.
         /// </summary>
         /// <remarks>
@@ -103,15 +94,6 @@ namespace Web.Paginas.Productos
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAlta;
-
-        /// <summary>
-        /// Control btnModificar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnModificar;
 
         /// <summary>
         /// Control lblMensajes.
@@ -129,7 +111,7 @@ namespace Web.Paginas.Productos
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lstProducto;
+        protected global::System.Web.UI.WebControls.GridView lstProducto;
 
         /// <summary>
         /// Control txtId.

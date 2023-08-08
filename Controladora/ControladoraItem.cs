@@ -398,43 +398,74 @@ namespace Controladoras
 
         #endregion
 
-        #region Producen
-        public List<Produce> listIdProducen()
+        #region Lotes
+        public List<Lote> listIdLotes()
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Produce> lst = inst.listIdProducen();
+            List<Lote> lst = inst.listIdLotes();
             return lst;
 
         }
 
-        public List<Produce> listProducen()
+        public List<Lote_Ferti> listIdLotes_Fertis()
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Produce> lst = inst.listProducen();
+            List<Lote_Ferti> lst = inst.listIdLotes_Fertis();
+            return lst;
+
+        }
+
+        public List<Lote> listLotes()
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Lote> lst = inst.listLotes();
             return lst;
         }
 
-        public List<Produce> buscarVarProducen(string var)
+        public List<Lote_Ferti> listLotes_Fertis()
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Produce> lst = inst.buscarVarProducen(var);
+            List<Lote_Ferti> lst = inst.listLotes_Fertis();
             return lst;
         }
 
-        public Produce buscarProduce(int idGranja, int idProducto, string fchProduccion)
+        public List<Lote> buscarVarLotes(string var)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Lote> lst = inst.buscarVarLotes(var);
+            return lst;
+        }
+
+        public List<Lote_Ferti> buscarVarLotes_Fertis(string var)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Lote_Ferti> lst = inst.buscarVarLotes_Fertis(var);
+            return lst;
+        }
+
+        public Lote buscarLote(int idGranja, int idProducto, string fchProduccion)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
 
-            Produce produce = inst.buscarProduce(idGranja, idProducto, fchProduccion);
-            return produce;
+            Lote lote = inst.buscarLote(idGranja, idProducto, fchProduccion);
+            return lote;
 
         }
 
-        public bool altaProduce(Produce produce)
+        public Lote_Ferti buscarLote_Ferti(int idFertilizante, int idGranja, int idProducto, string fchProduccion)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
 
-            if (inst.altaProduce(produce))
+            Lote_Ferti loteF = inst.buscarLote_Ferti(idFertilizante, idGranja, idProducto, fchProduccion);
+            return loteF;
+
+        }
+
+        public bool altaLote(Lote lote)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            if (inst.altaLote(lote))
             {
                 return true;
             }
@@ -442,12 +473,12 @@ namespace Controladoras
                 return false;
         }
 
-        public bool bajaProduce(int idGranja, int idProducto, string fchProduccion)
+        public bool bajaLote(int idFertilizante, int idGranja, int idProducto, string fchProduccion)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
 
 
-            if (inst.bajaProduce(idGranja, idProducto, fchProduccion))
+            if (inst.bajaLote(idFertilizante, idGranja, idProducto, fchProduccion))
             {
                 return true;
             }
@@ -455,10 +486,10 @@ namespace Controladoras
                 return false;
         }
 
-        public bool modProduce(Produce produce)
+        public bool modLote(Lote lote, Lote_Ferti loteF)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            if (inst.modProduce(produce))
+            if (inst.modLote(lote, loteF))
             {
                 return true;
             }

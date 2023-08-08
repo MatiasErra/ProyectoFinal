@@ -23,6 +23,10 @@ namespace Web.Paginas.Granjass
             if (!IsPostBack)
             {
                 listar();
+                if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
+                {
+                    btnVolver.Visible = true;
+                }
             }
         }
 
@@ -52,6 +56,7 @@ namespace Web.Paginas.Granjass
             lblMensajes.Text = "";
             txtId.Text = "";
             txtBuscar.Text = "";
+
 
             txtNombre.Text = "";
             txtUbicacion.Text = "";
@@ -188,6 +193,11 @@ namespace Web.Paginas.Granjass
             CargarListDueño();
         }
 
+        protected void btnVolver_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("/Paginas/Lotes/frmLotes");
+        }
+
         protected void btnAlta_Click(object sender, EventArgs e)
         {
             if (!faltanDatos())
@@ -201,13 +211,22 @@ namespace Web.Paginas.Granjass
                 Granja unaGranja = new Granja(id, nombre, ubicacion, idCliente);
                 if (Web.altaGranja(unaGranja))
                 {
-                    listar();
-                    lblMensajes.Text = "Granja dada de alta con exito.";
+                    if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
+                    {
+                        System.Web.HttpContext.Current.Session["idGranjaSel"] = unaGranja.IdGranja.ToString();
+                        Response.Redirect("/Paginas/Lotes/frmLotes");
+                    }
+                    else
+                    {
+                        listar();
+                        lblMensajes.Text = "Granja dada de alta con éxito.";
+                    }
+
 
                 }
                 else
                 {
-                    lblMensajes.Text = "No se pudo dar de alta la granja.";
+                    lblMensajes.Text = "Ya existe una Granja con estos datos. Estos son los posibles datos repetidos (Ubicación).";
                 }
             }
             else
@@ -219,10 +238,10 @@ namespace Web.Paginas.Granjass
         private bool comprobarProducen(int id)
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            List<Produce> producen = Web.listProducen();
-            foreach(Produce unProduce in producen)
+            List<Lote> lotes = Web.listLotes();
+            foreach (Lote unLote in lotes)
             {
-                if (unProduce.IdGranja.Equals(id))
+                if (unLote.IdGranja.Equals(id))
                 {
                     return true;
                 }
@@ -235,11 +254,12 @@ namespace Web.Paginas.Granjass
             Button btnConstultar = (Button)sender;
             GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
             int id = int.Parse(HttpUtility.HtmlEncode(selectedrow.Cells[0].Text));
-            if (!comprobarProducen(id))
+
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            Granja unaGranja = Web.buscarGranja(id);
+            if (unaGranja != null)
             {
-                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                Granja unaGranja = Web.buscarGranja(id);
-                if (unaGranja != null)
+                if (!comprobarProducen(id))
                 {
                     if (Web.bajaGranja(id))
                     {
@@ -253,13 +273,14 @@ namespace Web.Paginas.Granjass
                 }
                 else
                 {
-                    lblMensajes.Text = "La granja no existe.";
+                    lblMensajes.Text = "Esta granja esta asociada a un lote.";
                 }
             }
             else
             {
-                lblMensajes.Text = "Esta granja esta asociada a un produce.";
-            }          
+                lblMensajes.Text = "La granja no existe.";
+            }
+
         }
 
         protected void btnModificar_Click(object sender, EventArgs e)

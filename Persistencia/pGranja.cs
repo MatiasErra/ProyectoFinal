@@ -49,7 +49,7 @@ namespace Persistencia
 
         public List<Granja> listGranjas()
         {
-            List<Granja> listaGranjas = new List<Granja>();
+            List<Granja> resultado = new List<Granja>();
 
             Granja granja;
             using (SqlConnection connect = Conexion.Conectar())
@@ -68,18 +68,18 @@ namespace Persistencia
                             granja.Ubicacion = reader["ubicacion"].ToString();
                             granja.IdCliente = int.Parse(reader["idCliente"].ToString());
 
-                            listaGranjas.Add(granja);
+                            resultado.Add(granja);
                         }
                     }
                 }
                 catch (Exception)
                 {
 
-                    return listaGranjas;
+                    return resultado;
 
                 }
             }
-            return listaGranjas;
+            return resultado;
         }
 
         public List<Granja> buscarVarGranjas(string var)
@@ -182,9 +182,10 @@ namespace Persistencia
                     resultado = true;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                resultado = false;
+                return resultado;
             }
             return resultado;
         }
@@ -217,6 +218,7 @@ namespace Persistencia
             }
             catch (Exception)
             {
+                resultado = false;
                 return resultado;
             }
 
@@ -255,6 +257,7 @@ namespace Persistencia
             }
             catch (Exception)
             {
+                resultado = false;
                 return resultado;
 
             }

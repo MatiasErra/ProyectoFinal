@@ -19,6 +19,10 @@ namespace Web.Paginas.Fertilizantes
             {
                 limpiar();
                 listar();
+                if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
+                {
+                    btnVolver.Visible = true;
+                }
             }
         }
 
@@ -161,22 +165,22 @@ namespace Web.Paginas.Fertilizantes
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             Fertilizante fer = Web.buscarFerti(id);
-            
+
             txtId.Text = fer.IdFertilizante.ToString();
             txtNombre.Text = fer.Nombre.ToString();
-           txtTipo.Text = fer.Tipo.ToString();
+            txtTipo.Text = fer.Tipo.ToString();
 
             txtPH.Text = fer.PH.ToString();
             lstImpacto.SelectedValue = fer.Impacto.ToString();
-            
+
 
         }
 
-    
+
         private bool phValid()
         {
             short ph = short.Parse(txtPH.Text.ToString());
-            if (ph>-1 && ph <15)
+            if (ph > -1 && ph < 15)
             {
                 return true;
             }
@@ -190,7 +194,10 @@ namespace Web.Paginas.Fertilizantes
         #endregion
 
 
-
+        protected void btnVolver_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("/Paginas/Lotes/frmLotes");
+        }
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
@@ -221,14 +228,28 @@ namespace Web.Paginas.Fertilizantes
                         Fertilizante fertilizante = new Fertilizante(id, nombre, tipo, pH, impacto);
                         if (Web.altaFerti(fertilizante))
                         {
-                            limpiar();
-                            lblMensajes.Text = "Fertilizante dado de alta con éxito.";
-                            listar();
+                            if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
+                            {
+                                System.Web.HttpContext.Current.Session["idFertilizanteSel"] = fertilizante.IdFertilizante.ToString();
+                                Response.Redirect("/Paginas/Lotes/frmLotes");
+                            }
+                            if (System.Web.HttpContext.Current.Session["loteDatosMod"] != null)
+                            {
+                                System.Web.HttpContext.Current.Session["idFertilizanteSel"] = fertilizante.IdFertilizante.ToString();
+                                Response.Redirect("/Paginas/Lotes/modLote");
+                             
+                            }
+                            else
+                            {
+                                limpiar();
+                                lblMensajes.Text = "Fertilizante dado de alta con éxito.";
+                                listar();
+                            }
 
                         }
                         else
                         {
-                        
+
                             lblMensajes.Text = "Ya existe un Fertilizante con estos datos. Estos son los posibles datos repetidos (Nombre).";
 
                         }
@@ -260,26 +281,26 @@ namespace Web.Paginas.Fertilizantes
             id = int.Parse(selectedrow.Cells[0].Text);
 
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                Fertilizante fertilizante = Web.buscarFerti(id);
-                if (fertilizante != null)
+            Fertilizante fertilizante = Web.buscarFerti(id);
+            if (fertilizante != null)
+            {
+                if (Web.bajaFerti(id))
                 {
-                    if (Web.bajaFerti(id))
-                    {
-                        limpiar();
-                        lblMensajes.Text = "Se ha eliminado el Fertilizante.";
-                        listar();
-                    }
-                    else
-                    {
-                        limpiar();
-                        lblMensajes.Text = "No se ha podido eliminar el Fertilizante.";
-                    }
+                    limpiar();
+                    lblMensajes.Text = "Se ha eliminado el Fertilizante.";
+                    listar();
                 }
                 else
                 {
-                    lblMensajes.Text = "El Fertilizante no existe.";
+                    limpiar();
+                    lblMensajes.Text = "No se ha podido eliminar el Fertilizante.";
                 }
-          
+            }
+            else
+            {
+                lblMensajes.Text = "El Fertilizante no existe.";
+            }
+
 
         }
 

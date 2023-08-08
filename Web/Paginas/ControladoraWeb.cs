@@ -648,44 +648,76 @@ namespace Web.Paginas
 
         #endregion
 
-        #region Producen
-        public List<Produce> listIdProducen()
+        #region Lotes
+        public List<Lote> listIdLotes()
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Produce> lst = inst.listIdProducen();
+            List<Lote> lst = inst.listIdLotes();
             return lst;
 
         }
 
-        public List<Produce> listProducen()
+        public List<Lote_Ferti> listIdLotes_Fertis()
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Produce> lst = inst.listProducen();
+            List<Lote_Ferti> lst = inst.listIdLotes_Fertis();
             return lst;
 
         }
 
-        public List<Produce> buscarVarProducen(string var)
+        public List<Lote> listLotes()
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            List<Lote> lst = inst.listLotes();
+            return lst;
+
+        }
+
+        public List<Lote_Ferti> listLotes_Fertis()
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            List<Lote_Ferti> lst = inst.listLotes_Fertis();
+            return lst;
+
+        }
+
+        public List<Lote> buscarVarLotes(string var)
         {
             ControladoraItem ins = ControladoraItem.obtenerInstancia();
-            List<Produce> lst = ins.buscarVarProducen(var);
+            List<Lote> lst = ins.buscarVarLotes(var);
             return lst;
         }
 
-        public Produce buscarProduce(int idGranja, int idProducto, string fchProduccion)
+        public List<Lote_Ferti> buscarVarLotes_Fertis(string var)
+        {
+            ControladoraItem ins = ControladoraItem.obtenerInstancia();
+            List<Lote_Ferti> lst = ins.buscarVarLotes_Fertis(var);
+            return lst;
+        }
+
+        public Lote buscarLote(int idGranja, int idProducto, string fchProduccion)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            Produce produce = inst.buscarProduce(idGranja, idProducto, fchProduccion);
-            return produce;
+            Lote lote = inst.buscarLote(idGranja, idProducto, fchProduccion);
+            return lote;
 
         }
 
-        public bool altaProduce(Produce produce)
+        public Lote_Ferti buscarLote_Ferti(int idFertilizante, int idGranja, int idProducto, string fchProduccion)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            if (inst.altaProduce(produce))
+            Lote_Ferti loteF = inst.buscarLote_Ferti(idFertilizante, idGranja, idProducto, fchProduccion);
+            return loteF;
+
+        }
+
+        public bool altaLote(Lote lote)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+            if (inst.altaLote(lote))
             {
                 return true;
             }
@@ -693,11 +725,11 @@ namespace Web.Paginas
                 return false;
         }
 
-        public bool bajaProduce(int idGranja, int idProducto, string fchProduccion)
+        public bool bajaLote(int idFertilizante, int idGranja, int idProducto, string fchProduccion)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            if (inst.bajaProduce(idGranja, idProducto, fchProduccion))
+            if (inst.bajaLote(idFertilizante, idGranja, idProducto, fchProduccion))
             {
                 return true;
             }
@@ -705,10 +737,10 @@ namespace Web.Paginas
                 return false;
         }
 
-        public bool modProduce(Produce produce)
+        public bool modLote(Lote lote, Lote_Ferti loteF)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            if (inst.modProduce(produce))
+            if (inst.modLote(lote, loteF))
             {
                 return true;
             }

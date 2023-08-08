@@ -181,7 +181,7 @@ namespace Web.Paginas.Granjas
                     }
                     else
                     {
-                        lblMensajes.Text = "No se pudo modificar la granja";
+                        lblMensajes.Text = "Ya existe una Granja con estos datos. Estos son los posibles datos repetidos (Ubicación).";
                     }
                 }
                 else

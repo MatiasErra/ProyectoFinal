@@ -111,7 +111,7 @@
 
                                       <div class="input-group">
                                         Fecha de nacimiento<br />
-                                        <asp:TextBox ID="txtFchNac" runat="server" CssClass="input--style-2 js-datepicker px-0 py-2" placeholder="Telefono" TextMode="Date"></asp:TextBox>
+                                        <asp:TextBox ID="txtFchNac" runat="server" CssClass="input--style-2 js-datepicker px-0 py-2" placeholder="Fecha" TextMode="Date"></asp:TextBox>
                                     </div>
 
 

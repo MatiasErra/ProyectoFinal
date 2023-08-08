@@ -15,6 +15,7 @@
 
                     <div class="col-12">
 
+                        <asp:Button ID="btnVolver" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Visible="false" Text="Volver" OnClick="btnVolver_Click" />
                         <asp:Button ID="btnLimpiar" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" />
 
 
@@ -84,13 +85,7 @@
                         <asp:Label ID="lblMensajes" runat="server"></asp:Label>
 
                     </div>
-
-
-
-
-
                 </div>
-
                 <div class="col-md-12 align-self-center">
                     <div class="row align-self-center">
                         <div class="col-md-10 col-md-offset-1">
@@ -126,10 +121,10 @@
                                                 <ItemTemplate>
 
 
-
-
+                                                    
+                                                    
                                                     <asp:Button ID="btnBaja" CssClass="btnE btn--radius btn--red" runat="server" Text="Baja" OnClientClick="return confirm('¿Desea eliminar esta Granja?')" OnClick="btnBaja_Click" />
-                                                    <asp:Button ID="btmModificar" CssClass="btnE btn--radius btn--yellow" runat="server" Text="Modificar" OnClick="btnModificar_Click" />
+                                                    <asp:Button ID="btnModificar" CssClass="btnE btn--radius btn--yellow" runat="server" Text="Modificar" OnClick="btnModificar_Click" />
 
                                                 </ItemTemplate>
                                             </asp:TemplateField>

@@ -166,10 +166,19 @@ namespace Web.Paginas.Depositos
                 Deposito unDeposito = new Deposito(id, capacidad, ubicacion, temperatura, condiciones);
                 if (Web.altaDeps(unDeposito))
                 {
-                    limpiar();
+                    if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
+                    {
+                        System.Web.HttpContext.Current.Session["idDepositoSel"] = unDeposito.IdDeposito.ToString();
+                        Response.Redirect("/Paginas/Lotes/frmLotes");
+                    }
+                    else
+                    {
+                         limpiar();
                     lblMensajes.Text = "Depósito dado de alta con éxito.";
                     listar();
 
+                    }
+                   
                 }
                 else
                 {
