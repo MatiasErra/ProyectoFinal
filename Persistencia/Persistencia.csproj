@@ -52,6 +52,7 @@
     <Compile Include="pFertilizante.cs" />
     <Compile Include="pGranja.cs" />
     <Compile Include="pLote.cs" />
+    <Compile Include="pLote_Ferti.cs" />
     <Compile Include="pPesticida.cs" />
     <Compile Include="pProducto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

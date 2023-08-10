@@ -11,89 +11,116 @@ namespace Web.Paginas.Lotes
 {
 
 
-    public partial class modLote
+    public partial class frmLotesFertis
     {
 
         /// <summary>
-        /// Control txtIdGranja.
+        /// Control txtGranja.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIdGranja;
+        protected global::System.Web.UI.WebControls.Label txtGranja;
 
         /// <summary>
-        /// Control txtIdProducto.
+        /// Control txtProducto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIdProducto;
+        protected global::System.Web.UI.WebControls.Label txtProducto;
 
         /// <summary>
-        /// Control txtFchProduccion.
+        /// Control txtFechProd.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFchProduccion;
+        protected global::System.Web.UI.WebControls.Label txtFechProd;
 
         /// <summary>
-        /// Control txtCantidad.
+        /// Control txtBuscarFertilizante.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCantidad;
+        protected global::System.Web.UI.WebControls.TextBox txtBuscarFertilizante;
 
         /// <summary>
-        /// Control txtPrecio.
+        /// Control btnBuscarFertilizante.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPrecio;
+        protected global::System.Web.UI.WebControls.Button btnBuscarFertilizante;
 
         /// <summary>
-        /// Control txtBuscarDeposito.
+        /// Control listFertilizante.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtBuscarDeposito;
+        protected global::System.Web.UI.WebControls.DropDownList listFertilizante;
 
         /// <summary>
-        /// Control btnBuscarDeposito.
+        /// Control btnModificarCantidadFertiLote.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBuscarDeposito;
+        protected global::System.Web.UI.WebControls.Button btnModificarCantidadFertiLote;
 
         /// <summary>
-        /// Control listDeposito.
+        /// Control btnAltaFertilizante.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList listDeposito;
+        protected global::System.Web.UI.WebControls.Button btnAltaFertilizante;
 
         /// <summary>
-        /// Control lstFertSel.
+        /// Control txtCantidadFerti.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView lstFertSel;
+        protected global::System.Web.UI.WebControls.TextBox txtCantidadFerti;
+
+        /// <summary>
+        /// Control btnCancelar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancelar;
+
+        /// <summary>
+        /// Control btnSelect.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSelect;
+
+        /// <summary>
+        /// Control lstLotFertSel.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView lstLotFertSel;
 
         /// <summary>
         /// Control lblMensajes.
@@ -105,30 +132,30 @@ namespace Web.Paginas.Lotes
         protected global::System.Web.UI.WebControls.Label lblMensajes;
 
         /// <summary>
-        /// Control btnVerFertis.
+        /// Control btnAtrasFrm.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnVerFertis;
+        protected global::System.Web.UI.WebControls.Button btnAtrasFrm;
 
         /// <summary>
-        /// Control btnModificar.
+        /// Control btnAtrasMod.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnModificar;
+        protected global::System.Web.UI.WebControls.Button btnAtrasMod;
 
         /// <summary>
-        /// Control btnAtras.
+        /// Control txtIdFertilizante.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAtras;
+        protected global::System.Web.UI.WebControls.TextBox txtIdFertilizante;
     }
 }

@@ -34,3 +34,12 @@ D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Persistencia\obj\Debug
 D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Persistencia\obj\Debug\Persistencia.csproj.CopyComplete
 D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Persistencia\obj\Debug\Persistencia.dll
 D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Persistencia\obj\Debug\Persistencia.pdb
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Proyecto\Persistencia\bin\Debug\Persistencia.dll
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Proyecto\Persistencia\bin\Debug\Persistencia.pdb
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Proyecto\Persistencia\bin\Debug\Clases.dll
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Proyecto\Persistencia\bin\Debug\Clases.pdb
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Proyecto\Persistencia\obj\Debug\Persistencia.csproj.AssemblyReference.cache
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Proyecto\Persistencia\obj\Debug\Persistencia.csproj.CoreCompileInputs.cache
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Proyecto\Persistencia\obj\Debug\Persistencia.csproj.CopyComplete
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Proyecto\Persistencia\obj\Debug\Persistencia.dll
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Proyecto\Persistencia\obj\Debug\Persistencia.pdb

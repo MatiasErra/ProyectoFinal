@@ -151,7 +151,13 @@ namespace Web.Paginas.Productos
             string value = txtBuscar.Text.ToLower();
             List<Producto> productos = Web.buscarVarProductos(value);
             lstProducto.DataSource = null;
-
+            foreach (Producto unProducto in productos)
+            {
+                string Imagen = "data:image/jpeg;base64,";
+                Imagen += unProducto.Imagen;
+                Imagen = $"<img style=\"max-width:50px\" src=\"{Imagen}\">";
+                unProducto.Imagen = Imagen;
+            }
             if (txtBuscar.Text != "")
             {
                 if (productos.Count > 0)

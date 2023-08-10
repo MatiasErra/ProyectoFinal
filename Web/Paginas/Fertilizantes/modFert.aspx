@@ -4,7 +4,7 @@
 
     <div class="card mt-1 mb-1 w-50 m-auto  text-center">
         <div class="card-header" style="background-color: white">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Modificar Depósito</h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Modificar Fertilizante</h1>
         </div>
         <div class="card-body">
 

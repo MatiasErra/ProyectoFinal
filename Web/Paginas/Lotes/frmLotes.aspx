@@ -121,14 +121,6 @@
 
                                     </div>
 
-                                 
-
-
-
-
-                                 
-                                    
-
                                     <div class="modal-footer">
                                         <asp:Button ID="btnAlta" class="btn btn-primary" runat="server" Text="Alta" OnClick="btnAlta_Click" />
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -182,12 +174,12 @@
                                                 ItemStyle-CssClass="GridStl" />
 
 
-                                     
+
 
                                             <asp:TemplateField HeaderText="Opciones del administrador"
                                                 ItemStyle-CssClass="GridStl">
                                                 <ItemTemplate>
-
+                                                    <asp:Button ID="btnVerFertis" CssClass="btnE btn--radius btn--blue" runat="server" Text="Ver Fertilizantes" OnClick="btnVerFertis_Click" />
                                                     <asp:Button ID="btnBaja" CssClass="btnE btn--radius btn--red" runat="server" Text="Baja" OnClientClick="return confirm('¿Desea eliminar este Lote?')" OnClick="btnBaja_Click" />
                                                     <asp:Button ID="btmModificar" CssClass="btnE btn--radius btn--yellow" runat="server" Text="Modificar" OnClick="btnModificar_Click" />
 

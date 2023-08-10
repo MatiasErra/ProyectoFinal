@@ -29,9 +29,11 @@ justify-content :center;
     clear: both;
     background-color: black
 }
-
-
-
+.centerText {
+  
+    align-content: center;
+    flex-wrap: wrap;
+}
 /* ==========================================================================
    #BUTTON
    ========================================================================== */

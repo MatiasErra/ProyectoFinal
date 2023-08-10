@@ -399,33 +399,11 @@ namespace Controladoras
         #endregion
 
         #region Lotes
-        public List<Lote> listIdLotes()
-        {
-            ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Lote> lst = inst.listIdLotes();
-            return lst;
-
-        }
-
-        public List<Lote_Ferti> listIdLotes_Fertis()
-        {
-            ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Lote_Ferti> lst = inst.listIdLotes_Fertis();
-            return lst;
-
-        }
 
         public List<Lote> listLotes()
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
             List<Lote> lst = inst.listLotes();
-            return lst;
-        }
-
-        public List<Lote_Ferti> listLotes_Fertis()
-        {
-            ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Lote_Ferti> lst = inst.listLotes_Fertis();
             return lst;
         }
 
@@ -436,28 +414,12 @@ namespace Controladoras
             return lst;
         }
 
-        public List<Lote_Ferti> buscarVarLotes_Fertis(string var)
-        {
-            ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Lote_Ferti> lst = inst.buscarVarLotes_Fertis(var);
-            return lst;
-        }
-
         public Lote buscarLote(int idGranja, int idProducto, string fchProduccion)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
 
             Lote lote = inst.buscarLote(idGranja, idProducto, fchProduccion);
             return lote;
-
-        }
-
-        public Lote_Ferti buscarLote_Ferti(int idFertilizante, int idGranja, int idProducto, string fchProduccion)
-        {
-            ControladoraI inst = ControladoraI.obtenerInstancia();
-
-            Lote_Ferti loteF = inst.buscarLote_Ferti(idFertilizante, idGranja, idProducto, fchProduccion);
-            return loteF;
 
         }
 
@@ -473,12 +435,12 @@ namespace Controladoras
                 return false;
         }
 
-        public bool bajaLote(int idFertilizante, int idGranja, int idProducto, string fchProduccion)
+        public bool bajaLote(int idGranja, int idProducto, string fchProduccion)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
 
 
-            if (inst.bajaLote(idFertilizante, idGranja, idProducto, fchProduccion))
+            if (inst.bajaLote(idGranja, idProducto, fchProduccion))
             {
                 return true;
             }
@@ -486,10 +448,10 @@ namespace Controladoras
                 return false;
         }
 
-        public bool modLote(Lote lote, Lote_Ferti loteF)
+        public bool modLote(Lote lote)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            if (inst.modLote(lote, loteF))
+            if (inst.modLote(lote))
             {
                 return true;
             }
@@ -498,6 +460,77 @@ namespace Controladoras
                 return false;
             }
         }
+        #endregion
+
+        #region Lotes_Fertis
+
+        public List<Lote_Ferti> listLotesFertis()
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Lote_Ferti> lst = inst.listLotesFertis();
+            return lst;
+        }
+
+        public List<string[]> FertisEnLote(int idGranja, int idProducto, string fchProduccion)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<string[]> lst = inst.FertisEnLote(idGranja, idProducto, fchProduccion);
+            return lst;
+        }
+
+        public List<Lote_Ferti> buscarVarLotesFertis(string var)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Lote_Ferti> lst = inst.buscarVarLotesFertis(var);
+            return lst;
+        }
+
+        public Lote_Ferti buscarLoteFerti(int idFertilizante, int idGranja, int idProducto, string fchProduccion)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            Lote_Ferti loteF = inst.buscarLoteFerti(idFertilizante, idGranja, idProducto, fchProduccion);
+            return loteF;
+
+        }
+
+        public bool altaLoteFerti(Lote_Ferti loteF)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            if (inst.altaLoteFerti(loteF))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool bajaLoteFerti(int idFertilizante, int idGranja, int idProducto, string fchProduccion)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+
+            if (inst.bajaLoteFerti(idFertilizante, idGranja, idProducto, fchProduccion))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool modLoteFerti(Lote_Ferti loteF)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            if (inst.modLoteFerti(loteF))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
         #endregion
 
         #region Camiones

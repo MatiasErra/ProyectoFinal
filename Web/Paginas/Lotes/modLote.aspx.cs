@@ -12,34 +12,30 @@ namespace Web.Paginas.Lotes
 {
     public partial class modLote : System.Web.UI.Page
     {
+
+        #region Load
+
         protected void Page_PreInit(object sender, EventArgs e)
         {
-            if (System.Web.HttpContext.Current.Session["idGranjaSel"] == null 
-                || System.Web.HttpContext.Current.Session["idProductoSel"] ==null 
+            if (System.Web.HttpContext.Current.Session["idGranjaSel"] == null
+                || System.Web.HttpContext.Current.Session["idProductoSel"] == null
                 || System.Web.HttpContext.Current.Session["fchProduccionSel"] == null)
             {
                 Response.Redirect("/Paginas/Lotes/frmLotes");
             }
 
         }
-     static   List<Fertilizante> lstFertSelected = new List<Fertilizante>();
-
-        public List<Fertilizante> LstFertSelected { get => lstFertSelected; set => lstFertSelected = value; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-         
+
                 int idGranja = (int)System.Web.HttpContext.Current.Session["idGranjaSel"];
                 int idProducto = (int)System.Web.HttpContext.Current.Session["idProductoSel"];
                 string fchProduccion = System.Web.HttpContext.Current.Session["fchProduccionSel"].ToString();
-                
-
-          
 
                 CargarListDeposito();
-                CargarListFertilizante();
 
                 if (System.Web.HttpContext.Current.Session["loteDatosMod"] != null)
                 {
@@ -49,13 +45,16 @@ namespace Web.Paginas.Lotes
                 {
                     cargarLote(idGranja, idProducto, fchProduccion);
                 }
+
             }
         }
 
+        #endregion
+
+        #region Utilidad
 
         private void limpiarIdSession()
         {
-            System.Web.HttpContext.Current.Session["idFertilizanteSel"] = null;
             System.Web.HttpContext.Current.Session["idGranjaSel"] = null;
             System.Web.HttpContext.Current.Session["idProductoSel"] = null;
             System.Web.HttpContext.Current.Session["fchProduccionSel"] = null;
@@ -65,89 +64,17 @@ namespace Web.Paginas.Lotes
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             Lote lote = Web.buscarLote(idGranja, idProducto, fchProduccion);
-      //      Lote_Ferti loteF = Web.buscarLote_Ferti(idFertilizante, idGranja, idProducto, fchProduccion);
             txtIdGranja.Text = lote.IdGranja.ToString();
             txtIdProducto.Text = lote.IdProducto.ToString();
             txtFchProduccion.Text = DateTime.Parse(lote.FchProduccion).ToString("yyyy-MM-dd");
             txtCantidad.Text = lote.Cantidad.ToString();
             txtPrecio.Text = lote.Precio.ToString();
             listDeposito.SelectedValue = lote.IdDeposito.ToString();
-      //      txtIdFertilizante.Text = loteF.IdFertilizante.ToString();
-       //     txtCantidadFerti.Text = loteF.Cantidad;
         }
-
-
-      
-
-        private void guardarDatos()
-        {
-            System.Web.HttpContext.Current.Session["loteDatosMod"] = "Si";
-
-
-            if (txtFchProduccion.Text != "")
-            {
-                System.Web.HttpContext.Current.Session["fchProduccionSel"] = txtFchProduccion.Text;
-            }
-            System.Web.HttpContext.Current.Session["cantidadSel"] = txtCantidad.Text;
-            System.Web.HttpContext.Current.Session["precioSel"] = txtPrecio.Text;
-            System.Web.HttpContext.Current.Session["idDepositoSel"] = listDeposito.SelectedValue;
-            System.Web.HttpContext.Current.Session["idFerCantSel"] = txtCantidadFerti.Text;
-
-        }
-
-        private void cargarDatos()
-        {
-            System.Web.HttpContext.Current.Session["loteDatosMod"] = null;
-
-
-            if (System.Web.HttpContext.Current.Session["idGranjaSel"] != null)
-            {
-                txtIdGranja.Text = System.Web.HttpContext.Current.Session["idGranjaSel"].ToString();
-
-            }
-
-
-            if (System.Web.HttpContext.Current.Session["idProductoSel"] != null)
-            {
-                txtIdProducto.Text = System.Web.HttpContext.Current.Session["idProductoSel"].ToString();
-
-            }
-
-
-
-
-
-            if (System.Web.HttpContext.Current.Session["fchProduccionSel"] != null)
-            {
-                txtFchProduccion.Text = DateTime.Parse(System.Web.HttpContext.Current.Session["fchProduccionSel"].ToString()).ToString("yyyy-MM-dd");
-                System.Web.HttpContext.Current.Session["fchProduccionSel"] = null;
-            }
-
-            txtCantidad.Text = System.Web.HttpContext.Current.Session["cantidadSel"].ToString();
-            System.Web.HttpContext.Current.Session["cantidadSel"] = null;
-            txtPrecio.Text = System.Web.HttpContext.Current.Session["precioSel"].ToString();
-            System.Web.HttpContext.Current.Session["precioSel"] = null;
-            txtCantidadFerti.Text = System.Web.HttpContext.Current.Session["idFerCantSel"].ToString();
-            System.Web.HttpContext.Current.Session[" idFerCantSel"] = null;
-            if (System.Web.HttpContext.Current.Session["idDepositoSel"] == null)
-            {
-                listDeposito.SelectedValue = "Seleccione un Deposito";
-                System.Web.HttpContext.Current.Session["idDepositoSel"] = null;
-            }
-            else
-            {
-                listDeposito.SelectedValue = System.Web.HttpContext.Current.Session["idDepositoSel"].ToString();
-                System.Web.HttpContext.Current.Session["idDepositoSel"] = null;
-            }
-
-
-        }
-
-
 
         private bool faltanDatos()
         {
-            if (txtCantidad.Text == "" || txtPrecio.Text == "" || listDeposito.SelectedValue == "Seleccione un Deposito" || txtCantidadFerti.Text == "")
+            if (txtCantidad.Text == "" || txtPrecio.Text == "" || listDeposito.SelectedValue == "Seleccione un Deposito")
             {
                 return true;
             }
@@ -166,10 +93,10 @@ namespace Web.Paginas.Lotes
 
             txtCantidad.Text = "";
             txtPrecio.Text = "";
-            txtCantidadFerti.Text = "";
             CargarListDeposito();
-            CargarListFertilizante();
         }
+
+        #endregion
 
         #region DropDownBoxes
 
@@ -225,71 +152,6 @@ namespace Web.Paginas.Lotes
 
         #endregion
 
-        #region Fertilizante
-
-        public void CargarListFertilizante()
-        {
-            listFertilizante.DataSource = null;
-            listFertilizante.DataSource = createDataSourceFertilizante();
-            listFertilizante.DataTextField = "nombre";
-            listFertilizante.DataValueField = "id";
-            listFertilizante.DataBind();
-        }
-
-        ICollection createDataSourceFertilizante()
-        {
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            List<Fertilizante> fertilizantes = new List<Fertilizante>();
-            if (txtBuscarFertilizante.Text == "")
-            {
-                fertilizantes = Web.lstFerti();
-            }
-            else
-            {
-                string value = txtBuscarFertilizante.Text.ToLower();
-                fertilizantes = Web.buscarVarFerti(value);
-                if (fertilizantes.Count == 0)
-                {
-                    lblMensajes.Text = "No se encontro ningún Fertilizante.";
-                }
-            }
-
-            DataTable dt = new DataTable();
-
-            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
-            dt.Columns.Add(new DataColumn("id", typeof(String)));
-
-            dt.Rows.Add(createRow("Seleccione un Fertilizante", "Seleccione un Fertilizante", dt));
-
-            cargarFertilizantes(fertilizantes, dt);
-
-            DataView dv = new DataView(dt);
-            return dv;
-        }
-
-        private void cargarFertilizantes(List<Fertilizante> fertilizantes, DataTable dt)
-        {
-            foreach (Fertilizante unFertilizante in fertilizantes)
-            {
-                dt.Rows.Add(createRow(unFertilizante.Nombre + " " + unFertilizante.Tipo ,unFertilizante.IdFertilizante.ToString(), dt));
-            }
-        }
-
-
-        protected void btnBuscarFertilizante_Click(object sender, EventArgs e)
-        {
-            CargarListFertilizante();
-        }
-
-
-        protected void btnAltaFertilizante_Click(object sender, EventArgs e)
-        {
-            guardarDatos();
-            Response.Redirect("/Paginas/Fertilizantes/frmFertilizantes");
-        }
-
-
-        #endregion
 
 
 
@@ -305,7 +167,65 @@ namespace Web.Paginas.Lotes
 
         #endregion
 
+        #region Guardar y cargar datos
 
+        private void guardarDatos()
+        {
+            System.Web.HttpContext.Current.Session["loteDatosMod"] = "Si";
+
+            System.Web.HttpContext.Current.Session["cantidadSel"] = txtCantidad.Text;
+            System.Web.HttpContext.Current.Session["precioSel"] = txtPrecio.Text;
+            System.Web.HttpContext.Current.Session["idDepositoSel"] = listDeposito.SelectedValue;
+
+
+        }
+
+        private void cargarDatos()
+        {
+            System.Web.HttpContext.Current.Session["loteDatosMod"] = null;
+
+
+
+            if (System.Web.HttpContext.Current.Session["idGranjaSel"] != null)
+            {
+                txtIdGranja.Text = System.Web.HttpContext.Current.Session["idGranjaSel"].ToString();
+
+            }
+
+            if (System.Web.HttpContext.Current.Session["idProductoSel"] != null)
+            {
+                txtIdProducto.Text = System.Web.HttpContext.Current.Session["idProductoSel"].ToString();
+
+            }
+
+            if (System.Web.HttpContext.Current.Session["fchProduccionSel"] != null)
+            {
+                txtFchProduccion.Text = DateTime.Parse(System.Web.HttpContext.Current.Session["fchProduccionSel"].ToString()).ToString("yyyy-MM-dd");
+                System.Web.HttpContext.Current.Session["fchProduccionSel"] = null;
+            }
+
+            txtCantidad.Text = System.Web.HttpContext.Current.Session["cantidadSel"].ToString();
+            System.Web.HttpContext.Current.Session["cantidadSel"] = null;
+
+            txtPrecio.Text = System.Web.HttpContext.Current.Session["precioSel"].ToString();
+            System.Web.HttpContext.Current.Session["precioSel"] = null;
+
+            if (System.Web.HttpContext.Current.Session["idDepositoSel"] == null)
+            {
+                listDeposito.SelectedValue = "Seleccione un Deposito";
+                System.Web.HttpContext.Current.Session["idDepositoSel"] = null;
+            }
+            else
+            {
+                listDeposito.SelectedValue = System.Web.HttpContext.Current.Session["idDepositoSel"].ToString();
+                System.Web.HttpContext.Current.Session["idDepositoSel"] = null;
+            }
+        }
+
+
+        #endregion
+
+        #region Botones
 
         protected void btnBuscarDeposito_Click(object sender, EventArgs e)
         {
@@ -332,28 +252,15 @@ namespace Web.Paginas.Lotes
                 double precio = double.Parse(HttpUtility.HtmlEncode(txtPrecio.Text));
                 int idDeposito = int.Parse(HttpUtility.HtmlEncode(listDeposito.SelectedValue));
 
-              //  string cantidadFerti = HttpUtility.HtmlEncode(txtCantidadFerti.Text);
-
                 ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
                 Lote unLote = new Lote(idGranja, idProducto, fchProduccion, cantidad, precio, idDeposito);
-               
-                foreach (Fertilizante fer in MlstFertSelected())
+
+                if (Web.modLote(unLote))
                 {
-                    Lote_Ferti unLoteF = new Lote_Ferti(fer.IdFertilizante, idGranja, idProducto, fchProduccion, "100");
+                    limpiar();
+                    lblMensajes.Text = "Lote modificado con éxito.";
 
-
-                    if (Web.modLote(unLote, unLoteF))
-                    {
-                        limpiar();
-                        lblMensajes.Text = "Lote modificado con éxito.";
-
-                    }
-                    else
-                    {
-                        lblMensajes.Text = "No se pudo modificar el lote.";
-                    }
                 }
-
                 limpiarIdSession();
                 Response.Redirect("/Paginas/Lotes/frmLotes");
             }
@@ -363,71 +270,14 @@ namespace Web.Paginas.Lotes
             }
         }
 
-        private void listar()
+        protected void btnVerFertis_Click(object sender, EventArgs e)
         {
-            lstFertSel.DataSource = null;
-            lstFertSel.DataSource = MlstFertSelected();
-            lstFertSel.DataBind();
-          
+            guardarDatos();
+            System.Web.HttpContext.Current.Session["loteDatosMod"] = "Si";
+            Response.Redirect("/Paginas/Lotes/frmLotesFertis");
         }
 
-        private List<Fertilizante> MlstFertSelected()
-        {
-            return LstFertSelected;
-        }
+        #endregion
 
-        public void listarFertSel()
-        {
-            if (listFertilizante.SelectedValue != "Seleccione un Fertilizante")
-            {
-                int idFertilizante = int.Parse(HttpUtility.HtmlEncode(listFertilizante.SelectedValue));
-                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                Fertilizante fert = Web.buscarFerti(idFertilizante);
-                if (fert != null)
-                {
-                    LstFertSelected.Add(fert);
-                   
-                }
-               
-              
-            }
-
-        }
-
-        //public DataTable listarFertSel()
-        //{
-
-        //    //DataTable dt = new DataTable();
-        //    //dt.Columns.AddRange(new DataColumn[2]{
-        //    //    new DataColumn("IdFertilizante", typeof(int)),
-        //    //    new DataColumn("Nombre", typeof(string))
-        //    //});
-        //    int idFertilizante = int.Parse(HttpUtility.HtmlEncode(listFertilizante.SelectedValue));
-        //    ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-        //    Fertilizante fert = Web.buscarFerti(idFertilizante);
-        //    if(fert != null ) 
-        //    {
-        //        lstFertSelected.Add(fert);
-        //        foreach (Fertilizante fer in lstFertSelected)
-        //        {
-        //            DataRow dr = dt.NewRow();
-
-        //            dr["IdFertilizante"] = fer.IdFertilizante;
-        //            dr["Nombre"] = fer.Nombre;
-
-
-        //            dt.Rows.Add(dr);
-        //        }
-        //    }
-
-        //    return dt;
-        //}
-
-        protected void btnSelectFertilizante_Click(object sender, EventArgs e)
-        {
-            listarFertSel();
-            listar();
-        }
-           
     }
 }

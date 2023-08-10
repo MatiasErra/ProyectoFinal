@@ -60,13 +60,13 @@ namespace Web.Paginas.Fertilizantes
         private void limpiar()
         {
             txtId.Text = "";
-         
+
             txtNombre.Text = "";
             txtTipo.Text = "";
             lblMensajes.Text = "";
             txtPH.Text = "";
             lstImpacto.SelectedValue = "Seleccionar tipo de impacto";
-     
+
 
         }
 
@@ -140,48 +140,56 @@ namespace Web.Paginas.Fertilizantes
             {
                 if (phValid())
                 {
-                    
 
-                        if (lstImpacto.SelectedValue.ToString() != "Seleccionar tipo de impacto")
+
+                    if (lstImpacto.SelectedValue.ToString() != "Seleccionar tipo de impacto")
+                    {
+
+                        int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text.ToString()));
+                        string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
+                        string tipo = HttpUtility.HtmlEncode(txtTipo.Text);
+
+                        short pH = short.Parse(HttpUtility.HtmlEncode(txtPH.Text));
+                        string impacto = HttpUtility.HtmlEncode(lstImpacto.SelectedValue.ToString());
+
+
+
+
+
+                        ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                        Fertilizante fertilizante = new Fertilizante(id, nombre, tipo, pH, impacto);
+                        if (Web.modFerti(fertilizante))
                         {
-
-                            int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text.ToString()));
-                            string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
-                            string tipo = HttpUtility.HtmlEncode(txtTipo.Text);
-
-                            short pH = short.Parse(HttpUtility.HtmlEncode(txtPH.Text));
-                            string impacto = HttpUtility.HtmlEncode(lstImpacto.SelectedValue.ToString());
-
-
-
-
-
-                            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                            Fertilizante fertilizante = new Fertilizante(id, nombre, tipo, pH, impacto);
-                            if (Web.modFerti(fertilizante))
-                            {
                             limpiar();
                             lblMensajes.Text = "Fertilizante modificado con éxito.";
                             limpiarIdSession();
-                            Response.Redirect("/Paginas/Fertilizantes/frmFertilizantes");
-
-
-
-
-                        }
+                            if (System.Web.HttpContext.Current.Session["loteFertiDatos"] != null)
+                            {
+                                Response.Redirect("/Paginas/Lotes/frmLotesFertis");
+                            }
                             else
                             {
-
-                            lblMensajes.Text = "Ya existe un Fertilizante con estos datos. Estos son los posibles datos repetidos(Nombre).";
-
+                                Response.Redirect("/Paginas/Fertilizantes/frmFertilizantes");
                             }
+
+
+
+
 
                         }
                         else
                         {
-                            lblMensajes.Text = "Falta seleccionar el tipo de impacto.";
+
+                            lblMensajes.Text = "Ya existe un Fertilizante con estos datos. Estos son los posibles datos repetidos(Nombre).";
+
                         }
-                  
+
+                    }
+                    else
+                    {
+                        lblMensajes.Text = "Falta seleccionar el tipo de impacto.";
+                    }
+
                 }
                 else
                 {
@@ -203,7 +211,14 @@ namespace Web.Paginas.Fertilizantes
         {
             limpiar();
             limpiarIdSession();
-            Response.Redirect("/Paginas/Fertilizantes/frmFertilizantes");
+            if (System.Web.HttpContext.Current.Session["loteFertiDatos"] != null)
+            {
+                Response.Redirect("/Paginas/Lotes/frmLotesFertis");
+            }
+            else
+            {
+                Response.Redirect("/Paginas/Fertilizantes/frmFertilizantes");
+            }
 
         }
     }

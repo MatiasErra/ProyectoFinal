@@ -19,11 +19,15 @@ namespace Web.Paginas.Fertilizantes
             {
                 limpiar();
                 listar();
-                if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
+
+                if (System.Web.HttpContext.Current.Session["loteFertiDatos"] != null)
                 {
-                    btnVolver.Visible = true;
+                    btnVolverFerti.Visible = true;
                 }
+
+              
             }
+
         }
 
         #region Utilidad
@@ -194,9 +198,10 @@ namespace Web.Paginas.Fertilizantes
         #endregion
 
 
-        protected void btnVolver_Click(object sender, EventArgs e)
+
+        protected void btnVolverFerti_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/Paginas/Lotes/frmLotes");
+            Response.Redirect("/Paginas/Lotes/frmLotesFertis");
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)
@@ -228,16 +233,10 @@ namespace Web.Paginas.Fertilizantes
                         Fertilizante fertilizante = new Fertilizante(id, nombre, tipo, pH, impacto);
                         if (Web.altaFerti(fertilizante))
                         {
-                            if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
+                            if (System.Web.HttpContext.Current.Session["loteFertiDatos"] != null)
                             {
                                 System.Web.HttpContext.Current.Session["idFertilizanteSel"] = fertilizante.IdFertilizante.ToString();
-                                Response.Redirect("/Paginas/Lotes/frmLotes");
-                            }
-                            if (System.Web.HttpContext.Current.Session["loteDatosMod"] != null)
-                            {
-                                System.Web.HttpContext.Current.Session["idFertilizanteSel"] = fertilizante.IdFertilizante.ToString();
-                                Response.Redirect("/Paginas/Lotes/modLote");
-                             
+                                Response.Redirect("/Paginas/Lotes/frmLotesFertis");
                             }
                             else
                             {
@@ -245,6 +244,7 @@ namespace Web.Paginas.Fertilizantes
                                 lblMensajes.Text = "Fertilizante dado de alta con éxito.";
                                 listar();
                             }
+
 
                         }
                         else

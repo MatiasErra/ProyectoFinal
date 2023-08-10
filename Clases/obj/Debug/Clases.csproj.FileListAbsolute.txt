@@ -22,3 +22,9 @@ D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Clases\obj\Debug\Clase
 D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Clases\obj\Debug\Clases.csproj.CoreCompileInputs.cache
 D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Clases\obj\Debug\Clases.dll
 D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Clases\obj\Debug\Clases.pdb
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Proyecto\Clases\bin\Debug\Clases.dll
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Proyecto\Clases\bin\Debug\Clases.pdb
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Proyecto\Clases\obj\Debug\Clases.csproj.AssemblyReference.cache
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Proyecto\Clases\obj\Debug\Clases.csproj.CoreCompileInputs.cache
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Proyecto\Clases\obj\Debug\Clases.dll
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Proyecto\Clases\obj\Debug\Clases.pdb
