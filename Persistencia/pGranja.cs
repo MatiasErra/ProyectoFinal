@@ -40,9 +40,10 @@ namespace Persistencia
 
                 connect.Close();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception(ex.ToString());
+                
+                return resultado;
             }
             return resultado;
         }
@@ -113,9 +114,9 @@ namespace Persistencia
 
                 conect.Close();
             }
-            catch (Exception ex)
+            catch (Exception )
             {
-                throw new Exception(ex.ToString());
+                return resultado;
             }
             return resultado;
         }

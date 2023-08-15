@@ -462,14 +462,67 @@ namespace Controladoras
         }
         #endregion
 
-        #region Lotes_Fertis
+        #region Lotes_Pestis
 
-        public List<Lote_Ferti> listLotesFertis()
+ 
+        public List<string[]> PestisEnLote(int idGranja, int idProducto, string fchProduccion)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Lote_Ferti> lst = inst.listLotesFertis();
+            List<string[]> lst = inst.PestisEnLote(idGranja, idProducto, fchProduccion);
             return lst;
         }
+
+        public Lote_Pesti buscarLotePesti(int idPesicida, int idGranja, int idProducto, string fchProduccion)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            Lote_Pesti loteP = inst.buscarLotePesti(idPesicida, idGranja, idProducto, fchProduccion);
+            return loteP;
+
+        }
+
+        public bool altaLotePesti(Lote_Pesti loteP)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            if (inst.altaLotePesti(loteP))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool bajaLotePesti(int idFertilizante, int idGranja, int idProducto, string fchProduccion)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+
+            if (inst.bajaLotePesti(idFertilizante, idGranja, idProducto, fchProduccion))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool modLotePesti(Lote_Pesti loteP)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            if (inst.modLotePesti(loteP))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        #endregion
+
+        #region Lotes_Fertis
+
+
 
         public List<string[]> FertisEnLote(int idGranja, int idProducto, string fchProduccion)
         {
@@ -478,13 +531,7 @@ namespace Controladoras
             return lst;
         }
 
-        public List<Lote_Ferti> buscarVarLotesFertis(string var)
-        {
-            ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Lote_Ferti> lst = inst.buscarVarLotesFertis(var);
-            return lst;
-        }
-
+       
         public Lote_Ferti buscarLoteFerti(int idFertilizante, int idGranja, int idProducto, string fchProduccion)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();

@@ -53,3 +53,14 @@ D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Proyecto\Cont
 D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Proyecto\Controladora\obj\Debug\Controladoras.csproj.CopyComplete
 D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Proyecto\Controladora\obj\Debug\Controladora.dll
 D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Proyecto\Controladora\obj\Debug\Controladora.pdb
+C:\Users\Mrgat\OneDrive\Escritorio\Proyecto\Controladora\bin\Debug\Controladora.dll
+C:\Users\Mrgat\OneDrive\Escritorio\Proyecto\Controladora\bin\Debug\Controladora.pdb
+C:\Users\Mrgat\OneDrive\Escritorio\Proyecto\Controladora\bin\Debug\Clases.dll
+C:\Users\Mrgat\OneDrive\Escritorio\Proyecto\Controladora\bin\Debug\Persistencia.dll
+C:\Users\Mrgat\OneDrive\Escritorio\Proyecto\Controladora\bin\Debug\Clases.pdb
+C:\Users\Mrgat\OneDrive\Escritorio\Proyecto\Controladora\bin\Debug\Persistencia.pdb
+C:\Users\Mrgat\OneDrive\Escritorio\Proyecto\Controladora\obj\Debug\Controladoras.csproj.AssemblyReference.cache
+C:\Users\Mrgat\OneDrive\Escritorio\Proyecto\Controladora\obj\Debug\Controladoras.csproj.CoreCompileInputs.cache
+C:\Users\Mrgat\OneDrive\Escritorio\Proyecto\Controladora\obj\Debug\Controladoras.csproj.CopyComplete
+C:\Users\Mrgat\OneDrive\Escritorio\Proyecto\Controladora\obj\Debug\Controladora.dll
+C:\Users\Mrgat\OneDrive\Escritorio\Proyecto\Controladora\obj\Debug\Controladora.pdb

@@ -1745,7 +1745,7 @@
 											"top": 1146,
 											"width": 116.365234375,
 											"height": 13,
-											"text": "-disponible: boolean",
+											"text": "-disponible: string",
 											"horizontalAlignment": 0
 										}
 									],
@@ -1991,7 +1991,7 @@
 											"top": 1003,
 											"width": 105.47900390625,
 											"height": 13,
-											"text": "-pH: string",
+											"text": "-pH: short",
 											"horizontalAlignment": 0
 										},
 										{
@@ -13539,7 +13539,7 @@
 							},
 							"name": "disponible",
 							"visibility": "private",
-							"type": "boolean"
+							"type": "string"
 						}
 					]
 				},
@@ -13647,7 +13647,7 @@
 							},
 							"name": "pH",
 							"visibility": "private",
-							"type": "string"
+							"type": "short"
 						},
 						{
 							"_type": "UMLAttribute",

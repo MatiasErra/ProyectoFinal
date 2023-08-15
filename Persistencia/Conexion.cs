@@ -18,7 +18,7 @@ namespace persistenciaDB
             }
         }
 
-        public static SqlConnection Conectar()
+        public static SqlConnection Conectar() 
         {
             SqlConnection conectar = new SqlConnection(CadenadaDeConexion);
             try

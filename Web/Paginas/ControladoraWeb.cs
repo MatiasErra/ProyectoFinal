@@ -716,12 +716,7 @@ namespace Web.Paginas
 
         #region Lotes_Fertis
 
-        public List<Lote_Ferti> listLotesFertis()
-        {
-            ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Lote_Ferti> lst = inst.listLotesFertis();
-            return lst;
-        }
+  
 
         public List<string[]> FertisEnLote(int idGranja, int idProducto, string fchProduccion)
         {
@@ -730,13 +725,7 @@ namespace Web.Paginas
             return lst;
         }
 
-        public List<Lote_Ferti> buscarVarLotesFertis(string var)
-        {
-            ControladoraItem ins = ControladoraItem.obtenerInstancia();
-            List<Lote_Ferti> lst = ins.buscarVarLotesFertis(var);
-            return lst;
-        }
-
+        
         public Lote_Ferti buscarLoteFerti(int idFertilizante, int idGranja, int idProducto, string fchProduccion)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
@@ -776,6 +765,67 @@ namespace Web.Paginas
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
             if (inst.modLoteFerti(loteF))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
+        #region Lotes_Pestis
+
+
+        public List<string[]> PestisEnLote(int idGranja, int idProducto, string fchProduccion)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            List<string[]> lst = inst.PestisEnLote(idGranja, idProducto, fchProduccion);
+            return lst;
+        }
+
+  
+        public Lote_Pesti buscarLotePesti(int idPesticida, int idGranja, int idProducto, string fchProduccion)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+            Lote_Pesti loteP = inst.buscarLotePesti(idPesticida, idGranja, idProducto, fchProduccion);
+            return loteP;
+
+        }
+
+        public bool altaLotePesti(Lote_Pesti loteP)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            if (inst.altaLotePesti(loteP))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool bajaLotePesti(int idPesticida, int idGranja, int idProducto, string fchProduccion)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            if (inst.bajaLotePesti(idPesticida, idGranja, idProducto, fchProduccion))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool modLotePesti(Lote_Pesti loteP)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            if (inst.modLotePesti(loteP))
             {
                 return true;
             }

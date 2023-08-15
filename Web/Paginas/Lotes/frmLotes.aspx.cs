@@ -31,11 +31,12 @@ namespace Web.Paginas.Lotes
                 {
                     cargarDatos();
 
-               
-                }    
+
+                }
                 System.Web.HttpContext.Current.Session["idGranjaSel"] = null;
-                    System.Web.HttpContext.Current.Session["idProductoSel"] = null;
-                    System.Web.HttpContext.Current.Session["fchProduccionSel"] = null;
+                System.Web.HttpContext.Current.Session["idProductoSel"] = null;
+                System.Web.HttpContext.Current.Session["fchProduccionSel"] = null;
+                listProductoUpdate();
             }
         }
         #endregion
@@ -48,6 +49,7 @@ namespace Web.Paginas.Lotes
             lstLote.DataSource = null;
             lstLote.DataSource = Web.listLotes();
             lstLote.DataBind();
+
             limpiar();
         }
 
@@ -125,6 +127,21 @@ namespace Web.Paginas.Lotes
             else
             {
                 return false;
+            }
+        }
+
+        private void listProductoUpdate()
+        {
+            if (listProducto.SelectedValue != "Seleccione un Producto")
+            {
+                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                int idProducto = int.Parse(HttpUtility.HtmlEncode(listProducto.SelectedValue));
+                Producto unProducto = Web.buscarProducto(idProducto);
+                lblCantidad.Text = "Cantidad (" + unProducto.TipoVenta + ")";
+            }
+            else
+            {
+                lblCantidad.Text = "Cantidad";
             }
         }
 
@@ -438,6 +455,7 @@ namespace Web.Paginas.Lotes
                     if (Web.altaLote(unLote))
                     {
                         listar();
+                        listProductoUpdate();
                         lblMensajes.Text = "Lote dado de alta con éxito.";
                     }
                     else
@@ -502,6 +520,26 @@ namespace Web.Paginas.Lotes
             System.Web.HttpContext.Current.Session["fchProduccionSel"] = fchProduccion;
 
             Response.Redirect("/Paginas/Lotes/modLote");
+        }
+
+        protected void btnVerPestis_Click(object sender, EventArgs e)
+        {
+            Button btnConstultar = (Button)sender;
+            GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
+            int idGranja = int.Parse(HttpUtility.HtmlEncode(selectedrow.Cells[0].Text));
+            int idProducto = int.Parse(HttpUtility.HtmlEncode(selectedrow.Cells[1].Text));
+            string fchProduccion = HttpUtility.HtmlEncode(selectedrow.Cells[2].Text);
+
+            System.Web.HttpContext.Current.Session["idGranjaSel"] = idGranja;
+            System.Web.HttpContext.Current.Session["idProductoSel"] = idProducto;
+            System.Web.HttpContext.Current.Session["fchProduccionSel"] = fchProduccion;
+
+            Response.Redirect("/Paginas/Lotes/frmLotesPestis");
+        }
+
+        protected void listProductoUpdate(object sender, EventArgs e)
+        {
+            listProductoUpdate();
         }
 
         protected void btnVerFertis_Click(object sender, EventArgs e)

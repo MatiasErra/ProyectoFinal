@@ -163,11 +163,16 @@ namespace Web.Paginas.Pesticidas
                             limpiar();
                             lblMensajes.Text = "Pesticida modificado con éxito.";
                             limpiarIdSession();
-                            Response.Redirect("/Paginas/Pesticidas/frmPesticidas");
+                            if (System.Web.HttpContext.Current.Session["lotePestiDatos"] != null)
+                            {
+                                Response.Redirect("/Paginas/Lotes/frmLotesPestis");
+                            }
+                            else
+                            {
+                                Response.Redirect("/Paginas/Pesticidas/frmPesticidas");
+                            }
 
-
-
-
+                            
                         }
                         else
                         {
@@ -203,7 +208,14 @@ namespace Web.Paginas.Pesticidas
         {
             limpiar();
             limpiarIdSession();
-            Response.Redirect("/Paginas/Pesticidas/frmPesticidas");
+            if (System.Web.HttpContext.Current.Session["lotePestiDatos"] != null)
+            {
+                Response.Redirect("/Paginas/Lotes/frmLotesPestis");
+            }
+            else
+            {
+                Response.Redirect("/Paginas/Pesticidas/frmPesticidas");
+            }
 
         }
     }

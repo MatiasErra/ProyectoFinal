@@ -313,7 +313,7 @@ namespace Web.Paginas.Lotes
             }
             else
             {
-                lblMensajes.Text = "Error al eliminar Fertilizante del Lote";
+                lblMensajes.Text = "Error al eliminar Fertilizante del Lote.";
             }
 
         }
@@ -396,6 +396,10 @@ namespace Web.Paginas.Lotes
             txtBuscarFertilizante.Visible = true;
             btnCancelar.Visible = false;
             btnModificarCantidadFertiLote.Visible = false;
+            int idGranja = int.Parse(HttpUtility.HtmlEncode(txtGranja.Text.ToString()));
+            int idProducto = int.Parse(HttpUtility.HtmlEncode(txtProducto.Text.ToString()));
+            string fchProduccion = HttpUtility.HtmlEncode(txtFechProd.Text.ToString());
+            CargarLotesFertis(idGranja, idProducto, fchProduccion);
 
 
             if (System.Web.HttpContext.Current.Session["loteDatosMod"] != null)

@@ -108,6 +108,7 @@
 
         </div>
         <div class="col-12">
+            <asp:Button ID="btnVerPestis" CssClass="btnE btn--radius btn--blue mt-1 mb-1" runat="server" Text="Ver Pesticidas del Lote" OnClick="btnVerPestis_Click" />
             <asp:Button ID="btnVerFertis" CssClass="btnE btn--radius btn--blue mt-1 mb-1" runat="server" Text="Ver Fertilizantes del Lote" OnClick="btnVerFertis_Click" />
             <asp:Button ID="btnModificar" CssClass="btnE btn--radius btn--green mt-1 mb-1" runat="server" Text="Modificar" OnClick="btnModificar_Click" OnClientClick="return confirm('¿Desea modificar este lote?')" />
             <asp:Button ID="btnAtras" CssClass="btnE btn--radius btn--gray mt-1 mb-1" runat="server" Text="Volver" OnClick="btnAtras_Click" />

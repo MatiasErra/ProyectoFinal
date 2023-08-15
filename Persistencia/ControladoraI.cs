@@ -288,19 +288,9 @@ namespace Persistencia
 
         #region Lotes_Fertis
 
-        public List<Lote_Ferti> listLotesFertis()
-        {
-            return new pLote_Ferti().listLotesFertis();
-        }
-
         public List<string[]> FertisEnLote(int idGranja, int idProducto, string fchProduccion)
         {
             return new pLote_Ferti().FertisEnLote(idGranja, idProducto, fchProduccion);
-        }
-
-        public List<Lote_Ferti> buscarVarLotesFertis(string var)
-        {
-            return new pLote_Ferti().buscarVarLotesFertis(var);
         }
 
         public Lote_Ferti buscarLoteFerti(int idFertilizante, int idGranja, int idProducto, string fchProduccion)
@@ -320,6 +310,37 @@ namespace Persistencia
         public bool modLoteFerti(Lote_Ferti loteF)
         {
             return new pLote_Ferti().modLoteFerti(loteF);
+        }
+
+        #endregion
+
+        #region Lotes_Pestis
+
+
+
+        public List<string[]> PestisEnLote(int idGranja, int idProducto, string fchProduccion)
+        {
+            return new pLote_Pesti().PestisEnLote(idGranja, idProducto, fchProduccion);
+        }
+
+      
+        public Lote_Pesti buscarLotePesti(int idFertilizante, int idGranja, int idProducto, string fchProduccion)
+        {
+            return new pLote_Pesti().buscarLotePesti(idFertilizante, idGranja, idProducto, fchProduccion);
+        }
+        public bool altaLotePesti(Lote_Pesti loteF)
+        {
+            return new pLote_Pesti().altaLotePesti(loteF);
+        }
+
+        public bool bajaLotePesti(int idFertilizante, int idGranja, int idProducto, string fchProduccion)
+        {
+            return new pLote_Pesti().bajaLotePesti(idFertilizante, idGranja, idProducto, fchProduccion);
+        }
+
+        public bool modLotePesti(Lote_Pesti loteP)
+        {
+            return new pLote_Pesti().modLotePesti(loteP);
         }
 
         #endregion

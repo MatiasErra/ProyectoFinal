@@ -12,41 +12,7 @@ namespace Persistencia
 {
     class pLote_Ferti
     {
-        public List<Lote_Ferti> listLotesFertis()
-        {
-            List<Lote_Ferti> resultado = new List<Lote_Ferti>();
-
-            Lote_Ferti loteF;
-            using (SqlConnection connect = Conexion.Conectar())
-            {
-                try
-                {
-                    SqlCommand cmd = new SqlCommand("LstLotes_Fertis", connect);
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            loteF = new Lote_Ferti();
-                            loteF.IdFertilizante = int.Parse(reader["idFertilizante"].ToString());
-                            loteF.IdGranja = int.Parse(reader["idGranja"].ToString());
-                            loteF.IdProducto = int.Parse(reader["idProducto"].ToString());
-                            string[] DateArr = reader["fchProduccion"].ToString().Split(' ');
-                            loteF.FchProduccion = DateArr[0];
-                            loteF.Cantidad = reader["cantidad"].ToString();
-
-                            resultado.Add(loteF);
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-                    return resultado;
-                }
-            }
-            return resultado;
-        }
+        
 
         public List<string[]> FertisEnLote(int idGranja, int idProducto, string fchProduccion)
         {
@@ -90,46 +56,7 @@ namespace Persistencia
             return resultado;
         }
 
-        public List<Lote_Ferti> buscarVarLotesFertis(string var)
-        {
-            List<Lote_Ferti> resultado = new List<Lote_Ferti>();
-            try
-            {
-                Lote_Ferti loteF;
-
-
-                SqlConnection conect = Conexion.Conectar();
-
-                SqlCommand cmd = new SqlCommand("BuscarVarLote_Ferti", conect);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@var", var));
-
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        loteF = new Lote_Ferti();
-                        loteF.IdFertilizante = int.Parse(reader["idFertilizante"].ToString());
-                        loteF.IdGranja = int.Parse(reader["idGranja"].ToString());
-                        loteF.IdProducto = int.Parse(reader["idProducto"].ToString());
-                        string[] DateArr = reader["fchProduccion"].ToString().Split(' ');
-                        loteF.FchProduccion = DateArr[0];
-                        loteF.Cantidad = reader["cantidad"].ToString();
-
-                        resultado.Add(loteF);
-                    }
-                }
-
-                conect.Close();
-            }
-            catch (Exception)
-            {
-                return resultado;
-            }
-            return resultado;
-        }
-
+ 
         public Lote_Ferti buscarLoteFerti(int idFertilizante, int idGranja, int idProducto, string fchProduccion)
         {
             Lote_Ferti loteF = new Lote_Ferti();

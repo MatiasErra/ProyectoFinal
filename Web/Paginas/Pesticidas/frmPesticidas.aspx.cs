@@ -20,6 +20,10 @@ namespace Web.Paginas.Pesticidas
             {
                 limpiar();
                 listar();
+                if (System.Web.HttpContext.Current.Session["lotePestiDatos"] != null)
+                {
+                    btnVolverPesti.Visible = true;
+                }
             }
         }
 
@@ -191,6 +195,10 @@ namespace Web.Paginas.Pesticidas
         #endregion
 
 
+        protected void btnVolverPesti_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("/Paginas/Lotes/frmLotesPestis");
+        }
 
 
         protected void btnBuscar_Click(object sender, EventArgs e)
@@ -222,9 +230,17 @@ namespace Web.Paginas.Pesticidas
                         Pesticida pesticida = new Pesticida(id, nombre, tipo, pH, impacto);
                         if (Web.altaPesti(pesticida))
                         {
-                            limpiar();
-                            lblMensajes.Text = "Pesticida dado de alta con éxito.";
-                            listar();
+                            if (System.Web.HttpContext.Current.Session["lotePestiDatos"] != null)
+                            {
+                                System.Web.HttpContext.Current.Session["idPesticidaSel"] = pesticida.IdPesticida.ToString();
+                                Response.Redirect("/Paginas/Lotes/frmLotesPestis");
+                            }
+                            else
+                            {
+                                limpiar();
+                                lblMensajes.Text = "Pesticida dado de alta con éxito.";
+                                listar();
+                            }
 
                         }
                         else

@@ -93,6 +93,16 @@ idDeposito int references Depositos(idDeposito),
 primary key(idGranja, idProducto, fchProduccion)
 );
 
+create table Lotes_Pestis(
+idPesticida int references Pesticidas(idPesti),
+idGranja int,
+idProducto int,
+fchProduccion date,
+cantidad varchar(30) not null,
+primary key(idPesticida, idGranja, idProducto, fchProduccion),
+foreign key(idGranja, idProducto, fchProduccion) references Lotes(idGranja, idProducto, fchProduccion)
+);
+
 create table Lotes_Fertis(
 idFertilizante int references Fertilizantes(idFerti),
 idGranja int,

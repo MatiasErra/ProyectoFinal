@@ -40,9 +40,9 @@ namespace Persistencia
 
                 connect.Close();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception(ex.ToString());
+                return resultado;
             }
             return resultado;
         }
@@ -73,9 +73,9 @@ namespace Persistencia
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    throw new Exception(ex.ToString());
+                    return fertilizantes;
 
                 }
             }
@@ -114,9 +114,9 @@ namespace Persistencia
 
                 conect.Close();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception(ex.ToString());
+                return resultado;
             }
             return resultado;
         }
@@ -185,9 +185,10 @@ namespace Persistencia
                     resultado = true;
                 }
             }
-            catch (Exception ex)
+            catch (Exception )
             {
-                throw ex;
+                resultado = false;
+                return resultado;
             }
             return resultado;
         }
@@ -220,6 +221,7 @@ namespace Persistencia
             }
             catch (Exception)
             {
+                resultado = false;
                 return resultado;
             }
 
@@ -259,6 +261,7 @@ namespace Persistencia
             }
             catch (Exception)
             {
+                resultado = false;
                 return resultado;
 
             }

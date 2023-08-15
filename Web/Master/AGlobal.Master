@@ -101,6 +101,9 @@
                                 <optgroup label="Productos">
                                     <option value="/Paginas/Productos/frmProductos">ABM Productos</option>
                                 </optgroup>
+                                <optgroup label="Pesticidas">
+                                    <option value="/Paginas/Pesticidas/frmPesticidas">ABM Pesticidas</option>
+                                </optgroup>
                                 <optgroup label="Fertilizantes">
                                     <option value="/Paginas/Fertilizantes/frmFertilizantes">ABM Fertilizantes</option>
                                 </optgroup>

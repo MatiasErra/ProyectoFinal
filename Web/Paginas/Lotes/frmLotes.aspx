@@ -65,7 +65,7 @@
                                     </div>
                                     <div class="row" style="margin-bottom: 32px; border-bottom: 1px solid #e5e5e5;">
                                         <div class="col-8">
-                                            <asp:DropDownList ID="listProducto" CssClass="input--style-2" runat="server">
+                                            <asp:DropDownList ID="listProducto" AutoPostBack="True" CssClass="input--style-2" runat="server" OnSelectedIndexChanged="listProductoUpdate">
                                             </asp:DropDownList>
                                         </div>
                                         <div class="col-4">
@@ -82,6 +82,7 @@
                                     </div>
 
                                     <div class="input-group ms-1">
+                                        <asp:Label ID="lblCantidad" class="mt-2" Text="Cantidad" style="color: #666; font-size: 16px; font-weight: 500;" runat="server" />
                                         <asp:TextBox ID="txtCantidad" CssClass="input--style-2" runat="server" placeholder="Cantidad" MaxLength="10" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==8);;"></asp:TextBox>
                                         <asp:RegularExpressionValidator Display="Dynamic" runat="server"
                                             ControlToValidate="txtCantidad"
@@ -179,6 +180,7 @@
                                             <asp:TemplateField HeaderText="Opciones del administrador"
                                                 ItemStyle-CssClass="GridStl">
                                                 <ItemTemplate>
+                                                    <asp:Button ID="btnVerPestis" CssClass="btnE btn--radius btn--blue" runat="server" Text="Ver Pesticidas" OnClick="btnVerPestis_Click" />
                                                     <asp:Button ID="btnVerFertis" CssClass="btnE btn--radius btn--blue" runat="server" Text="Ver Fertilizantes" OnClick="btnVerFertis_Click" />
                                                     <asp:Button ID="btnBaja" CssClass="btnE btn--radius btn--red" runat="server" Text="Baja" OnClientClick="return confirm('¿Desea eliminar este Lote?')" OnClick="btnBaja_Click" />
                                                     <asp:Button ID="btmModificar" CssClass="btnE btn--radius btn--yellow" runat="server" Text="Modificar" OnClick="btnModificar_Click" />

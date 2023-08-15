@@ -43,3 +43,12 @@ D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Proyecto\Pers
 D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Proyecto\Persistencia\obj\Debug\Persistencia.csproj.CopyComplete
 D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Proyecto\Persistencia\obj\Debug\Persistencia.dll
 D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Proyecto\Proyecto\Proyecto\Persistencia\obj\Debug\Persistencia.pdb
+C:\Users\Mrgat\OneDrive\Escritorio\Proyecto\Persistencia\bin\Debug\Persistencia.dll
+C:\Users\Mrgat\OneDrive\Escritorio\Proyecto\Persistencia\bin\Debug\Persistencia.pdb
+C:\Users\Mrgat\OneDrive\Escritorio\Proyecto\Persistencia\bin\Debug\Clases.dll
+C:\Users\Mrgat\OneDrive\Escritorio\Proyecto\Persistencia\bin\Debug\Clases.pdb
+C:\Users\Mrgat\OneDrive\Escritorio\Proyecto\Persistencia\obj\Debug\Persistencia.csproj.AssemblyReference.cache
+C:\Users\Mrgat\OneDrive\Escritorio\Proyecto\Persistencia\obj\Debug\Persistencia.csproj.CoreCompileInputs.cache
+C:\Users\Mrgat\OneDrive\Escritorio\Proyecto\Persistencia\obj\Debug\Persistencia.csproj.CopyComplete
+C:\Users\Mrgat\OneDrive\Escritorio\Proyecto\Persistencia\obj\Debug\Persistencia.dll
+C:\Users\Mrgat\OneDrive\Escritorio\Proyecto\Persistencia\obj\Debug\Persistencia.pdb

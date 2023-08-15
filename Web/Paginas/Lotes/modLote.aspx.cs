@@ -201,7 +201,7 @@ namespace Web.Paginas.Lotes
             if (System.Web.HttpContext.Current.Session["fchProduccionSel"] != null)
             {
                 txtFchProduccion.Text = DateTime.Parse(System.Web.HttpContext.Current.Session["fchProduccionSel"].ToString()).ToString("yyyy-MM-dd");
-                System.Web.HttpContext.Current.Session["fchProduccionSel"] = null;
+
             }
 
             txtCantidad.Text = System.Web.HttpContext.Current.Session["cantidadSel"].ToString();
@@ -268,6 +268,13 @@ namespace Web.Paginas.Lotes
             {
                 lblMensajes.Text = "Faltan datos.";
             }
+        }
+
+        protected void btnVerPestis_Click(object sender, EventArgs e)
+        {
+            guardarDatos();
+            System.Web.HttpContext.Current.Session["loteDatosMod"] = "Si";
+            Response.Redirect("/Paginas/Lotes/frmLotesPestis");
         }
 
         protected void btnVerFertis_Click(object sender, EventArgs e)

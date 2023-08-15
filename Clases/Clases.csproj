@@ -50,6 +50,7 @@
     <Compile Include="Granja.cs" />
     <Compile Include="Lote.cs" />
     <Compile Include="Lote_Ferti.cs" />
+    <Compile Include="Lote_Pesti.cs" />
     <Compile Include="Pedido.cs" />
     <Compile Include="Pedido_Producto.cs" />
     <Compile Include="Persona.cs" />
