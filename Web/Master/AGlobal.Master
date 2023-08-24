@@ -92,6 +92,11 @@
                                 <optgroup label="Camioneros">
                                     <option value="/Paginas/Camioneros/frmCamioneros">ABM Camioneros</option>
                                 </optgroup>
+
+                                  <optgroup label="Camiones">
+                                    <option value="/Paginas/Camiones/frmCamiones">ABM Camiones</option>
+                                </optgroup>
+
                                 <optgroup label="Depositos">
                                     <option value="/Paginas/Depositos/frmDepositos">ABM Depositos</option>
                                 </optgroup>
@@ -129,60 +134,63 @@
 
             </asp:ContentPlaceHolder>
         </div>
-        <footer class="myFooter bg-dark text-center text-light" >
-            <div class="container-fluid">
+        <footer class="myFooter bg-dark text-center text-light fixed-md-bottom" >
+            <div class="container-fluid ">
                
                 <a name="contacto"></a>
                 <div class="row">
                     <div class="col-md-6 col-12">
-                        <div class="">
-                            <h5>Información de Contacto:</h5>
+                        <div class="row mb-1">
+                            <h5 class ="mb-1">Información de Contacto:</h5>
                         </div>
                         <div class="row">
                             <div class="col-6">
-                                <p class="float-end"><i class="fas fa-home text-grayish">&nbsp;</i>Rosario, Colonia, Uruguay </p>
+                                <p class="float-end mb-1"><i class="fas fa-home text-grayish">&nbsp;</i>Rosario, Colonia, Uruguay </p>
                             </div>
-                            <div class="col-6">
-                                <p class="float-start">
+                            <div class="col-6 " >
+                                <p class="float-start mb-1">
                                     <i class="fas fa-envelope text-grayish">&nbsp;</i>
                                     rosario@ctc.edu.uy
                                 </p>
                             </div>
                             <div class="col-6">
-                                <p class="float-end"><i class="fas fa-phone text-grayish">&nbsp;</i> +598 92 039 523</p>
+                                <p class="float-end mb-1"><i class="fas fa-phone text-grayish">&nbsp;</i> +598 92 039 523</p>
                             </div>
                             <div class="col-6">
-                                <p class="float-start"><i class="fas fa-fax text-grayish">&nbsp;</i> 4531 5623</p>
+                                <p class="float-start mb-1"><i class="fas fa-fax text-grayish">&nbsp;</i> 4531 5623</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-12">
-                        <div>
-                            <h5>Nuestras Redes:</h5>
+                    <div class="col-md-6 col-12 ">
+                        <div class="row mb-2">
+                            <h5 class="mb-1">Nuestras Redes:</h5>
                         </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <a class="btn btn-dark float-end" href="https://www.linkedin.com" target="_blank">
+                        <div class="row align-self-center mb-1">
+                            <div class="col-12">
+                                <a class="btnE    m-auto  " href="https://www.linkedin.com" target="_blank">
                                     <i class="fab fa-linkedin">&nbsp;</i></a>
-                            </div>
-                            <div class="col-6">
-                                <a class="btn btn-dark float-start" href="https://www.instagram.com" target="_blank">
-                                    <i class="fab fa-instagram">&nbsp;</i>
-                                
-                                </a>
-                            </div>
-                            <div class="col-6">
-                                <a class="btn btn-dark float-end" href="https://www.facebook.com" target="_blank">
-                                    <i class="fab fa-facebook">&nbsp;</i>
+
+                                  <a class="btnE  m-auto " href="https://www.facebook.com" target="_blank">
+                                    <i class="fab fa-facebook ">&nbsp;</i>
                                    
                                 </a>
-                            </div>
-                            <div class="col-6">
-                                <a class="btn btn-dark float-start" href="https://www.youtube.com" target="_blank">
+
+
+                                <a class="btnE  m-auto " href="https://www.instagram.com" target="_blank">
+                                    <i class="fab fa-instagram ">&nbsp;</i>
+                                
+                                </a>
+
+                                  <a class="btnE  m-auto " href="https://www.youtube.com" target="_blank">
                                     <i class="fab fa-youtube">&nbsp;</i>
                                 
                                 </a>
+                         
+
                             </div>
+
+                         
+                           
                         </div>
                     </div>
                 </div>

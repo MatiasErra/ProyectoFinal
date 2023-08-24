@@ -20,17 +20,43 @@ namespace Web.Paginas.Depositos
         
             if (!IsPostBack)
             {
-                limpiar();
+               
+              
+                if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
+                {
+                    btnVolver.Visible = true;
+                    lstDeposito.Visible = false;
+                    lstDepositoSelect.Visible = true;
+                }
+                if (System.Web.HttpContext.Current.Session["idDepMod"] != null)
+                {
+                    lblMensajes.Text = "Deposito Modificado";
+                    System.Web.HttpContext.Current.Session["idDepMod"] = null;
+                }
+                System.Web.HttpContext.Current.Session["idDep"] = null;
                 listar();
+            
             }
         }
 
         private void listar()
-        {  ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+        {
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             List<Deposito> lst = Web.listDeps();
-            lstDeposito.DataSource = lst;
-            lstDeposito.DataBind();
-
+            if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
+            {
+               
+                lstDepositoSelect.Visible=true;
+                lstDepositoSelect.DataSource =lst;
+                lstDepositoSelect.DataBind();
+            }
+            else
+            {
+               
+                lstDeposito.Visible = true;
+                lstDeposito.DataSource = lst;
+                lstDeposito.DataBind();
+            }
         }
 
 
@@ -64,31 +90,8 @@ namespace Web.Paginas.Depositos
         }
 
 
-        private void cargarDep(int id)
-        {
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            Deposito deposito = Web.buscarDeps(id);
-            txtId.Text = deposito.IdDeposito.ToString();
-            txtCapacidad.Text = deposito.Capacidad;
-            txtCondiciones.Text = deposito.Condiciones;
-            txtTemperatura.Text = deposito.Temperatura.ToString();
-            txtUbicacion.Text = deposito.Ubicacion;
-        }
-
-        protected void Select_Click(object sender, EventArgs e)
-        {
-
-            int id;
-            Button btnConstultar = (Button)sender;
-            GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
-            id = int.Parse(selectedrow.Cells[0].Text);
-     
-                cargarDep(id);
-
-        
-
-        }
-
+   
+  
         static int GenerateUniqueId()
         {
             Guid guid = Guid.NewGuid();
@@ -101,7 +104,7 @@ namespace Web.Paginas.Depositos
             }
 
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            List<Deposito> lstDep = Web.listIdDeps();
+            List<Deposito> lstDep = Web.listDeps();
             foreach (Deposito deposito in lstDep)
             {
                 if (deposito.IdDeposito.Equals(intGuid))
@@ -124,32 +127,65 @@ namespace Web.Paginas.Depositos
             List<Deposito> depositos = new List<Deposito>();
             depositos = Web.buscarVarDeps(value);
             lstDeposito.DataSource = null;
-
-            if (txtBuscar.Text != "")
+            if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
             {
-
-                if (depositos.Count > 0)
+                if (txtBuscar.Text != "")
                 {
-                    lstDeposito.Visible = true;
-                    lblMensajes.Text = "";
-                    lstDeposito.DataSource = depositos;
-                    lstDeposito.DataBind();
+
+                    if (depositos.Count > 0)
+                    {
+                        lstDepositoSelect.Visible = true;
+                        lblMensajes.Text = "";
+                        lstDepositoSelect.DataSource = depositos;
+                        lstDepositoSelect.DataBind();
+                    }
+                    else
+                    {
+                        lstDepositoSelect.Visible = false;
+                        lblMensajes.Text = "No se encontro ningun Depósito.";
+                    }
                 }
                 else
                 {
-                    lstDeposito.Visible = false;
-                    lblMensajes.Text = "No se encontro ningun Depósito.";
+                    lblMensajes.Text = "Debe poner algun dato en el buscador.";
+
                 }
             }
             else
             {
-                lblMensajes.Text = "Debe poner algun dato en el buscador.";
+
+                if (txtBuscar.Text != "")
+                {
+
+                    if (depositos.Count > 0)
+                    {
+                        lstDeposito.Visible = true;
+                        lblMensajes.Text = "";
+                        lstDeposito.DataSource = depositos;
+                        lstDeposito.DataBind();
+                    }
+                    else
+                    {
+                        lstDeposito.Visible = false;
+                        lblMensajes.Text = "No se encontro ningun Depósito.";
+                    }
+                }
+                else
+                {
+                    lblMensajes.Text = "Debe poner algun dato en el buscador.";
+
+                }
             }
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
             buscar();
+        }
+
+        protected void btnVolver_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("/Paginas/Lotes/frmAltaLotes");
         }
 
         protected void btnAlta_Click(object sender, EventArgs e)
@@ -193,6 +229,21 @@ namespace Web.Paginas.Depositos
             }
         }
 
+        protected void btnSelected_Click(object sender, EventArgs e)
+        {
+
+            int id;
+            Button btnConstultar = (Button)sender;
+            GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
+            id = int.Parse(selectedrow.Cells[0].Text);
+
+            System.Web.HttpContext.Current.Session["idDepositoSel"] = id;
+
+            Response.Redirect("/Paginas/Lotes/frmAltaLotes");
+
+
+
+        }
 
 
         protected void btnBaja_Click(object sender, EventArgs e)

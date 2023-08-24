@@ -13,29 +13,33 @@ namespace Persistencia
     class pLote
     {
 
-        public List<Lote> listLotes()
+        public List<string[]> listLotes()
         {
-            List<Lote> resultado = new List<Lote>();
+            List<string[]> resultado = new List<string[]>();
 
-            Lote lote;
+
             using (SqlConnection connect = Conexion.Conectar())
             {
                 try
                 {
                     SqlCommand cmd = new SqlCommand("LstLotes", connect);
                     cmd.CommandType = CommandType.StoredProcedure;
+
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            lote = new Lote();
-                            lote.IdGranja = int.Parse(reader["idGranja"].ToString());
-                            lote.IdProducto = int.Parse(reader["idProducto"].ToString());
+                            string[] lote = new string[9];
+                            lote[0] = reader["idGranja"].ToString();
+                            lote[1] = reader["nombreGranja"].ToString();
+                            lote[2] = reader["idProducto"].ToString();
+                            lote[3] = reader["nombreProducto"].ToString();
                             string[] DateArr = reader["fchProduccion"].ToString().Split(' ');
-                            lote.FchProduccion = DateArr[0];
-                            lote.Cantidad = int.Parse(reader["cantidad"].ToString());
-                            lote.Precio = double.Parse(reader["precio"].ToString());
-                            lote.IdDeposito = int.Parse(reader["idDeposito"].ToString());
+                            lote[4] = DateArr[0];
+                            lote[5] = reader["cantidad"].ToString();
+                            lote[6] = reader["precio"].ToString();
+                            lote[7] = reader["idDeposito"].ToString();
+                            lote[8] = reader["ubicacionDeposito"].ToString();
 
                             resultado.Add(lote);
                         }
@@ -43,21 +47,17 @@ namespace Persistencia
                 }
                 catch (Exception)
                 {
-
                     return resultado;
-
                 }
             }
             return resultado;
         }
 
-        public List<Lote> buscarVarLotes(string var)
+        public List<string[]> buscarVarLotes(string var)
         {
-            List<Lote> resultado = new List<Lote>();
+            List<string[]> resultado = new List<string[]>();
             try
             {
-                Lote lote;
-
 
                 SqlConnection conect = Conexion.Conectar();
 
@@ -70,14 +70,17 @@ namespace Persistencia
                 {
                     while (reader.Read())
                     {
-                        lote = new Lote();
-                        lote.IdGranja = int.Parse(reader["idGranja"].ToString());
-                        lote.IdProducto = int.Parse(reader["idProducto"].ToString());
+                        string[] lote = new string[9];
+                        lote[0] = reader["idGranja"].ToString();
+                        lote[1] = reader["nombreGranja"].ToString();
+                        lote[2] = reader["idProducto"].ToString();
+                        lote[3] = reader["nombreProducto"].ToString();
                         string[] DateArr = reader["fchProduccion"].ToString().Split(' ');
-                        lote.FchProduccion = DateArr[0];
-                        lote.Cantidad = int.Parse(reader["cantidad"].ToString());
-                        lote.Precio = double.Parse(reader["precio"].ToString());
-                        lote.IdDeposito = int.Parse(reader["idDeposito"].ToString());
+                        lote[4] = DateArr[0];
+                        lote[5] = reader["cantidad"].ToString();
+                        lote[6] = reader["precio"].ToString();
+                        lote[7] = reader["idDeposito"].ToString();
+                        lote[8] = reader["ubicacionDeposito"].ToString();
 
                         resultado.Add(lote);
                     }
@@ -92,9 +95,9 @@ namespace Persistencia
             return resultado;
         }
 
-        public Lote buscarLote(int idGranja, int idProducto, string fchProduccion)
+        public string[] buscarLote(string nombreGranja, string nombreProducto, string fchProduccion)
         {
-            Lote lote = new Lote();
+            string[] lote = new string[9];
 
             using (SqlConnection connect = Conexion.Conectar())
             {
@@ -103,21 +106,25 @@ namespace Persistencia
                     SqlCommand cmd = new SqlCommand("BuscarLote", connect);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.Add(new SqlParameter("@idGranja", idGranja));
-                    cmd.Parameters.Add(new SqlParameter("@idProducto", idProducto));
+                    cmd.Parameters.Add(new SqlParameter("@nombreGranja", nombreGranja));
+                    cmd.Parameters.Add(new SqlParameter("@nombreProducto", nombreProducto));
                     cmd.Parameters.Add(new SqlParameter("@fchProduccion", fchProduccion));
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            lote.IdGranja = int.Parse(reader["idGranja"].ToString());
-                            lote.IdProducto = int.Parse(reader["idProducto"].ToString());
+
+                            lote[0] = reader["idGranja"].ToString();
+                            lote[1] = reader["nombreGranja"].ToString();
+                            lote[2] = reader["idProducto"].ToString();
+                            lote[3] = reader["nombreProducto"].ToString();
                             string[] DateArr = reader["fchProduccion"].ToString().Split(' ');
-                            lote.FchProduccion = DateArr[0];
-                            lote.Cantidad = int.Parse(reader["cantidad"].ToString());
-                            lote.Precio = double.Parse(reader["precio"].ToString());
-                            lote.IdDeposito = int.Parse(reader["idDeposito"].ToString());
+                            lote[4] = DateArr[0];
+                            lote[5] = reader["cantidad"].ToString();
+                            lote[6] = reader["precio"].ToString();
+                            lote[7] = reader["idDeposito"].ToString();
+                            lote[8] = reader["ubicacionDeposito"].ToString();
                         }
                     }
                 }
@@ -170,7 +177,7 @@ namespace Persistencia
         }
 
 
-        public bool bajaLote(int idGranja, int idProducto, string fchProduccion)
+        public bool bajaLote(string nombreGranja, string nombreProducto, string fchProduccion)
         {
             bool resultado = false;
 
@@ -180,8 +187,8 @@ namespace Persistencia
                 SqlCommand cmd = new SqlCommand("BajaLote", connect);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add(new SqlParameter("@idGranja", idGranja));
-                cmd.Parameters.Add(new SqlParameter("@idProducto", idProducto));
+                cmd.Parameters.Add(new SqlParameter("@nombreGranja", nombreGranja));
+                cmd.Parameters.Add(new SqlParameter("@nombreProducto", nombreProducto));
                 cmd.Parameters.Add(new SqlParameter("@fchProduccion", fchProduccion));
 
                 int resBD = cmd.ExecuteNonQuery();

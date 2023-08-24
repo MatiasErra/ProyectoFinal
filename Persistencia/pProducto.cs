@@ -12,40 +12,7 @@ namespace Persistencia
 {
     class pProducto
     {
-        public List<Producto> listIdProductos()
-        {
-            List<Producto> resultado = new List<Producto>();
-            try
-            {
-                Producto producto;
-
-
-                SqlConnection connect = Conexion.Conectar();
-
-                SqlCommand cmd = new SqlCommand("LstIdProductos", connect);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        producto = new Producto();
-                        producto.IdProducto = int.Parse(reader["idProducto"].ToString());
-
-
-                        resultado.Add(producto);
-                    }
-                }
-
-                connect.Close();
-            }
-            catch (Exception)
-            {
-                return resultado;
-            }
-            return resultado;
-        }
+    
 
         public List<Producto> listProductos()
         {

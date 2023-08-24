@@ -48,12 +48,12 @@ namespace Web.Paginas.Admins
             txtId.Text = lstadm.IdPersona.ToString();
             txtNombre.Text = lstadm.Nombre.ToString();
             txtApell.Text = lstadm.Apellido.ToString();
-       
+
 
 
             txtFchNac.Text = DateTime.Parse(lstadm.FchNacimiento).ToString("yyyy-MM-dd");
 
-           
+
             listTipoAdmin.SelectedValue = lstadm.TipoDeAdmin.ToString();
             lstEstado.SelectedValue = lstadm.Estado.ToString();
         }
@@ -62,7 +62,7 @@ namespace Web.Paginas.Admins
 
         private bool faltanDatos()
         {
-            if (txtNombre.Text == "" || txtApell.Text == "" 
+            if (txtNombre.Text == "" || txtApell.Text == ""
              || txtFchNac.Text == "")
 
 
@@ -78,15 +78,15 @@ namespace Web.Paginas.Admins
         {
 
             txtId.Text = "";
-           
+
 
             txtNombre.Text = "";
             txtApell.Text = "";
-      
+
             txtFchNac.Text = "";
             lblMensajes.Text = "";
             listTipoAdmin.SelectedValue = "Seleccionar tipo de Admin";
-    
+
 
         }
 
@@ -187,82 +187,93 @@ namespace Web.Paginas.Admins
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
-
-            if (!faltanDatos())
+            if (Page.IsValid)
             {
-                if (!txtId.Text.Equals(""))
+
+
+                if (!faltanDatos())
                 {
-
-                    if (listTipoAdmin.SelectedValue.ToString() != "Seleccionar tipo de Admin")
+                    if (!txtId.Text.Equals(""))
                     {
-                        if (lstEstado.SelectedValue.ToString() != "Seleccionar estado de Admin")
+
+                        if (listTipoAdmin.SelectedValue.ToString() != "Seleccionar tipo de Admin")
                         {
-                            if (fchNotToday())
+                            if (lstEstado.SelectedValue.ToString() != "Seleccionar estado de Admin")
                             {
-                                int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text.ToString()));
-                                string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
-                                string apellido = HttpUtility.HtmlEncode(txtApell.Text);
-
-
-                                string txtFc = HttpUtility.HtmlEncode(txtFchNac.Text);
-                                string tipoAdm = HttpUtility.HtmlEncode(listTipoAdmin.SelectedValue.ToString());
-                                string estado = HttpUtility.HtmlEncode(lstEstado.SelectedValue.ToString());
-
-
-
-                                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                                Admin unAdmin = new Admin();
-                                unAdmin.IdPersona = id;
-                                unAdmin.Nombre = nombre;
-                                unAdmin.Apellido = apellido;
-
-
-                                unAdmin.FchNacimiento = txtFc;
-                                unAdmin.TipoDeAdmin = tipoAdm;
-                                unAdmin.Estado = estado;
-
-                                if (Web.modificarAdm(unAdmin))
+                                if (fchNotToday())
                                 {
-                                    limpiar();
+                                    int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text.ToString()));
+                                    string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
+                                    string apellido = HttpUtility.HtmlEncode(txtApell.Text);
 
-                                    lblMensajes.Text = "Admin modificado con éxito.";
-                                    limpiarIdSession();
 
-                                    Response.Redirect("/Paginas/Admins/frmAdmins");
+                                    string txtFc = HttpUtility.HtmlEncode(txtFchNac.Text);
+                                    string tipoAdm = HttpUtility.HtmlEncode(listTipoAdmin.SelectedValue.ToString());
+                                    string estado = HttpUtility.HtmlEncode(lstEstado.SelectedValue.ToString());
+
+
+
+                                    ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                                    Admin unAdmin = new Admin();
+                                    unAdmin.IdPersona = id;
+                                    unAdmin.Nombre = nombre;
+                                    unAdmin.Apellido = apellido;
+
+
+                                    unAdmin.FchNacimiento = txtFc;
+                                    unAdmin.TipoDeAdmin = tipoAdm;
+                                    unAdmin.Estado = estado;
+
+                                    if (Web.modificarAdm(unAdmin))
+                                    {
+                                        limpiar();
+
+                                        lblMensajes.Text = "Admin modificado con éxito.";
+                                        limpiarIdSession();
+                                        System.Web.HttpContext.Current.Session["idAdminMod"] = "si";
+
+                                        Response.Redirect("/Paginas/Admins/frmAdmins");
+                                    }
+                                    else
+                                    {
+                                        lblMensajes.Text = "No se pudo modificar el Administrador.";
+
+                                    }
                                 }
                                 else
                                 {
-                                    lblMensajes.Text = "No se pudo modificar el Administrador.";
-
+                                    lblMensajes.Text = "Seleccionar una fecha menor a hoy.";
                                 }
                             }
                             else
                             {
-                                lblMensajes.Text = "Seleccionar una fecha menor a hoy.";
+                                lblMensajes.Text = "Falta seleccionar el estado de admin.";
                             }
                         }
                         else
                         {
-                            lblMensajes.Text = "Falta seleccionar el estado de admin.";
+                            lblMensajes.Text = "Falta selecionar el tipo de Admin.";
+
                         }
                     }
                     else
                     {
-                        lblMensajes.Text = "Falta selecionar el tipo de Admin.";
-
+                        lblMensajes.Text = "Debe seleccionar un Admin.";
                     }
+
+
                 }
+
                 else
                 {
-                    lblMensajes.Text = "Debe seleccionar un Admin.";
+                    lblMensajes.Text = "Faltan datos.";
                 }
-
-
             }
 
             else
             {
-                lblMensajes.Text = "Faltan datos.";
+                lblMensajes.Text = "Hay algún caracter no válido o faltante en el formulario";
+
             }
         }
 

@@ -11,13 +11,13 @@ namespace Clases
         private int _idFertilizante;
         private string _nombre;
         private string _tipo;
-        private short _pH;
+        private double _pH;
         private string _impacto;
 
         public int IdFertilizante { get => _idFertilizante; set => _idFertilizante = value; }
         public string Nombre { get => _nombre; set => _nombre = value; }
         public string Tipo { get => _tipo; set => _tipo = value; }
-        public short PH { get => _pH; set => _pH = value; }
+        public double PH { get => _pH; set => _pH = value; }
         public string Impacto { get => _impacto; set => _impacto = value; }
 
 
@@ -28,7 +28,7 @@ namespace Clases
 
         public Fertilizante () { }
 
-        public Fertilizante(int idFertilizante, string nombre, string tipo, short pH, string impacto)
+        public Fertilizante(int idFertilizante, string nombre, string tipo, double pH, string impacto)
         {
             IdFertilizante = idFertilizante;
             Nombre = nombre;

@@ -17,8 +17,8 @@ namespace Web.Paginas.Lotes
 
         protected void Page_PreInit(object sender, EventArgs e)
         {
-            if (System.Web.HttpContext.Current.Session["idGranjaSel"] == null
-                || System.Web.HttpContext.Current.Session["idProductoSel"] == null
+            if (System.Web.HttpContext.Current.Session["nombreGranjaSel"] == null
+                || System.Web.HttpContext.Current.Session["nombreProductoSel"] == null
                 || System.Web.HttpContext.Current.Session["fchProduccionSel"] == null)
             {
                 Response.Redirect("/Paginas/Lotes/frmLotes");
@@ -31,8 +31,8 @@ namespace Web.Paginas.Lotes
             if (!IsPostBack)
             {
 
-                int idGranja = (int)System.Web.HttpContext.Current.Session["idGranjaSel"];
-                int idProducto = (int)System.Web.HttpContext.Current.Session["idProductoSel"];
+                string nombreGranja = System.Web.HttpContext.Current.Session["nombreGranjaSel"].ToString();
+                string nombreProducto = System.Web.HttpContext.Current.Session["nombreProductoSel"].ToString();
                 string fchProduccion = System.Web.HttpContext.Current.Session["fchProduccionSel"].ToString();
 
                 CargarListDeposito();
@@ -43,7 +43,7 @@ namespace Web.Paginas.Lotes
                 }
                 else
                 {
-                    cargarLote(idGranja, idProducto, fchProduccion);
+                    cargarLote(nombreGranja, nombreProducto, fchProduccion);
                 }
 
             }
@@ -55,21 +55,25 @@ namespace Web.Paginas.Lotes
 
         private void limpiarIdSession()
         {
-            System.Web.HttpContext.Current.Session["idGranjaSel"] = null;
-            System.Web.HttpContext.Current.Session["idProductoSel"] = null;
+            System.Web.HttpContext.Current.Session["nombreGranjaSel"] = null;
+            System.Web.HttpContext.Current.Session["nombreProductoSel"] = null;
             System.Web.HttpContext.Current.Session["fchProduccionSel"] = null;
         }
 
-        private void cargarLote(int idGranja, int idProducto, string fchProduccion)
+        private void cargarLote(string nombreGranja, string nombreProducto, string fchProduccion)
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            Lote lote = Web.buscarLote(idGranja, idProducto, fchProduccion);
-            txtIdGranja.Text = lote.IdGranja.ToString();
-            txtIdProducto.Text = lote.IdProducto.ToString();
-            txtFchProduccion.Text = DateTime.Parse(lote.FchProduccion).ToString("yyyy-MM-dd");
-            txtCantidad.Text = lote.Cantidad.ToString();
-            txtPrecio.Text = lote.Precio.ToString();
-            listDeposito.SelectedValue = lote.IdDeposito.ToString();
+            string[] lote = Web.buscarLote(nombreGranja, nombreProducto, fchProduccion);
+            txtIdGranja.Text = lote[0].ToString();
+            txtIdProducto.Text = lote[2].ToString();
+            txtFchProduccion.Text = DateTime.Parse(lote[4]).ToString("dd/MM/yyyy");
+            string cantidad = lote[5].ToString();
+            string[] cant = cantidad.Split(' ');
+            string count = cant[0].ToString();
+
+            txtCantidad.Text = count;
+            txtPrecio.Text = lote[6].ToString();
+            listDeposito.SelectedValue = lote[7].ToString();
         }
 
         private bool faltanDatos()
@@ -115,6 +119,7 @@ namespace Web.Paginas.Lotes
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             List<Deposito> depositos = new List<Deposito>();
+            DataView dv = new DataView();
             if (txtBuscarDeposito.Text == "")
             {
                 depositos = Web.listDeps();
@@ -123,22 +128,28 @@ namespace Web.Paginas.Lotes
             {
                 string value = txtBuscarDeposito.Text.ToLower();
                 depositos = Web.buscarVarDeps(value);
-                if (depositos.Count == 0)
-                {
-                    lblMensajes.Text = "No se encontro ningun Deposito.";
-                }
+
             }
 
-            DataTable dt = new DataTable();
+            if (depositos.Count == 0)
+            {
+                lblMensajes.Text = "No se encontro ningun Deposito.";
+            }
+            else
+            {
 
-            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
-            dt.Columns.Add(new DataColumn("id", typeof(String)));
+                DataTable dt = new DataTable();
 
-            dt.Rows.Add(createRow("Seleccione un Deposito", "Seleccione un Deposito", dt));
+                dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+                dt.Columns.Add(new DataColumn("id", typeof(String)));
 
-            cargarDepositos(depositos, dt);
+                dt.Rows.Add(createRow("Seleccione un Deposito", "Seleccione un Deposito", dt));
+                cargarDepositos(depositos, dt);
+                dv = new DataView(dt);
 
-            DataView dv = new DataView(dt);
+            }
+
+
             return dv;
         }
 
@@ -186,15 +197,15 @@ namespace Web.Paginas.Lotes
 
 
 
-            if (System.Web.HttpContext.Current.Session["idGranjaSel"] != null)
+            if (System.Web.HttpContext.Current.Session["nombreGranjaSel"] != null)
             {
-                txtIdGranja.Text = System.Web.HttpContext.Current.Session["idGranjaSel"].ToString();
+                txtIdGranja.Text = System.Web.HttpContext.Current.Session["nombreGranjaSel"].ToString();
 
             }
 
-            if (System.Web.HttpContext.Current.Session["idProductoSel"] != null)
+            if (System.Web.HttpContext.Current.Session["nombreProductoSel"] != null)
             {
-                txtIdProducto.Text = System.Web.HttpContext.Current.Session["idProductoSel"].ToString();
+                txtIdProducto.Text = System.Web.HttpContext.Current.Session["nombreProductoSel"].ToString();
 
             }
 
@@ -227,6 +238,12 @@ namespace Web.Paginas.Lotes
 
         #region Botones
 
+        protected void btnAltaDeposito_Click(object sender, EventArgs e)
+        {
+            guardarDatos();
+            Response.Redirect("/Paginas/Depositos/frmDepositos");
+        }
+
         protected void btnBuscarDeposito_Click(object sender, EventArgs e)
         {
             CargarListDeposito();
@@ -245,24 +262,41 @@ namespace Web.Paginas.Lotes
         {
             if (!faltanDatos())
             {
-                int idGranja = int.Parse(HttpUtility.HtmlEncode(txtIdGranja.Text));
-                int idProducto = int.Parse(HttpUtility.HtmlEncode(txtIdProducto.Text));
-                string fchProduccion = HttpUtility.HtmlEncode(txtFchProduccion.Text);
-                int cantidad = int.Parse(HttpUtility.HtmlEncode(txtCantidad.Text));
-                double precio = double.Parse(HttpUtility.HtmlEncode(txtPrecio.Text));
-                int idDeposito = int.Parse(HttpUtility.HtmlEncode(listDeposito.SelectedValue));
-
-                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                Lote unLote = new Lote(idGranja, idProducto, fchProduccion, cantidad, precio, idDeposito);
-
-                if (Web.modLote(unLote))
+                if (int.Parse(txtCantidad.Text) > 0)
                 {
-                    limpiar();
-                    lblMensajes.Text = "Lote modificado con éxito.";
+                    ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+
+                    int idGranja = int.Parse(HttpUtility.HtmlEncode(txtIdGranja.Text));
+                    int idProducto = int.Parse(HttpUtility.HtmlEncode(txtIdProducto.Text));
+                    string fchProduccion = HttpUtility.HtmlEncode(txtFchProduccion.Text);
+                    Producto producto = Web.buscarProducto(idProducto);
+                    string cantidad = HttpUtility.HtmlEncode(txtCantidad.Text) + " " + producto.TipoVenta.ToString();
+                    double precio = double.Parse(HttpUtility.HtmlEncode(txtPrecio.Text));
+                    int idDeposito = int.Parse(HttpUtility.HtmlEncode(listDeposito.SelectedValue));
+
+
+                    Lote unLote = new Lote(idGranja, idProducto, fchProduccion, cantidad, precio, idDeposito);
+
+                    if (Web.modLote(unLote))
+                    {
+                        limpiar();
+                        lblMensajes.Text = "Lote modificado con éxito.";
+                        limpiarIdSession();
+                        System.Web.HttpContext.Current.Session["LoteMod"] = "si";
+                        Response.Redirect("/Paginas/Lotes/frmLotes");
+
+                    }
+                    else
+                    {
+                        lblMensajes.Text = "No se modifico el lote";
+                    }
 
                 }
-                limpiarIdSession();
-                Response.Redirect("/Paginas/Lotes/frmLotes");
+                else
+                {
+                    lblMensajes.Text = "La cantidad debe ser mayor a cero.";
+                }
+
             }
             else
             {

@@ -33,6 +33,15 @@ namespace Web.Paginas.Clientes
         protected global::System.Web.UI.WebControls.Button btnBuscar;
 
         /// <summary>
+        /// Control btnVolverFrm.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnVolverFrm;
+
+        /// <summary>
         /// Control btnLimpiar.
         /// </summary>
         /// <remarks>
@@ -58,6 +67,15 @@ namespace Web.Paginas.Clientes
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView lstCliente;
+
+        /// <summary>
+        /// Control lstClienteSelect.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView lstClienteSelect;
 
         /// <summary>
         /// Control txtId.

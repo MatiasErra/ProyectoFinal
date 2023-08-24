@@ -69,13 +69,13 @@ namespace Web.Paginas.Granjass
         protected global::System.Web.UI.WebControls.TextBox txtUbicacion;
 
         /// <summary>
-        /// Control txtBuscarDueño.
+        /// Control listDueño.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtBuscarDueño;
+        protected global::System.Web.UI.WebControls.DropDownList listDueño;
 
         /// <summary>
         /// Control btnBuscarDueño.
@@ -85,15 +85,6 @@ namespace Web.Paginas.Granjass
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnBuscarDueño;
-
-        /// <summary>
-        /// Control listDueño.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList listDueño;
 
         /// <summary>
         /// Control btnAlta.
@@ -121,6 +112,15 @@ namespace Web.Paginas.Granjass
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView lstGranja;
+
+        /// <summary>
+        /// Control lstGranjaSelect.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView lstGranjaSelect;
 
         /// <summary>
         /// Control txtId.

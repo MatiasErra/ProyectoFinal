@@ -15,7 +15,7 @@ namespace Web.Paginas.Productos
     {
         protected void Page_PreInit(object sender, EventArgs e)
         {
-            if (System.Web.HttpContext.Current.Session["idProductoSel"] == null)
+            if (System.Web.HttpContext.Current.Session["idProductoMod"] == null)
             {
                 Response.Redirect("/Paginas/Productos/frmProductos");
             }
@@ -26,7 +26,7 @@ namespace Web.Paginas.Productos
         {
             if (!IsPostBack)
             {
-                int idProducto = (int)System.Web.HttpContext.Current.Session["idProductoSel"];
+                int idProducto = (int)System.Web.HttpContext.Current.Session["idProductoMod"];
 
                 CargarListTipo();
                 CargarListTipoVenta();
@@ -130,8 +130,8 @@ namespace Web.Paginas.Productos
             dt.Columns.Add(new DataColumn("id", typeof(String)));
 
             dt.Rows.Add(createRow("Seleccione un tipo de venta", "Seleccione un tipo de venta", dt));
-            dt.Rows.Add(createRow("Kilo", "Kilo", dt));
-            dt.Rows.Add(createRow("Unidad", "Unidad", dt));
+            dt.Rows.Add(createRow("Kilos", "Kilos", dt));
+            dt.Rows.Add(createRow("Unidades", "Unidades", dt));
 
             DataView dv = new DataView(dt);
             return dv;
@@ -187,52 +187,63 @@ namespace Web.Paginas.Productos
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
-            if (!faltanDatos())
+            if (Page.IsValid)
             {
-                if (detectarImagen())
+
+                if (!faltanDatos())
                 {
-                    ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                    int idProducto = int.Parse(HttpUtility.HtmlEncode(txtId.Text));
-                    string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
-                    string tipo = HttpUtility.HtmlEncode(listTipo.SelectedValue);
-                    string tipoVenta = HttpUtility.HtmlEncode(listTipoVenta.SelectedValue);
-                    string imagen = "";
-                    if (fileImagen.HasFile)
+                    if (detectarImagen())
                     {
-                        byte[] fileBytes = fileImagen.FileBytes;
-                        imagen = Convert.ToBase64String(fileBytes);
+                        ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                        int idProducto = int.Parse(HttpUtility.HtmlEncode(txtId.Text));
+                        string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
+                        string tipo = HttpUtility.HtmlEncode(listTipo.SelectedValue);
+                        string tipoVenta = HttpUtility.HtmlEncode(listTipoVenta.SelectedValue);
+                        string imagen = "";
+                        if (fileImagen.HasFile)
+                        {
+                            byte[] fileBytes = fileImagen.FileBytes;
+                            imagen = Convert.ToBase64String(fileBytes);
+                        }
+                        else
+                        {
+                            Producto producto = Web.buscarProducto(idProducto);
+                            imagen = producto.Imagen;
+                        }
+
+
+
+                        Producto unProducto = new Producto(idProducto, nombre, tipo, tipoVenta, imagen);
+                        if (Web.modProducto(unProducto))
+                        {
+                            limpiar();
+                            lblMensajes.Text = "Producto modificado con éxito.";
+                            System.Web.HttpContext.Current.Session["ProductoMod"] = "si";
+
+
+                            limpiarIdSession();
+                            Response.Redirect("/Paginas/Productos/frmProductos");
+                        }
+                        else
+                        {
+                            lblMensajes.Text = "Ya existe un Producto con estos datos. Estos son los posibles datos repetidos (Nombre).";
+                        }
+
                     }
                     else
                     {
-                        Producto producto = Web.buscarProducto(idProducto);
-                        imagen = producto.Imagen;
+                        lblMensajes.Text = "El archivo debe ser una imagen o es muy grande.";
                     }
-
-
-
-                    Producto unProducto = new Producto(idProducto, nombre, tipo, tipoVenta, imagen);
-                    if (Web.modProducto(unProducto))
-                    {
-                        limpiar();
-                        lblMensajes.Text = "Producto modificado con éxito.";
-
-                        limpiarIdSession();
-                        Response.Redirect("/Paginas/Productos/frmProductos");
-                    }
-                    else
-                    {
-                        lblMensajes.Text = "Ya existe un Producto con estos datos. Estos son los posibles datos repetidos (Nombre).";
-                    }
-
                 }
                 else
                 {
-                    lblMensajes.Text = "El archivo debe ser una imagen o es muy grande.";
+                    lblMensajes.Text = "Faltan datos.";
                 }
             }
             else
             {
-                lblMensajes.Text = "Faltan datos.";
+                lblMensajes.Text = "Hay algún caracter no válido o faltante en el formulario";
+
             }
         }
     }

@@ -12,40 +12,7 @@ namespace Persistencia
 {
     class pCamion
     {
-        public List<Camion> listIdCam()
-        {
-            List<Camion> resultado = new List<Camion>();
-            try
-            {
-                Camion camion;
-
-
-                SqlConnection connect = Conexion.Conectar();
-
-                SqlCommand cmd = new SqlCommand("LstIdCami", connect);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        camion = new Camion();
-                        camion.IdCamion = int.Parse(reader["idCamion"].ToString());
-
-
-                        resultado.Add(camion);
-                    }
-                }
-
-                connect.Close();
-            }
-            catch (Exception)
-            {
-                return resultado;
-            }
-            return resultado;
-        }
+      
 
         public List<Camion> lstCam()
         {

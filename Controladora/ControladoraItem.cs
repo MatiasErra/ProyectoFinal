@@ -29,13 +29,7 @@ namespace Controladoras
 
         #region Depositos
 
-        public List<Deposito> listIdDeps()
-        {
-            ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Deposito> lst = inst.listIdDeps();
-            return lst;
-
-        }
+  
 
         public List<Deposito> listDeps()
         {
@@ -102,13 +96,6 @@ namespace Controladoras
 
         #region Granjas
 
-        public List<Granja> listIdGranjas()
-        {
-            ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Granja> lst = inst.listIdGranjas();
-            return lst;
-
-        }
 
         public List<Granja> listGranjas()
         {
@@ -175,13 +162,6 @@ namespace Controladoras
 
         #region Productos
 
-        public List<Producto> listIdProductos()
-        {
-            ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Producto> lst = inst.listIdProductos();
-            return lst;
-
-        }
 
         public List<Producto> listProductos()
         {
@@ -248,13 +228,7 @@ namespace Controladoras
 
         #region Pesticida
 
-        public List<Pesticida> listIdPesti()
-        {
-            ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Pesticida> lst = inst.listIdPesti();
-            return lst;
-
-        }
+    
 
         public List<Pesticida> lstPesti()
         {
@@ -324,13 +298,7 @@ namespace Controladoras
 
         #region Fertilizantes
 
-        public List<Fertilizante> listIdFert()
-        {
-            ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Fertilizante> lst = inst.listIdFert();
-            return lst;
 
-        }
 
         public List<Fertilizante> lstFerti()
         {
@@ -400,25 +368,25 @@ namespace Controladoras
 
         #region Lotes
 
-        public List<Lote> listLotes()
+        public List<string[]> listLotes()
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Lote> lst = inst.listLotes();
+            List<string[]> lst = inst.listLotes();
             return lst;
         }
 
-        public List<Lote> buscarVarLotes(string var)
+        public List<string[]> buscarVarLotes(string var)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Lote> lst = inst.buscarVarLotes(var);
+            List<string[]> lst = inst.buscarVarLotes(var);
             return lst;
         }
 
-        public Lote buscarLote(int idGranja, int idProducto, string fchProduccion)
+        public string[] buscarLote(string nombreGranja, string nombreProducto, string fchProduccion)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
 
-            Lote lote = inst.buscarLote(idGranja, idProducto, fchProduccion);
+            string[] lote = inst.buscarLote(nombreGranja, nombreProducto, fchProduccion);
             return lote;
 
         }
@@ -435,12 +403,12 @@ namespace Controladoras
                 return false;
         }
 
-        public bool bajaLote(int idGranja, int idProducto, string fchProduccion)
+        public bool bajaLote(string nombreGranja, string nombreProducto, string fchProduccion)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
 
 
-            if (inst.bajaLote(idGranja, idProducto, fchProduccion))
+            if (inst.bajaLote(nombreGranja, nombreProducto, fchProduccion))
             {
                 return true;
             }
@@ -522,8 +490,6 @@ namespace Controladoras
 
         #region Lotes_Fertis
 
-
-
         public List<string[]> FertisEnLote(int idGranja, int idProducto, string fchProduccion)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
@@ -531,7 +497,6 @@ namespace Controladoras
             return lst;
         }
 
-       
         public Lote_Ferti buscarLoteFerti(int idFertilizante, int idGranja, int idProducto, string fchProduccion)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
@@ -581,13 +546,7 @@ namespace Controladoras
         #endregion
 
         #region Camiones
-        public List<Camion> listIdCam()
-        {
-            ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Camion> lst = inst.listIdCam();
-            return lst;
-
-        }
+     
 
         public List<Camion> lstCam()
         {

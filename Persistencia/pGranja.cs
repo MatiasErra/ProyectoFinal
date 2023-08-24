@@ -12,42 +12,7 @@ namespace Persistencia
 {
     class pGranja
     {
-        public List<Granja> listIdGranjas()
-        {
-            List<Granja> resultado = new List<Granja>();
-            try
-            {
-                Granja granja;
-
-
-                SqlConnection connect = Conexion.Conectar();
-
-                SqlCommand cmd = new SqlCommand("LstIdGranjas", connect);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        granja = new Granja();
-                        granja.IdGranja = int.Parse(reader["idGranja"].ToString());
-
-
-                        resultado.Add(granja);
-                    }
-                }
-
-                connect.Close();
-            }
-            catch (Exception)
-            {
-                
-                return resultado;
-            }
-            return resultado;
-        }
-
+   
         public List<Granja> listGranjas()
         {
             List<Granja> resultado = new List<Granja>();

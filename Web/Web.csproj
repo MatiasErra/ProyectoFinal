@@ -137,6 +137,7 @@
     <Content Include="Paginas\Fertilizantes\modFert.aspx" />
     <Content Include="Paginas\Granjas\frmGranjas.aspx" />
     <Content Include="Paginas\Granjas\modGranja.aspx" />
+    <Content Include="Paginas\Lotes\frmAltaLotes.aspx" />
     <Content Include="Paginas\Lotes\frmLotes.aspx" />
     <Content Include="Paginas\Lotes\frmLotesFertis.aspx" />
     <Content Include="Paginas\Lotes\frmLotesPestis.aspx" />
@@ -364,6 +365,13 @@
     </Compile>
     <Compile Include="Paginas\Granjas\modGranja.aspx.designer.cs">
       <DependentUpon>modGranja.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Lotes\frmAltaLotes.aspx.cs">
+      <DependentUpon>frmAltaLotes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Lotes\frmAltaLotes.aspx.designer.cs">
+      <DependentUpon>frmAltaLotes.aspx</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Lotes\frmLotes.aspx.cs">
       <DependentUpon>frmLotes.aspx</DependentUpon>

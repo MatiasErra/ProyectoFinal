@@ -23,12 +23,21 @@ namespace Web.Paginas.Camiones
             {
                 limpiar();
                 listar();
+
+                if (System.Web.HttpContext.Current.Session["idCamionMod"] != null)
+                {
+                    lblMensajes.Text = "Camión Modificado";
+                    System.Web.HttpContext.Current.Session["idCamionMod"] = null;
+                }
+
+                System.Web.HttpContext.Current.Session["idCamionSel"] = null;
             }
         }
 
         private void listar()
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            lstCamiones.Visible = true;
             lstCamiones.DataSource = null;
             lstCamiones.DataSource = Web.lstCam();
             lstCamiones.DataBind();
@@ -108,7 +117,7 @@ namespace Web.Paginas.Camiones
             }
 
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            List<Camion> lstCam = Web.listIdCam();
+            List<Camion> lstCam = Web.lstCam();
             foreach (Camion camion in lstCam)
             {
                 if (camion.IdCamion.Equals(intGuid))
@@ -170,11 +179,11 @@ namespace Web.Paginas.Camiones
                     int id = GenerateUniqueId();
                     string marca = HttpUtility.HtmlEncode(txtMarca.Text);
                     string modelo = HttpUtility.HtmlEncode(txtModelo.Text);
-                    double carga = double.Parse( HttpUtility.HtmlEncode(txtCarga.Text));
+                    double carga = double.Parse(HttpUtility.HtmlEncode(txtCarga.Text));
                     string disponible = HttpUtility.HtmlEncode(lstDisponible.SelectedValue.ToString());
 
                     ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                    Camion camion = new Camion(id, marca, modelo, carga,  disponible);
+                    Camion camion = new Camion(id, marca, modelo, carga, disponible);
                     if (Web.altaCam(camion))
                     {
                         limpiar();
@@ -190,7 +199,7 @@ namespace Web.Paginas.Camiones
                 }
                 else
                 {
-                    lblMensajes.Text = "Seleccione una disponibilidad.";
+                    lblMensajes.Text = "Falta seleccionar la disponibilidad.";
                 }
             }
             else
@@ -200,7 +209,7 @@ namespace Web.Paginas.Camiones
         }
 
 
-    
+
 
         protected void btnBaja_Click(object sender, EventArgs e)
         {
@@ -221,7 +230,7 @@ namespace Web.Paginas.Camiones
                 }
                 else
                 {
-                    limpiar();
+
                     lblMensajes.Text = "No se ha podido borrar el Camión.";
                 }
             }

@@ -122,7 +122,7 @@ namespace Web.Paginas.Pesticidas
 
         private bool phValid()
         {
-            short ph = short.Parse(txtPH.Text.ToString());
+            double ph = double.Parse(txtPH.Text.ToString());
             if (ph > -1 && ph < 15)
             {
                 return true;
@@ -136,68 +136,77 @@ namespace Web.Paginas.Pesticidas
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
-            if (!faltanDatos())
+            if (Page.IsValid)
             {
-                if (phValid())
+                if (!faltanDatos())
                 {
-
-
-                    if (lstImpacto.SelectedValue.ToString() != "Seleccionar tipo de impacto")
+                    if (phValid())
                     {
 
-                        int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text.ToString()));
-                        string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
-                        string tipo = HttpUtility.HtmlEncode(txtTipo.Text);
 
-                        short pH = short.Parse(HttpUtility.HtmlEncode(txtPH.Text));
-                        string impacto = HttpUtility.HtmlEncode(lstImpacto.SelectedValue.ToString());
-
-
-
-
-
-                        ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                        Pesticida pesticida = new Pesticida(id, nombre, tipo, pH, impacto);
-                        if (Web.modPesti(pesticida))
+                        if (lstImpacto.SelectedValue.ToString() != "Seleccionar tipo de impacto")
                         {
-                            limpiar();
-                            lblMensajes.Text = "Pesticida modificado con éxito.";
-                            limpiarIdSession();
-                            if (System.Web.HttpContext.Current.Session["lotePestiDatos"] != null)
+
+                            int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text.ToString()));
+                            string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
+                            string tipo = HttpUtility.HtmlEncode(txtTipo.Text);
+
+                            double pH = double.Parse(HttpUtility.HtmlEncode(txtPH.Text));
+                            string impacto = HttpUtility.HtmlEncode(lstImpacto.SelectedValue.ToString());
+
+
+
+
+
+                            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                            Pesticida pesticida = new Pesticida(id, nombre, tipo, pH, impacto);
+                            if (Web.modPesti(pesticida))
                             {
-                                Response.Redirect("/Paginas/Lotes/frmLotesPestis");
+                                limpiar();
+                                lblMensajes.Text = "Pesticida modificado con éxito.";
+                                limpiarIdSession();
+                                if (System.Web.HttpContext.Current.Session["lotePestiDatos"] != null)
+                                {
+                                    Response.Redirect("/Paginas/Lotes/frmLotesPestis");
+                                }
+                                else
+                                {
+                                    System.Web.HttpContext.Current.Session["PestiMod"] = "si";
+                                    Response.Redirect("/Paginas/Pesticidas/frmPesticidas");
+                                }
+
+
                             }
                             else
                             {
-                                Response.Redirect("/Paginas/Pesticidas/frmPesticidas");
+
+                                lblMensajes.Text = "Ya existe un Pesticida con estos datos. Estos son los posibles datos repetidos(Nombre).";
+
                             }
 
-                            
                         }
                         else
                         {
-
-                            lblMensajes.Text = "Ya existe un Pesticida con estos datos. Estos son los posibles datos repetidos(Nombre).";
-
+                            lblMensajes.Text = "Falta seleccionar el tipo de impacto.";
                         }
 
                     }
                     else
                     {
-                        lblMensajes.Text = "Falta seleccionar el tipo de impacto.";
+                        lblMensajes.Text = "El PH debe estar entre 0-14.";
                     }
+
 
                 }
                 else
                 {
-                    lblMensajes.Text = "El PH debe estar entre 0-14.";
+                    lblMensajes.Text = "Faltan Datos.";
                 }
-
-
             }
             else
             {
-                lblMensajes.Text = "Faltan Datos.";
+                lblMensajes.Text = "Hay algún carácter no válido o faltante en el formulario";
+
             }
 
 

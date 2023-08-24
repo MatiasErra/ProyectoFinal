@@ -51,6 +51,15 @@ namespace Web.Paginas.Productos
         protected global::System.Web.UI.WebControls.DropDownList listTipoVenta;
 
         /// <summary>
+        /// Control lblimg.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblimg;
+
+        /// <summary>
         /// Control imgImagen.
         /// </summary>
         /// <remarks>
@@ -58,6 +67,15 @@ namespace Web.Paginas.Productos
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image imgImagen;
+
+        /// <summary>
+        /// Control lblNewImg.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNewImg;
 
         /// <summary>
         /// Control fileImagen.

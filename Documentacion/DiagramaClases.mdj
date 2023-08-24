@@ -954,7 +954,7 @@
 											"top": 1179,
 											"width": 122.80810546875,
 											"height": 13,
-											"text": "-pH: short",
+											"text": "-pH: double",
 											"horizontalAlignment": 0
 										},
 										{
@@ -1991,7 +1991,7 @@
 											"top": 1003,
 											"width": 105.47900390625,
 											"height": 13,
-											"text": "-pH: short",
+											"text": "-pH: double",
 											"horizontalAlignment": 0
 										},
 										{
@@ -2532,7 +2532,7 @@
 											"top": 914,
 											"width": 149.79833984375,
 											"height": 13,
-											"text": "-cantidad: int",
+											"text": "-cantidad: string",
 											"horizontalAlignment": 0
 										},
 										{
@@ -13200,7 +13200,7 @@
 							},
 							"name": "pH",
 							"visibility": "private",
-							"type": "short"
+							"type": "double"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -13647,7 +13647,7 @@
 							},
 							"name": "pH",
 							"visibility": "private",
-							"type": "short"
+							"type": "double"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -13981,7 +13981,7 @@
 							},
 							"name": "cantidad",
 							"visibility": "private",
-							"type": "int"
+							"type": "string"
 						},
 						{
 							"_type": "UMLAttribute",

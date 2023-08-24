@@ -21,15 +21,23 @@ namespace Web.Paginas.Admins
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
-            {
+            { 
+                System.Web.HttpContext.Current.Session["idAdminSel"] = null;
                 limpiar();
                 listar();
                 CargarTipos();
+
+                if (System.Web.HttpContext.Current.Session["idAdminMod"] != null)
+                {
+                    lblMensajes.Text = "Administrador Modificado";
+                    System.Web.HttpContext.Current.Session["idAdminMod"] = null;
+                }
             }
         }
 
         private void listar()
         {
+            lstAdmin.Visible = true;
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             lstAdmin.DataSource = null;
             lstAdmin.DataSource = Web.lstAdmin();
@@ -62,19 +70,6 @@ namespace Web.Paginas.Admins
             else { return false; }
 
 
-        }
-
-
-        private bool faltaIdAdm()
-        {
-            if (lstAdmin.SelectedIndex == -1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
 
 
@@ -134,7 +129,7 @@ namespace Web.Paginas.Admins
             return dv;
         }
 
-            DataRow createRow(String Text, String Value, DataTable dt)
+        DataRow createRow(String Text, String Value, DataTable dt)
         {
 
 
@@ -149,7 +144,7 @@ namespace Web.Paginas.Admins
 
         private void limpiar()
         {
-           
+
             txtId.Text = "";
             txtBuscar.Text = "";
             lblMensajes.Text = "";
@@ -177,11 +172,11 @@ namespace Web.Paginas.Admins
             string Luser = user.ToLower();
             for (int i = 0; i < users.Count; i++)
             {
-                if(Luser.Equals (users[i].ToString().ToLower()))
+                if (Luser.Equals(users[i].ToString().ToLower()))
                 {
                     pep++;
                 }
-               string u = users[i].ToString();
+                string u = users[i].ToString();
 
             }
 
@@ -198,7 +193,7 @@ namespace Web.Paginas.Admins
 
 
 
-            if (pep>0)
+            if (pep > 0)
             {
                 return false;
             }
@@ -261,13 +256,14 @@ namespace Web.Paginas.Admins
                 else
                 {
                     lstAdmin.Visible = false;
-                    lblMensajes.Text = "No se encontro ningun admin.";
-                 
+                    lblMensajes.Text = "No se encontro ningun Administrador.";
+
                 }
-            } 
+            }
             else
             {
                 lblMensajes.Text = "Debe poner algun dato en el buscador.";
+                listar();
             }
         }
 
@@ -313,14 +309,14 @@ namespace Web.Paginas.Admins
                                     if (Web.altaAdmin(unAdmin))
                                     {
                                         limpiar();
-                                        lblMensajes.Text = "Admin dado de alta con éxito.";
+                                        lblMensajes.Text = "Administrador dado de alta con éxito.";
                                         listar();
 
                                     }
                                     else
                                     {
 
-                                        lblMensajes.Text = "Ya existe un admin con estos datos. Estos son los posibles datos repetidos (Email / Teléfono).";
+                                        lblMensajes.Text = "Ya existe un Administrador con estos datos. Estos son los posibles datos repetidos (Email / Teléfono / Usuario).";
 
 
                                     }
@@ -338,12 +334,12 @@ namespace Web.Paginas.Admins
                         }
                         else
                         {
-                            lblMensajes.Text = "Falta seleccionar el estado de admin.";
+                            lblMensajes.Text = "Falta seleccionar el estado de Administrador.";
                         }
                     }
                     else
                     {
-                        lblMensajes.Text = "Falta seleccionar el tipo de admin.";
+                        lblMensajes.Text = "Falta seleccionar el tipo de Administrador.";
                     }
                 }
                 else
@@ -368,28 +364,28 @@ namespace Web.Paginas.Admins
             id = int.Parse(selectedrow.Cells[0].Text);
 
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                Admin unAdmin = Web.buscarAdm(id);
-                if (unAdmin != null)
+            Admin unAdmin = Web.buscarAdm(id);
+            if (unAdmin != null)
+            {
+                if (Web.bajaAdmin(id))
                 {
-                    if (Web.bajaAdmin(id))
-                    {
-                        limpiar();
-                        lblMensajes.Text = "Se ha eliminado el Admin.";
-                        txtId.Text = "";
-                        txtBuscar.Text = "";
-                        listar();
-                    }
-                    else
-                    {
-                       
-                        lblMensajes.Text = "No se ha podido eliminar el Admin.";
-                    }
+                    limpiar();
+                    lblMensajes.Text = "Se ha eliminado el Administrador.";
+                    txtId.Text = "";
+                    txtBuscar.Text = "";
+                    listar();
                 }
                 else
                 {
-                    lblMensajes.Text = "El Admin no existe.";
+
+                    lblMensajes.Text = "No se ha podido eliminar el Administrador.";
                 }
-          
+            }
+            else
+            {
+                lblMensajes.Text = "El Administrador no existe.";
+            }
+
         }
 
         protected void btnModificar_Click(object sender, EventArgs e)
@@ -401,8 +397,8 @@ namespace Web.Paginas.Admins
             id = int.Parse(selectedrow.Cells[0].Text);
 
             System.Web.HttpContext.Current.Session["idAdminSel"] = id;
-            
 
+            Response.Redirect("/Paginas/Admins/modAdmin");
         }
 
         protected void btnLimpiar_Click(object sender, EventArgs e)

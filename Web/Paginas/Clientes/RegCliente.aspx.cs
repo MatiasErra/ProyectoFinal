@@ -146,6 +146,10 @@ namespace Web.Paginas.Clientes
 
         #endregion
 
+        protected void btnAtras_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("/Paginas/Clientes/iniciarSesion");
+        }
 
 
         protected void btnAlta_Click(object sender, EventArgs e)
@@ -176,13 +180,14 @@ namespace Web.Paginas.Clientes
                         if (Web.altaCli(unCli))
                         {
                             lblMensajes.Text = "Cliente dado de alta con exito.";
+                            System.Web.HttpContext.Current.Session["CliReg"] = "si";
                             Response.Redirect("/Paginas/Clientes/iniciarSesion");
                             limpiar();
                         }
                         else
                         {
-                            lblMensajes.Text = "No se pudo dar de alta el Cliente, dado que el Email o telefono ya fueron registrados";
-                            
+                            lblMensajes.Text =  "Ya existe un Cliente con estos datos. Estos son los posibles datos repetidos (Email / Teléfono / Usuario).";
+
                         }
 
                     }

@@ -12,40 +12,7 @@ namespace Persistencia
 {
     public class pFertilizante
     {
-        public List<Fertilizante> listIdFert()
-        {
-            List<Fertilizante> resultado = new List<Fertilizante>();
-            try
-            {
-                Fertilizante fertilizante;
-
-
-                SqlConnection connect = Conexion.Conectar();
-
-                SqlCommand cmd = new SqlCommand("LstIdFerti", connect);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        fertilizante = new Fertilizante();
-                        fertilizante.IdFertilizante = int.Parse(reader["idFerti"].ToString());
-
-
-                        resultado.Add(fertilizante);
-                    }
-                }
-
-                connect.Close();
-            }
-            catch (Exception)
-            {
-                return resultado;
-            }
-            return resultado;
-        }
+       
 
         public List<Fertilizante> lstFerti()
         {
@@ -66,7 +33,7 @@ namespace Persistencia
                             fertilizante.IdFertilizante = int.Parse(reader["idFerti"].ToString());
                             fertilizante.Nombre = reader["nombre"].ToString();
                             fertilizante.Tipo = reader["tipo"].ToString();
-                            fertilizante.PH = short.Parse(reader["pH"].ToString());
+                            fertilizante.PH = double.Parse(reader["pH"].ToString());
                             fertilizante.Impacto = reader["impacto"].ToString();
 
                             fertilizantes.Add(fertilizante);
@@ -105,7 +72,7 @@ namespace Persistencia
                         fertilizante.IdFertilizante = int.Parse(reader["idFerti"].ToString());
                         fertilizante.Nombre = reader["nombre"].ToString();
                         fertilizante.Tipo = reader["tipo"].ToString();
-                        fertilizante.PH = short.Parse(reader["pH"].ToString());
+                        fertilizante.PH = double.Parse(reader["pH"].ToString());
                         fertilizante.Impacto = reader["impacto"].ToString();
 
                         resultado.Add(fertilizante);
@@ -141,7 +108,7 @@ namespace Persistencia
                             fertilizante.IdFertilizante = int.Parse(reader["idFerti"].ToString());
                             fertilizante.Nombre = reader["nombre"].ToString();
                             fertilizante.Tipo = reader["tipo"].ToString();
-                            fertilizante.PH = short.Parse(reader["pH"].ToString());
+                            fertilizante.PH = double.Parse(reader["pH"].ToString());
                             fertilizante.Impacto = reader["impacto"].ToString();
                         }
                     }

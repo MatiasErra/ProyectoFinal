@@ -4,7 +4,7 @@
 
     <div class="container row m-2 text-center">
         <div class="row justify-content-center">
-            <div class="col-12 m-3 p-2 text-center" style="border-radius: 20px; background-color: #f2f0f0">
+            <div class="col-12 m-3 p-2 text-center backforContent">
                 <div class="row">
                     <div class="col-12">
                         <h2 class="title">ABM Camiones </h2>
@@ -33,7 +33,7 @@
                         <div class="modal-dialog modal-none">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo Deposito</h1>
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo Camión</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
@@ -41,8 +41,8 @@
 
                                     <div class="input-group">
 
-                                        <asp:TextBox ID="txtMarca" CssClass="input--style-2" runat="server" placeholder="Marca" MaxLength="30" onkeydown="return(!(event.keyCode>=91));"></asp:TextBox>
-                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server"
+                                        <asp:TextBox ID="txtMarca" CssClass="input--style-tex" runat="server" placeholder="Marca" MaxLength="30" onkeydown="return(!(event.keyCode>=91));"></asp:TextBox>
+                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                                             ControlToValidate="txtMarca"
                                             ValidationExpression="^[a-zA-Z ]*$"
                                             ErrorMessage="No es una letra valida" />
@@ -50,24 +50,24 @@
 
                                     <div class="input-group">
 
-                                        <asp:TextBox ID="txtModelo" CssClass="input--style-2" runat="server" placeholder="Modelo" onkeydown="return(!(event.keyCode>=91));"></asp:TextBox>
-                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server"
+                                        <asp:TextBox ID="txtModelo" CssClass="input--style-tex" runat="server" placeholder="Modelo" onkeydown="return(!(event.keyCode>=91));"></asp:TextBox>
+                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server"  class="text initText"
                                             ControlToValidate="txtModelo"
-                                            ValidationExpression="^[a-zA-Z ]*$"
+                                            ValidationExpression="^[a-zA-Z0-9 ]*$"
                                             ErrorMessage="No es un letra valido" />
                                     </div>
 
                                     <div class="input-group">
 
-                                        <asp:TextBox ID="txtCarga" CssClass="input--style-2" runat="server" placeholder="Carga" MaxLength="10" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
-                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server"
+                                        <asp:TextBox ID="txtCarga" CssClass="input--style-tex" runat="server" placeholder="Carga" MaxLength="10" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
+                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                                             ControlToValidate="txtCarga"
                                             ValidationExpression="^[0-9]*$"
                                             ErrorMessage="No es un numero valido" />
                                     </div>
                                     <div class="input-group">
 
-                                        <asp:DropDownList ID="lstDisponible" CssClass="input--style-2" runat="server">
+                                        <asp:DropDownList ID="lstDisponible" CssClass="input--style-lst" runat="server">
                                         </asp:DropDownList>
                                     </div>
 
@@ -84,10 +84,16 @@
                         </div>
                     </div>
 
-                    <div class="col-12">
-                        <asp:Label ID="lblMensajes" runat="server"></asp:Label>
+                
+                                  <div class="col-12 my-2">
+                    <asp:Label CssClass="text centerText " ID="lblMensajes" runat="server"></asp:Label>
 
-                    </div>
+                      <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
+                            ControlToValidate="txtBuscar"
+                            ValidationExpression="^[a-zA-Z0-9 ]+$"
+                            ErrorMessage="No es un carácter válido" />
+
+                </div>
 
                     <div class="col-md-12 align-self-center">
 

@@ -26,11 +26,6 @@ namespace Persistencia
 
         #region Depositos
 
-        public List<Deposito> listIdDeps()
-        {
-            return new pDeposito().listIdDeps();
-        }
-
         public List<Deposito> listDeps()
         {
             return new pDeposito().listDeps();
@@ -64,10 +59,6 @@ namespace Persistencia
 
         #region Granjas
 
-        public List<Granja> listIdGranjas()
-        {
-            return new pGranja().listIdGranjas();
-        }
 
         public List<Granja> listGranjas()
         {
@@ -102,10 +93,7 @@ namespace Persistencia
 
         #region Camiones
 
-        public List<Camion> listIdCam()
-        {
-            return new pCamion().listIdCam();
-        }
+   
 
         public List<Camion> lstCam()
         {
@@ -140,11 +128,7 @@ namespace Persistencia
 
         #region Productos
 
-        public List<Producto> listIdProductos()
-        {
-            return new pProducto().listIdProductos();
-        }
-
+       
         public List<Producto> listProductos()
         {
             return new pProducto().listProductos();
@@ -177,11 +161,6 @@ namespace Persistencia
         #endregion
 
         #region Pesticida
-
-        public List<Pesticida> listIdPesti()
-        {
-            return new pPesticida().listIdPesti();
-        }
 
         public List<Pesticida> lstPesti()
         {
@@ -216,10 +195,6 @@ namespace Persistencia
 
         #region Fertilizantes
 
-        public List<Fertilizante> listIdFert()
-        {
-            return new pFertilizante().listIdFert();
-        }
 
         public List<Fertilizante> lstFerti()
         {
@@ -254,19 +229,19 @@ namespace Persistencia
 
         #region Lotes
 
-        public List<Lote> listLotes()
+        public List<string[]> listLotes()
         {
             return new pLote().listLotes();
         } 
 
-        public List<Lote> buscarVarLotes(string var)
+        public List<string[]> buscarVarLotes(string var)
         {
             return new pLote().buscarVarLotes(var);
         }
 
-        public Lote buscarLote(int idGranja, int idProducto, string fchProduccion)
+        public string[] buscarLote(string nombreGranja, string nombreProducto, string fchProduccion)
         {
-            return new pLote().buscarLote(idGranja, idProducto, fchProduccion);
+            return new pLote().buscarLote(nombreGranja, nombreProducto, fchProduccion);
         }
 
         public bool altaLote(Lote lote)
@@ -274,9 +249,9 @@ namespace Persistencia
             return new pLote().altaLote(lote);
         }
 
-        public bool bajaLote(int idGranja, int idProducto, string fchProduccion)
+        public bool bajaLote(string nombreGranja, string nombreProducto, string fchProduccion)
         {
-            return new pLote().bajaLote(idGranja, idProducto, fchProduccion);
+            return new pLote().bajaLote(nombreGranja, nombreProducto, fchProduccion);
         }
 
         public bool modLote(Lote lote)
@@ -316,14 +291,11 @@ namespace Persistencia
 
         #region Lotes_Pestis
 
-
-
         public List<string[]> PestisEnLote(int idGranja, int idProducto, string fchProduccion)
         {
             return new pLote_Pesti().PestisEnLote(idGranja, idProducto, fchProduccion);
         }
 
-      
         public Lote_Pesti buscarLotePesti(int idFertilizante, int idGranja, int idProducto, string fchProduccion)
         {
             return new pLote_Pesti().buscarLotePesti(idFertilizante, idGranja, idProducto, fchProduccion);

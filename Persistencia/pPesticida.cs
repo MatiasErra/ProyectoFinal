@@ -13,40 +13,7 @@ namespace Persistencia
     internal class pPesticida
     {
 
-        public List<Pesticida> listIdPesti()
-        {
-            List<Pesticida> resultado = new List<Pesticida>();
-            try
-            {
-                Pesticida pesticida;
-
-
-                SqlConnection connect = Conexion.Conectar();
-
-                SqlCommand cmd = new SqlCommand("LstIdPesti", connect);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        pesticida = new Pesticida();
-                        pesticida.IdPesticida = int.Parse(reader["idPesti"].ToString());
-
-
-                        resultado.Add(pesticida);
-                    }
-                }
-
-                connect.Close();
-            }
-            catch (Exception)
-            {
-                return resultado;
-            }
-            return resultado;
-        }
+      
 
         public List<Pesticida> lstPesti()
         {
@@ -67,7 +34,7 @@ namespace Persistencia
                             pesticida.IdPesticida = int.Parse(reader["idPesti"].ToString());
                             pesticida.Nombre = reader["nombre"].ToString();
                             pesticida.Tipo = reader["tipo"].ToString();
-                            pesticida.PH = short.Parse(reader["pH"].ToString());
+                            pesticida.PH = double.Parse(reader["pH"].ToString());
                             pesticida.Impacto = reader["impacto"].ToString();
 
                             pesticidas.Add(pesticida);
@@ -106,7 +73,7 @@ namespace Persistencia
                         pesticida.IdPesticida = int.Parse(reader["idPesti"].ToString());
                         pesticida.Nombre = reader["nombre"].ToString();
                         pesticida.Tipo = reader["tipo"].ToString();
-                        pesticida.PH = short.Parse(reader["pH"].ToString());
+                        pesticida.PH = double.Parse(reader["pH"].ToString());
                         pesticida.Impacto = reader["impacto"].ToString();
 
                         resultado.Add(pesticida);
@@ -142,7 +109,7 @@ namespace Persistencia
                             pesticida.IdPesticida = int.Parse(reader["idPesti"].ToString());
                             pesticida.Nombre = reader["nombre"].ToString();
                             pesticida.Tipo = reader["tipo"].ToString();
-                            pesticida.PH = short.Parse(reader["pH"].ToString());
+                            pesticida.PH = double.Parse(reader["pH"].ToString());
                             pesticida.Impacto = reader["impacto"].ToString();
                         }
                     }

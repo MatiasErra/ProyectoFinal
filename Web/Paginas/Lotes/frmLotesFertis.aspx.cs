@@ -19,8 +19,8 @@ namespace Web.Paginas.Lotes
         protected void Page_PreInit(object sender, EventArgs e)
         {
 
-            if (System.Web.HttpContext.Current.Session["idGranjaSel"] == null
-            || System.Web.HttpContext.Current.Session["idProductoSel"] == null
+            if (System.Web.HttpContext.Current.Session["nombreGranjaSel"] == null
+            || System.Web.HttpContext.Current.Session["nombreProductoSel"] == null
             || System.Web.HttpContext.Current.Session["fchProduccionSel"] == null
            )
 
@@ -40,13 +40,12 @@ namespace Web.Paginas.Lotes
             if (!IsPostBack)
 
             {
-                string Granja = System.Web.HttpContext.Current.Session["idGranjaSel"].ToString();
-                string Producto = System.Web.HttpContext.Current.Session["idProductoSel"].ToString();
-
-                int idGranja = int.Parse(Granja);
-                int idProducto = int.Parse(Producto);
-
+                string nombreGranja = System.Web.HttpContext.Current.Session["nombreGranjaSel"].ToString();
+                string nombreProducto = System.Web.HttpContext.Current.Session["nombreProductoSel"].ToString();
                 string fchProduccion = System.Web.HttpContext.Current.Session["fchProduccionSel"].ToString();
+                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                string[] lote = Web.buscarLote(nombreGranja, nombreProducto, fchProduccion);
+
                 if (System.Web.HttpContext.Current.Session["loteDatosMod"] != null)
                 {
                     btnAtrasMod.Visible = true;
@@ -60,9 +59,9 @@ namespace Web.Paginas.Lotes
                 {
                     cargarDatos();
                 }
-                CargarLote(idGranja, idProducto, fchProduccion);
-                CargarListFertilizante();
-                CargarLotesFertis(idGranja, idProducto, fchProduccion);
+                CargarLote(nombreGranja, nombreProducto, fchProduccion);
+                CargarListFertilizante(int.Parse(lote[0]), int.Parse(lote[2]), fchProduccion);
+                CargarLotesFertis(int.Parse(lote[0]), int.Parse(lote[2]), fchProduccion);
 
 
 
@@ -88,20 +87,21 @@ namespace Web.Paginas.Lotes
 
         #region Fertilizante
 
-        public void CargarListFertilizante()
+        public void CargarListFertilizante(int idGranja, int idProducto, string fchProduccion)
         {
             listFertilizante.DataSource = null;
-            listFertilizante.DataSource = createDataSourceFertilizante();
+            listFertilizante.DataSource = createDataSourceFertilizante(idGranja, idProducto, fchProduccion);
             listFertilizante.DataTextField = "nombre";
             listFertilizante.DataValueField = "id";
             listFertilizante.DataBind();
         }
 
-        ICollection createDataSourceFertilizante()
+        ICollection createDataSourceFertilizante(int idGranja, int idProducto, string fchProduccion)
         {
             listFertilizante.Visible = true;
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             List<Fertilizante> fertilizantes = new List<Fertilizante>();
+            List<string[]> mostrar = new List<string[]>();
 
             DataTable dt = new DataTable();
 
@@ -117,26 +117,59 @@ namespace Web.Paginas.Lotes
             {
                 string value = txtBuscarFertilizante.Text.ToLower();
                 fertilizantes = Web.buscarVarFerti(value);
-                if (fertilizantes.Count == 0)
+
+            }
+            if (fertilizantes.Count == 0)
+            {
+                lblMensajes.Text = "No se encontro ningún Fertilizante.";
+                listFertilizante.Visible = false;
+            }
+            else
+            {
+                listFertilizante.Visible = true;
+                List<string[]> filtro = Web.FertisEnLote(idGranja, idProducto, fchProduccion);
+                foreach (Fertilizante unFerti in fertilizantes)
                 {
-                    lblMensajes.Text = "No se encontro ningún Fertilizante.";
+                    int cont = 0;
+                    foreach (string[] fertL in filtro)
+                    {
+                        if (int.Parse(fertL[0]).Equals(unFerti.IdFertilizante))
+                        {
+                            cont++;
+                        }
+                    }
+                    if (cont == 0)
+                    {
+                        string[] fert = new string[5];
+                        fert[0] = unFerti.IdFertilizante.ToString();
+                        fert[1] = unFerti.Nombre;
+                        fert[2] = unFerti.Tipo;
+                        fert[3] = unFerti.PH.ToString();
+                        fert[4] = unFerti.Impacto;
+                        mostrar.Add(fert);
+                    }
+                }
+
+                if (mostrar.Count == 0)
+                {
+                    lblMensajes.Text = "No se encontro ningún Fertilizante sin añadir.";
                     listFertilizante.Visible = false;
                 }
+                else
+                {
+                    cargarFertilizantes(mostrar, dt);
+                }
             }
-
-
-
-            cargarFertilizantes(fertilizantes, dt);
-
-            DataView dv = new DataView(dt);
-            return dv;
+                DataView dv = new DataView(dt);
+                return dv;
+           
         }
 
-        private void cargarFertilizantes(List<Fertilizante> fertilizantes, DataTable dt)
+        private void cargarFertilizantes(List<string[]> fertilizantes, DataTable dt)
         {
-            foreach (Fertilizante unFertilizante in fertilizantes)
+            foreach (string[] unFertilizante in fertilizantes)
             {
-                dt.Rows.Add(createRow(unFertilizante.Nombre + " " + unFertilizante.Tipo, unFertilizante.IdFertilizante.ToString(), dt));
+                dt.Rows.Add(createRow(unFertilizante[1] + " " + unFertilizante[2], unFertilizante[0], dt));
             }
         }
 
@@ -148,8 +181,14 @@ namespace Web.Paginas.Lotes
 
         protected void btnBuscarFertilizante_Click(object sender, EventArgs e)
         {
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            string[] lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
 
-            CargarListFertilizante();
+            int idGranja = int.Parse(lote[0]);
+            int idProducto = int.Parse(lote[2]);
+            string fchProduccion = lote[4];
+
+            CargarListFertilizante(idGranja, idProducto, fchProduccion);
         }
 
         #endregion
@@ -221,7 +260,7 @@ namespace Web.Paginas.Lotes
 
             foreach (string[] str in fertilizantes)
             {
-              int id =  int.Parse(str[0].ToString());
+                int id = int.Parse(str[0].ToString());
                 DataRow dr = dt.NewRow();
                 dr["IdFertilizante"] = id;
                 dr["Nombre"] = str[1].ToString();
@@ -238,11 +277,10 @@ namespace Web.Paginas.Lotes
 
         #region Lote
 
-        private void CargarLote(int idGranja, int idProducto, string fchProduccion)
+        private void CargarLote(string nombreGranja, string nombreProducto, string fchProduccion)
         {
-            txtGranja.Text = idGranja.ToString();
-            txtProducto.Text = idProducto.ToString();
-
+            txtGranja.Text = nombreGranja.ToString();
+            txtProducto.Text = nombreProducto.ToString();
             txtFechProd.Text = fchProduccion.ToString();
 
         }
@@ -263,19 +301,21 @@ namespace Web.Paginas.Lotes
         {
             if (listFertilizante.SelectedValue != "Seleccione un Fertilizante")
             {
-                if (txtCantidadFerti.Text != "")
+                if (txtCantidadFerti.Text != "" && int.Parse(txtCantidadFerti.Text) > 0)
                 {
                     ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                    string[] lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
+
                     int idFertilizante = int.Parse(HttpUtility.HtmlEncode(listFertilizante.SelectedValue));
-                    int idGranja = int.Parse(HttpUtility.HtmlEncode(txtGranja.Text.ToString()));
-                    int idProducto = int.Parse(HttpUtility.HtmlEncode(txtProducto.Text.ToString()));
-                    string fchProduccion = HttpUtility.HtmlEncode(txtFechProd.Text.ToString());
+                    int idGranja = int.Parse(lote[0]);
+                    int idProducto = int.Parse(lote[2]);
+                    string fchProduccion = lote[4];
 
                     string cantidad = HttpUtility.HtmlEncode(txtCantidadFerti.Text);
                     Lote_Ferti loteF = new Lote_Ferti(idFertilizante, idGranja, idProducto, fchProduccion, cantidad);
                     if (Web.altaLoteFerti(loteF))
                     {
-                        CargarListFertilizante();
+                        CargarListFertilizante(idGranja, idProducto, fchProduccion);
                         CargarLotesFertis(idGranja, idProducto, fchProduccion);
                         txtCantidadFerti.Text = "";
                         lblMensajes.Text = "Fertilizante dado de alta en el Lote con éxito.";
@@ -287,7 +327,7 @@ namespace Web.Paginas.Lotes
                 }
                 else
                 {
-                    lblMensajes.Text = "Debe ingresar una cantidad.";
+                    lblMensajes.Text = "Debe ingresar una cantidad o debe ser mayor a cero.";
                 }
 
             }
@@ -301,14 +341,19 @@ namespace Web.Paginas.Lotes
         {
             Button btnConstultar = (Button)sender;
             GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
-            int idFertilizante = int.Parse(HttpUtility.HtmlEncode(selectedrow.Cells[0].Text));
-            int idGranja = int.Parse(HttpUtility.HtmlEncode(txtGranja.Text.ToString()));
-            int idProducto = int.Parse(HttpUtility.HtmlEncode(txtProducto.Text.ToString()));
-            string fchProduccion = HttpUtility.HtmlEncode(txtFechProd.Text.ToString());
+
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            string[] lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
+
+            int idFertilizante = int.Parse(HttpUtility.HtmlEncode(selectedrow.Cells[0].Text));
+            int idGranja = int.Parse(lote[0]);
+            int idProducto = int.Parse(lote[2]);
+            string fchProduccion = lote[4];
+
             if (Web.bajaLoteFerti(idFertilizante, idGranja, idProducto, fchProduccion))
             {
                 CargarLotesFertis(idGranja, idProducto, fchProduccion);
+                CargarListFertilizante(idGranja, idProducto, fchProduccion);
                 lblMensajes.Text = "Se eliminó el Fertilizante del Lote.";
             }
             else
@@ -333,13 +378,16 @@ namespace Web.Paginas.Lotes
         {
             Button btnConstultar = (Button)sender;
             GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
-            int idFertilizante = int.Parse(selectedrow.Cells[0].Text);
-            int idGranja = int.Parse(HttpUtility.HtmlEncode(txtGranja.Text.ToString()));
-            int idProducto = int.Parse(HttpUtility.HtmlEncode(txtProducto.Text.ToString()));
-            string fchProduccion = HttpUtility.HtmlEncode(txtFechProd.Text.ToString());
-            System.Web.HttpContext.Current.Session["idFertiSel"] = idFertilizante;
 
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            string[] lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
+
+            int idFertilizante = int.Parse(HttpUtility.HtmlEncode(selectedrow.Cells[0].Text));
+            int idGranja = int.Parse(lote[0]);
+            int idProducto = int.Parse(lote[2]);
+            string fchProduccion = lote[4];
+            System.Web.HttpContext.Current.Session["idFertiSel"] = idFertilizante;
+
             Lote_Ferti loteF = Web.buscarLoteFerti(idFertilizante, idGranja, idProducto, fchProduccion);
             Fertilizante fer = Web.buscarFerti(idFertilizante);
 
@@ -363,14 +411,18 @@ namespace Web.Paginas.Lotes
 
         protected void btnModificarCantidadFertiLote_Click(object sender, EventArgs e)
         {
-            if (txtCantidadFerti.Text != "")
+            if (txtCantidadFerti.Text != "" && int.Parse(txtCantidadFerti.Text) > 0)
             {
-                int idFertilizante = (int)System.Web.HttpContext.Current.Session["idFertiSel"];
-                int idGranja = int.Parse(HttpUtility.HtmlEncode(txtGranja.Text.ToString()));
-                int idProducto = int.Parse(HttpUtility.HtmlEncode(txtProducto.Text.ToString()));
-                string fchProduccion = HttpUtility.HtmlEncode(txtFechProd.Text.ToString());
-                string cantidad = HttpUtility.HtmlEncode(txtCantidadFerti.Text);
+
                 ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                string[] lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
+
+                int idFertilizante = (int)System.Web.HttpContext.Current.Session["idFertiSel"];
+                int idGranja = int.Parse(lote[0]);
+                int idProducto = int.Parse(lote[2]);
+                string fchProduccion = lote[4];
+                string cantidad = HttpUtility.HtmlEncode(txtCantidadFerti.Text);
+
                 Lote_Ferti loteF = new Lote_Ferti(idFertilizante, idGranja, idProducto, fchProduccion, cantidad);
                 if (Web.modLoteFerti(loteF))
                 {
@@ -380,7 +432,7 @@ namespace Web.Paginas.Lotes
             }
             else
             {
-                lblMensajes.Text = "Cantidad esta vacío.";
+                lblMensajes.Text = "La cantidad esta vacía o debe ser mayor a cero.";
             }
         }
 
@@ -396,9 +448,13 @@ namespace Web.Paginas.Lotes
             txtBuscarFertilizante.Visible = true;
             btnCancelar.Visible = false;
             btnModificarCantidadFertiLote.Visible = false;
-            int idGranja = int.Parse(HttpUtility.HtmlEncode(txtGranja.Text.ToString()));
-            int idProducto = int.Parse(HttpUtility.HtmlEncode(txtProducto.Text.ToString()));
-            string fchProduccion = HttpUtility.HtmlEncode(txtFechProd.Text.ToString());
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            string[] lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
+
+            int idGranja = int.Parse(lote[0]);
+            int idProducto = int.Parse(lote[2]);
+            string fchProduccion = lote[4];
+
             CargarLotesFertis(idGranja, idProducto, fchProduccion);
 
 

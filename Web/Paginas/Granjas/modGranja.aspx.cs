@@ -14,7 +14,7 @@ namespace Web.Paginas.Granjas
     {
         protected void Page_PreInit(object sender, EventArgs e)
         {
-            if (System.Web.HttpContext.Current.Session["idGranjaSel"] == null)
+            if (System.Web.HttpContext.Current.Session["idGranjaSelMod"] == null)
             {
                 Response.Redirect("/Paginas/Granjas/frmGranjas");
             }
@@ -27,7 +27,7 @@ namespace Web.Paginas.Granjas
         {
             if (!IsPostBack)
             {
-                int id = (int)System.Web.HttpContext.Current.Session["idGranjaSel"];
+                int id = (int)System.Web.HttpContext.Current.Session["idGranjaSelMod"];
                 txtId.Text = id.ToString();
                 cargarGranja(id);
                 CargarListDueño();
@@ -37,7 +37,7 @@ namespace Web.Paginas.Granjas
 
         private void limpiarIdSession()
         {
-            System.Web.HttpContext.Current.Session["idGranjaSel"] = null;
+            System.Web.HttpContext.Current.Session["idGranjaSelMod"] = null;
         }
 
         private void cargarGranja(int id)
@@ -89,30 +89,34 @@ namespace Web.Paginas.Granjas
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             List<Cliente> clientes = new List<Cliente>();
-            if (txtBuscarDueño.Text == "")
-            {
-                clientes = Web.lstCli();
-            }
-            else
-            {
-                string value = txtBuscarDueño.Text.ToLower();
-                clientes = Web.buscarVarCli(value);
-                if (clientes.Count == 0)
-                {
-                    lblMensajes.Text = "No se encontro ningun Cliente.";
-                }
-            }
-
-
             DataTable dt = new DataTable();
 
             dt.Columns.Add(new DataColumn("nombre", typeof(String)));
             dt.Columns.Add(new DataColumn("id", typeof(String)));
 
-            dt.Rows.Add(createRow("Seleccione un Dueño", "Seleccione un Dueño", dt));
 
-            cargarDueños(clientes, dt);
+            if (txtBuscarDueño.Text == "")
+            {
+                clientes = Web.lstCli();
+                dt.Rows.Add(createRow("Seleccione un Dueño", "Seleccione un Dueño", dt));
+            }
+            else
+            {
+                string value = txtBuscarDueño.Text.ToLower();
+                clientes = Web.buscarVarCli(value);
+               
+            }
+            if (clientes.Count == 0)
+            {
+                lblMensajes.Text = "No se encontro ningun Cliente.";
+            }
+            else
+            {
+                cargarDueños(clientes, dt);
 
+            }
+
+     
             DataView dv = new DataView(dt);
             return dv;
 
@@ -141,12 +145,9 @@ namespace Web.Paginas.Granjas
         }
         protected void btnBuscarDueño_Click(object sender, EventArgs e)
         {
-            listDueño.DataSource = null;
-            listDueño.DataSource = createDataSource();
-            listDueño.DataTextField = "nombre";
-            listDueño.DataValueField = "id";
-            listDueño.DataBind();
-        }
+            CargarListDueño();
+        
+            }
 
         protected void btnAtras_Click(object sender, EventArgs e)
         {
@@ -160,39 +161,49 @@ namespace Web.Paginas.Granjas
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
-            if (!faltanDatos())
+            if (Page.IsValid)
             {
-                if (!txtId.Text.Equals(""))
+                if (!faltanDatos())
                 {
-                    int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text));
-                    string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
-                    string ubicacion = HttpUtility.HtmlEncode(txtUbicacion.Text);
-                    int idCliente = int.Parse(HttpUtility.HtmlEncode(listDueño.SelectedValue));
-
-                    ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                    Granja unaGraja = new Granja(id, nombre, ubicacion, idCliente);
-                    if (Web.modGranja(unaGraja))
+                    if (!txtId.Text.Equals(""))
                     {
-                        limpiar();
-                        lblMensajes.Text = "Granja modificada con exito.";
+                        int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text));
+                        string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
+                        string ubicacion = HttpUtility.HtmlEncode(txtUbicacion.Text);
+                        int idCliente = int.Parse(HttpUtility.HtmlEncode(listDueño.SelectedValue));
 
-                        limpiarIdSession();
-                        Response.Redirect("/Paginas/Granjas/frmGranjas");
+                        ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                        Granja unaGraja = new Granja(id, nombre, ubicacion, idCliente);
+                        if (Web.modGranja(unaGraja))
+                        {
+                            limpiar();
+                            lblMensajes.Text = "Granja modificada con exito.";
+                            System.Web.HttpContext.Current.Session["GranjaMod"] = "si";
+                            limpiarIdSession();
+                            Response.Redirect("/Paginas/Granjas/frmGranjas");
+                        }
+                        else
+                        {
+                            lblMensajes.Text = "Ya existe una Granja con estos datos. Estos son los posibles datos repetidos (Ubicación).";
+                        }
                     }
                     else
                     {
-                        lblMensajes.Text = "Ya existe una Granja con estos datos. Estos son los posibles datos repetidos (Ubicación).";
+                        lblMensajes.Text = "Debe seleccionar una granja.";
                     }
                 }
                 else
                 {
-                    lblMensajes.Text = "Debe seleccionar una granja.";
+                    lblMensajes.Text = "Faltan datos.";
                 }
             }
+
             else
             {
-                lblMensajes.Text = "Faltan datos.";
+                lblMensajes.Text = "Hay algún caracter no válido o faltante en el formulario";
+
             }
+
         }
     }
 }

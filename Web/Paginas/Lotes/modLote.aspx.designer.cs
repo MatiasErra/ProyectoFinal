@@ -21,7 +21,7 @@ namespace Web.Paginas.Lotes
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIdGranja;
+        protected global::System.Web.UI.WebControls.Label txtIdGranja;
 
         /// <summary>
         /// Control txtIdProducto.
@@ -30,7 +30,7 @@ namespace Web.Paginas.Lotes
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIdProducto;
+        protected global::System.Web.UI.WebControls.Label txtIdProducto;
 
         /// <summary>
         /// Control txtFchProduccion.
@@ -39,7 +39,16 @@ namespace Web.Paginas.Lotes
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFchProduccion;
+        protected global::System.Web.UI.WebControls.Label txtFchProduccion;
+
+        /// <summary>
+        /// Control lblCantidad.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCantidad;
 
         /// <summary>
         /// Control txtCantidad.
@@ -87,13 +96,13 @@ namespace Web.Paginas.Lotes
         protected global::System.Web.UI.WebControls.DropDownList listDeposito;
 
         /// <summary>
-        /// Control lstFertSel.
+        /// Control btnAltaDeposito.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView lstFertSel;
+        protected global::System.Web.UI.WebControls.Button btnAltaDeposito;
 
         /// <summary>
         /// Control lblMensajes.

@@ -12,40 +12,7 @@ namespace Persistencia
 {
     class pDeposito
     {
-        public List<Deposito> listIdDeps()
-        {
-            List<Deposito> resultado = new List<Deposito>();
-            try
-            {
-                Deposito deposito;
-
-
-                SqlConnection connect = Conexion.Conectar();
-
-                SqlCommand cmd = new SqlCommand("LstIdDepositos", connect);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        deposito = new Deposito();
-                        deposito.IdDeposito = int.Parse(reader["idDeposito"].ToString());
-
-
-                        resultado.Add(deposito);
-                    }
-                }
-
-                connect.Close();
-            }
-            catch (Exception)
-            {
-                return resultado;
-            }
-            return resultado;
-        }
+   
 
         public List<Deposito> listDeps()
         {

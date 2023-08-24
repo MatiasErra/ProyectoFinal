@@ -24,8 +24,14 @@ namespace Web.Paginas.Fertilizantes
                 {
                     btnVolverFerti.Visible = true;
                 }
+                if(System.Web.HttpContext.Current.Session["FertiMod"] != null)
+                {
+                    lblMensajes.Text = "Fertilizante modificado";
+                    System.Web.HttpContext.Current.Session["FertiMod"] = null;
+                }
+                System.Web.HttpContext.Current.Session["idFert"] = null;
 
-              
+
             }
 
         }
@@ -117,7 +123,7 @@ namespace Web.Paginas.Fertilizantes
             }
 
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            List<Fertilizante> lstFer = Web.listIdFert();
+            List<Fertilizante> lstFer = Web.lstFerti();
             foreach (Fertilizante fertilizante in lstFer)
             {
                 if (fertilizante.IdFertilizante.Equals(intGuid))
@@ -165,25 +171,12 @@ namespace Web.Paginas.Fertilizantes
         }
 
 
-        private void cargarFert(int id)
-        {
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            Fertilizante fer = Web.buscarFerti(id);
-
-            txtId.Text = fer.IdFertilizante.ToString();
-            txtNombre.Text = fer.Nombre.ToString();
-            txtTipo.Text = fer.Tipo.ToString();
-
-            txtPH.Text = fer.PH.ToString();
-            lstImpacto.SelectedValue = fer.Impacto.ToString();
-
-
-        }
+  
 
 
         private bool phValid()
         {
-            short ph = short.Parse(txtPH.Text.ToString());
+            double ph = double.Parse(txtPH.Text.ToString());
             if (ph > -1 && ph < 15)
             {
                 return true;
@@ -211,6 +204,7 @@ namespace Web.Paginas.Fertilizantes
 
         protected void btnAlta_Click(object sender, EventArgs e)
         {
+            
             if (!faltanDatos())
             {
                 if (phValid())
@@ -222,7 +216,7 @@ namespace Web.Paginas.Fertilizantes
                         string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
                         string tipo = HttpUtility.HtmlEncode(txtTipo.Text);
 
-                        short pH = short.Parse(HttpUtility.HtmlEncode(txtPH.Text));
+                        double pH = double.Parse(HttpUtility.HtmlEncode(txtPH.Text));
                         string impacto = HttpUtility.HtmlEncode(lstImpacto.SelectedValue.ToString());
 
 
@@ -292,7 +286,7 @@ namespace Web.Paginas.Fertilizantes
                 }
                 else
                 {
-                    limpiar();
+
                     lblMensajes.Text = "No se ha podido eliminar el Fertilizante.";
                 }
             }

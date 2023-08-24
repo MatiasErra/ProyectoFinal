@@ -23,28 +23,56 @@ namespace Web.Paginas.Productos
             if (!IsPostBack)
             {
                 listar();
+                CargarListTipo();
+                CargarListTipoVenta();
                 if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
                 {
                     btnVolver.Visible = true;
+                    lstProducto.Visible = false;
+                    lstProductoSelect.Visible = true;
+
                 }
+                if (System.Web.HttpContext.Current.Session["ProductoMod"] != null)
+
+                {
+                    lblMensajes.Text = "Productos Modificado";
+                }
+
+                System.Web.HttpContext.Current.Session["idProductoMod"] = null;
+
+
+
             }
         }
 
         private void listar()
         {
+
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             List<Producto> productos = Web.listProductos();
-            foreach(Producto unProducto in productos)
+            foreach (Producto unProducto in productos)
             {
                 string Imagen = "data:image/jpeg;base64,";
                 Imagen += unProducto.Imagen;
-                Imagen = $"<img style=\"max-width:50px\" src=\"{Imagen}\">";
+                Imagen = $"<img style=\"max-width:100px\" src=\"{Imagen}\">";
                 unProducto.Imagen = Imagen;
             }
-            lstProducto.DataSource = null;
-            lstProducto.DataSource = productos;
-            lstProducto.DataBind();
-            limpiar();
+            if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
+            {
+                lstProductoSelect.Visible = true;
+                lstProductoSelect.DataSource = null;
+                lstProductoSelect.DataSource = productos;
+                lstProductoSelect.DataBind();
+            }
+            else
+            {
+                lstProducto.Visible = true;
+                lstProducto.DataSource = null;
+                lstProducto.DataSource = productos;
+                lstProducto.DataBind();
+
+            }
+
         }
 
 
@@ -68,8 +96,8 @@ namespace Web.Paginas.Productos
             txtNombre.Text = "";
             fileImagen.Attributes.Clear();
             lstProducto.SelectedIndex = -1;
-            CargarListTipo();
-            CargarListTipoVenta(); ;
+
+            listar();
         }
 
         #region DropDownBoxes
@@ -124,8 +152,8 @@ namespace Web.Paginas.Productos
             dt.Columns.Add(new DataColumn("id", typeof(String)));
 
             dt.Rows.Add(createRow("Seleccione un tipo de venta", "Seleccione un tipo de venta", dt));
-            dt.Rows.Add(createRow("Kilo", "Kilo", dt));
-            dt.Rows.Add(createRow("Unidad", "Unidad", dt));
+            dt.Rows.Add(createRow("Kilos", "Kilos", dt));
+            dt.Rows.Add(createRow("Unidades", "Unidades", dt));
 
             DataView dv = new DataView(dt);
             return dv;
@@ -158,24 +186,51 @@ namespace Web.Paginas.Productos
                 Imagen = $"<img style=\"max-width:50px\" src=\"{Imagen}\">";
                 unProducto.Imagen = Imagen;
             }
-            if (txtBuscar.Text != "")
+            if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
+
             {
-                if (productos.Count > 0)
+                if (txtBuscar.Text != "")
                 {
-                    lstProducto.Visible = true;
-                    lblMensajes.Text = "";
-                    lstProducto.DataSource = productos;
-                    lstProducto.DataBind();
+                    if (productos.Count > 0)
+                    {
+                        lstProductoSelect.Visible = true;
+                        lblMensajes.Text = "";
+                        lstProductoSelect.DataSource = productos;
+                        lstProductoSelect.DataBind();
+                    }
+                    else
+                    {
+                        lstProductoSelect.Visible = false;
+                        lblMensajes.Text = "No se encontró ningún producto.";
+                    }
                 }
                 else
                 {
-                    lstProducto.Visible = false;
-                    lblMensajes.Text = "No se encontró ningún producto.";
+                    lblMensajes.Text = "Debe ingresar algún dato en el buscador para buscar.";
                 }
             }
             else
             {
-                lblMensajes.Text = "Debe ingresar algún dato en el buscador para buscar.";
+
+                if (txtBuscar.Text != "")
+                {
+                    if (productos.Count > 0)
+                    {
+                        lstProducto.Visible = true;
+                        lblMensajes.Text = "";
+                        lstProducto.DataSource = productos;
+                        lstProducto.DataBind();
+                    }
+                    else
+                    {
+                        lstProducto.Visible = false;
+                        lblMensajes.Text = "No se encontró ningún producto.";
+                    }
+                }
+                else
+                {
+                    lblMensajes.Text = "Debe ingresar algún dato en el buscador para buscar.";
+                }
             }
 
         }
@@ -197,7 +252,7 @@ namespace Web.Paginas.Productos
             }
 
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            List<Producto> lstProductos = Web.listIdProductos();
+            List<Producto> lstProductos = Web.listProductos();
             foreach (Producto producto in lstProductos)
             {
                 if (producto.IdProducto.Equals(intGuid))
@@ -234,7 +289,7 @@ namespace Web.Paginas.Productos
 
         protected void btnVolver_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/Paginas/Lotes/frmLotes");
+            Response.Redirect("/Paginas/Lotes/frmAltaLotes");
         }
 
         protected void btnAlta_Click(object sender, EventArgs e)
@@ -257,7 +312,7 @@ namespace Web.Paginas.Productos
                         if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
                         {
                             System.Web.HttpContext.Current.Session["idProductoSel"] = unProducto.IdProducto.ToString();
-                            Response.Redirect("/Paginas/Lotes/frmLotes");
+                            Response.Redirect("/Paginas/Lotes/frmAltaLotes");
                         }
                         else
                         {
@@ -284,10 +339,10 @@ namespace Web.Paginas.Productos
         private bool loteExistente(int idProducto)
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            List<Lote> lotes = Web.listLotes();
-            foreach(Lote unLote in lotes)
+            List<string[]> lotes = Web.listLotes();
+            foreach (string[] unLote in lotes)
             {
-                if(unLote.IdProducto == idProducto)
+                if (int.Parse(unLote[0].ToString()) == idProducto)
                 {
                     return true;
                 }
@@ -309,7 +364,7 @@ namespace Web.Paginas.Productos
                     if (Web.bajaProducto(unProducto.IdProducto))
                     {
                         listar();
-                        lblMensajes.Text = "Se ha borrado el producto."; 
+                        lblMensajes.Text = "Se ha borrado el producto.";
                     }
                     else
                     {
@@ -320,7 +375,7 @@ namespace Web.Paginas.Productos
                 {
                     lblMensajes.Text = "Hay un lote asociado a este producto.";
                 }
-                
+
             }
             else
             {
@@ -335,8 +390,21 @@ namespace Web.Paginas.Productos
             int idProducto = int.Parse(HttpUtility.HtmlEncode(selectedrow.Cells[0].Text));
 
 
-            System.Web.HttpContext.Current.Session["idProductoSel"] = idProducto;
+            System.Web.HttpContext.Current.Session["idProductoMod"] = idProducto;
             Response.Redirect("/Paginas/Productos/modProducto");
+        }
+
+        protected void btnSelected_Click(object sender, EventArgs e)
+        {
+
+            Button btnConstultar = (Button)sender;
+            GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
+            string id = (HttpUtility.HtmlEncode(selectedrow.Cells[0].Text));
+
+            System.Web.HttpContext.Current.Session["idProductoSel"] = id;
+
+            Response.Redirect("/Paginas/Lotes/frmAltaLotes");
+
         }
 
         protected void btnLimpiar_Click(object sender, EventArgs e)
@@ -345,7 +413,7 @@ namespace Web.Paginas.Productos
         }
 
 
-        
+
 
     }
 }

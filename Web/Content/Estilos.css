@@ -1,23 +1,39 @@
 .CamList {
-
 }
 
-.CamList div{
-    margin: 10px;
+    .CamList div {
+        margin: 10px;
+    }
+
+.row {
+    justify-content: center;
 }
 
-.row{
-justify-content :center;
+.rowLine {
+    margin-bottom: 32px;
+    border-bottom: 1px solid #c1c1c1
 }
 
 .bodyStyl {
     background-color: #fa4251;
     height: 100%;
     min-height: 100%;
-        
     overflow: auto;
     padding-bottom: 180px;
 }
+
+.backforContent {
+    border-radius: 20px;
+    background-color: #f2f0f0;
+}
+
+
+/*.backforContentColor {
+    border-radius: 20px;
+    background-color: #f2f0f0;
+}
+
+*/
 
 .myFooter {
     position: fixed;
@@ -29,15 +45,34 @@ justify-content :center;
     clear: both;
     background-color: black
 }
+
+.text {
+    color: #666;
+    font-size: 16px;
+    font-weight: 500;
+}
+
 .centerText {
-  
     align-content: center;
     flex-wrap: wrap;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.initText {
+    align-content: start;
+    flex-wrap: wrap;
+
+    padding-left: 5px;
+   
 }
 /* ==========================================================================
    #BUTTON
    ========================================================================== */
 .btnE {
+    margin: 0.25rem;
     text-align: center;
     display: inline-block;
     padding: 6px 12px;
@@ -93,6 +128,8 @@ justify-content :center;
 
 .btn--srch {
     width: 150px;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
 
@@ -103,7 +140,6 @@ justify-content :center;
    ========================================================================== */
 input {
     outline: none;
-    margin: 0;
     border: none;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
@@ -134,10 +170,36 @@ input {
     cursor: pointer;
 }
 
-.input--style-2 {
+.input--style-tex {
+    /* align-items: normal; */
+    margin-left:0 !important;
+    padding-top: 9px !important;
+    padding-bottom: 9px !important;
+    padding-left: 5px !important;
+/*    margin-bottom: 0.5rem !important;
+    margin-top: 0.5rem !important;*/
+    color: #666;
+    align-items: center;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: transparent !important;
+}
+
+.padding-bus {
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+    padding-left: 5px !important;
+}
+
+.input--style-lst {
     /* align-items: normal; */
     align-content: center;
-    padding: 9px 0;
+    padding: 9px 0px;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
     color: #666;
     align-items: center;
     width: 100%;
@@ -243,6 +305,7 @@ input {
     height: 50px;
     overflow: hidden;
 }
+
 th {
     vertical-align: middle;
 }
@@ -475,10 +538,8 @@ input[type="date" i] {
     font-weight: 700;
     margin-bottom: 37px;
 }
+
 select {
     word-wrap: normal;
     border: none;
 }
-
-
-

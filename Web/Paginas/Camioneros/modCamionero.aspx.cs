@@ -152,65 +152,76 @@ namespace Web.Paginas.Camioneros
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
-            if (!faltanDatos())
+            if (Page.IsValid)
             {
-                if (!txtId.Text.Equals(""))
+                if (!faltanDatos())
                 {
-                    if (fchNotToday())
+                    if (!txtId.Text.Equals(""))
                     {
-                        if (fchVencNotToday())
+                        if (fchNotToday())
                         {
-                            if (lstDisponible.SelectedValue.ToString() != "Seleccionar disponibilidad")
+                            if (fchVencNotToday())
                             {
-                                int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text.ToString()));
-                                string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
-                                string apellido = HttpUtility.HtmlEncode(txtApell.Text);
-                                string email = HttpUtility.HtmlEncode(txtEmail.Text);
-                                string tele = HttpUtility.HtmlEncode(txtTel.Text);
-                                string txtFc = HttpUtility.HtmlEncode(txtFchNac.Text);
-                                string cedula = HttpUtility.HtmlEncode(txtCedula.Text);
-                                string disponible = HttpUtility.HtmlEncode(lstDisponible.SelectedValue.ToString());
-                                string txtFchVenc = HttpUtility.HtmlEncode(txtFchManejo.Text);
-
-                                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                                Camionero unCamionero = new Camionero(id, nombre, apellido, email, tele, txtFc, cedula, disponible, txtFchVenc);
-                                if (Web.modCamionero(unCamionero))
+                                if (lstDisponible.SelectedValue.ToString() != "Seleccionar disponibilidad")
                                 {
-                                    limpiar();
-                                    lblMensajes.Text = "Camionero modificado con exito.";
-                                    limpiarIdSession();
-                                    Response.Redirect("/Paginas/Camioneros/frmCamioneros");
+                                    int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text.ToString()));
+                                    string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
+                                    string apellido = HttpUtility.HtmlEncode(txtApell.Text);
+                                    string email = HttpUtility.HtmlEncode(txtEmail.Text);
+                                    string tele = HttpUtility.HtmlEncode(txtTel.Text);
+                                    string txtFc = HttpUtility.HtmlEncode(txtFchNac.Text);
+                                    string cedula = HttpUtility.HtmlEncode(txtCedula.Text);
+                                    string disponible = HttpUtility.HtmlEncode(lstDisponible.SelectedValue.ToString());
+                                    string txtFchVenc = HttpUtility.HtmlEncode(txtFchManejo.Text);
 
+                                    ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                                    Camionero unCamionero = new Camionero(id, nombre, apellido, email, tele, txtFc, cedula, disponible, txtFchVenc);
+                                    if (Web.modCamionero(unCamionero))
+                                    {
+                                        limpiar();
+                                        lblMensajes.Text = "Camionero modificado con éxito.";
+                                        limpiarIdSession();
+                                        System.Web.HttpContext.Current.Session["idCamioneroMod"] = "si";
+
+                                        Response.Redirect("/Paginas/Camioneros/frmCamioneros");
+
+                                    }
+                                    else
+                                    {
+
+                                        lblMensajes.Text = "No se pudo modificar el camionero.";
+                                    }
                                 }
                                 else
                                 {
-                                    
-                                    lblMensajes.Text = "No se pudo modificar el camionero.";
+                                    lblMensajes.Text = "Falta seleccionar la disponibilidad.";
                                 }
                             }
                             else
                             {
-                                lblMensajes.Text = "Falta seleccionar la disponibilidad.";
+                                lblMensajes.Text = "Seleccione una fecha de vencimiento mayor a hoy.";
                             }
                         }
                         else
                         {
-                            lblMensajes.Text = "Seleccione una fecha de vencimiento mayor a hoy.";
+                            lblMensajes.Text = "Seleccione una fecha de nacimiento menor a hoy.";
                         }
                     }
                     else
                     {
-                        lblMensajes.Text = "Seleccione una fecha de nacimiento menor a hoy.";
+                        lblMensajes.Text = "Debe seleccionar un camionero.";
                     }
                 }
                 else
                 {
-                    lblMensajes.Text = "Debe seleccionar un camionero.";
+                    lblMensajes.Text = "Faltan datos.";
                 }
             }
+
             else
             {
-                lblMensajes.Text = "Faltan datos.";
+                lblMensajes.Text = "Hay algún caracter no válido o faltante en el formulario";
+
             }
         }
         protected void btnAtras_Click(object sender, EventArgs e)

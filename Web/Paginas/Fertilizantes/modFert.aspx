@@ -2,62 +2,73 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <div class="card mt-1 mb-1 w-50 m-auto  text-center">
-        <div class="card-header" style="background-color: white">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Modificar Fertilizante</h1>
-        </div>
-        <div class="card-body">
+
+    <div class="container row m-2 text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-7 col-sm-11 m-3 p-3 text-center backforContent">
+                <div class="row rowLine">
+                    <h2 class="title">Modificar Fertilizante </h2>
+                </div>
 
 
                 <div class="input-group">
-                <asp:TextBox ID="txtId" ReadOnly="false" CssClass="input--style-2" placeholder="" runat="server" Enabled="False"></asp:TextBox>
-            </div>
+                    <asp:TextBox ID="txtId" ReadOnly="false" CssClass="input--style-tex" placeholder="" runat="server" Enabled="False"></asp:TextBox>
+                </div>
 
 
-            <div class="input-group">
+                <div class="input-group">
 
-                <asp:TextBox ID="txtNombre" CssClass="input--style-2" runat="server" placeholder="Nombre" MaxLength="40" onkeydown="return(!(event.keyCode>=91) && event.keyCode!=32);"></asp:TextBox>
-                <asp:RegularExpressionValidator Display="Dynamic" runat="server"
-                    ControlToValidate="txtNombre"
+                    <asp:TextBox ID="txtNombre" CssClass="input--style-tex" runat="server" placeholder="Nombre" MaxLength="40" onkeydown="return(!(event.keyCode>=91) || event.keyCode==32 || event.keyCode==8);"></asp:TextBox>
+                    <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
+                        ControlToValidate="txtNombre"
+                        ValidationExpression="^[a-zA-Z ]*$"
+                        ErrorMessage="No es una letra valida" />
+                </div>
+
+                <div class="input-group">
+
+                    <asp:TextBox ID="txtTipo" CssClass="input--style-tex" runat="server" placeholder="Tipo" MaxLength="40" onkeydown="return(!(event.keyCode>=91) || event.keyCode==32 || event.keyCode==8);"></asp:TextBox>
+                 <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
+                    ControlToValidate="txtTipo"
                     ValidationExpression="^[a-zA-Z ]*$"
                     ErrorMessage="No es una letra valida" />
+                    
+                
+                </div>
+              
+
+
+
+                <div class="input-group">
+
+                    <asp:TextBox ID="txtPH" CssClass="input--style-tex" MaxLength="4" runat="server" placeholder="PH" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==188 || event.keyCode==8);"></asp:TextBox>
+                     <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
+                                            ControlToValidate="txtPH"
+                                            ValidationExpression="([0-9])[0-9]*[,]?[0-9]*"
+                                            ErrorMessage="Solo numeros">
+                                        </asp:RegularExpressionValidator>
+
+
+                </div>
+                <div class="input-group">
+
+                    <asp:DropDownList ID="lstImpacto" runat="server" CssClass="input--style-lst"></asp:DropDownList>
+                </div>
+
+                <div class="col-12 my-2">
+                    <asp:Label CssClass="text centerText " ID="lblMensajes" runat="server"></asp:Label>
+
+                </div>
+
+
+
+                <div class="col-12">
+                    <asp:Button ID="btnModificar" CssClass="btnE btn--radius btn--green mt-1 mb-1" runat="server" Text="Modificar" OnClick="btnModificar_Click" OnClientClick="return confirm('¿Desea modificar este Administrador?')" />
+                    <asp:Button ID="btnAtras" CssClass="btnE btn--radius btn--gray mt-1 mb-1" runat="server" Text="Volver" OnClick="btnAtras_Click" />
+                </div>
+
+
             </div>
-
-            <div class="input-group">
-
-                <asp:TextBox ID="txtTipo" CssClass="input--style-2" runat="server" placeholder="Tipo" MaxLength="40" onkeydown="return(!(event.keyCode>=91) && event.keyCode!=32);"></asp:TextBox>
-            </div>
-            <asp:RegularExpressionValidator Display="Dynamic" runat="server"
-                ControlToValidate="txtTipo"
-                ValidationExpression="^[a-zA-Z ]*$"
-                ErrorMessage="No es una letra valida" />
-
-
-
-            <div class="input-group">
-
-                <asp:TextBox ID="txtPH" CssClass="input--style-2" MaxLength="2" runat="server" placeholder="PH" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
-
-
-
-            </div>
-            <div class="col-12 mt-1 mb-1">
-
-                <asp:DropDownList ID="lstImpacto" runat="server" CssClass="input--style-2"></asp:DropDownList>
-            </div>
-
-            <div class="col-12">
-                <asp:Label ID="lblMensajes" runat="server"></asp:Label>
-
-            </div>
-
-
-            <div class="col-12">
-                <asp:Button ID="btnModificar" CssClass="btnE btn--radius btn--green mt-1 mb-1" runat="server" Text="Modificar" OnClick="btnModificar_Click" OnClientClick="return confirm('¿Desea modificar este Administrador?')" />
-                <asp:Button ID="btnAtras" CssClass="btnE btn--radius btn--gray mt-1 mb-1" runat="server" Text="Volver" OnClick="btnAtras_Click" />
-            </div>
-
-
         </div>
-        </div>
+    </div>
 </asp:Content>

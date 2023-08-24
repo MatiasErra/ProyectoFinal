@@ -1,9 +1,11 @@
 ﻿<%@ Page Title="Gestion de admins" Language="C#" AutoEventWireup="true" MasterPageFile="~/Master/AGlobal.Master" CodeBehind="frmAdmins.aspx.cs" Inherits="Web.Paginas.Admins.frmListarAdmins" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+
+
     <div class="container row m-2 text-center">
         <div class="row justify-content-center">
-            <div class="col-12 m-3 p-2 text-center" style="border-radius: 20px; background-color: #f2f0f0;">
+            <div class="col-12 m-3 p-2 text-center backforContent">
                 <div class="row ">
                     <div class="col-12">
                         <h2 class="title">ABM Administradores </h2>
@@ -27,7 +29,8 @@
 
 
                     <!-- Modal Nuevo admin -->
-                    <div class="modal fade" id="altaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                   
+                    <div class="modal fade" id="altaModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog modal-none">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -38,18 +41,18 @@
 
                                     <div class="input-group">
 
-                                        <asp:TextBox ID="txtNombre" CssClass="input--style-2" runat="server" placeholder="Nombre" MaxLength="40" onkeydown="return(!(event.keyCode>=91) && event.keyCode!=32);"></asp:TextBox>
-                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server"
-                                            ControlToValidate="txtNombre"
+                                        <asp:TextBox ID="txtNombre" CssClass="input--style-tex" runat="server" placeholder="Nombre" MaxLength="40" onkeydown="return(!(event.keyCode>=91) && event.keyCode!=32);"></asp:TextBox>
+                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
+                                            ControlToValidate="txtNombre" 
                                             ValidationExpression="^[a-zA-Z ]*$"
                                             ErrorMessage="No es una letra valida" />
                                     </div>
 
                                     <div class="input-group">
 
-                                        <asp:TextBox ID="txtApell" CssClass="input--style-2" runat="server" placeholder="Apellido" MaxLength="40" onkeydown="return(!(event.keyCode>=91) && event.keyCode!=32);"></asp:TextBox>
+                                        <asp:TextBox ID="txtApell" CssClass="input--style-tex" runat="server" placeholder="Apellido" MaxLength="40" onkeydown="return(!(event.keyCode>=91) && event.keyCode!=32);"></asp:TextBox>
 
-                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server"
+                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                                             ControlToValidate="txtApell"
                                             ValidationExpression="^[a-zA-Z ]*$"
                                             ErrorMessage="No es una letra valida" />
@@ -57,9 +60,9 @@
                                     </div>
                                     <div class="input-group">
 
-                                        <asp:TextBox ID="txtEmail" CssClass="input--style-2" runat="server" placeholder="Email" onkeydown="return(event.keyCode!=32);"></asp:TextBox>
+                                        <asp:TextBox ID="txtEmail" CssClass="input--style-tex" runat="server" placeholder="Email" onkeydown="return(event.keyCode!=32);"></asp:TextBox>
 
-                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server"
+                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                                             ControlToValidate="txtEmail"
                                             ValidationExpression="^\S+@\S+$"
                                             ErrorMessage="No es un Email valido" />
@@ -67,54 +70,53 @@
                                     </div>
 
                                     <div class="input-group">
-                                       
-                        <asp:TextBox ID="txtTel" CssClass="input--style-2" MaxLength="9" runat="server" placeholder="Telefono" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
 
-                                        <asp:RegularExpressionValidator Display="Dynamic" ControlToValidate="txtTel" ID="RegularExpressionValidator2"
-                                            ValidationExpression="^[\s\S]{9,}$" runat="server" ErrorMessage="Debe ser un numero de 9 caracteres." />
+                                        <asp:TextBox ID="txtTel" CssClass="input--style-tex" MaxLength="9" runat="server" placeholder="Telefono" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
+
+                                        <asp:RegularExpressionValidator Display="Dynamic" ControlToValidate="txtTel" ID="RegularExpressionValidator2" class="text initText"
+                                            ValidationExpression="^[\s\S]{9,}$" runat="server" ErrorMessage="El teléfono debe de tener 9 caracteres." />
 
 
                                     </div>
-                                  
+
                                     <div class="input-group">
-                                      
-                        <asp:TextBox ID="txtUser" runat="server" CssClass="input--style-2" placeholder="Nombre de Usuario" MaxLength="40" onkeydown="return(!(event.keyCode>=91) && event.keyCode!=32);"> </asp:TextBox>
-                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server"
+
+                                        <asp:TextBox ID="txtUser" runat="server" CssClass="input--style-tex" placeholder="Nombre de Usuario" MaxLength="40" onkeydown="return(!(event.keyCode>=91) && event.keyCode!=32);"> </asp:TextBox>
+                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                                             ControlToValidate="txtUser"
                                             ValidationExpression="[a-zA-Z0-9]*$"
                                             ErrorMessage="No es una letra valida" />
 
                                     </div>
                                     <div class="input-group">
-                                    
-                        <asp:TextBox ID="txtPass" runat="server" CssClass="input--style-2" TextMode="Password" MaxLength="40" placeholder="Contraseña" onkeydown="event.keyCode!=32);"></asp:TextBox>
-                                      <asp:RegularExpressionValidator Display="Dynamic" runat="server"
+
+                                        <asp:TextBox ID="txtPass" runat="server" CssClass="input--style-tex" TextMode="Password" MaxLength="40" placeholder="Contraseña" onkeydown="event.keyCode!=32);"></asp:TextBox>
+                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                                             ControlToValidate="txtPass"
                                             ValidationExpression="[a-zA-Z0-9-_.,]*$"
                                             ErrorMessage="No es una letra valida" />
 
-                                        </div>
-                                
-                                  
-                                 
-
-                               <div class="input-group">
-                                   <asp:DropDownList ID="listTipoAdmin" CssClass="input--style-2" runat="server">
-                                   </asp:DropDownList>
-                               </div>
-
-
-                                       <div class="input-group">
-                                   <asp:DropDownList ID="lstEstado" CssClass="input--style-2" runat="server">
-                                   </asp:DropDownList>
-                               </div>
-
-                                      <div class="input-group">
-                                        Fecha de nacimiento<br />
-                                        <asp:TextBox ID="txtFchNac" runat="server" CssClass="input--style-2 js-datepicker px-0 py-2" placeholder="Fecha" TextMode="Date"></asp:TextBox>
                                     </div>
 
 
+
+
+                                    <div class="input-group">
+                                        <asp:DropDownList ID="listTipoAdmin" CssClass="input--style-lst" runat="server">
+                                        </asp:DropDownList>
+                                    </div>
+
+
+                                    <div class="input-group">
+                                        <asp:DropDownList ID="lstEstado" CssClass="input--style-lst" runat="server">
+                                        </asp:DropDownList>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <asp:Label class="text initText" Text="Fecha de nacimiento" runat="server" />
+                                        <asp:TextBox ID="txtFchNac" runat="server" CssClass=" input--style-tex js-datepicker " placeholder="Fecha" TextMode="Date"></asp:TextBox>
+                                    </div>
+                                     
 
                                     <div class="modal-footer">
                                         <asp:Button ID="btnAlta" class="btnE btn--radius btn--green" runat="server" Text="Alta" OnClick="btnAlta_Click" />
@@ -127,13 +129,15 @@
                         </div>
 
                     </div>
+              <div class="col-12 my-2">
+                    <asp:Label CssClass="text centerText " ID="lblMensajes" runat="server"></asp:Label>
 
-                    <div class="col-12">
-                        <asp:Label ID="lblMensajes" runat="server"></asp:Label>
+                      <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
+                            ControlToValidate="txtBuscar"
+                            ValidationExpression="^[a-zA-Z0-9 ]+$"
+                            ErrorMessage="No es un carácter válido" />
 
-                    </div>
-
-
+                </div>
 
 
 
@@ -178,7 +182,7 @@
                                             <asp:BoundField DataField="TipoDeAdmin"
                                                 HeaderText="Tipo de Admin" ItemStyle-CssClass="GridStl" />
 
-                                             <asp:BoundField DataField="Estado"
+                                            <asp:BoundField DataField="Estado"
                                                 HeaderText="Estado" ItemStyle-CssClass="GridStl" />
 
                                             <asp:TemplateField HeaderText="Opciones del administrador"
@@ -211,7 +215,7 @@
             </div>
         </div>
     </div>
-    
 
-            <asp:TextBox Visible="false" CssClass="form-control m-1" ID="txtId" runat="server" Enabled="False"></asp:TextBox>
+
+    <asp:TextBox Visible="false" CssClass="form-control m-1" ID="txtId" runat="server" Enabled="False"></asp:TextBox>
 </asp:Content>

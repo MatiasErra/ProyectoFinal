@@ -12,7 +12,10 @@ namespace Web.Paginas.Clientes
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if(System.Web.HttpContext.Current.Session["CliReg"] != null)
+            {
+                lblMensajes.Text = "Se ha registrado con éxito";
+            }
         }
 
         protected void btnRegist_Click(object sender, EventArgs e)

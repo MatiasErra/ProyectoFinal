@@ -29,7 +29,7 @@ namespace Web.Paginas.Depositos
                 txtId.Text = id.ToString();
                 cargarDep(id);
             }
-           
+
 
         }
 
@@ -70,7 +70,7 @@ namespace Web.Paginas.Depositos
         }
         private void limpiarIdSession()
         {
-            System.Web.HttpContext.Current.Session ["idDep"] = null;
+            System.Web.HttpContext.Current.Session["idDep"] = null;
         }
 
 
@@ -90,33 +90,46 @@ namespace Web.Paginas.Depositos
             {
                 if (!txtId.Text.Equals(""))
                 {
-                    int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text));
-                    string capacidad = HttpUtility.HtmlEncode(txtCapacidad.Text);
-                    string ubicacion = HttpUtility.HtmlEncode(txtUbicacion.Text);
-                    short temperatura = short.Parse(HttpUtility.HtmlEncode(txtTemperatura.Text));
-                    string condiciones = HttpUtility.HtmlEncode(txtCondiciones.Text);
-
-                    ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                    Deposito unDeposito = new Deposito(id, capacidad, ubicacion, temperatura, condiciones);
-                    if (Web.modDeps(unDeposito))
+                    if (Page.IsValid)
                     {
-                        limpiar();
-                        lblMensajes.Text = "Depósito modificado con éxito.";
-                       
-                        limpiarIdSession();
-                        Response.Redirect("/Paginas/Depositos/frmDepositos");
+                        int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text));
+                        string capacidad = HttpUtility.HtmlEncode(txtCapacidad.Text);
+                        string ubicacion = HttpUtility.HtmlEncode(txtUbicacion.Text);
+                        short temperatura = short.Parse(HttpUtility.HtmlEncode(txtTemperatura.Text));
+                        string condiciones = HttpUtility.HtmlEncode(txtCondiciones.Text);
+
+                        ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                        Deposito unDeposito = new Deposito(id, capacidad, ubicacion, temperatura, condiciones);
+                        if (Web.modDeps(unDeposito))
+                        {
+                            limpiar();
+                            lblMensajes.Text = "Depósito modificado con éxito.";
+
+                            limpiarIdSession();
+
+                            System.Web.HttpContext.Current.Session["idDepMod"] = "si";
+                            Response.Redirect("/Paginas/Depositos/frmDepositos");
+                        }
+                        else
+                        {
+
+                            lblMensajes.Text = "Ya existe un Depósito con estos datos. Estos son los posibles datos repetidos (Ubicación).";
+
+
+                        }
                     }
+
                     else
-                    {   
-        
-                        lblMensajes.Text = "Ya existe un Depósito con estos datos. Estos son los posibles datos repetidos (Ubicación).";
-
+                    {
+                        lblMensajes.Text = "Hay algún caracter no válido o faltante en el formulario";
 
                     }
+
                 }
                 else
                 {
                     lblMensajes.Text = "Debe seleccionar un Depósito.";
+                
                 }
             }
             else

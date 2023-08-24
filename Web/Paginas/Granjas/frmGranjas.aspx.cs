@@ -20,23 +20,128 @@ namespace Web.Paginas.Granjass
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Web.HttpContext.Current.Session["idGranjaSelMod"] = null;
             if (!IsPostBack)
             {
-                listar();
+          
                 if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
                 {
                     btnVolver.Visible = true;
+                    lstGranja.Visible = false;
+                    lstGranjaSelect.Visible = true;
                 }
+                if (System.Web.HttpContext.Current.Session["GranjaMod"] != null)
+                {
+                    lblMensajes.Text = "Granja Modificada";
+                    System.Web.HttpContext.Current.Session["GranjaMod"] = null;
+                }
+                if (System.Web.HttpContext.Current.Session["GranjaDatosFrm"] != null)
+                {
+                    cargarDatos();
+                }
+
+                listar();
+
+
+
+
             }
         }
+
+        #region Guardar y cargar datos
+
+        private void guardarDatos()
+        {
+
+
+            System.Web.HttpContext.Current.Session["GranjaDatosFrm"] = "Si";
+
+            System.Web.HttpContext.Current.Session["Ubicacion"] = txtUbicacion.Text;
+            System.Web.HttpContext.Current.Session["Nombre"] = txtNombre.Text;
+
+        }
+
+        private void cargarDatos()
+        {
+            System.Web.HttpContext.Current.Session["GranjaDatosFrm"] = null;
+
+
+
+            txtUbicacion.Text = System.Web.HttpContext.Current.Session["Ubicacion"].ToString();
+            System.Web.HttpContext.Current.Session["Ubicacion"] = null;
+
+            txtNombre.Text = System.Web.HttpContext.Current.Session["Nombre"].ToString();
+            System.Web.HttpContext.Current.Session["Nombre"] = null;
+
+            if (System.Web.HttpContext.Current.Session["DuenoSelected"] != null)
+            {
+                listDueño.SelectedValue = System.Web.HttpContext.Current.Session["DuenoSelected"].ToString();
+                System.Web.HttpContext.Current.Session["DuenoSelected"] = null;
+            }
+
+
+
+
+
+        }
+
+
+        #endregion
+
 
         private void listar()
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            lstGranja.DataSource = null;
-            lstGranja.DataSource = Web.listGranjas();
-            lstGranja.DataBind();
-            limpiar();
+            List<Granja> granjas = Web.listGranjas();
+            if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
+            {
+                lstGranjaSelect.Visible = true;
+                lstGranjaSelect.DataSource = null;
+           
+                lstGranjaSelect.DataSource = ObtenerGranjas(granjas);
+                lstGranjaSelect.DataBind();
+            
+            }
+            else
+            {
+                lstGranja.Visible = true;
+                lstGranja.DataSource = null;
+                lstGranja.DataSource = ObtenerGranjas(granjas);
+                lstGranja.DataBind();
+               
+            }
+            CargarListDueño();
+        }
+
+
+
+        public DataTable ObtenerGranjas(List<Granja> granjas)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.AddRange(new DataColumn[4] {
+
+
+
+                new DataColumn("IdGranja", typeof(int)),
+                new DataColumn("Nombre", typeof(string)),
+                new DataColumn("Ubicacion", typeof(string)),
+
+                new DataColumn("NomDue", typeof(string))});
+
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+          
+            foreach (Granja gran in granjas)
+            {
+                Cliente cli = Web.buscarCli(gran.IdCliente);
+
+                DataRow dr = dt.NewRow();
+                dr["IdGranja"] = gran.IdGranja.ToString();
+                dr["Nombre"] = gran.Nombre.ToString();
+                dr["Ubicacion"] = gran.Ubicacion.ToString();
+                dr["NomDue"] = cli.Nombre.ToString();
+                dt.Rows.Add(dr);
+            }
+            return dt;
         }
 
         private bool faltanDatos()
@@ -60,9 +165,9 @@ namespace Web.Paginas.Granjass
 
             txtNombre.Text = "";
             txtUbicacion.Text = "";
-            txtBuscarDueño.Text = "";
+
             lstGranja.SelectedIndex = -1;
-            CargarListDueño();
+            listar();
         }
 
 
@@ -83,19 +188,10 @@ namespace Web.Paginas.Granjass
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             List<Cliente> clientes = new List<Cliente>();
-            if (txtBuscarDueño.Text == "")
-            {
-                clientes = Web.lstCli();
-            }
-            else
-            {
-                string value = txtBuscarDueño.Text.ToLower();
-                clientes = Web.buscarVarCli(value);
-                if (clientes.Count == 0)
-                {
-                    lblMensajes.Text = "No se encontro ningun Cliente.";
-                }
-            }
+
+            clientes = Web.lstCli();
+
+
 
 
             DataTable dt = new DataTable();
@@ -145,7 +241,7 @@ namespace Web.Paginas.Granjass
             }
 
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            List<Granja> lstGranjas = Web.listIdGranjas();
+            List<Granja> lstGranjas = Web.listGranjas();
             foreach (Granja granja in lstGranjas)
             {
                 if (granja.IdGranja.Equals(intGuid))
@@ -167,21 +263,57 @@ namespace Web.Paginas.Granjass
             string value = txtBuscar.Text.ToLower();
             List<Granja> granjas = Web.buscarVarGranjas(value);
             lstGranja.DataSource = null;
-
-
-            if (granjas.Count > 0)
+            if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
             {
-                lstGranja.Visible = true;
-                lblMensajes.Text = "";
-                lstGranja.DataSource = granjas;
-                lstGranja.DataBind();
+                if (txtBuscar.Text != "")
+                {
+
+                    if (granjas.Count > 0)
+                    {
+                        lstGranjaSelect.Visible = true;
+                        lblMensajes.Text = "";
+                        lstGranjaSelect.DataSource = ObtenerGranjas(granjas);
+                        lstGranjaSelect.DataBind();
+                    }
+                    else
+                    {
+                        lstGranjaSelect.Visible = false;
+                        lblMensajes.Text = "No se encontró ninguna granja.";
+                    }
+                }
+                else
+                {
+                    lblMensajes.Text = "Debe poner algun dato en el buscador.";
+                    listar();
+                }
+
             }
             else
             {
-                lstGranja.Visible = false;
-                lblMensajes.Text = "No se encontró ninguna granja.";
+                if (txtBuscar.Text != "")
+                {
+
+                    if (granjas.Count > 0)
+                    {
+                        lstGranja.Visible = true;
+                        lblMensajes.Text = "";
+                        lstGranja.DataSource = granjas;
+                        lstGranja.DataBind();
+                    }
+                    else
+                    {
+                        lstGranja.Visible = false;
+                        lblMensajes.Text = "No se encontró ninguna granja.";
+                    }
+                }
+                else
+                {
+                    lblMensajes.Text = "Debe poner algun dato en el buscador.";
+                    listar();
+                }
             }
         }
+
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
@@ -190,12 +322,13 @@ namespace Web.Paginas.Granjass
 
         protected void btnBuscarDueño_Click(object sender, EventArgs e)
         {
-            CargarListDueño();
+            guardarDatos();
+            Response.Redirect("/Paginas/Clientes/frmListarClientes");
         }
 
         protected void btnVolver_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/Paginas/Lotes/frmLotes");
+            Response.Redirect("/Paginas/Lotes/frmAltaLotes");
         }
 
         protected void btnAlta_Click(object sender, EventArgs e)
@@ -214,7 +347,7 @@ namespace Web.Paginas.Granjass
                     if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
                     {
                         System.Web.HttpContext.Current.Session["idGranjaSel"] = unaGranja.IdGranja.ToString();
-                        Response.Redirect("/Paginas/Lotes/frmLotes");
+                        Response.Redirect("/Paginas/Lotes/frmAltaLotes");
                     }
                     else
                     {
@@ -235,13 +368,27 @@ namespace Web.Paginas.Granjass
             }
         }
 
+
+        protected void btnSelected_Click(object sender, EventArgs e)
+        {
+
+            Button btnConstultar = (Button)sender;
+            GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
+            string id = (HttpUtility.HtmlEncode(selectedrow.Cells[0].Text));
+
+            System.Web.HttpContext.Current.Session["idGranjaSel"] = id;
+
+            Response.Redirect("/Paginas/Lotes/frmAltaLotes");
+
+        }
+
         private bool comprobarProducen(int id)
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            List<Lote> lotes = Web.listLotes();
-            foreach (Lote unLote in lotes)
+            List<string[]> lotes = Web.listLotes();
+            foreach (string[] unLote in lotes)
             {
-                if (unLote.IdGranja.Equals(id))
+                if (int.Parse(unLote[0]).Equals(id))
                 {
                     return true;
                 }
@@ -291,7 +438,7 @@ namespace Web.Paginas.Granjass
             GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
             id = int.Parse(selectedrow.Cells[0].Text);
 
-            System.Web.HttpContext.Current.Session["idGranjaSel"] = id;
+            System.Web.HttpContext.Current.Session["idGranjaSelMod"] = id;
             Response.Redirect("/Paginas/Granjas/modGranja");
 
         }

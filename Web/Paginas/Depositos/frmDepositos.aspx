@@ -12,12 +12,12 @@
                     <div class="col-12">
 
 
-                        <asp:TextBox CssClass="d-inline form-control  w-75 m-2 border-0  " ID="txtBuscar" runat="server" placeholder="Buscar" MaxLength="100" onkeydown="return(!(event.keyCode>=91));"></asp:TextBox>
+                        <asp:TextBox CssClass="d-inline form-control  w-75 m-2 border-0  " ID="txtBuscar" runat="server" placeholder="Buscar" MaxLength="100" onkeydown="return(( event.keyCode<91 &&  event.keyCode>64  ) || (event.keyCode>=48) && (event.keyCode<=57)   || event.keyCode==32 || event.keyCode==8);"></asp:TextBox>
                         <asp:Button CssClass="btnE btn--radius btn--green align-self-center btn--srch" ID="btnBuscar" runat="server" Text="Buscar" OnClick="btnBuscar_Click" />
                     </div>
-
+                    
                     <div class="col-12">
-
+                         <asp:Button ID="btnVolver" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Visible="false" Text="Volver" OnClick="btnVolver_Click" />
                         <asp:Button ID="btnLimpiar" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" />
 
 
@@ -28,6 +28,7 @@
 
                     </div>
 
+                  
                     <div class="modal fade" id="altaModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog modal-none">
                             <div class="modal-content">
@@ -38,8 +39,8 @@
                                 <div class="modal-body">
 
                                     <div class="input-group">
-                                        <asp:TextBox ID="txtCapacidad" CssClass="input--style-2" runat="server" placeholder="Capacidad en toneladas" MaxLength="20" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
-                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server"
+                                        <asp:TextBox ID="txtCapacidad" CssClass="input--style-tex" runat="server" placeholder="Capacidad en toneladas" MaxLength="20" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
+                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                                             ControlToValidate="txtCapacidad"
                                             ValidationExpression="^[0-9]*$"
                                             ErrorMessage="No es un caracter valido" />
@@ -47,8 +48,8 @@
 
                                     <div class="input-group">
 
-                                        <asp:TextBox ID="txtUbicacion" CssClass="input--style-2" runat="server" placeholder="Ubicacion" MaxLength="50" onkeydown="return(!(event.keyCode>=91));"></asp:TextBox>
-                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server"
+                                        <asp:TextBox ID="txtUbicacion" CssClass="input--style-tex" runat="server" placeholder="Ubicacion" MaxLength="50" onkeydown="return(!(event.keyCode>=91));"></asp:TextBox>
+                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                                             ControlToValidate="txtUbicacion"
                                             ValidationExpression="^[a-zA-Z0-9 ]*$"
                                             ErrorMessage="No es una letra valida" />
@@ -56,8 +57,8 @@
 
                                     <div class="input-group">
 
-                                        <asp:TextBox ID="txtTemperatura" CssClass="input--style-2" runat="server" MaxLength="3" placeholder="Temperatura en °C" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
-                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server"
+                                        <asp:TextBox ID="txtTemperatura" CssClass="input--style-tex" runat="server" MaxLength="3" placeholder="Temperatura en °C" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
+                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                                             ControlToValidate="txtTemperatura"
                                             ValidationExpression="^[0-9]*$"
                                             ErrorMessage="No es un numero valido" />
@@ -65,8 +66,8 @@
 
                                     <div class="input-group">
 
-                                        <asp:TextBox ID="txtCondiciones" CssClass="input--style-2" runat="server" placeholder="Condiciones" MaxLength="80" onkeydown="return(!(event.keyCode>=91));"></asp:TextBox>
-                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server"
+                                        <asp:TextBox ID="txtCondiciones" CssClass="input--style-tex" runat="server" placeholder="Condiciones" MaxLength="80" onkeydown="return(!(event.keyCode>=91) && event.keyCode!=32);"></asp:TextBox>
+                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                                             ControlToValidate="txtCondiciones"
                                             ValidationExpression="^[a-zA-Z ]*$"
                                             ErrorMessage="No es una letra valida" />
@@ -85,17 +86,22 @@
                         </div>
                     </div>
 
-                    <div class="col-12">
-                        <asp:Label ID="lblMensajes" runat="server"></asp:Label>
 
-                    </div>
+              <div class="col-12 my-2">
+                    <asp:Label CssClass="text centerText " ID="lblMensajes" runat="server"></asp:Label>
 
+                      <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
+                            ControlToValidate="txtBuscar"
+                            ValidationExpression="^[a-zA-Z0-9 ]+$"
+                            ErrorMessage="No es un carácter válido" />
+
+                </div>
                     <div class="col-md-12 align-self-center">
 
 
 
                         <div class="row align-self-center">
-                            <div class="col-md-10 col-md-offset-1">
+                            <div class="col-md-11 col-md-offset-1">
                                 <div class="form-group">
                                     <div class="table-responsive">
                                         <asp:GridView ID="lstDeposito" Width="100%" SelectedIndex="1" AutoGenerateColumns="false"
@@ -129,6 +135,50 @@
 
 
 
+                                                        <asp:Button ID="btnBaja" CssClass="btnE btn--radius btn--red" runat="server" Text="Baja" OnClientClick="return confirm('¿Desea eliminar este Deposito?')" OnClick="btnBaja_Click" />
+                                                        <asp:Button ID="btmModificar" CssClass="btnE btn--radius btn--yellow" runat="server" Text="Modificar" OnClick="btnModificar_Click" />
+
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+
+
+
+                                            </Columns>
+                                        </asp:GridView>
+                                    
+
+
+                                         <asp:GridView ID="lstDepositoSelect" Width="100%" SelectedIndex="1" AutoGenerateColumns="false" Visible="false"
+                                            CssClass="table table-bordered table-condensed table-responsive table-hover"
+                                            runat="server">
+                                            <AlternatingRowStyle BackColor="White" />
+                                            <HeaderStyle BackColor="#6B696B" Font-Bold="true" Font-Size="Medium" ForeColor="White" />
+                                            <RowStyle BackColor="#f5f5f5" />
+                                            <Columns>
+
+                                                <asp:BoundField DataField="IdDeposito"
+                                                    HeaderText="Id de Depósito"
+                                                    ItemStyle-CssClass="GridStl" />
+
+                                                <asp:BoundField DataField="Capacidad"
+                                                    HeaderText="Capacidad"
+                                                    ItemStyle-CssClass="GridStl" />
+                                                <asp:BoundField DataField="Ubicacion"
+                                                    HeaderText="Ubicación" ItemStyle-CssClass="GridStl" />
+
+                                                <asp:BoundField DataField="Temperatura"
+                                                    HeaderText="Temperatura" ItemStyle-CssClass="GridStl" />
+                                                <asp:BoundField DataField="Condiciones"
+                                                    HeaderText="Condiciones" ItemStyle-CssClass="GridStl" />
+
+
+                                                <asp:TemplateField HeaderText="Opciones del administrador"
+                                                    ItemStyle-CssClass="GridStl">
+                                                    <ItemTemplate>
+
+
+
+                                                             <asp:Button ID="btnSelect" CssClass="btnE btn--radius btn--blue" runat="server" Text="Seleccionar"  OnClick="btnSelected_Click" />
                                                         <asp:Button ID="btnBaja" CssClass="btnE btn--radius btn--red" runat="server" Text="Baja" OnClientClick="return confirm('¿Desea eliminar este Deposito?')" OnClick="btnBaja_Click" />
                                                         <asp:Button ID="btmModificar" CssClass="btnE btn--radius btn--yellow" runat="server" Text="Modificar" OnClick="btnModificar_Click" />
 

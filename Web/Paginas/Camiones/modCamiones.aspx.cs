@@ -124,49 +124,59 @@ namespace Web.Paginas.Camiones
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
-            if (!faltanDatos())
+            if (Page.IsValid)
             {
-                if (lstDisponible.SelectedValue.ToString() != "Seleccionar disponibilidad")
+                if (!faltanDatos())
                 {
-                    int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text.ToString()));
-                    string marca = HttpUtility.HtmlEncode(txtMarca.Text);
-                    string modelo = HttpUtility.HtmlEncode(txtModelo.Text);
-                    double carga = double.Parse(HttpUtility.HtmlEncode(txtCarga.Text));
-                    string disponible = HttpUtility.HtmlEncode(lstDisponible.SelectedValue.ToString());
-
-
-
-
-
-                    ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                    Camion camion = new Camion(id, marca, modelo, carga, disponible);
-                    if (Web.modCam(camion))
+                    if (lstDisponible.SelectedValue.ToString() != "Seleccionar disponibilidad")
                     {
-                        limpiar();
-                        lblMensajes.Text = "Camión modificado con éxito.";
-                        limpiarIdSession();
-                        Response.Redirect("/Paginas/Camiones/frmCamiones");
+                        int id = Convert.ToInt32(HttpUtility.HtmlEncode(txtId.Text.ToString()));
+                        string marca = HttpUtility.HtmlEncode(txtMarca.Text);
+                        string modelo = HttpUtility.HtmlEncode(txtModelo.Text);
+                        double carga = double.Parse(HttpUtility.HtmlEncode(txtCarga.Text));
+                        string disponible = HttpUtility.HtmlEncode(lstDisponible.SelectedValue.ToString());
 
 
 
 
+
+                        ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                        Camion camion = new Camion(id, marca, modelo, carga, disponible);
+                        if (Web.modCam(camion))
+                        {
+                            limpiar();
+                            lblMensajes.Text = "Camión modificado con éxito.";
+                            limpiarIdSession();
+                            System.Web.HttpContext.Current.Session["idCamionMod"] = "si";
+
+                            Response.Redirect("/Paginas/Camiones/frmCamiones");
+
+
+
+
+                        }
+                        else
+                        {
+
+                            lblMensajes.Text = "No se pudo modificar el Camión";
+
+                        }
                     }
                     else
                     {
-
-                        lblMensajes.Text = "No se pudo modificar el Camión";
-
+                        lblMensajes.Text = "Seleccione una disponibilidad.";
                     }
+
                 }
                 else
                 {
-                    lblMensajes.Text = "Seleccione una disponibilidad.";
+                    lblMensajes.Text = "Faltan Datos.";
                 }
-
             }
             else
             {
-                lblMensajes.Text = "Faltan Datos.";
+                lblMensajes.Text = "Hay algún caracter no válido o faltante en el formulario";
+
             }
 
 

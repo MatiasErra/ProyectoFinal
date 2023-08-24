@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Web.Paginas.Clientes
 {
@@ -19,33 +20,50 @@ namespace Web.Paginas.Clientes
         {
             if (!IsPostBack)
             {
+               
+
+                if (System.Web.HttpContext.Current.Session["GranjaDatosFrm"] != null)
+                {
+                    btnVolverFrm.Visible = true;
+
+                    lstClienteSelect.Visible = true;
+                    lstCliente.Visible = false;
+
+                } 
                 limpiar();
                 listar();
             }
         }
 
+
         private void listar()
         {
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            lstCliente.DataSource = null;
-            lstCliente.DataSource = Web.lstCli();
+            if (System.Web.HttpContext.Current.Session["GranjaDatosFrm"] != null)
+            {
+                lstClienteSelect.Visible = true;
+                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                lstClienteSelect.DataSource = null;
+                lstClienteSelect.DataSource = Web.lstCli();
+                lstClienteSelect.DataBind();
+            }
+            else
+            {
 
-            lstCliente.DataBind();
+
+
+                lstCliente.Visible = true;
+                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                lstCliente.DataSource = null;
+                lstCliente.DataSource = Web.lstCli();
+
+                lstCliente.DataBind();
+            }
         }
 
-        //protected void lstCliente_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    if (lstCliente.SelectedIndex != -1)
-        //    {
-        //        string linea = this.lstCliente.SelectedItem.ToString();
-        //        string[] partes = linea.Split(' ');
-        //        string id = partes[0];
-        //        txtId.Text = id;
-        //    }
-        //}
 
         private void limpiar()
         {
+
             lblMensajes.Text = "";
             txtId.Text = "";
             txtBuscar.Text = "";
@@ -69,26 +87,62 @@ namespace Web.Paginas.Clientes
             string val = value.ToLower();
             List<Cliente> clienteslst = new List<Cliente>();
              clienteslst = Web.buscarVarCli(val);
-            lstCliente.DataSource = null;
-            if (txtBuscar.Text != "")
+            if (System.Web.HttpContext.Current.Session["GranjaDatosFrm"] != null)
             {
-                if (clienteslst.Count > 0)
+                lstClienteSelect.DataSource = null;
+                if (txtBuscar.Text != "")
                 {
-                    lstCliente.Visible = true;
-                    lblMensajes.Text = "";
-                    lstCliente.DataSource = clienteslst;
-                    lstCliente.DataBind();
+                    if (clienteslst.Count > 0)
+                    {
+                        lstClienteSelect.Visible = true;
+                        lblMensajes.Text = "";
+                        lstClienteSelect.DataSource = clienteslst;
+                        lstClienteSelect.DataBind();
+                    }
+                    else
+                    {
+                        lstClienteSelect.Visible = false;
+                        lblMensajes.Text = "No se encontro ningun Cliente.";
+                    }
                 }
                 else
                 {
-                    lstCliente.Visible = false;
-                    lblMensajes.Text = "No se encontro ningun Cliente.";
+                    lblMensajes.Text = "Debe poner algun dato en el buscador.";
+                    listar();
                 }
+
             }
             else
             {
-                lblMensajes.Text = "Debe poner algun dato en el buscador.";
+
+                lstCliente.DataSource = null;
+                if (txtBuscar.Text != "")
+                {
+                    if (clienteslst.Count > 0)
+                    {
+                        lstCliente.Visible = true;
+                        lblMensajes.Text = "";
+                        lstCliente.DataSource = clienteslst;
+                        lstCliente.DataBind();
+                    }
+                    else
+                    {
+                        lstCliente.Visible = false;
+                        lblMensajes.Text = "No se encontro ningun Cliente.";
+                    }
+                }
+                else
+                {
+                    lblMensajes.Text = "Debe poner algun dato en el buscador.";
+                    listar();
+                }
             }
+        }
+
+
+        protected void btnVolverFrm_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("/Paginas/Granjas/frmGranjas");
         }
 
 
@@ -100,10 +154,14 @@ namespace Web.Paginas.Clientes
 
         protected void btnBaja_Click(object sender, EventArgs e)
         {
-            if (txtId.Text != "")
-            {
-                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                Cliente unCliente = Web.buscarCli(int.Parse(HttpUtility.HtmlEncode(txtId.Text)));
+
+
+            Button btnConstultar = (Button)sender;
+            GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
+            int id = int.Parse(HttpUtility.HtmlEncode(selectedrow.Cells[0].Text));
+
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                Cliente unCliente = Web.buscarCli(id);
                 if (unCliente != null)
                 {
                     if (Web.bajaCli(int.Parse(txtId.Text)))
@@ -124,11 +182,21 @@ namespace Web.Paginas.Clientes
                 {
                     lblMensajes.Text = "El Cliente no existe.";
                 }
-            }
-            else
-            {
-                lblMensajes.Text = "Seleccione un Cliente para eliminar. ";
-            }
+            
+            
+        }
+
+        protected void btnSelected_Click(object sender, EventArgs e)
+        {
+
+            Button btnConstultar = (Button)sender;
+            GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
+            string id = (HttpUtility.HtmlEncode(selectedrow.Cells[0].Text));
+
+            System.Web.HttpContext.Current.Session["DuenoSelected"] = id;
+
+            Response.Redirect("/Paginas/Granjas/frmGranjas");
+
         }
     }
 }

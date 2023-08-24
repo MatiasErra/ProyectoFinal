@@ -24,6 +24,12 @@ namespace Web.Paginas.Pesticidas
                 {
                     btnVolverPesti.Visible = true;
                 }
+                if(System.Web.HttpContext.Current.Session["PestiMod"] != null)
+                {
+                    lblMensajes.Text = "Pesticida modificado";
+                    System.Web.HttpContext.Current.Session["PestiMod"] = null;
+                }
+                System.Web.HttpContext.Current.Session["idPest"] = null;
             }
         }
 
@@ -114,7 +120,7 @@ namespace Web.Paginas.Pesticidas
             }
 
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            List<Pesticida> lstPest = Web.listIdPesti();
+            List<Pesticida> lstPest = Web.lstPesti();
             foreach (Pesticida pesticida in lstPest)
             {
                 if (pesticida.IdPesticida.Equals(intGuid))
@@ -162,25 +168,10 @@ namespace Web.Paginas.Pesticidas
         }
 
 
-        //private void cargarPest(int id)
-        //{
-        //    ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-        //    Fertilizante fer = Web.buscarFerti(id);
-
-        //    txtId.Text = fer.IdFertilizante.ToString();
-        //    txtNombre.Text = fer.Nombre.ToString();
-        //    txtTipo.Text = fer.Tipo.ToString();
-
-        //    txtPH.Text = fer.PH.ToString();
-        //    lstImpacto.SelectedValue = fer.Impacto.ToString();
-
-
-        //}
-
 
         private bool phValid()
         {
-            short ph = short.Parse(txtPH.Text.ToString());
+            double ph = double.Parse(txtPH.Text.ToString());
             if (ph > -1 && ph < 15)
             {
                 return true;
@@ -219,7 +210,7 @@ namespace Web.Paginas.Pesticidas
                         string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
                         string tipo = HttpUtility.HtmlEncode(txtTipo.Text);
 
-                        short pH = short.Parse(HttpUtility.HtmlEncode(txtPH.Text));
+                        double pH = double.Parse(HttpUtility.HtmlEncode(txtPH.Text));
                         string impacto = HttpUtility.HtmlEncode(lstImpacto.SelectedValue.ToString());
 
 

@@ -114,15 +114,6 @@ namespace Web.Paginas.Lotes
         protected global::System.Web.UI.WebControls.Button btnSelect;
 
         /// <summary>
-        /// Control lstLotPestiSel.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView lstLotPestiSel;
-
-        /// <summary>
         /// Control lblMensajes.
         /// </summary>
         /// <remarks>
@@ -130,6 +121,15 @@ namespace Web.Paginas.Lotes
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMensajes;
+
+        /// <summary>
+        /// Control lstLotPestiSel.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView lstLotPestiSel;
 
         /// <summary>
         /// Control btnAtrasFrm.

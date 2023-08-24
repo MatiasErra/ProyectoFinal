@@ -140,8 +140,8 @@ namespace Web.Paginas
 
         public int iniciarSesionCli(string user, string pass)
         {
-        ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
-        int id = ins. iniciarSesionCli(user, pass);
+            ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
+            int id = ins.iniciarSesionCli(user, pass);
             return id;
         }
         public List<Cliente> lstCli()
@@ -152,7 +152,7 @@ namespace Web.Paginas
 
         }
 
-         public List<Cliente> buscarVarCli(string var)
+        public List<Cliente> buscarVarCli(string var)
         {
             ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
             List<Cliente> lst = ins.buscarVarCli(var);
@@ -278,13 +278,7 @@ namespace Web.Paginas
 
         #region Depositos
 
-        public List<Deposito> listIdDeps()
-        {
-            ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Deposito> lst = inst.listIdDeps();
-            return lst;
 
-        }
 
         public List<Deposito> listDeps()
         {
@@ -353,13 +347,6 @@ namespace Web.Paginas
 
         #region Granjas
 
-        public List<Granja> listIdGranjas()
-        {
-            ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Granja> lst = inst.listIdGranjas();
-            return lst;
-
-        }
 
         public List<Granja> listGranjas()
         {
@@ -426,13 +413,7 @@ namespace Web.Paginas
 
         #region Productos
 
-        public List<Producto> listIdProductos()
-        {
-            ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Producto> lst = inst.listIdProductos();
-            return lst;
-
-        }
+    
 
         public List<Producto> listProductos()
         {
@@ -498,14 +479,6 @@ namespace Web.Paginas
         #endregion
 
         #region Pesticida
-
-        public List<Pesticida> listIdPesti()
-        {
-            ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Pesticida> lst = inst.listIdPesti();
-            return lst;
-
-        }
 
         public List<Pesticida> lstPesti()
         {
@@ -575,14 +548,6 @@ namespace Web.Paginas
 
         #region Fertilizantes
 
-        public List<Fertilizante> listIdFert()
-        {
-           
-            ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Fertilizante> lst = inst.listIdFert();
-            return lst;
-
-        }
 
         public List<Fertilizante> lstFerti()
         {
@@ -652,26 +617,26 @@ namespace Web.Paginas
 
         #region Lotes
 
-        public List<Lote> listLotes()
+        public List<string[]> listLotes()
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Lote> lst = inst.listLotes();
+            List<string[]> lst = inst.listLotes();
             return lst;
 
         }
 
-        public List<Lote> buscarVarLotes(string var)
+        public List<string[]> buscarVarLotes(string var)
         {
             ControladoraItem ins = ControladoraItem.obtenerInstancia();
-            List<Lote> lst = ins.buscarVarLotes(var);
+            List<string[]> lst = ins.buscarVarLotes(var);
             return lst;
         }
 
-        public Lote buscarLote(int idGranja, int idProducto, string fchProduccion)
+        public string[] buscarLote(string nombreGranja, string nombreProducto, string fchProduccion)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            Lote lote = inst.buscarLote(idGranja, idProducto, fchProduccion);
+            string[] lote = inst.buscarLote(nombreGranja, nombreProducto, fchProduccion);
             return lote;
 
         }
@@ -688,11 +653,11 @@ namespace Web.Paginas
                 return false;
         }
 
-        public bool bajaLote(int idGranja, int idProducto, string fchProduccion)
+        public bool bajaLote(string nombreGranja, string nombreProducto, string fchProduccion)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            if (inst.bajaLote(idGranja, idProducto, fchProduccion))
+            if (inst.bajaLote(nombreGranja, nombreProducto, fchProduccion))
             {
                 return true;
             }
@@ -716,7 +681,6 @@ namespace Web.Paginas
 
         #region Lotes_Fertis
 
-  
 
         public List<string[]> FertisEnLote(int idGranja, int idProducto, string fchProduccion)
         {
@@ -725,7 +689,6 @@ namespace Web.Paginas
             return lst;
         }
 
-        
         public Lote_Ferti buscarLoteFerti(int idFertilizante, int idGranja, int idProducto, string fchProduccion)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
@@ -778,7 +741,6 @@ namespace Web.Paginas
 
         #region Lotes_Pestis
 
-
         public List<string[]> PestisEnLote(int idGranja, int idProducto, string fchProduccion)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
@@ -786,7 +748,6 @@ namespace Web.Paginas
             return lst;
         }
 
-  
         public Lote_Pesti buscarLotePesti(int idPesticida, int idGranja, int idProducto, string fchProduccion)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
@@ -838,14 +799,7 @@ namespace Web.Paginas
         #endregion
 
         #region Camiones
-        public List<Camion> listIdCam()
-        {
-            ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Camion> lst = inst.listIdCam();
-            return lst;
-
-        }
-
+ 
         public List<Camion> lstCam()
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();

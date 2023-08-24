@@ -26,11 +26,19 @@ namespace Web.Paginas.Camioneros
             {
                 limpiar();
                 listar();
+                if (System.Web.HttpContext.Current.Session["idCamioneroMod"] != null)
+                {
+                    lblMensajes.Text = "Camionero modificado con éxito.";
+                    System.Web.HttpContext.Current.Session["idCamioneroMod"] = null;
+                }
+                System.Web.HttpContext.Current.Session["idCamioneroSel"] = null;
+
             }
         }
 
         private void listar()
         {
+            lstCamionero.Visible = true;
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             lstCamionero.DataSource = null;
             lstCamionero.DataSource = Web.listCamionero();
@@ -75,17 +83,7 @@ namespace Web.Paginas.Camioneros
             }
         }
 
-        private bool faltaIdCam()
-        {
-            if (lstCamionero.SelectedIndex == -1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+
 
         public void cargarDisponible()
         {
@@ -139,37 +137,6 @@ namespace Web.Paginas.Camioneros
             lstCamionero.SelectedIndex = -1;
             listar();
         }
-
-        private void cargarCam(int id)
-        {
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            Camionero camionero = Web.buscarCamionero(id);
-            txtId.Text = camionero.IdPersona.ToString();
-            txtNombre.Text = camionero.Nombre;
-            txtApell.Text = camionero.Apellido;
-            txtEmail.Text = camionero.Email;
-            txtFchNac.Text = DateTime.Parse(camionero.FchNacimiento).ToString("yyyy-MM-dd");
-            txtTel.Text = camionero.Telefono;
-            txtCedula.Text = camionero.Cedula;
-            txtFchManejo.Text = DateTime.Parse(camionero.FchManejo).ToString("yyyy-MM-dd");
-            lstDisponible.SelectedValue = camionero.Disponible.ToString();
-        }
-
-        //protected void lstCamionero_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    if (!faltaIdCam())
-        //    {
-        //        string linea = this.lstCamionero.SelectedItem.ToString();
-        //        string[] partes = linea.Split(' ');
-        //        int id = Convert.ToInt32(partes[0]);
-        //        cargarCam(id);
-        //        lstCamionero.SelectedIndex = -1;
-        //    }
-        //    else
-        //    {
-        //        lblMensajes.Text = "Debe seleccionar un camionero de la lista";
-        //    }
-        //}
 
         static int GenerateUniqueId()
         {
@@ -227,6 +194,7 @@ namespace Web.Paginas.Camioneros
             else
             {
                 lblMensajes.Text = "Debe poner algun dato en el buscador.";
+                listar();
             }
         }
 
@@ -265,7 +233,7 @@ namespace Web.Paginas.Camioneros
                             }
                             else
                             {
-                                lblMensajes.Text = "No se pudo dar de alta el camionero.";
+                                lblMensajes.Text = "Ya existe un Camionero con estos datos. Estos son los posibles datos repetidos (Email / Teléfono / Cedula).";
 
                             }
                         }
@@ -307,13 +275,11 @@ namespace Web.Paginas.Camioneros
                     {
                         limpiar();
                         lblMensajes.Text = "Se ha borrado el camionero.";
-                        txtId.Text = "";
                         txtBuscar.Text = "";
                         listar();
                     }
                     else
                     {
-                        limpiar();
                         lblMensajes.Text = "No se ha podido borrar el camionero.";
                     }
                 }
