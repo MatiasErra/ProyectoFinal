@@ -79,7 +79,7 @@
                     <ul class="navbar-nav mb-2 mb-lg-0">
 
                         <li class="me-2">
-                            <a class="btn btn-outline-light" href="~/Paginas/">Iniciar sesion</a>
+                            <asp:Button runat="server" Cssclass="btn btn-outline-light"  OnClick="btnCerrarSesion_Click"  Text="Cerrar sesión"/>
                         </li>
 
                     </ul>

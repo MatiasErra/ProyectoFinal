@@ -82,7 +82,9 @@ namespace Persistencia
 
         }
 
-        public List<Admin> lstAdmin()
+     
+
+        public List<Admin> buscarAdminFiltro(string buscar, string varEst, string varAdm, string ordenar)
         {
             List<Admin> resultado = new List<Admin>();
             try
@@ -92,55 +94,13 @@ namespace Persistencia
 
                 SqlConnection conect = Conexion.Conectar();
 
-                SqlCommand cmd = new SqlCommand("LstAdmin", conect);
+                SqlCommand cmd = new SqlCommand("BuscarAdminFiltro", conect);
 
                 cmd.CommandType = CommandType.StoredProcedure;
-
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        admin = new Admin();
-                        admin.IdPersona = int.Parse(reader["idPersona"].ToString());
-                        admin.Nombre = reader["nombre"].ToString();
-                        admin.Apellido = reader["apellido"].ToString();
-                        admin.Email = reader["email"].ToString();
-                        admin.Telefono = reader["telefono"].ToString();
-                       string Date = reader["fchNacimiento"].ToString();
-                       string [] DateArr = Date.Split(' ');
-                        admin.FchNacimiento = DateArr[0];
-                        admin.User = reader["usuario"].ToString();
-                        admin.TipoDeAdmin = reader["tipoDeAdmin"].ToString();
-                        admin.Estado = reader["estado"].ToString();
-
-                        resultado.Add(admin);
-                    }
-                }
-
-                conect.Close();
-            }
-            catch (Exception)
-            {
-                return resultado;
-            }
-            return resultado;
-        }
-
-        public List<Admin> buscarVarAdmin(string var)
-        {
-            List<Admin> resultado = new List<Admin>();
-            try
-            {
-                Admin admin;
-
-
-                SqlConnection conect = Conexion.Conectar();
-
-                SqlCommand cmd = new SqlCommand("BuscarVarAdmin", conect);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@var", var));
-
+                cmd.Parameters.Add(new SqlParameter("@buscar", buscar));
+                cmd.Parameters.Add(new SqlParameter("@varEst", varEst));
+                cmd.Parameters.Add(new SqlParameter("@varAdm", varAdm));
+                cmd.Parameters.Add(new SqlParameter("@ordenar", ordenar));
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())

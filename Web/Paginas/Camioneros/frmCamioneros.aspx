@@ -11,10 +11,21 @@
                     </div>
                     <div class="col-12">
                       
-                        <asp:TextBox CssClass="d-inline form-control  w-75 m-2 border-0  " ID="txtBuscar" runat="server" placeholder="Buscar" MaxLength="100" onkeydown="return(!(event.keyCode>=91));"></asp:TextBox>
+                        <asp:TextBox CssClass="d-inline form-control  w-50 m-2 border-0  " ID="txtBuscar" runat="server" placeholder="Buscar" MaxLength="100" onkeydown="return(!(event.keyCode>=91));"></asp:TextBox>
                         <asp:Button CssClass="btnE btn--radius btn--green align-self-center btn--srch" ID="btnBuscar" runat="server" Text="Buscar" OnClick="btnBuscar_Click" />
 
                     </div>
+
+                        <div class="row text-center  ">
+                            <div class=" col-sm-12">
+                                <asp:DropDownList ID="listFiltroTipo" CssClass="lstOrd btn--radius  align-self-center btn--srch" Width="250" AutoPostBack="true" OnSelectedIndexChanged="listFiltroTipo_SelectedIndexChanged" runat="server"></asp:DropDownList>
+                          
+                                <asp:DropDownList ID="listOrdenarPor" CssClass="lstOrd btn--radius  align-self-center btn--srch " Width="200" AutoPostBack="true" OnSelectedIndexChanged="listOrdenarPor_SelectedIndexChanged" runat="server"></asp:DropDownList>
+                                </div>
+
+                        </div>
+
+
 
                                         <div class="col-12">
 
@@ -28,7 +39,16 @@
 
                     </div>
 
+                    
+                             <div class="col-12 my-2">
+                    <asp:Label CssClass="text centerText " ID="lblMensajes" runat="server"></asp:Label>
 
+                      <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
+                            ControlToValidate="txtBuscar"
+                            ValidationExpression="^[a-zA-Z0-9 ]+$"
+                            ErrorMessage="No es un carácter válido" />
+
+                </div>
                  
                     <div class="modal fade" id="altaModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog modal-none">
@@ -116,15 +136,6 @@
                     </div>
                         </div>
 
-                             <div class="col-12 my-2">
-                    <asp:Label CssClass="text centerText " ID="lblMensajes" runat="server"></asp:Label>
-
-                      <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
-                            ControlToValidate="txtBuscar"
-                            ValidationExpression="^[a-zA-Z0-9 ]+$"
-                            ErrorMessage="No es un carácter válido" />
-
-                </div>
                     <div class="col-md-12 align-self-center">
                     <div class="row align-self-center">
                         <div class="col-md-11 col-md-offset-1">
@@ -189,6 +200,14 @@
                         </div>
                     </div>
                 </div>
+                      <div class="text-center">
+                        
+                        <div class="text-center">
+                            <asp:LinkButton ID="lblPaginaAnt" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
+                            <asp:Label ID="lblPaginaAct" runat="server" Text=""></asp:Label>
+                            <asp:LinkButton ID="lblPaginaSig" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
+                        </div>
+                    </div>
 
 
 

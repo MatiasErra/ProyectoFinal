@@ -60,17 +60,12 @@ namespace Web.Paginas
             int id = ins.iniciarSesionAdm(user, pass);
             return id;
         }
-        public List<Admin> lstAdmin()
-        {
-            ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
-            List<Admin> lst = ins.lstAdmin();
-            return lst;
-        }
+   
 
-        public List<Admin> buscarVarAdmin(string var)
+        public List<Admin> buscarAdminFiltro(string buscar, string varEst, string varAdm, string ordenar)
         {
             ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
-            List<Admin> lst = ins.buscarVarAdmin(var);
+            List<Admin> lst = ins.buscarAdminFiltro(buscar, varEst, varAdm, ordenar);
             return lst;
         }
 
@@ -144,18 +139,11 @@ namespace Web.Paginas
             int id = ins.iniciarSesionCli(user, pass);
             return id;
         }
-        public List<Cliente> lstCli()
+       
+        public List<Cliente> buscarCliFiltro(string buscar, string ordenar)
         {
             ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
-            List<Cliente> lst = ins.lstCli();
-            return lst;
-
-        }
-
-        public List<Cliente> buscarVarCli(string var)
-        {
-            ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
-            List<Cliente> lst = ins.buscarVarCli(var);
+            List<Cliente> lst = ins.buscarCliFiltro(buscar, ordenar);
             return lst;
         }
 
@@ -213,16 +201,11 @@ namespace Web.Paginas
 
         #region Camioneros
 
-        public List<Camionero> listCamionero()
-        {
-            ControladoraPersona inst = ControladoraPersona.obtenerInstancia();
-            return inst.listCamionero();
-        }
 
-        public List<Camionero> buscarVarCamionero(string var)
+        public List<Camionero> buscarCamioneroFiltro(string buscar, string disp, string ordenar)
         {
             ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
-            List<Camionero> lst = ins.buscarVarCamionero(var);
+            List<Camionero> lst = ins.buscarCamioneroFiltro(buscar, disp, ordenar);
             return lst;
         }
 
@@ -280,18 +263,10 @@ namespace Web.Paginas
 
 
 
-        public List<Deposito> listDeps()
-        {
-            ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Deposito> lst = inst.listDeps();
-            return lst;
-
-        }
-
-        public List<Deposito> buscarVarDeps(string var)
+        public List<Deposito> buscarDepositoFiltro(string buscar, string ordenar)
         {
             ControladoraItem ins = ControladoraItem.obtenerInstancia();
-            List<Deposito> lst = ins.buscarVarDeps(var);
+            List<Deposito> lst = ins.buscarDepositoFiltro(buscar, ordenar);
             return lst;
         }
 
@@ -348,18 +323,12 @@ namespace Web.Paginas
         #region Granjas
 
 
-        public List<Granja> listGranjas()
-        {
-            ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Granja> lst = inst.listGranjas();
-            return lst;
+ 
 
-        }
-
-        public List<Granja> buscarVarGranjas(string var)
+        public List<Granja> buscarGranjaFiltro(string buscar, string orden)
         {
             ControladoraItem ins = ControladoraItem.obtenerInstancia();
-            List<Granja> lst = ins.buscarVarGranjas(var);
+            List<Granja> lst = ins.buscarGranjaFiltro(buscar, orden);
             return lst;
         }
 
@@ -413,7 +382,13 @@ namespace Web.Paginas
 
         #region Productos
 
-    
+        public List<Producto> buscarProductoFiltro(string buscar, string tipo, string tipoVen, string ordenar)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            List<Producto> lst = inst.buscarProductoFiltro(buscar, tipo, tipoVen, ordenar);
+            return lst;
+
+        }
 
         public List<Producto> listProductos()
         {
@@ -423,12 +398,7 @@ namespace Web.Paginas
 
         }
 
-        public List<Producto> buscarVarProductos(string var)
-        {
-            ControladoraItem ins = ControladoraItem.obtenerInstancia();
-            List<Producto> lst = ins.buscarVarProductos(var);
-            return lst;
-        }
+        
 
         public Producto buscarProducto(int id)
         {
@@ -480,17 +450,11 @@ namespace Web.Paginas
 
         #region Pesticida
 
-        public List<Pesticida> lstPesti()
-        {
-            ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Pesticida> lst = inst.lstPesti();
-            return lst;
-        }
 
-        public List<Pesticida> buscarVarPesti(string var)
+        public List<Pesticida> buscarPesticidaFiltro(string buscar, string impact, string ordenar)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Pesticida> lst = inst.buscarVarPesti(var);
+            List<Pesticida> lst = inst.buscarPesticidaFiltro(buscar, impact, ordenar);
             return lst;
         }
 
@@ -549,17 +513,12 @@ namespace Web.Paginas
         #region Fertilizantes
 
 
-        public List<Fertilizante> lstFerti()
-        {
-            ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Fertilizante> lst = inst.lstFerti();
-            return lst;
-        }
+    
 
-        public List<Fertilizante> buscarVarFerti(string var)
+        public List<Fertilizante> buscarFertilizanteFiltro(string buscar, string impact, string ordenar)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Fertilizante> lst = inst.buscarVarFerti(var);
+            List<Fertilizante> lst = inst.buscarFertilizanteFiltro(buscar, impact, ordenar);
             return lst;
         }
 
@@ -617,18 +576,11 @@ namespace Web.Paginas
 
         #region Lotes
 
-        public List<string[]> listLotes()
-        {
-            ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<string[]> lst = inst.listLotes();
-            return lst;
-
-        }
-
-        public List<string[]> buscarVarLotes(string var)
+      
+        public List<string[]> buscarFiltrarLotes(string buscar, string ordenar)
         {
             ControladoraItem ins = ControladoraItem.obtenerInstancia();
-            List<string[]> lst = ins.buscarVarLotes(var);
+            List<string[]> lst = ins.buscarFiltrarLotes(buscar, ordenar);
             return lst;
         }
 
@@ -800,17 +752,12 @@ namespace Web.Paginas
 
         #region Camiones
  
-        public List<Camion> lstCam()
-        {
-            ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Camion> lst = inst.lstCam();
-            return lst;
-        }
+ 
 
-        public List<Camion> buscarVarCam(string var)
+        public List<Camion> buscarFiltroCam(string buscar, string disp, string ordenar)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Camion> lst = inst.buscarVarCam(var);
+            List<Camion> lst = inst.buscarFiltroCam(buscar, disp, ordenar);
             return lst;
         }
 

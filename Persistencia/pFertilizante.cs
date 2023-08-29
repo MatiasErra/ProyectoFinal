@@ -14,42 +14,8 @@ namespace Persistencia
     {
        
 
-        public List<Fertilizante> lstFerti()
-        {
-            List<Fertilizante> fertilizantes= new List<Fertilizante>();
-
-            Fertilizante fertilizante;
-            using (SqlConnection connect = Conexion.Conectar())
-            {
-                try
-                {
-                    SqlCommand cmd = new SqlCommand("LstFerti", connect);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            fertilizante = new Fertilizante();
-                            fertilizante.IdFertilizante = int.Parse(reader["idFerti"].ToString());
-                            fertilizante.Nombre = reader["nombre"].ToString();
-                            fertilizante.Tipo = reader["tipo"].ToString();
-                            fertilizante.PH = double.Parse(reader["pH"].ToString());
-                            fertilizante.Impacto = reader["impacto"].ToString();
-
-                            fertilizantes.Add(fertilizante);
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-                    return fertilizantes;
-
-                }
-            }
-            return fertilizantes;
-        }
-
-        public List<Fertilizante> buscarVarFerti(string var)
+     
+        public List<Fertilizante> buscarFertilizanteFiltro(string buscar, string impact, string ordenar)
         {
             List<Fertilizante> resultado = new List<Fertilizante>();
             try
@@ -59,10 +25,12 @@ namespace Persistencia
 
                 SqlConnection conect = Conexion.Conectar();
 
-                SqlCommand cmd = new SqlCommand("BuscarVarFerti", conect);
+                SqlCommand cmd = new SqlCommand("BuscarFertilizanteFiltro", conect);
 
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@var", var));
+                cmd.Parameters.Add(new SqlParameter("@buscar", buscar));
+                cmd.Parameters.Add(new SqlParameter("@impact", impact));
+                cmd.Parameters.Add(new SqlParameter("@ordenar", ordenar));
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {

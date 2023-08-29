@@ -13,47 +13,9 @@ namespace Persistencia
     class pLote
     {
 
-        public List<string[]> listLotes()
-        {
-            List<string[]> resultado = new List<string[]>();
+      
 
-
-            using (SqlConnection connect = Conexion.Conectar())
-            {
-                try
-                {
-                    SqlCommand cmd = new SqlCommand("LstLotes", connect);
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            string[] lote = new string[9];
-                            lote[0] = reader["idGranja"].ToString();
-                            lote[1] = reader["nombreGranja"].ToString();
-                            lote[2] = reader["idProducto"].ToString();
-                            lote[3] = reader["nombreProducto"].ToString();
-                            string[] DateArr = reader["fchProduccion"].ToString().Split(' ');
-                            lote[4] = DateArr[0];
-                            lote[5] = reader["cantidad"].ToString();
-                            lote[6] = reader["precio"].ToString();
-                            lote[7] = reader["idDeposito"].ToString();
-                            lote[8] = reader["ubicacionDeposito"].ToString();
-
-                            resultado.Add(lote);
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-                    return resultado;
-                }
-            }
-            return resultado;
-        }
-
-        public List<string[]> buscarVarLotes(string var)
+        public List<string[]> buscarFiltrarLotes(string buscar, string ordenar)
         {
             List<string[]> resultado = new List<string[]>();
             try
@@ -61,10 +23,12 @@ namespace Persistencia
 
                 SqlConnection conect = Conexion.Conectar();
 
-                SqlCommand cmd = new SqlCommand("BuscarVarLote", conect);
+                SqlCommand cmd = new SqlCommand("BuscarFiltrarLotes", conect);
 
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@var", var));
+                cmd.Parameters.Add(new SqlParameter("@buscar", buscar));
+                cmd.Parameters.Add(new SqlParameter("@ordenar", ordenar));
+
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {

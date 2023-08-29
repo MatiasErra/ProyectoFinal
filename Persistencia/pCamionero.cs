@@ -12,56 +12,9 @@ namespace Persistencia
 {
      class pCamionero
     {
-        public List<Camionero> listCamionero()
-        {
-            List<Camionero> listaCamioneros = new List<Camionero>();
+      
 
-            Camionero camionero;
-            using (SqlConnection connect = Conexion.Conectar())
-            {
-                try
-                {
-                    SqlCommand cmd = new SqlCommand("LstCamioneros", connect);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            camionero = new Camionero();
-                            camionero.IdPersona = int.Parse(reader["idPersona"].ToString());
-                            camionero.Nombre = reader["nombre"].ToString();
-                            camionero.Apellido = reader["apellido"].ToString();
-                            camionero.Email = reader["email"].ToString();
-                            camionero.Telefono = reader["telefono"].ToString();
-
-                            string Fecha = reader["fchNacimiento"].ToString();
-                            string []fechaArr = Fecha.Split(' ');
-                            camionero.FchNacimiento = fechaArr[0];
-
-                        
-                            camionero.Cedula = reader["cedula"].ToString();
-                            camionero.Disponible = reader["disponible"].ToString();
-                            
-                             string Fecha2   = reader["fchManejo"].ToString();
-                            string[] fecha2Arr = Fecha2.Split(' ');
-
-                            camionero.FchManejo = fecha2Arr[0];
-
-                            listaCamioneros.Add(camionero);
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-
-                    return listaCamioneros;
-
-                }
-            }
-            return listaCamioneros;
-        }
-
-        public List<Camionero> buscarVarCamionero(string var)
+        public List<Camionero> buscarCamioneroFiltro(string buscar,string disp, string ordenar)
         {
             List<Camionero> resultado = new List<Camionero>();
             try
@@ -71,11 +24,12 @@ namespace Persistencia
 
                 SqlConnection conect = Conexion.Conectar();
 
-                SqlCommand cmd = new SqlCommand("BuscarVarCamionero", conect);
+                SqlCommand cmd = new SqlCommand("BuscarCamioneroFiltro", conect);
 
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@var", var));
-
+                cmd.Parameters.Add(new SqlParameter("@buscar", buscar));
+                cmd.Parameters.Add(new SqlParameter("@disp", disp));
+                cmd.Parameters.Add(new SqlParameter("@ordenar", ordenar));
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
@@ -86,11 +40,18 @@ namespace Persistencia
                         camionero.Apellido = reader["apellido"].ToString();
                         camionero.Email = reader["email"].ToString();
                         camionero.Telefono = reader["telefono"].ToString();
-                        camionero.FchNacimiento = reader["fchNacimiento"].ToString();
+
+                        string Fecha = reader["fchNacimiento"].ToString();
+                        string[] fechaArr = Fecha.Split(' ');
+                        camionero.FchNacimiento = fechaArr[0];
+
                         camionero.Cedula = reader["cedula"].ToString();
                         camionero.Disponible = reader["disponible"].ToString();
-                        camionero.FchManejo = reader["fchManejo"].ToString();
 
+                        string Fecha2 = reader["fchManejo"].ToString();
+                        string[] fecha2Arr = Fecha2.Split(' ');
+
+                        camionero.FchManejo = fecha2Arr[0];
                         resultado.Add(camionero);
                     }
                 }

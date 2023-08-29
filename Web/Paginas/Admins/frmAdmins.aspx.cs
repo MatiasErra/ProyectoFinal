@@ -1,4 +1,5 @@
 ﻿using Clases;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
+using System.Web.Services.Description;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -16,15 +18,28 @@ namespace Web.Paginas.Admins
         protected void Page_PreInit(object sender, EventArgs e)
         {
             this.MasterPageFile = "~/Master/AGlobal.Master";
+
+
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
-            { 
+            {
+                if (System.Web.HttpContext.Current.Session["PagAct"] == null)
+                {
+                    lblPaginaAct.Text = "1";
+                }
+                else
+                {
+                    lblPaginaAct.Text = System.Web.HttpContext.Current.Session["PagAct"].ToString();
+                    System.Web.HttpContext.Current.Session["PagAct"] = null;
+                }
+
+
                 System.Web.HttpContext.Current.Session["idAdminSel"] = null;
-                limpiar();
-                listar();
+          
+
                 CargarTipos();
 
                 if (System.Web.HttpContext.Current.Session["idAdminMod"] != null)
@@ -32,18 +47,40 @@ namespace Web.Paginas.Admins
                     lblMensajes.Text = "Administrador Modificado";
                     System.Web.HttpContext.Current.Session["idAdminMod"] = null;
                 }
+                CargarListFiltroTipoHab();
+                CargarListFiltroTipoAdm();
+                CargarListOrdenarPor();
+                if (System.Web.HttpContext.Current.Session["Buscar"] != null)
+                {
+                    txtBuscar.Text = System.Web.HttpContext.Current.Session["Buscar"].ToString();
+                    System.Web.HttpContext.Current.Session["Buscar"] = null;
+                }
+
+                if (System.Web.HttpContext.Current.Session["FiltroTipoHab"] != null)
+                {
+                    listFiltroTipoHab.SelectedValue = System.Web.HttpContext.Current.Session["FiltroTipoHab"].ToString();
+                    System.Web.HttpContext.Current.Session["FiltroTipoHab"] = null;
+                }
+
+                if (System.Web.HttpContext.Current.Session["FiltroTipoAdm"] != null)
+                {
+                    lstFltTipoAdm.SelectedValue = System.Web.HttpContext.Current.Session["FiltroTipoAdm"].ToString();
+                    System.Web.HttpContext.Current.Session["FiltroTipoAdm"] = null;
+                }
+
+                if (System.Web.HttpContext.Current.Session["OrdenarPor"] != null)
+                {
+                    listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"].ToString();
+                    System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
+
+                }
+
+                listarPagina();
+
             }
         }
 
-        private void listar()
-        {
-            lstAdmin.Visible = true;
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            lstAdmin.DataSource = null;
-            lstAdmin.DataSource = Web.lstAdmin();
 
-            lstAdmin.DataBind();
-        }
 
         private bool faltanDatos()
         {
@@ -142,6 +179,9 @@ namespace Web.Paginas.Admins
 
         }
 
+
+
+        #region Utilidad
         private void limpiar()
         {
 
@@ -158,9 +198,14 @@ namespace Web.Paginas.Admins
             listTipoAdmin.SelectedValue = "Seleccionar tipo de Admin";
             txtBuscar.Text = "";
             lstAdmin.SelectedIndex = -1;
-            listar();
 
+            lstFltTipoAdm.SelectedValue = "Filtrar por tipo de admin";
+            listFiltroTipoHab.SelectedValue = "Filtrar por estado";
+            listOrdenarPor.SelectedValue = "Ordenar por";
+            lblPaginaAct.Text = "1";
+            listarPagina();
         }
+
 
         private bool ValidUser()
         {
@@ -235,44 +280,257 @@ namespace Web.Paginas.Admins
         }
 
 
-        private void buscar()
+
+
+
+        private int PagMax()
         {
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            string value = txtBuscar.Text;
-            string val = value.ToLower();
-            List<Admin> adminslst = new List<Admin>();
-            adminslst = Web.buscarVarAdmin(value);
-            lstAdmin.DataSource = null;
-
-            if (txtBuscar.Text != "")
-            {
-                if (adminslst.Count > 0)
-                {
-                    lstAdmin.Visible = true;
-                    lblMensajes.Text = "";
-                    lstAdmin.DataSource = adminslst;
-                    lstAdmin.DataBind();
-                }
-                else
-                {
-                    lstAdmin.Visible = false;
-                    lblMensajes.Text = "No se encontro ningun Administrador.";
-
-                }
-            }
-            else
-            {
-                lblMensajes.Text = "Debe poner algun dato en el buscador.";
-                listar();
-            }
+          
+            return 2;
         }
 
 
 
+        private void listarPagina()
+        {
+            List<Admin> admins = obtenerAdmins();
+            List<Admin> adminPagina = new List<Admin>();
+            string p = lblPaginaAct.Text.ToString();
+            int pagina = int.Parse(p);
+            int cont = 0;
+            foreach (Admin unAdmin in admins)
+            {
+                if (adminPagina.Count == PagMax())
+                {
+                    break;
+                }
+                if (cont >= ((pagina * PagMax()) - PagMax()))
+                {
+                    adminPagina.Add(unAdmin);
+                }
 
+                cont++;
+            }
+
+            if (adminPagina.Count == 0)
+            {
+                lblMensajes.Text = "No se encontro ningún administrador.";
+
+                lblPaginaAnt.Visible = false;
+                lblPaginaAct.Visible = false;
+                lblPaginaSig.Visible = false;
+                lstAdmin.Visible = false;
+            }
+            else
+            {
+                
+                lblMensajes.Text = "";
+                modificarPagina();
+                lstAdmin.Visible = true;
+                lstAdmin.DataSource = null;
+                lstAdmin.DataSource = adminPagina;
+                lstAdmin.DataBind();
+            }
+
+        }
+        private void modificarPagina()
+        {
+            List<Admin> admins = obtenerAdmins();
+            double pxp = PagMax();
+            double count = admins.Count;
+            double pags = count / pxp;
+            double cantPags = Math.Ceiling(pags);
+
+            string pagAct = lblPaginaAct.Text.ToString();
+ 
+            lblPaginaSig.Visible = true;
+            lblPaginaAct.Visible =true;
+            lblPaginaAnt.Visible = true;
+            if (pagAct == cantPags.ToString())
+            {
+                lblPaginaSig.Visible = false;
+            }
+            if (pagAct == "1")
+            {
+                lblPaginaAnt.Visible = false;
+            }
+            lblPaginaAnt.Text = (int.Parse(pagAct) - 1).ToString();
+            lblPaginaAct.Text = pagAct.ToString();
+            lblPaginaSig.Text = (int.Parse(pagAct) + 1).ToString();
+        }
+
+
+        private List<Admin> obtenerAdmins()
+        {
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            string buscar = txtBuscar.Text;
+            string varEst = "";
+            string varAdm = "";
+            string ordenar = "";
+            if (listFiltroTipoHab.SelectedValue != "Filtrar por estado")
+            {
+                varEst = listFiltroTipoHab.SelectedValue;
+            }
+
+            if (lstFltTipoAdm.SelectedValue != "Filtrar por tipo de admin")
+            {
+                varAdm = lstFltTipoAdm.SelectedValue;
+            }
+
+
+
+
+            if (listOrdenarPor.SelectedValue != "Ordenar por")
+            {
+                ordenar = listOrdenarPor.SelectedValue;
+            }
+
+            List<Admin> admins = Web.buscarAdminFiltro(buscar, varEst, varAdm, ordenar);
+
+            return admins;
+        }
+
+        #endregion
+
+        #region Filtro
+
+        public void CargarListFiltroTipoHab()
+        {
+            listFiltroTipoHab.DataSource = null;
+            listFiltroTipoHab.DataSource = createDataSourceFiltroTipoHab();
+            listFiltroTipoHab.DataTextField = "nombre";
+            listFiltroTipoHab.DataValueField = "id";
+            listFiltroTipoHab.DataBind();
+        }
+
+        ICollection createDataSourceFiltroTipoHab()
+        {
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+            dt.Columns.Add(new DataColumn("id", typeof(String)));
+
+            dt.Rows.Add(createRow("Filtrar por estado", "Filtrar por estado", dt));
+            dt.Rows.Add(createRow("Habilitado", "Habilitado", dt));
+            dt.Rows.Add(createRow("No Habilitado", "No Habilitado", dt));
+
+
+
+            DataView dv = new DataView(dt);
+            return dv;
+        }
+
+
+        public void CargarListFiltroTipoAdm()
+        {
+            lstFltTipoAdm.DataSource = null;
+            lstFltTipoAdm.DataSource = createDataSourceFiltroTipoAdm();
+            lstFltTipoAdm.DataTextField = "nombre";
+            lstFltTipoAdm.DataValueField = "id";
+            lstFltTipoAdm.DataBind();
+        }
+
+        ICollection createDataSourceFiltroTipoAdm()
+        {
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+            dt.Columns.Add(new DataColumn("id", typeof(String)));
+
+
+            dt.Rows.Add(createRow("Filtrar por tipo de admin", "Filtrar por tipo de admin", dt));
+            dt.Rows.Add(createRow("Administrador global", "Administrador global", dt));
+            dt.Rows.Add(createRow("Administrador de productos", "Administrador de productos", dt));
+            dt.Rows.Add(createRow("Administrador de pedidos", "Administrador de pedidos", dt));
+            dt.Rows.Add(createRow("Administrador de flota", "Administrador de flota", dt));
+
+
+            DataView dv = new DataView(dt);
+            return dv;
+        }
+
+
+
+        #endregion
+
+        #region Ordenar
+
+        public void CargarListOrdenarPor()
+        {
+            listOrdenarPor.DataSource = null;
+            listOrdenarPor.DataSource = createDataSourceOrdenarPor();
+            listOrdenarPor.DataTextField = "nombre";
+            listOrdenarPor.DataValueField = "id";
+            listOrdenarPor.DataBind();
+        }
+
+        ICollection createDataSourceOrdenarPor()
+        {
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+            dt.Columns.Add(new DataColumn("id", typeof(String)));
+
+            dt.Rows.Add(createRow("Ordenar por", "Ordenar por", dt));
+            dt.Rows.Add(createRow("Nombre", "Nombre", dt));
+            dt.Rows.Add(createRow("Apellido", "Apellido", dt));
+            dt.Rows.Add(createRow("E-Mail", "E-Mail", dt));
+            dt.Rows.Add(createRow("Teléfono", "Teléfono", dt));
+            dt.Rows.Add(createRow("Fecha de Nacimiento", "Fecha de Nacimiento", dt));
+            dt.Rows.Add(createRow("Usuario", "Usuario", dt));
+            dt.Rows.Add(createRow("Tipo de Admin", "Tipo de Admin", dt));
+            dt.Rows.Add(createRow("Estado", "Estado", dt));
+            DataView dv = new DataView(dt);
+            return dv;
+        }
+
+        #endregion
+
+
+
+
+        #region botones
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            buscar();
+            lblPaginaAct.Text = "1";
+            listarPagina();
+        }
+        protected void listFiltroTipo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lblPaginaAct.Text = "1";
+            listarPagina();
+        }
+
+        protected void listOrdenarPor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lblPaginaAct.Text = "1";
+            listarPagina();
+        }
+        protected void lblPaginaAnt_Click(object sender, EventArgs e)
+        {
+            string p = lblPaginaAct.Text.ToString();
+            int pagina = int.Parse(p);
+            System.Web.HttpContext.Current.Session["PagAct"] = (pagina - 1).ToString();
+            System.Web.HttpContext.Current.Session["Buscar"] = txtBuscar.Text;
+            System.Web.HttpContext.Current.Session["FiltroTipoHab"] = listFiltroTipoHab.SelectedValue;
+            System.Web.HttpContext.Current.Session["FiltroTipoAdm"] = lstFltTipoAdm.SelectedValue;
+            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue;
+            Server.TransferRequest(Request.Url.AbsolutePath, false);
+        }
+
+        protected void lblPaginaSig_Click(object sender, EventArgs e)
+        {
+            string p = lblPaginaAct.Text.ToString();
+            int pagina = int.Parse(p);
+            System.Web.HttpContext.Current.Session["PagAct"] = (pagina + 1).ToString();
+            System.Web.HttpContext.Current.Session["Buscar"] = txtBuscar.Text;
+            System.Web.HttpContext.Current.Session["FiltroTipoHab"] = listFiltroTipoHab.SelectedValue;
+            System.Web.HttpContext.Current.Session["FiltroTipoAdm"] = lstFltTipoAdm.SelectedValue;
+            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue;
+            Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
 
         protected void btnAlta_Click(object sender, EventArgs e)
@@ -310,7 +568,7 @@ namespace Web.Paginas.Admins
                                     {
                                         limpiar();
                                         lblMensajes.Text = "Administrador dado de alta con éxito.";
-                                        listar();
+                                        listarPagina();
 
                                     }
                                     else
@@ -373,7 +631,7 @@ namespace Web.Paginas.Admins
                     lblMensajes.Text = "Se ha eliminado el Administrador.";
                     txtId.Text = "";
                     txtBuscar.Text = "";
-                    listar();
+                    listarPagina();
                 }
                 else
                 {
@@ -404,8 +662,9 @@ namespace Web.Paginas.Admins
         protected void btnLimpiar_Click(object sender, EventArgs e)
         {
             limpiar();
+            listarPagina();
         }
 
-
+        #endregion
     }
 }

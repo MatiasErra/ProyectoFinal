@@ -12,7 +12,49 @@ namespace Persistencia
 {
     class pProducto
     {
-    
+
+
+        public List<Producto> buscarProductoFiltro(string buscar, string tipo, string tipoVen, string ordenar)
+        {
+            List<Producto> resultado = new List<Producto>();
+            try
+            {
+                Producto producto;
+
+
+                SqlConnection connect = Conexion.Conectar();
+
+                SqlCommand cmd = new SqlCommand("BuscarProductoFiltro", connect);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter("@buscar", buscar));
+                cmd.Parameters.Add(new SqlParameter("@tipo", tipo));
+                cmd.Parameters.Add(new SqlParameter("@tipoVen", tipoVen));
+                cmd.Parameters.Add(new SqlParameter("@ordenar", ordenar));
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        producto = new Producto();
+                        producto.IdProducto = int.Parse(reader["idProducto"].ToString());
+                        producto.Nombre = reader["nombre"].ToString();
+                        producto.Tipo = reader["tipo"].ToString();
+                        producto.TipoVenta = reader["tipoVenta"].ToString();
+                        producto.Imagen = reader["imagen"].ToString();
+
+                        resultado.Add(producto);
+                    }
+                }
+
+                connect.Close();
+            }
+            catch (Exception)
+            {
+                return resultado;
+            }
+            return resultado;
+        }
 
         public List<Producto> listProductos()
         {
@@ -50,45 +92,7 @@ namespace Persistencia
             return listaProductos;
         }
 
-        public List<Producto> buscarVarProductos(string var)
-        {
-            List<Producto> resultado = new List<Producto>();
-            try
-            {
-                Producto producto;
-
-
-                SqlConnection connect = Conexion.Conectar();
-
-                SqlCommand cmd = new SqlCommand("BuscarVarProducto", connect);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@var", var));
-
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        producto = new Producto();
-                        producto.IdProducto = int.Parse(reader["idProducto"].ToString());
-                        producto.Nombre = reader["nombre"].ToString();
-                        producto.Tipo = reader["tipo"].ToString();
-                        producto.TipoVenta = reader["tipoVenta"].ToString();
-                        producto.Imagen = reader["imagen"].ToString();
-
-                        resultado.Add(producto);
-                    }
-                }
-
-                connect.Close();
-            }
-            catch (Exception)
-            {
-                return resultado;
-            }
-            return resultado;
-        }
-
+      
         public Producto buscarProducto(int id)
         {
             Producto producto = new Producto();

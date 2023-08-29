@@ -13,48 +13,7 @@ namespace Persistencia
    class pCliente
     {
 
-        public List<Cliente> lstCli()
-        {
-            List<Cliente> resultado = new List<Cliente>();
-            try
-            {
-                Cliente cliente;
 
-
-                SqlConnection conect = Conexion.Conectar();
-
-                SqlCommand cmd = new SqlCommand("LstCliente", conect);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        cliente = new Cliente();
-                        cliente.IdPersona = int.Parse(reader["idPersona"].ToString());
-                        cliente.Nombre = reader["nombre"].ToString();
-                        cliente.Apellido = reader["apellido"].ToString();
-                        cliente.Email = reader["email"].ToString();
-                        cliente.Telefono = reader["telefono"].ToString() ;
-                        string Date = reader["fchNacimiento"].ToString();
-                        string[] DateArr = Date.Split(' ');
-                        cliente.FchNacimiento = DateArr[0];
-                        cliente.User = reader["usuario"].ToString();
-                        cliente.Direccion = reader["direccion"].ToString();
-
-                        resultado.Add(cliente);
-                    }
-                }
-
-                conect.Close();
-            }
-            catch (Exception)
-            {
-                return resultado;
-            }
-            return resultado;
-        }
 
 
         public List<string> userRepetidoCli()
@@ -97,7 +56,7 @@ namespace Persistencia
 
         }
 
-        public List<Cliente> buscarVarCli (string var)
+        public List<Cliente> buscarCliFiltro(string buscar, string ordenar)
         {
             List<Cliente> resultado = new List<Cliente>();
             try
@@ -107,11 +66,11 @@ namespace Persistencia
 
                 SqlConnection conect = Conexion.Conectar();
 
-                SqlCommand cmd = new SqlCommand("BuscarVarCli", conect);
+                SqlCommand cmd = new SqlCommand("BuscarCliFiltro", conect);
 
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@var", var));
-
+                cmd.Parameters.Add(new SqlParameter("@buscar", buscar));
+                cmd.Parameters.Add(new SqlParameter("@ordenar", ordenar));
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())

@@ -37,6 +37,11 @@ namespace Web.Paginas.Clientes
             if (web.iniciarSesionCli(nombre, hashedPassword) > 0 && web.iniciarSesionAdm(nombre, hashedPassword)==0)
             {
                 lblMensajes.Text = "Sesión iniciada como cliente ";
+                System.Web.HttpContext.Current.Session["ClienteIniciado"] = nombre;
+
+                Response.Redirect("/Paginas/Nav/frmInicio");
+            
+
             }
             if (web.iniciarSesionAdm(nombre, hashedPassword) > 0 && web.iniciarSesionCli(nombre, hashedPassword) == 0)
             {

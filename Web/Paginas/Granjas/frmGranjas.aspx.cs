@@ -23,7 +23,7 @@ namespace Web.Paginas.Granjass
             System.Web.HttpContext.Current.Session["idGranjaSelMod"] = null;
             if (!IsPostBack)
             {
-          
+
                 if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
                 {
                     btnVolver.Visible = true;
@@ -39,8 +39,37 @@ namespace Web.Paginas.Granjass
                 {
                     cargarDatos();
                 }
+                if (System.Web.HttpContext.Current.Session["PagAct"] == null)
+                {
+                    lblPaginaAct.Text = "1";
+                }
+                else
+                {
+                    lblPaginaAct.Text = System.Web.HttpContext.Current.Session["PagAct"].ToString();
+                    System.Web.HttpContext.Current.Session["PagAct"] = null;
+                }
+                CargarListOrdenarPor();
+                CargarListDueño();
 
-                listar();
+
+                if (System.Web.HttpContext.Current.Session["Buscar"] != null)
+                {
+                    txtBuscar.Text = System.Web.HttpContext.Current.Session["Buscar"].ToString();
+                    System.Web.HttpContext.Current.Session["Buscar"] = null;
+                }
+                if (System.Web.HttpContext.Current.Session["OrdenarPor"] != null)
+                {
+                    listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"].ToString();
+                    System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
+
+                }
+
+
+
+
+
+                listarPagina();
+
 
 
 
@@ -88,34 +117,228 @@ namespace Web.Paginas.Granjass
 
         #endregion
 
-
-        private void listar()
+        private int PagMax()
         {
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            List<Granja> granjas = Web.listGranjas();
-            if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
-            {
-                lstGranjaSelect.Visible = true;
-                lstGranjaSelect.DataSource = null;
-           
-                lstGranjaSelect.DataSource = ObtenerGranjas(granjas);
-                lstGranjaSelect.DataBind();
-            
-            }
-            else
-            {
-                lstGranja.Visible = true;
-                lstGranja.DataSource = null;
-                lstGranja.DataSource = ObtenerGranjas(granjas);
-                lstGranja.DataBind();
-               
-            }
-            CargarListDueño();
+
+            return 2;
         }
 
 
 
-        public DataTable ObtenerGranjas(List<Granja> granjas)
+        private List<Granja> obtenerGranjas()
+        {
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            string buscar = txtBuscar.Text;
+
+            string ordenar = "";
+
+
+            if (listOrdenarPor.SelectedValue != "Ordenar por")
+            {
+                ordenar = listOrdenarPor.SelectedValue;
+            }
+
+
+
+            List<Granja> granja = Web.buscarGranjaFiltro(buscar, ordenar);
+
+            return granja;
+        }
+
+
+        private void listarPagina()
+        {
+            List<Granja> granjas = obtenerGranjas();
+            List<Granja> GranjaPagina = new List<Granja>();
+       
+         
+
+
+            if (listOrdenarPor.SelectedValue == "Nombre del dueño")
+            {
+                Granjasorden(granjas);
+            }
+            else
+            {
+                GranjasNorm(granjas, GranjaPagina);
+            }
+
+
+
+        }
+
+        private void Granjasorden(List<Granja> granjas)
+        {
+            string p = lblPaginaAct.Text.ToString();
+            int pagina = int.Parse(p);
+            int cont = 0;
+            List<string[]> GranjaPagina = new List<string[]>();
+
+
+            List<string[]> ordenGranjasDu = ObtenerGranjaslstOrd(granjas);
+            foreach (string[] unaGranja in ordenGranjasDu)
+            {
+                if (GranjaPagina.Count == PagMax())
+                {
+                    break;
+                }
+                if (cont >= ((pagina * PagMax()) - PagMax()))
+                {
+                    GranjaPagina.Add(unaGranja);
+                }
+
+                cont++;
+            }
+
+            if (GranjaPagina.Count == 0)
+            {
+                lblMensajes.Text = "No se encontro ningún administrador.";
+
+                lblPaginaAnt.Visible = false;
+                lblPaginaAct.Visible = false;
+                lblPaginaSig.Visible = false;
+                lstGranja.Visible = false;
+                lstGranjaSelect.Visible = false;
+            }
+            else
+            {
+                if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
+                {
+                    lstGranjaSelect.Visible = true;
+                    modificarPagina();
+                    lstGranjaSelect.DataSource = null;
+                    lstGranjaSelect.DataSource = ObtenerGranjasDataTableOrd(GranjaPagina);
+                    lstGranjaSelect.DataBind();
+                }
+
+                else
+                {
+                    lblMensajes.Text = "";
+                    modificarPagina();
+                    lstGranja.Visible = true;
+                    lstGranja.DataSource = null;
+                    lstGranja.DataSource = ObtenerGranjasDataTableOrd(GranjaPagina);
+                    lstGranja.DataBind();
+                }
+            }
+
+        }
+
+        private void GranjasNorm(List<Granja> granjas, List<Granja> GranjaPagina)
+        {
+            string p = lblPaginaAct.Text.ToString();
+            int pagina = int.Parse(p);
+            int cont = 0;
+            foreach (Granja unaGranja in granjas)
+            {
+                if (GranjaPagina.Count == PagMax())
+                {
+                    break;
+                }
+                if (cont >= ((pagina * PagMax()) - PagMax()))
+                {
+                    GranjaPagina.Add(unaGranja);
+                }
+
+                cont++;
+            }
+
+            if (GranjaPagina.Count == 0)
+            {
+                lblMensajes.Text = "No se encontro ningún administrador.";
+
+                lblPaginaAnt.Visible = false;
+                lblPaginaAct.Visible = false;
+                lblPaginaSig.Visible = false;
+                lstGranja.Visible = false;
+                lstGranjaSelect.Visible = false;
+            }
+            else
+            {
+                if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
+                {
+                    lstGranjaSelect.Visible = true;
+                    modificarPagina();
+                    lstGranjaSelect.DataSource = null;
+                    lstGranjaSelect.DataSource = ObtenerGranjasDataTable(GranjaPagina);
+                    lstGranjaSelect.DataBind();
+                }
+
+                else
+                {
+                    lblMensajes.Text = "";
+                    modificarPagina();
+                    lstGranja.Visible = true;
+                    lstGranja.DataSource = null;
+                    lstGranja.DataSource = ObtenerGranjasDataTable(GranjaPagina);
+                    lstGranja.DataBind();
+                }
+            }
+
+
+
+        }
+
+        private void modificarPagina()
+        {
+            List<Granja> granjas = obtenerGranjas();
+            double pxp = PagMax();
+            double count = granjas.Count;
+            double pags = count / pxp;
+            double cantPags = Math.Ceiling(pags);
+
+            string pagAct = lblPaginaAct.Text.ToString();
+
+            lblPaginaSig.Visible = true;
+            lblPaginaAct.Visible = true;
+            lblPaginaAnt.Visible = true;
+            if (pagAct == cantPags.ToString())
+            {
+                lblPaginaSig.Visible = false;
+            }
+            if (pagAct == "1")
+            {
+                lblPaginaAnt.Visible = false;
+            }
+            lblPaginaAnt.Text = (int.Parse(pagAct) - 1).ToString();
+            lblPaginaAct.Text = pagAct.ToString();
+            lblPaginaSig.Text = (int.Parse(pagAct) + 1).ToString();
+        }
+
+
+        #region Ordenar
+
+        public void CargarListOrdenarPor()
+        {
+            listOrdenarPor.DataSource = null;
+            listOrdenarPor.DataSource = createDataSourceOrdenarPor();
+            listOrdenarPor.DataTextField = "nombre";
+            listOrdenarPor.DataValueField = "id";
+            listOrdenarPor.DataBind();
+        }
+
+        ICollection createDataSourceOrdenarPor()
+        {
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+            dt.Columns.Add(new DataColumn("id", typeof(String)));
+
+            dt.Rows.Add(createRow("Ordenar por", "Ordenar por", dt));
+            dt.Rows.Add(createRow("Nombre", "Nombre", dt));
+            dt.Rows.Add(createRow("Ubicación", "Ubicación", dt));
+            dt.Rows.Add(createRow("Nombre del dueño", "Nombre del dueño", dt));
+
+            DataView dv = new DataView(dt);
+            return dv;
+        }
+
+        #endregion
+
+
+
+        public DataTable ObtenerGranjasDataTable(List<Granja> granjas)
         {
             DataTable dt = new DataTable();
             dt.Columns.AddRange(new DataColumn[4] {
@@ -129,7 +352,7 @@ namespace Web.Paginas.Granjass
                 new DataColumn("NomDue", typeof(string))});
 
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-          
+
             foreach (Granja gran in granjas)
             {
                 Cliente cli = Web.buscarCli(gran.IdCliente);
@@ -141,8 +364,69 @@ namespace Web.Paginas.Granjass
                 dr["NomDue"] = cli.Nombre.ToString();
                 dt.Rows.Add(dr);
             }
+     
             return dt;
         }
+
+        public DataTable ObtenerGranjasDataTableOrd(List<string[]> granjas)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.AddRange(new DataColumn[4] {
+
+
+
+                new DataColumn("IdGranja", typeof(int)),
+                new DataColumn("Nombre", typeof(string)),
+                new DataColumn("Ubicacion", typeof(string)),
+
+                new DataColumn("NomDue", typeof(string))});
+
+            foreach (string[] gran in granjas)
+            {
+                DataRow dr = dt.NewRow();
+                dr["IdGranja"] = gran[0].ToString();
+                dr["Nombre"] = gran[1].ToString();
+                dr["Ubicacion"] = gran[2].ToString();
+                dr["NomDue"] = gran[3].ToString();
+                dt.Rows.Add(dr);
+            }
+
+            return dt;
+        }
+
+
+
+
+
+        public List<string[]> ObtenerGranjaslstOrd(List<Granja> granjas)
+        {
+            List<string[]> myList = new List<string[]>();
+
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+
+            foreach (Granja gran in granjas)
+            {
+                Cliente cli = Web.buscarCli(gran.IdCliente);
+
+                string[] dr = new string[4];
+                dr[0] = gran.IdGranja.ToString();
+                dr[1] = gran.Nombre.ToString();
+                dr[2] = gran.Ubicacion.ToString();
+                dr[3] = cli.Nombre.ToString();
+                myList.Add(dr);
+              
+            }
+            var myListOrdenada = myList.OrderBy(x => x[3]).ToList();
+            return myListOrdenada;
+        }
+
+
+
+
+
+
+
+
 
         private bool faltanDatos()
         {
@@ -165,9 +449,10 @@ namespace Web.Paginas.Granjass
 
             txtNombre.Text = "";
             txtUbicacion.Text = "";
-
+            listOrdenarPor.SelectedValue = "Ordenar por";
             lstGranja.SelectedIndex = -1;
-            listar();
+            lblPaginaAct.Text = "1";
+            listarPagina();
         }
 
 
@@ -188,8 +473,10 @@ namespace Web.Paginas.Granjass
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             List<Cliente> clientes = new List<Cliente>();
-
-            clientes = Web.lstCli();
+            string b = "";
+            string d = "";
+            string o = "";
+            clientes = Web.buscarCliFiltro(b,d);
 
 
 
@@ -241,7 +528,9 @@ namespace Web.Paginas.Granjass
             }
 
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            List<Granja> lstGranjas = Web.listGranjas();
+            string var1 = "";
+            string var2 = "";
+            List<Granja> lstGranjas = Web.buscarGranjaFiltro(var1, var2);
             foreach (Granja granja in lstGranjas)
             {
                 if (granja.IdGranja.Equals(intGuid))
@@ -257,68 +546,10 @@ namespace Web.Paginas.Granjass
             else return GenerateUniqueId();
         }
 
-        private void buscar()
-        {
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            string value = txtBuscar.Text.ToLower();
-            List<Granja> granjas = Web.buscarVarGranjas(value);
-            lstGranja.DataSource = null;
-            if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
-            {
-                if (txtBuscar.Text != "")
-                {
-
-                    if (granjas.Count > 0)
-                    {
-                        lstGranjaSelect.Visible = true;
-                        lblMensajes.Text = "";
-                        lstGranjaSelect.DataSource = ObtenerGranjas(granjas);
-                        lstGranjaSelect.DataBind();
-                    }
-                    else
-                    {
-                        lstGranjaSelect.Visible = false;
-                        lblMensajes.Text = "No se encontró ninguna granja.";
-                    }
-                }
-                else
-                {
-                    lblMensajes.Text = "Debe poner algun dato en el buscador.";
-                    listar();
-                }
-
-            }
-            else
-            {
-                if (txtBuscar.Text != "")
-                {
-
-                    if (granjas.Count > 0)
-                    {
-                        lstGranja.Visible = true;
-                        lblMensajes.Text = "";
-                        lstGranja.DataSource = granjas;
-                        lstGranja.DataBind();
-                    }
-                    else
-                    {
-                        lstGranja.Visible = false;
-                        lblMensajes.Text = "No se encontró ninguna granja.";
-                    }
-                }
-                else
-                {
-                    lblMensajes.Text = "Debe poner algun dato en el buscador.";
-                    listar();
-                }
-            }
-        }
 
 
-        protected void btnBuscar_Click(object sender, EventArgs e)
-        {
-            buscar();
-        }
+
+
 
         protected void btnBuscarDueño_Click(object sender, EventArgs e)
         {
@@ -351,7 +582,7 @@ namespace Web.Paginas.Granjass
                     }
                     else
                     {
-                        listar();
+                        listarPagina();
                         lblMensajes.Text = "Granja dada de alta con éxito.";
                     }
 
@@ -385,7 +616,9 @@ namespace Web.Paginas.Granjass
         private bool comprobarProducen(int id)
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            List<string[]> lotes = Web.listLotes();
+            string buscar = "";
+                string ord = "";
+            List<string[]> lotes = Web.buscarFiltrarLotes(buscar, ord);
             foreach (string[] unLote in lotes)
             {
                 if (int.Parse(unLote[0]).Equals(id))
@@ -410,7 +643,7 @@ namespace Web.Paginas.Granjass
                 {
                     if (Web.bajaGranja(id))
                     {
-                        listar();
+                        listarPagina();
                         lblMensajes.Text = "Se ha borrado la granja.";
                     }
                     else
@@ -443,10 +676,47 @@ namespace Web.Paginas.Granjass
 
         }
 
+        protected void listOrdenarPor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lblPaginaAct.Text = "1";
+            listarPagina();
+        }
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            lblPaginaAct.Text = "1";
+            listarPagina();
+        }
+
+        protected void lblPaginaAnt_Click(object sender, EventArgs e)
+        {
+            string p = lblPaginaAct.Text.ToString();
+            int pagina = int.Parse(p);
+            System.Web.HttpContext.Current.Session["PagAct"] = (pagina - 1).ToString();
+            System.Web.HttpContext.Current.Session["Buscar"] = txtBuscar.Text;
+
+            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue;
+            Server.TransferRequest(Request.Url.AbsolutePath, false);
+        }
+
+        protected void lblPaginaSig_Click(object sender, EventArgs e)
+        {
+            string p = lblPaginaAct.Text.ToString();
+            int pagina = int.Parse(p);
+            System.Web.HttpContext.Current.Session["PagAct"] = (pagina + 1).ToString();
+            System.Web.HttpContext.Current.Session["Buscar"] = txtBuscar.Text;
+
+            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue;
+            Server.TransferRequest(Request.Url.AbsolutePath, false);
+        }
+
         protected void btnLimpiar_Click(object sender, EventArgs e)
         {
             limpiar();
+            listarPagina();
         }
+
+
 
     }
 }

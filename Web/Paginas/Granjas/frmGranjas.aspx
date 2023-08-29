@@ -20,6 +20,13 @@
                            </div>
 
 
+
+                     <div class="row text-center  ">
+                            <div class=" col-sm-12">
+                                <asp:DropDownList ID="listOrdenarPor" CssClass="lstOrd btn--radius  align-self-center btn--srch " Width="200" AutoPostBack="true" OnSelectedIndexChanged="listOrdenarPor_SelectedIndexChanged" runat="server"></asp:DropDownList>
+                                </div>
+
+
                     <div class="col-12">
 
                         <asp:Button ID="btnVolver" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Visible="false" Text="Volver" OnClick="btnVolver_Click" />
@@ -124,7 +131,7 @@
                                                 ItemStyle-CssClass="GridStl" />
 
                                             <asp:BoundField DataField="Ubicacion"
-                                                HeaderText="Ubicacion"
+                                                HeaderText="Ubicación"
                                                 ItemStyle-CssClass="GridStl" />
                                            
                                             <asp:BoundField DataField="NomDue"
@@ -195,7 +202,11 @@
 
                                         </Columns>
                                     </asp:GridView>
-
+                                      <div class="text-center">
+                            <asp:LinkButton ID="lblPaginaAnt" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
+                            <asp:Label ID="lblPaginaAct" runat="server" Text=""></asp:Label>
+                            <asp:LinkButton ID="lblPaginaSig" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
+                        </div>
 
 
 

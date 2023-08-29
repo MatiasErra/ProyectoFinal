@@ -1,9 +1,11 @@
 ﻿using Clases;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -122,12 +124,16 @@ namespace Web.Paginas.Lotes
             DataView dv = new DataView();
             if (txtBuscarDeposito.Text == "")
             {
-                depositos = Web.listDeps();
+                string value = "";
+                string ord = "";
+
+                depositos = Web.buscarDepositoFiltro(value, ord);
             }
             else
             {
                 string value = txtBuscarDeposito.Text.ToLower();
-                depositos = Web.buscarVarDeps(value);
+                string ord = "";
+                depositos = Web.buscarDepositoFiltro(value, ord);
 
             }
 

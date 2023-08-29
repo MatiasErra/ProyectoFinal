@@ -15,42 +15,8 @@ namespace Persistencia
 
       
 
-        public List<Pesticida> lstPesti()
-        {
-            List<Pesticida> pesticidas = new List<Pesticida>();
 
-            Pesticida pesticida;
-            using (SqlConnection connect = Conexion.Conectar())
-            {
-                try
-                {
-                    SqlCommand cmd = new SqlCommand("LstPesti", connect);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            pesticida = new Pesticida();
-                            pesticida.IdPesticida = int.Parse(reader["idPesti"].ToString());
-                            pesticida.Nombre = reader["nombre"].ToString();
-                            pesticida.Tipo = reader["tipo"].ToString();
-                            pesticida.PH = double.Parse(reader["pH"].ToString());
-                            pesticida.Impacto = reader["impacto"].ToString();
-
-                            pesticidas.Add(pesticida);
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-                    return pesticidas;
-
-                }
-            }
-            return pesticidas;
-        }
-
-        public List<Pesticida> buscarVarPesti(string var)
+        public List<Pesticida> buscarPesticidaFiltro(string buscar, string impact, string ordenar)
         {
             List<Pesticida> resultado = new List<Pesticida>();
             try
@@ -60,10 +26,12 @@ namespace Persistencia
 
                 SqlConnection conect = Conexion.Conectar();
 
-                SqlCommand cmd = new SqlCommand("BuscarVarPesti", conect);
+                SqlCommand cmd = new SqlCommand("BuscarPesticidaFiltro", conect);
 
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@var", var));
+                cmd.Parameters.Add(new SqlParameter("@buscar", buscar));
+                cmd.Parameters.Add(new SqlParameter("@impact", impact));
+                cmd.Parameters.Add(new SqlParameter("@ordenar", ordenar));
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {

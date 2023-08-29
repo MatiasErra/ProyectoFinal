@@ -13,7 +13,7 @@
                     </div>
 
                     <div class="col-12 ">
-                        <asp:TextBox CssClass="d-inline form-control  w-75 m-2 border-0" ID="txtBuscar" runat="server" placeholder="Buscar" MaxLength="100" onkeydown="return(( event.keyCode<91 &&  event.keyCode>64  ) || (event.keyCode>=48) && (event.keyCode<=57)   || event.keyCode==32 || event.keyCode==8   );"></asp:TextBox>
+                        <asp:TextBox CssClass="d-inline form-control  w-50 m-2 border-0" ID="txtBuscar" runat="server" placeholder="Buscar" MaxLength="100" onkeydown="return(( event.keyCode<91 &&  event.keyCode>64  ) || (event.keyCode>=48) && (event.keyCode<=57)   || event.keyCode==32 || event.keyCode==8   );"></asp:TextBox>
 
 
 
@@ -21,12 +21,15 @@
                         <asp:Button CssClass="btnE btn--radius btn--green align-self-center btn--srch" ID="btnBuscar" runat="server" Text="Buscar" OnClick="btnBuscar_Click" />
                     </div>
 
-                    <div class="col-12 ">
-                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
-                            ControlToValidate="txtBuscar"
-                            ValidationExpression="^[a-zA-Z0-9 ]+$"
-                            ErrorMessage="No es un carácter válido" />
-                    </div>
+
+                          <div class="row text-center  ">
+                            <div class=" col-sm-12">
+                                <asp:DropDownList ID="listFiltroTipo" CssClass="lstOrd btn--radius  align-self-center btn--srch" Width="200" AutoPostBack="true" OnSelectedIndexChanged="listFiltroTipo_SelectedIndexChanged" runat="server"></asp:DropDownList>
+                                 <asp:DropDownList ID="listFiltroVen" CssClass="lstOrd btn--radius  align-self-center btn--srch" Width="200" AutoPostBack="true" OnSelectedIndexChanged="listFiltroTipo_SelectedIndexChanged" runat="server"></asp:DropDownList>
+                                <asp:DropDownList ID="listOrdenarPor" CssClass="lstOrd btn--radius  align-self-center btn--srch " Width="200" AutoPostBack="true" OnSelectedIndexChanged="listOrdenarPor_SelectedIndexChanged" runat="server"></asp:DropDownList>
+                                </div>
+
+                        </div>
 
                     <div class="col-12">
                         <asp:Button ID="btnVolver" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Visible="false" Text="Volver" OnClick="btnVolver_Click" />
@@ -34,6 +37,17 @@
                         <button type="button" class="btnE btn--radius btn--blue align-self-center btn--lst" data-bs-toggle="modal" data-bs-target="#altaModal">
                             Añadir Producto
                         </button>
+                    </div>
+
+                    
+                    <div class="col-12 my-2">
+                        <asp:Label CssClass="text centerText " ID="lblMensajes" runat="server"></asp:Label>
+
+                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
+                            ControlToValidate="txtBuscar"
+                            ValidationExpression="^[a-zA-Z0-9 ]+$"
+                            ErrorMessage="No es un carácter válido" />
+
                     </div>
 
                     <!-- Modal Nuevo producto -->
@@ -84,15 +98,6 @@
                     </div>
 
 
-                    <div class="col-12 my-2">
-                        <asp:Label CssClass="text centerText " ID="lblMensajes" runat="server"></asp:Label>
-
-                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
-                            ControlToValidate="txtBuscar"
-                            ValidationExpression="^[a-zA-Z0-9 ]+$"
-                            ErrorMessage="No es un carácter válido" />
-
-                    </div>
 
 
                     <div class="col-md-12 align-self-center text-center">
@@ -189,6 +194,15 @@
                                 </div>
                             </div>
                         </div>
+                             <div class="text-center">
+
+                            <div class="text-center">
+                                <asp:LinkButton ID="lblPaginaAnt" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
+                                <asp:Label ID="lblPaginaAct" runat="server" Text=""></asp:Label>
+                                <asp:LinkButton ID="lblPaginaSig" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

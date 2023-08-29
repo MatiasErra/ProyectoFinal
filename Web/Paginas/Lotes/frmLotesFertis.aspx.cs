@@ -111,12 +111,18 @@ namespace Web.Paginas.Lotes
             if (txtBuscarFertilizante.Text == "")
             {
                 dt.Rows.Add(createRow("Seleccione un Fertilizante", "Seleccione un Fertilizante", dt));
-                fertilizantes = Web.lstFerti();
+                string value = "";
+                string impact = "";
+                string ord = "";
+                fertilizantes = Web.buscarFertilizanteFiltro(value, impact, ord);
+                fertilizantes = Web.buscarFertilizanteFiltro(value,impact,ord);
             }
             else
             {
                 string value = txtBuscarFertilizante.Text.ToLower();
-                fertilizantes = Web.buscarVarFerti(value);
+                string impact = "";
+                string ord = "";
+                fertilizantes = Web.buscarFertilizanteFiltro(value, impact ,ord);
 
             }
             if (fertilizantes.Count == 0)
@@ -395,7 +401,7 @@ namespace Web.Paginas.Lotes
 
             listFertilizante.SelectedValue = "Seleccione un Fertilizante";
             listFertilizante.Enabled = false;
-            listFertilizante.SelectedValue = fer.IdFertilizante.ToString();
+            listFertilizante.SelectedValue = fer.ToString();
             btnSelect.Visible = false;
             btnAltaFertilizante.Visible = false;
             btnCancelar.Visible = true;

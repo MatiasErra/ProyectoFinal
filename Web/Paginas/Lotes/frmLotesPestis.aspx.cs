@@ -1,10 +1,12 @@
 ﻿using Clases;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.Services.Description;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -101,13 +103,20 @@ namespace Web.Paginas.Lotes
 
             if (txtBuscarPesticida.Text == "")
             {
-                dt.Rows.Add(createRow("Seleccione un Fertilizante", "Seleccione un Fertilizante", dt));
-                pesticidas = Web.lstPesti();
+                dt.Rows.Add(createRow("Seleccione un Pesticida", "Seleccione un Pesticida", dt));
+                string value = "";
+                string impact = "";
+                string ordenar = "";
+
+                pesticidas = Web.buscarPesticidaFiltro(value, impact, ordenar);
             }
             else
             {
                 string value = txtBuscarPesticida.Text.ToLower();
-                pesticidas = Web.buscarVarPesti(value);
+                string impact = "";
+                string ordenar = "";
+
+                pesticidas = Web.buscarPesticidaFiltro(value, impact, ordenar);
              
             }
             if (pesticidas.Count == 0)
@@ -163,6 +172,22 @@ namespace Web.Paginas.Lotes
             }
         }
 
+
+        ICollection createDataSourcePesticidaSel(Pesticida pest)
+        {
+            listPesticidaSel.Visible = true;
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+            dt.Columns.Add(new DataColumn("id", typeof(String)));
+
+            dt.Rows.Add(createRow(pest.Nombre.ToString() + " " + pest.Tipo.ToString(), pest.IdPesticida.ToString(), dt));
+            DataView dv = new DataView(dt);
+            return dv;
+        }
+    
         protected void btnAltaPesticida_Click(object sender, EventArgs e)
         {
             guardarDatos();
@@ -377,9 +402,13 @@ namespace Web.Paginas.Lotes
 
             txtCantidadPesti.Text = loteP.Cantidad;
 
-            listPesticida.SelectedValue = "Seleccione un Pesticida";
+            listPesticida.Visible = false;
             listPesticida.Enabled = false;
-            listPesticida.SelectedValue = pesti.IdPesticida.ToString();
+            listPesticidaSel.DataSource = null;
+            listPesticidaSel.DataSource = createDataSourcePesticidaSel(pesti);
+            listPesticidaSel.DataTextField = "nombre";
+            listPesticidaSel.DataValueField = "id";
+            listPesticidaSel.DataBind();
             btnSelect.Visible = false;
             btnAltaPesticida.Visible = false;
             btnCancelar.Visible = true;
@@ -423,6 +452,8 @@ namespace Web.Paginas.Lotes
         {
             System.Web.HttpContext.Current.Session["idPestiSel"] = null;
             txtCantidadPesti.Text = "";
+            listPesticidaSel.Visible= false;
+            listPesticida.Visible = true;
             listPesticida.Enabled = true;
             btnSelect.Visible = true;
             btnAltaPesticida.Visible = true;

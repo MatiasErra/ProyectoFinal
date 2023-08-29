@@ -17,9 +17,19 @@ namespace Web.Paginas.Fertilizantes
         {
             if (!IsPostBack)
             {
-                limpiar();
-                listar();
+                if (System.Web.HttpContext.Current.Session["PagAct"] == null)
+                {
+                    lblPaginaAct.Text = "1";
+                }
+                else
+                {
+                    lblPaginaAct.Text = System.Web.HttpContext.Current.Session["PagAct"].ToString();
+                    System.Web.HttpContext.Current.Session["PagAct"] = null;
+                }
 
+
+             
+                CargarImpacto();
                 if (System.Web.HttpContext.Current.Session["loteFertiDatos"] != null)
                 {
                     btnVolverFerti.Visible = true;
@@ -31,6 +41,29 @@ namespace Web.Paginas.Fertilizantes
                 }
                 System.Web.HttpContext.Current.Session["idFert"] = null;
 
+
+
+                CargarListFiltroTipo();
+                CargarListOrdenarPor();
+
+                if (System.Web.HttpContext.Current.Session["Buscar"] != null)
+                {
+                    txtBuscar.Text = System.Web.HttpContext.Current.Session["Buscar"].ToString();
+                    System.Web.HttpContext.Current.Session["Buscar"] = null;
+                }
+
+                if (System.Web.HttpContext.Current.Session["FiltroTipo"] != null)
+                {
+                    listFiltro.SelectedValue = System.Web.HttpContext.Current.Session["FiltroTipo"].ToString();
+                    System.Web.HttpContext.Current.Session["FiltroTipo"] = null;
+                }
+
+                if (System.Web.HttpContext.Current.Session["OrdenarPor"] != null)
+                {
+                    listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"].ToString();
+                    System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
+                }
+                listarPagina();
 
             }
 
@@ -49,17 +82,13 @@ namespace Web.Paginas.Fertilizantes
 
             txtPH.Text = "";
             lstImpacto.SelectedValue = "Seleccionar tipo de impacto";
+            listOrdenarPor.SelectedValue = "Ordenar por";
+            listFiltro.SelectedValue = "Seleccionar tipo de impacto";
             lstFert.SelectedIndex = -1;
-            listar();
+            lblPaginaAct.Text = "1";
+            listarPagina();
         }
-        private void listar()
-        {
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            lstFert.DataSource = null;
-            lstFert.DataSource = Web.lstFerti();
-            CargarImpacto();
-            lstFert.DataBind();
-        }
+ 
 
         private bool faltanDatos()
         {
@@ -71,7 +100,70 @@ namespace Web.Paginas.Fertilizantes
         }
 
 
+        #region filtro
+        public void CargarListFiltroTipo()
+        {
+            listFiltro.DataSource = null;
+            listFiltro.DataSource = createDataSourceFiltroTipo();
+            listFiltro.DataTextField = "nombre";
+            listFiltro.DataValueField = "id";
+            listFiltro.DataBind();
+        }
 
+        ICollection createDataSourceFiltroTipo()
+        {
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+            dt.Columns.Add(new DataColumn("id", typeof(String)));
+
+            dt.Rows.Add(createRow("Seleccionar tipo de impacto", "Seleccionar tipo de impacto", dt));
+            dt.Rows.Add(createRow("Alto", "Alto", dt));
+            dt.Rows.Add(createRow("Medio", "Medio", dt));
+            dt.Rows.Add(createRow("Bajo", "Bajo", dt));
+
+
+
+
+            DataView dv = new DataView(dt);
+            return dv;
+        }
+
+
+        #endregion
+
+        #region Ordenar
+
+        public void CargarListOrdenarPor()
+        {
+            listOrdenarPor.DataSource = null;
+            listOrdenarPor.DataSource = createDataSourceOrdenarPor();
+            listOrdenarPor.DataTextField = "nombre";
+            listOrdenarPor.DataValueField = "id";
+            listOrdenarPor.DataBind();
+        }
+
+        ICollection createDataSourceOrdenarPor()
+        {
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+            dt.Columns.Add(new DataColumn("id", typeof(String)));
+
+            dt.Rows.Add(createRow("Ordenar por", "Ordenar por", dt));
+            dt.Rows.Add(createRow("Nombre", "Nombre", dt));
+            dt.Rows.Add(createRow("Tipo", "Tipo", dt));
+            dt.Rows.Add(createRow("PH", "PH", dt));
+            dt.Rows.Add(createRow("Impacto", "Impacto", dt));
+
+
+            DataView dv = new DataView(dt);
+            return dv;
+        }
+
+        #endregion
         public void CargarImpacto()
         {
             lstImpacto.DataSource = createDataSource();
@@ -123,7 +215,10 @@ namespace Web.Paginas.Fertilizantes
             }
 
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            List<Fertilizante> lstFer = Web.lstFerti();
+            string b = "";
+            string d = "";
+            string o = "";
+            List<Fertilizante> lstFer = Web.buscarFertilizanteFiltro(b,d,o);
             foreach (Fertilizante fertilizante in lstFer)
             {
                 if (fertilizante.IdFertilizante.Equals(intGuid))
@@ -140,37 +235,7 @@ namespace Web.Paginas.Fertilizantes
         }
 
 
-        private void buscar()
-        {
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            string value = txtBuscar.Text;
-            List<Fertilizante> lstFertil = new List<Fertilizante>();
-            lstFertil = Web.buscarVarFerti(value);
-            lstFert.DataSource = null;
-
-            if (txtBuscar.Text != "")
-            {
-                if (lstFertil.Count > 0)
-                {
-                    lstFert.Visible = true;
-                    lblMensajes.Text = "";
-                    lstFert.DataSource = lstFertil;
-                    lstFert.DataBind();
-                }
-                else
-                {
-                    lstFert.Visible = false;
-                    lblMensajes.Text = "No se encontro ningun admin.";
-
-                }
-            }
-            else
-            {
-                lblMensajes.Text = "Debe poner algun dato en el buscador.";
-            }
-        }
-
-
+     
   
 
 
@@ -187,6 +252,101 @@ namespace Web.Paginas.Fertilizantes
             }
         }
 
+        private int PagMax()
+        {
+
+            return 2;
+        }
+
+        private List<Fertilizante> obtenerFertilizantes()
+        {
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            string buscar = txtBuscar.Text;
+            string impact = "";
+            string ordenar = "";
+            if (listFiltro.SelectedValue != "Seleccionar tipo de impacto")
+            {
+                impact = listFiltro.SelectedValue;
+            }
+
+            if (listOrdenarPor.SelectedValue != "Ordenar por")
+            {
+                ordenar = listOrdenarPor.SelectedValue;
+            }
+
+            List<Fertilizante> fertilizantes = Web.buscarFertilizanteFiltro(buscar, impact, ordenar);
+
+            return fertilizantes;
+        }
+
+        private void listarPagina()
+        {
+            List<Fertilizante> fertilizantes = obtenerFertilizantes();
+            List<Fertilizante> fertilizantesPagina = new List<Fertilizante>();
+            string p = lblPaginaAct.Text.ToString();
+            int pagina = int.Parse(p);
+            int cont = 0;
+            foreach (Fertilizante unFertilizante in fertilizantes)
+            {
+                if (fertilizantesPagina.Count == PagMax())
+                {
+                    break;
+                }
+                if (cont >= ((pagina * PagMax()) - PagMax()))
+                {
+                    fertilizantesPagina.Add(unFertilizante);
+                }
+
+                cont++;
+            }
+
+            if (fertilizantesPagina.Count == 0)
+            {
+                lblMensajes.Text = "No se encontro ningún fertilizante.";
+
+                lblPaginaAnt.Visible = false;
+                lblPaginaAct.Visible = false;
+                lblPaginaSig.Visible = false;
+                lstFert.Visible = false;
+            }
+            else
+            {
+               
+                lblMensajes.Text = "";
+                modificarPagina();
+                lstFert.Visible = true;
+                lstFert.DataSource = null;
+                lstFert.DataSource = fertilizantesPagina;
+                lstFert.DataBind();
+            }
+
+
+        }
+
+        private void modificarPagina()
+        {
+            List<Fertilizante> fertilizantes = obtenerFertilizantes();
+            double pxp = PagMax();
+            double count = fertilizantes.Count;
+            double pags = count / pxp;
+            double cantPags = Math.Ceiling(pags);
+
+            string pagAct = lblPaginaAct.Text.ToString();
+            lblPaginaAct.Visible = true;
+            lblPaginaSig.Visible = true;
+            lblPaginaAnt.Visible = true;
+            if (pagAct == cantPags.ToString())
+            {
+                lblPaginaSig.Visible = false;
+            }
+            if (pagAct == "1")
+            {
+                lblPaginaAnt.Visible = false;
+            }
+            lblPaginaAnt.Text = (int.Parse(pagAct) - 1).ToString();
+            lblPaginaAct.Text = pagAct.ToString();
+            lblPaginaSig.Text = (int.Parse(pagAct) + 1).ToString();
+        }
 
         #endregion
 
@@ -197,11 +357,7 @@ namespace Web.Paginas.Fertilizantes
             Response.Redirect("/Paginas/Lotes/frmLotesFertis");
         }
 
-        protected void btnBuscar_Click(object sender, EventArgs e)
-        {
-            buscar();
-        }
-
+ 
         protected void btnAlta_Click(object sender, EventArgs e)
         {
             
@@ -236,7 +392,7 @@ namespace Web.Paginas.Fertilizantes
                             {
                                 limpiar();
                                 lblMensajes.Text = "Fertilizante dado de alta con éxito.";
-                                listar();
+                                listarPagina();
                             }
 
 
@@ -282,7 +438,7 @@ namespace Web.Paginas.Fertilizantes
                 {
                     limpiar();
                     lblMensajes.Text = "Se ha eliminado el Fertilizante.";
-                    listar();
+                    listarPagina();
                 }
                 else
                 {
@@ -313,9 +469,53 @@ namespace Web.Paginas.Fertilizantes
 
         }
 
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            lblPaginaAct.Text = "1";
+            listarPagina();
+        }
+
+        protected void lblPaginaAnt_Click(object sender, EventArgs e)
+        {
+            string p = lblPaginaAct.Text.ToString();
+            int pagina = int.Parse(p);
+            System.Web.HttpContext.Current.Session["PagAct"] = (pagina - 1).ToString();
+            System.Web.HttpContext.Current.Session["Buscar"] = txtBuscar.Text;
+            System.Web.HttpContext.Current.Session["FiltroTipo"] = listFiltro.SelectedValue;
+
+            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue;
+            Server.TransferRequest(Request.Url.AbsolutePath, false);
+        }
+
+        protected void lblPaginaSig_Click(object sender, EventArgs e)
+        {
+            string p = lblPaginaAct.Text.ToString();
+            int pagina = int.Parse(p);
+            System.Web.HttpContext.Current.Session["PagAct"] = (pagina + 1).ToString();
+            System.Web.HttpContext.Current.Session["Buscar"] = txtBuscar.Text;
+            System.Web.HttpContext.Current.Session["FiltroTipo"] = listFiltro.SelectedValue;
+
+            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue;
+            Server.TransferRequest(Request.Url.AbsolutePath, false);
+        }
+
         protected void btnLimpiar_Click(object sender, EventArgs e)
         {
             limpiar();
+            listarPagina();
+        }
+
+
+        protected void listFiltroTipo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lblPaginaAct.Text = "1";
+            listarPagina();
+        }
+
+        protected void listOrdenarPor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lblPaginaAct.Text = "1";
+            listarPagina();
         }
 
     }

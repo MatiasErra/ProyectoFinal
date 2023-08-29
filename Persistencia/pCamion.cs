@@ -14,43 +14,8 @@ namespace Persistencia
     {
       
 
-        public List<Camion> lstCam()
-        {
-            List<Camion> listaCamion = new List<Camion>();
-
-            Camion camion;
-            using (SqlConnection connect = Conexion.Conectar())
-            {
-                try
-                {
-                    SqlCommand cmd = new SqlCommand("lstCam", connect);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            camion = new Camion();
-                            camion.IdCamion = int.Parse(reader["idCamion"].ToString());
-                            camion.Marca = reader["marca"].ToString();
-                            camion.Modelo = reader["modelo"].ToString();
-                            camion.Carga = double.Parse(reader["carga"].ToString());
-                            camion.Disponible = reader["disponible"].ToString();
-
-                            listaCamion.Add(camion);
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-
-                    return listaCamion;
-
-                }
-            }
-            return listaCamion;
-        }
-
-        public List<Camion> buscarVarCam(string var)
+  
+        public List<Camion> buscarFiltroCam(string buscar, string disp, string ordenar)
         {
             List<Camion> resultado = new List<Camion>();
             try
@@ -60,11 +25,12 @@ namespace Persistencia
 
                 SqlConnection conect = Conexion.Conectar();
 
-                SqlCommand cmd = new SqlCommand("BuscarVarCam", conect);
+                SqlCommand cmd = new SqlCommand("BuscarFiltroCam", conect);
 
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@var", var));
-
+                cmd.Parameters.Add(new SqlParameter("@buscar", buscar));
+                cmd.Parameters.Add(new SqlParameter("@disp", disp));
+                cmd.Parameters.Add(new SqlParameter("@ordenar", ordenar));
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())

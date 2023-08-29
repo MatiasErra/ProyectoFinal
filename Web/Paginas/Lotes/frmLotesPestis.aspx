@@ -74,6 +74,9 @@
 
                     <div class="col-xl-9 col-lg-12">
                         <asp:DropDownList ID="listPesticida" CssClass="input--style-lst" runat="server">
+                             
+                        </asp:DropDownList>
+                           <asp:DropDownList ID="listPesticidaSel" visible ="false" CssClass="input--style-lst" runat="server">
                         </asp:DropDownList>
                     </div>
 

@@ -130,7 +130,9 @@ namespace Web.Paginas.Lotes
         ICollection createDataSourceGranja()
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            List<Granja> granjas = Web.listGranjas();
+            string var1 = "";
+            string var2 = "";
+            List<Granja> granjas = Web.buscarGranjaFiltro(var1, var2);
             DataTable dt = new DataTable();
 
       
@@ -224,8 +226,13 @@ namespace Web.Paginas.Lotes
             dt.Columns.Add(new DataColumn("nombre", typeof(String)));
             dt.Columns.Add(new DataColumn("id", typeof(String)));
 
-         
-                depositos = Web.listDeps();
+
+            string b = "";
+            string d = "";
+            string o = "";
+            
+
+            depositos = Web.buscarDepositoFiltro(b, d);
                 dt.Rows.Add(createRow("Seleccione un Deposito", "Seleccione un Deposito", dt));
           
             

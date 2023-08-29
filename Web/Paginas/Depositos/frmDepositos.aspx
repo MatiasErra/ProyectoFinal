@@ -12,23 +12,22 @@
                     <div class="col-12">
 
 
-                        <asp:TextBox CssClass="d-inline form-control  w-75 m-2 border-0  " ID="txtBuscar" runat="server" placeholder="Buscar" MaxLength="100" onkeydown="return(( event.keyCode<91 &&  event.keyCode>64  ) || (event.keyCode>=48) && (event.keyCode<=57)   || event.keyCode==32 || event.keyCode==8);"></asp:TextBox>
+                        <asp:TextBox CssClass="d-inline form-control  w-50 m-2 border-0  " ID="txtBuscar" runat="server" placeholder="Buscar" MaxLength="100" onkeydown="return(( event.keyCode<91 &&  event.keyCode>64  ) || (event.keyCode>=48) && (event.keyCode<=57)   || event.keyCode==32 || event.keyCode==8);"></asp:TextBox>
                         <asp:Button CssClass="btnE btn--radius btn--green align-self-center btn--srch" ID="btnBuscar" runat="server" Text="Buscar" OnClick="btnBuscar_Click" />
                     </div>
-                    
-                    <div class="col-12">
-                         <asp:Button ID="btnVolver" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Visible="false" Text="Volver" OnClick="btnVolver_Click" />
-                        <asp:Button ID="btnLimpiar" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" />
 
+                    <div class="col-12">
+                        <asp:Button ID="btnVolver" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Visible="false" Text="Volver" OnClick="btnVolver_Click" />
+                        <asp:Button ID="btnLimpiar" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" />
 
 
                         <button type="button" class="btnE btn--radius btn--blue align-self-center btn--lst" data-bs-toggle="modal" data-bs-target="#altaModal">
                             Añadir Depósito
                         </button>
-
+                        <asp:DropDownList ID="listOrdenarPor" CssClass="lstOrd btn--radius  align-self-center btn--srch " Width="200" AutoPostBack="true" OnSelectedIndexChanged="listOrdenarPor_SelectedIndexChanged" runat="server"></asp:DropDownList>
                     </div>
 
-                  
+
                     <div class="modal fade" id="altaModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog modal-none">
                             <div class="modal-content">
@@ -87,15 +86,15 @@
                     </div>
 
 
-              <div class="col-12 my-2">
-                    <asp:Label CssClass="text centerText " ID="lblMensajes" runat="server"></asp:Label>
+                    <div class="col-12 my-2">
+                        <asp:Label CssClass="text centerText " ID="lblMensajes" runat="server"></asp:Label>
 
-                      <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
+                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                             ControlToValidate="txtBuscar"
                             ValidationExpression="^[a-zA-Z0-9 ]+$"
                             ErrorMessage="No es un carácter válido" />
 
-                </div>
+                    </div>
                     <div class="col-md-12 align-self-center">
 
 
@@ -145,10 +144,10 @@
 
                                             </Columns>
                                         </asp:GridView>
-                                    
 
 
-                                         <asp:GridView ID="lstDepositoSelect" Width="100%" SelectedIndex="1" AutoGenerateColumns="false" Visible="false"
+
+                                        <asp:GridView ID="lstDepositoSelect" Width="100%" SelectedIndex="1" AutoGenerateColumns="false" Visible="false"
                                             CssClass="table table-bordered table-condensed table-responsive table-hover"
                                             runat="server">
                                             <AlternatingRowStyle BackColor="White" />
@@ -178,7 +177,7 @@
 
 
 
-                                                             <asp:Button ID="btnSelect" CssClass="btnE btn--radius btn--blue" runat="server" Text="Seleccionar"  OnClick="btnSelected_Click" />
+                                                        <asp:Button ID="btnSelect" CssClass="btnE btn--radius btn--blue" runat="server" Text="Seleccionar" OnClick="btnSelected_Click" />
                                                         <asp:Button ID="btnBaja" CssClass="btnE btn--radius btn--red" runat="server" Text="Baja" OnClientClick="return confirm('¿Desea eliminar este Deposito?')" OnClick="btnBaja_Click" />
                                                         <asp:Button ID="btmModificar" CssClass="btnE btn--radius btn--yellow" runat="server" Text="Modificar" OnClick="btnModificar_Click" />
 
@@ -193,7 +192,14 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="text-center">
 
+                            <div class="text-center">
+                                <asp:LinkButton ID="lblPaginaAnt" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
+                                <asp:Label ID="lblPaginaAct" runat="server" Text=""></asp:Label>
+                                <asp:LinkButton ID="lblPaginaSig" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
+                            </div>
+                        </div>
 
 
 

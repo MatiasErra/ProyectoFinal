@@ -97,13 +97,18 @@ namespace Web.Paginas.Granjas
 
             if (txtBuscarDueño.Text == "")
             {
-                clientes = Web.lstCli();
+                string b = "";
+                string d = "";
+                string o = "";
+                clientes = Web.buscarCliFiltro(b, d);
+
                 dt.Rows.Add(createRow("Seleccione un Dueño", "Seleccione un Dueño", dt));
             }
             else
             {
-                string value = txtBuscarDueño.Text.ToLower();
-                clientes = Web.buscarVarCli(value);
+                string buscar = txtBuscarDueño.Text.ToLower();
+                string ordenar = "";
+                clientes = Web.buscarCliFiltro(buscar, ordenar);
                
             }
             if (clientes.Count == 0)

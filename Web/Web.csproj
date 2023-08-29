@@ -128,6 +128,8 @@
     <Content Include="Paginas\Camioneros\modCamionero.aspx" />
     <Content Include="Paginas\Camiones\frmCamiones.aspx" />
     <Content Include="Paginas\Camiones\modCamiones.aspx" />
+    <Content Include="Paginas\Catalogo\frmCatalogo.aspx" />
+    <Content Include="Paginas\Catalogo\frmVerProducto.aspx" />
     <Content Include="Paginas\Clientes\frmListarClientes.aspx" />
     <Content Include="Paginas\Clientes\iniciarSesion.aspx" />
     <Content Include="Paginas\Clientes\RegCliente.aspx" />
@@ -142,6 +144,8 @@
     <Content Include="Paginas\Lotes\frmLotesFertis.aspx" />
     <Content Include="Paginas\Lotes\frmLotesPestis.aspx" />
     <Content Include="Paginas\Lotes\modLote.aspx" />
+    <Content Include="Paginas\Nav\frmInicio.aspx" />
+    <Content Include="Paginas\Nav\frmQuienesSomos.aspx" />
     <Content Include="Paginas\Pesticidas\frmPesticidas.aspx" />
     <Content Include="Paginas\Pesticidas\modPest.aspx" />
     <Content Include="Paginas\Productos\frmProductos.aspx" />
@@ -302,6 +306,20 @@
     <Compile Include="Paginas\Camiones\modCamiones.aspx.designer.cs">
       <DependentUpon>modCamiones.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Paginas\Catalogo\frmCatalogo.aspx.cs">
+      <DependentUpon>frmCatalogo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Catalogo\frmCatalogo.aspx.designer.cs">
+      <DependentUpon>frmCatalogo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Catalogo\frmVerProducto.aspx.cs">
+      <DependentUpon>frmVerProducto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Catalogo\frmVerProducto.aspx.designer.cs">
+      <DependentUpon>frmVerProducto.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Paginas\Clientes\frmListarClientes.aspx.cs">
       <DependentUpon>frmListarClientes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -400,6 +418,20 @@
     </Compile>
     <Compile Include="Paginas\Lotes\modLote.aspx.designer.cs">
       <DependentUpon>modLote.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Nav\frmInicio.aspx.cs">
+      <DependentUpon>frmInicio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Nav\frmInicio.aspx.designer.cs">
+      <DependentUpon>frmInicio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Nav\frmQuienesSomos.aspx.cs">
+      <DependentUpon>frmQuienesSomos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Nav\frmQuienesSomos.aspx.designer.cs">
+      <DependentUpon>frmQuienesSomos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Pesticidas\frmPesticidas.aspx.cs">
       <DependentUpon>frmPesticidas.aspx</DependentUpon>

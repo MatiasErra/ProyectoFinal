@@ -56,20 +56,15 @@ namespace Controladoras
             return id;
         }
 
-        public List<Admin> lstAdmin()
+   
+
+        public List<Admin> buscarAdminFiltro(string buscar, string varEst, string varAdm, string ordenar)
         {
             ControladoraP inst = ControladoraP.obtenerInstancia();
-            List<Admin> lst = inst.lstAdmin();
+            List<Admin> lst = inst.buscarAdminFiltro(buscar, varEst, varAdm, ordenar);
             return lst;
         }
 
-
-        public List<Admin> buscarVarAdmin(string var)
-        {
-            ControladoraP inst = ControladoraP.obtenerInstancia();
-            List<Admin> lst = inst.buscarVarAdmin(var);
-            return lst;
-        }
 
 
         public Admin buscarAdm(int id)
@@ -139,13 +134,6 @@ namespace Controladoras
 
 
 
-        public List<Cliente> lstCli()
-        {
-            ControladoraP inst = ControladoraP.obtenerInstancia();
-            List<Cliente> lst = inst.lstCliente();
-            return lst;
-        }
-
         public int iniciarSesionCli(string user, string pass)
         {
             ControladoraP ins = ControladoraP.obtenerInstancia();
@@ -155,10 +143,10 @@ namespace Controladoras
 
 
 
-        public List<Cliente> buscarVarCli(string var)
+        public List<Cliente> buscarCliFiltro(string buscar, string ordenar)
         {
             ControladoraP inst = ControladoraP.obtenerInstancia();
-            List<Cliente> lst = inst.buscarVarCli(var);
+            List<Cliente> lst = inst.buscarCliFiltro(buscar,ordenar);
             return lst;
         }
 
@@ -220,17 +208,11 @@ namespace Controladoras
 
         #region Camioneros
 
-        public List<Camionero> listCamionero()
+       
+        public List<Camionero> buscarCamioneroFiltro(string buscar, string disp, string ordenar)
         {
             ControladoraP inst = ControladoraP.obtenerInstancia();
-
-            return inst.listCamionero();
-        }
-
-        public List<Camionero> buscarVarCamionero(string var)
-        {
-            ControladoraP inst = ControladoraP.obtenerInstancia();
-            List<Camionero> lst = inst.buscarVarCamionero(var);
+            List<Camionero> lst = inst.buscarCamioneroFiltro( buscar,  disp, ordenar);
             return lst;
         }
 

@@ -31,17 +31,11 @@ namespace Controladoras
 
   
 
-        public List<Deposito> listDeps()
+       
+        public List<Deposito> buscarDepositoFiltro(string buscar, string ordenar)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Deposito> lst = inst.listDeps();
-            return lst;
-        }
-
-        public List<Deposito> buscarVarDeps(string var)
-        {
-            ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Deposito> lst = inst.buscarVarDeps(var);
+            List<Deposito> lst = inst.buscarDepositoFiltro(buscar, ordenar);
             return lst;
         }
 
@@ -97,17 +91,11 @@ namespace Controladoras
         #region Granjas
 
 
-        public List<Granja> listGranjas()
+ 
+        public List<Granja> buscarGranjaFiltro(string buscar, string orden)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Granja> lst = inst.listGranjas();
-            return lst;
-        }
-
-        public List<Granja> buscarVarGranjas(string var)
-        {
-            ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Granja> lst = inst.buscarVarGranjas(var);
+            List<Granja> lst = inst.buscarGranjaFiltro(buscar, orden);
             return lst;
         }
 
@@ -162,7 +150,12 @@ namespace Controladoras
 
         #region Productos
 
-
+        public List<Producto> buscarProductoFiltro(string buscar, string tipo, string tipoVen, string ordenar)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Producto> lst = inst.buscarProductoFiltro(buscar, tipo, tipoVen, ordenar);
+            return lst;
+        }
         public List<Producto> listProductos()
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
@@ -170,12 +163,7 @@ namespace Controladoras
             return lst;
         }
 
-        public List<Producto> buscarVarProductos(string var)
-        {
-            ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Producto> lst = inst.buscarVarProductos(var);
-            return lst;
-        }
+
 
         public Producto buscarProducto(int id)
         {
@@ -230,17 +218,12 @@ namespace Controladoras
 
     
 
-        public List<Pesticida> lstPesti()
-        {
-            ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Pesticida> lst = inst.lstPesti();
-            return lst;
-        }
+      
 
-        public List<Pesticida> buscarVarPesti(string var)
+        public List<Pesticida> buscarPesticidaFiltro(string buscar, string impact, string ordenar)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Pesticida> lst = inst.buscarVarPesti(var);
+            List<Pesticida> lst = inst.buscarPesticidaFiltro(buscar, impact, ordenar);
             return lst;
         }
 
@@ -300,17 +283,10 @@ namespace Controladoras
 
 
 
-        public List<Fertilizante> lstFerti()
+        public List<Fertilizante> buscarFertilizanteFiltro(string buscar, string impact, string ordenar)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Fertilizante> lst = inst.lstFerti();
-            return lst;
-        }
-
-        public List<Fertilizante> buscarVarFerti(string var)
-        {
-            ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Fertilizante> lst = inst.buscarVarFerti(var);
+            List<Fertilizante> lst = inst.buscarFertilizanteFiltro(buscar, impact, ordenar);
             return lst;
         }
 
@@ -368,17 +344,11 @@ namespace Controladoras
 
         #region Lotes
 
-        public List<string[]> listLotes()
+     
+        public List<string[]> buscarFiltrarLotes(string buscar, string ordenar)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<string[]> lst = inst.listLotes();
-            return lst;
-        }
-
-        public List<string[]> buscarVarLotes(string var)
-        {
-            ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<string[]> lst = inst.buscarVarLotes(var);
+            List<string[]> lst = inst.buscarFiltrarLotes(buscar, ordenar);
             return lst;
         }
 
@@ -548,17 +518,11 @@ namespace Controladoras
         #region Camiones
      
 
-        public List<Camion> lstCam()
+    
+        public List<Camion> buscarFiltroCam(string buscar, string disp, string ordenar)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Camion> lst = inst.lstCam();
-            return lst;
-        }
-
-        public List<Camion> buscarVarCam(string var)
-        {
-            ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Camion> lst = inst.buscarVarCam(var);
+            List<Camion> lst = inst.buscarFiltroCam(buscar, disp, ordenar);
             return lst;
         }
 

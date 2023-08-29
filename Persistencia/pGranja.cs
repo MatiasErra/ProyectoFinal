@@ -13,42 +13,9 @@ namespace Persistencia
     class pGranja
     {
    
-        public List<Granja> listGranjas()
-        {
-            List<Granja> resultado = new List<Granja>();
 
-            Granja granja;
-            using (SqlConnection connect = Conexion.Conectar())
-            {
-                try
-                {
-                    SqlCommand cmd = new SqlCommand("LstGranjas", connect);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            granja = new Granja();
-                            granja.IdGranja = int.Parse(reader["idGranja"].ToString());
-                            granja.Nombre = reader["nombre"].ToString();
-                            granja.Ubicacion = reader["ubicacion"].ToString();
-                            granja.IdCliente = int.Parse(reader["idCliente"].ToString());
 
-                            resultado.Add(granja);
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-
-                    return resultado;
-
-                }
-            }
-            return resultado;
-        }
-
-        public List<Granja> buscarVarGranjas(string var)
+        public List<Granja> buscarGranjaFiltro(string buscar, string orden)
         {
             List<Granja> resultado = new List<Granja>();
             try
@@ -58,11 +25,11 @@ namespace Persistencia
 
                 SqlConnection conect = Conexion.Conectar();
 
-                SqlCommand cmd = new SqlCommand("BuscarVarGranja", conect);
+                SqlCommand cmd = new SqlCommand("BuscarGranjaFiltro", conect);
 
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@var", var));
-
+                cmd.Parameters.Add(new SqlParameter("@buscar", buscar));
+                cmd.Parameters.Add(new SqlParameter("@orden", orden));
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())

@@ -24,8 +24,18 @@ namespace Web.Paginas.Camioneros
         {
             if (!IsPostBack)
             {
-                limpiar();
-                listar();
+                if (System.Web.HttpContext.Current.Session["PagAct"] == null)
+                {
+                    lblPaginaAct.Text = "1";
+                }
+                else
+                {
+                    lblPaginaAct.Text = System.Web.HttpContext.Current.Session["PagAct"].ToString();
+                    System.Web.HttpContext.Current.Session["PagAct"] = null;
+                }
+
+                cargarDisponible();
+
                 if (System.Web.HttpContext.Current.Session["idCamioneroMod"] != null)
                 {
                     lblMensajes.Text = "Camionero modificado con éxito.";
@@ -33,18 +43,36 @@ namespace Web.Paginas.Camioneros
                 }
                 System.Web.HttpContext.Current.Session["idCamioneroSel"] = null;
 
+                CargarListFiltroTipo();
+                CargarListOrdenarPor();
+
+
+                if (System.Web.HttpContext.Current.Session["Buscar"] != null)
+                {
+                    txtBuscar.Text = System.Web.HttpContext.Current.Session["Buscar"].ToString();
+                    System.Web.HttpContext.Current.Session["Buscar"] = null;
+                }
+
+                if (System.Web.HttpContext.Current.Session["FiltroTipo"] != null)
+                {
+                    listFiltroTipo.SelectedValue = System.Web.HttpContext.Current.Session["FiltroTipo"].ToString();
+                    System.Web.HttpContext.Current.Session["FiltroTipo"] = null;
+                }
+
+
+                if (System.Web.HttpContext.Current.Session["OrdenarPor"] != null)
+                {
+                    listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"].ToString();
+                    System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
+
+                }
+           
+                listarPagina();
             }
         }
 
-        private void listar()
-        {
-            lstCamionero.Visible = true;
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            lstCamionero.DataSource = null;
-            lstCamionero.DataSource = Web.listCamionero();
-            lstCamionero.DataBind();
-            cargarDisponible();
-        }
+        #region Utilidad
+
 
         private bool faltanDatos()
         {
@@ -125,7 +153,7 @@ namespace Web.Paginas.Camioneros
             lblMensajes.Text = "";
             txtId.Text = "";
             txtBuscar.Text = "";
-
+           
             txtNombre.Text = "";
             txtApell.Text = "";
             txtEmail.Text = "";
@@ -133,9 +161,11 @@ namespace Web.Paginas.Camioneros
             txtFchNac.Text = "";
             txtCedula.Text = "";
             lstDisponible.SelectedValue = "Seleccionar disponibilidad";
+            listFiltroTipo.SelectedValue = "Seleccionar disponibilidad";
+            listOrdenarPor.SelectedValue = "Ordenar por";
             txtFchManejo.Text = "";
             lstCamionero.SelectedIndex = -1;
-            listar();
+            listarPagina();
         }
 
         static int GenerateUniqueId()
@@ -166,41 +196,214 @@ namespace Web.Paginas.Camioneros
             else return GenerateUniqueId();
         }
 
-        private void buscar()
-        {
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            string value = txtBuscar.Text;
   
-            List<Camionero> camioneros = new List<Camionero>();
-            camioneros = Web.buscarVarCamionero(value);
-            lstCamionero.DataSource = null;
+        private int PagMax()
+        {
 
-            if (txtBuscar.Text != "")
+            return 5;
+        }
+
+
+
+        private void listarPagina()
+        {
+            List<Camionero> camioneros = obtenerCamioneros();
+            List<Camionero> camioneroPagina = new List<Camionero>();
+            string p = lblPaginaAct.Text.ToString();
+            int pagina = int.Parse(p);
+            int cont = 0;
+            foreach (Camionero unCamionero in camioneros)
             {
+                if (camioneroPagina.Count == PagMax())
+                {
+                    break;
+                }
+                if (cont >= ((pagina * PagMax()) - PagMax()))
+                {
+                    camioneroPagina.Add(unCamionero);
+                }
 
-                if (camioneros.Count > 0)
-                {
-                    lstCamionero.Visible = true;
-                    lblMensajes.Text = "";
-                    lstCamionero.DataSource = camioneros;
-                    lstCamionero.DataBind();
-                }
-                else
-                {
-                    lstCamionero.Visible = false;
-                    lblMensajes.Text = "No se encontro ningun camionero.";
-                }
+                cont++;
+            }
+
+            if (camioneroPagina.Count == 0)
+            {
+                lblMensajes.Text = "No se encontro ningún Camionero.";
+
+                lblPaginaAnt.Visible = false;
+                lblPaginaAct.Visible = false;
+                lblPaginaSig.Visible = false;
+                lstCamionero.Visible = false;
             }
             else
             {
-                lblMensajes.Text = "Debe poner algun dato en el buscador.";
-                listar();
+
+                lblMensajes.Text = "";
+                modificarPagina();
+                lstCamionero.Visible = true;
+                lstCamionero.DataSource = null;
+                lstCamionero.DataSource = camioneroPagina;
+                lstCamionero.DataBind();
             }
+
         }
+        private void modificarPagina()
+        {
+            List<Camionero> admins = obtenerCamioneros();
+            double pxp = PagMax();
+            double count = admins.Count;
+            double pags = count / pxp;
+            double cantPags = Math.Ceiling(pags);
+
+            string pagAct = lblPaginaAct.Text.ToString();
+
+            lblPaginaSig.Visible = true;
+            lblPaginaAct.Visible = true;
+            lblPaginaAnt.Visible = true;
+            if (pagAct == cantPags.ToString())
+            {
+                lblPaginaSig.Visible = false;
+            }
+            if (pagAct == "1")
+            {
+                lblPaginaAnt.Visible = false;
+            }
+            lblPaginaAnt.Text = (int.Parse(pagAct) - 1).ToString();
+            lblPaginaAct.Text = pagAct.ToString();
+            lblPaginaSig.Text = (int.Parse(pagAct) + 1).ToString();
+        }
+
+
+        private List<Camionero> obtenerCamioneros()
+        {
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            string buscar = txtBuscar.Text;
+            string disp = "";
+         
+            string ordenar = "";
+            if (listFiltroTipo.SelectedValue != "Seleccionar disponibilidad")
+            {
+                disp = listFiltroTipo.SelectedValue;
+            }
+
+            if (listOrdenarPor.SelectedValue != "Ordenar por")
+            {
+                ordenar = listOrdenarPor.SelectedValue;
+            }
+
+            List<Camionero> camioneros = Web.buscarCamioneroFiltro(buscar, disp,ordenar);
+
+ 
+            return camioneros;
+        }
+        #region Filtro
+
+        public void CargarListFiltroTipo()
+        {
+            listFiltroTipo.DataSource = null;
+            listFiltroTipo.DataSource = createDataSourceFiltroTipoHab();
+            listFiltroTipo.DataTextField = "nombre";
+            listFiltroTipo.DataValueField = "id";
+            listFiltroTipo.DataBind();
+        }
+
+        ICollection createDataSourceFiltroTipoHab()
+        {
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+            dt.Columns.Add(new DataColumn("id", typeof(String)));
+            dt.Rows.Add(createRow("Seleccionar disponibilidad", "Seleccionar disponibilidad", dt));
+            dt.Rows.Add(createRow("Disponible", "Disponible", dt));
+            dt.Rows.Add(createRow("No disponible", "No disponible", dt));
+
+
+
+
+            DataView dv = new DataView(dt);
+            return dv;
+        }
+
+        #endregion
+
+        #region ordenar
+        public void CargarListOrdenarPor()
+        {
+            listOrdenarPor.DataSource = null;
+            listOrdenarPor.DataSource = createDataSourceOrdenarPor();
+            listOrdenarPor.DataTextField = "nombre";
+            listOrdenarPor.DataValueField = "id";
+            listOrdenarPor.DataBind();
+        }
+
+        ICollection createDataSourceOrdenarPor()
+        {
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+            dt.Columns.Add(new DataColumn("id", typeof(String)));
+
+            dt.Rows.Add(createRow("Ordenar por", "Ordenar por", dt));
+            dt.Rows.Add(createRow("Nombre", "Nombre", dt));
+            dt.Rows.Add(createRow("Apellido", "Apellido", dt));
+            dt.Rows.Add(createRow("E-Mail", "E-Mail", dt));
+            dt.Rows.Add(createRow("Teléfono", "Teléfono", dt));
+            dt.Rows.Add(createRow("Fecha de Nacimiento", "Fecha de Nacimiento", dt));
+            dt.Rows.Add(createRow("Cedula", "Cedula", dt));
+            dt.Rows.Add(createRow("Vencimiento de libreta", "Vencimiento de libreta", dt));
+            dt.Rows.Add(createRow("Disponible", "Disponible", dt));
+           
+            DataView dv = new DataView(dt);
+            return dv;
+        }
+
+        #endregion
+
+
+
+        #endregion
+
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            buscar();
+            lblPaginaAct.Text = "1";
+            listarPagina();
+        }
+        protected void listFiltroTipo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lblPaginaAct.Text = "1";
+            listarPagina();
+        }
+
+        protected void listOrdenarPor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lblPaginaAct.Text = "1";
+            listarPagina();
+        }
+        protected void lblPaginaAnt_Click(object sender, EventArgs e)
+        {
+            string p = lblPaginaAct.Text.ToString();
+            int pagina = int.Parse(p);
+            System.Web.HttpContext.Current.Session["PagAct"] = (pagina - 1).ToString();
+            System.Web.HttpContext.Current.Session["Buscar"] = txtBuscar.Text;
+            System.Web.HttpContext.Current.Session["FiltroTipo"] = listFiltroTipo.SelectedValue;
+
+            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue;
+            Server.TransferRequest(Request.Url.AbsolutePath, false);
+        }
+
+        protected void lblPaginaSig_Click(object sender, EventArgs e)
+        {
+            string p = lblPaginaAct.Text.ToString();
+            int pagina = int.Parse(p);
+            System.Web.HttpContext.Current.Session["PagAct"] = (pagina + 1).ToString();
+            System.Web.HttpContext.Current.Session["Buscar"] = txtBuscar.Text;
+            System.Web.HttpContext.Current.Session["FiltroTipo"] = listFiltroTipo.SelectedValue;
+     
+            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue;
+            Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
 
         protected void btnAlta_Click(object sender, EventArgs e)
@@ -229,7 +432,7 @@ namespace Web.Paginas.Camioneros
                             {
                                 limpiar();
                                 lblMensajes.Text = "Camionero dado de alta con éxito.";
-                                listar();
+                                listarPagina();
                             }
                             else
                             {
@@ -276,7 +479,7 @@ namespace Web.Paginas.Camioneros
                         limpiar();
                         lblMensajes.Text = "Se ha borrado el camionero.";
                         txtBuscar.Text = "";
-                        listar();
+                    listarPagina();
                     }
                     else
                     {

@@ -26,13 +26,10 @@ namespace Persistencia
 
         #region Depositos
 
-        public List<Deposito> listDeps()
+       
+        public List<Deposito> buscarDepositoFiltro(string buscar, string ordenar)
         {
-            return new pDeposito().listDeps();
-        }
-        public List<Deposito> buscarVarDeps(string var)
-        {
-            return new pDeposito().buscarVarDeps(var);
+            return new pDeposito().buscarDepositoFiltro( buscar, ordenar);
         }
 
         public Deposito buscarDeps(int id)
@@ -60,13 +57,10 @@ namespace Persistencia
         #region Granjas
 
 
-        public List<Granja> listGranjas()
+    
+        public List<Granja> buscarGranjaFiltro(string buscar, string orden)
         {
-            return new pGranja().listGranjas();
-        }
-        public List<Granja> buscarVarGranjas(string var)
-        {
-            return new pGranja().buscarVarGranjas(var);
+            return new pGranja().buscarGranjaFiltro(buscar, orden);
         }
 
         public Granja buscarGranja(int id)
@@ -95,13 +89,10 @@ namespace Persistencia
 
    
 
-        public List<Camion> lstCam()
+
+        public List<Camion> buscarFiltroCam(string buscar, string disp, string ordenar)
         {
-            return new pCamion().lstCam();
-        }
-        public List<Camion> buscarVarCam(string var)
-        {
-            return new pCamion().buscarVarCam(var);
+            return new pCamion().buscarFiltroCam(buscar, disp, ordenar);
         }
 
         public Camion buscarCam(int id)
@@ -128,14 +119,16 @@ namespace Persistencia
 
         #region Productos
 
-       
+        public List<Producto> buscarProductoFiltro(string buscar, string tipo, string tipoVen, string ordenar)
+        {
+            return new pProducto().buscarProductoFiltro(buscar, tipo, tipoVen, ordenar);
+        }
+
+
+
         public List<Producto> listProductos()
         {
             return new pProducto().listProductos();
-        }
-        public List<Producto> buscarVarProductos(string var)
-        {
-            return new pProducto().buscarVarProductos(var);
         }
 
         public Producto buscarProducto(int id)
@@ -162,13 +155,10 @@ namespace Persistencia
 
         #region Pesticida
 
-        public List<Pesticida> lstPesti()
+       
+        public List<Pesticida> buscarPesticidaFiltro(string buscar, string impact, string ordenar)
         {
-            return new pPesticida().lstPesti();
-        }
-        public List<Pesticida> buscarVarPesti(string var)
-        {
-            return new pPesticida().buscarVarPesti(var);
+            return new pPesticida().buscarPesticidaFiltro(buscar, impact, ordenar);
         }
 
         public Pesticida buscarPesti(int id)
@@ -196,13 +186,9 @@ namespace Persistencia
         #region Fertilizantes
 
 
-        public List<Fertilizante> lstFerti()
+        public List<Fertilizante> buscarFertilizanteFiltro(string buscar, string impact, string ordenar)
         {
-            return new pFertilizante().lstFerti();
-        }
-        public List<Fertilizante> buscarVarFerti(string var)
-        {
-            return new pFertilizante().buscarVarFerti(var);
+            return new pFertilizante().buscarFertilizanteFiltro(buscar, impact,ordenar);
         }
 
         public Fertilizante buscarFerti(int id)
@@ -229,14 +215,10 @@ namespace Persistencia
 
         #region Lotes
 
-        public List<string[]> listLotes()
+  
+        public List<string[]> buscarFiltrarLotes(string buscar, string ordenar)
         {
-            return new pLote().listLotes();
-        } 
-
-        public List<string[]> buscarVarLotes(string var)
-        {
-            return new pLote().buscarVarLotes(var);
+            return new pLote().buscarFiltrarLotes(buscar, ordenar);
         }
 
         public string[] buscarLote(string nombreGranja, string nombreProducto, string fchProduccion)

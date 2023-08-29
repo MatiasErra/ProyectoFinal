@@ -18,8 +18,20 @@ namespace Web.Paginas.Pesticidas
         {
             if (!IsPostBack)
             {
-                limpiar();
-                listar();
+                if (System.Web.HttpContext.Current.Session["PagAct"] == null)
+                {
+                    lblPaginaAct.Text = "1";
+                }
+                else
+                {
+                    lblPaginaAct.Text = System.Web.HttpContext.Current.Session["PagAct"].ToString();
+                    System.Web.HttpContext.Current.Session["PagAct"] = null;
+                }
+
+
+       
+                CargarImpacto();
+
                 if (System.Web.HttpContext.Current.Session["lotePestiDatos"] != null)
                 {
                     btnVolverPesti.Visible = true;
@@ -30,6 +42,34 @@ namespace Web.Paginas.Pesticidas
                     System.Web.HttpContext.Current.Session["PestiMod"] = null;
                 }
                 System.Web.HttpContext.Current.Session["idPest"] = null;
+
+                CargarListFiltroTipo();
+                CargarListOrdenarPor();
+
+                if (System.Web.HttpContext.Current.Session["Buscar"] != null)
+                {
+                    txtBuscar.Text = System.Web.HttpContext.Current.Session["Buscar"].ToString();
+                    System.Web.HttpContext.Current.Session["Buscar"] = null;
+                }
+
+                if (System.Web.HttpContext.Current.Session["FiltroTipo"] != null)
+                {
+                    listFiltro.SelectedValue = System.Web.HttpContext.Current.Session["FiltroTipo"].ToString();
+                    System.Web.HttpContext.Current.Session["FiltroTipo"] = null;
+                }
+
+                if (System.Web.HttpContext.Current.Session["OrdenarPor"] != null)
+                {
+                    listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"].ToString();
+                    System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
+                }
+
+
+
+
+                listarPagina();
+
+
             }
         }
 
@@ -46,18 +86,14 @@ namespace Web.Paginas.Pesticidas
 
             txtPH.Text = "";
             lstImpacto.SelectedValue = "Seleccionar tipo de impacto";
+            listOrdenarPor.SelectedValue = "Ordenar por";
+            listFiltro.SelectedValue = "Seleccionar tipo de impacto";
             lstPest.SelectedIndex = -1;
-            listar();
-        }
-        private void listar()
-        {
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            lstPest.DataSource = null;
-            lstPest.DataSource = Web.lstPesti();
-            CargarImpacto();
-            lstPest.DataBind();
-        }
+            lblPaginaAct.Text = "1";
 
+            listarPagina();
+        }
+   
         private bool faltanDatos()
         {
             if (txtNombre.Text == "" || txtTipo.Text == "" || txtPH.Text == "")
@@ -67,7 +103,70 @@ namespace Web.Paginas.Pesticidas
             else { return false; }
         }
 
+        #region filtro
+        public void CargarListFiltroTipo()
+        {
+            listFiltro.DataSource = null;
+            listFiltro.DataSource = createDataSourceFiltroTipo();
+            listFiltro.DataTextField = "nombre";
+            listFiltro.DataValueField = "id";
+            listFiltro.DataBind();
+        }
 
+        ICollection createDataSourceFiltroTipo()
+        {
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+            dt.Columns.Add(new DataColumn("id", typeof(String)));
+
+            dt.Rows.Add(createRow("Seleccionar tipo de impacto", "Seleccionar tipo de impacto", dt));
+            dt.Rows.Add(createRow("Alto", "Alto", dt));
+            dt.Rows.Add(createRow("Medio", "Medio", dt));
+            dt.Rows.Add(createRow("Bajo", "Bajo", dt));
+
+
+
+
+            DataView dv = new DataView(dt);
+            return dv;
+        }
+
+
+        #endregion
+
+        #region Ordenar
+
+        public void CargarListOrdenarPor()
+        {
+            listOrdenarPor.DataSource = null;
+            listOrdenarPor.DataSource = createDataSourceOrdenarPor();
+            listOrdenarPor.DataTextField = "nombre";
+            listOrdenarPor.DataValueField = "id";
+            listOrdenarPor.DataBind();
+        }
+
+        ICollection createDataSourceOrdenarPor()
+        {
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+            dt.Columns.Add(new DataColumn("id", typeof(String)));
+
+            dt.Rows.Add(createRow("Ordenar por", "Ordenar por", dt));
+            dt.Rows.Add(createRow("Nombre", "Nombre", dt));
+            dt.Rows.Add(createRow("Tipo", "Tipo", dt));
+            dt.Rows.Add(createRow("PH", "PH", dt));
+            dt.Rows.Add(createRow("Impacto", "Impacto", dt));
+
+
+            DataView dv = new DataView(dt);
+            return dv;
+        }
+
+        #endregion
 
         public void CargarImpacto()
         {
@@ -120,7 +219,12 @@ namespace Web.Paginas.Pesticidas
             }
 
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            List<Pesticida> lstPest = Web.lstPesti();
+            string b = "";
+            string d = "";
+            string o = "";
+       
+
+            List<Pesticida> lstPest = Web.buscarPesticidaFiltro(b,d,o);
             foreach (Pesticida pesticida in lstPest)
             {
                 if (pesticida.IdPesticida.Equals(intGuid))
@@ -137,36 +241,7 @@ namespace Web.Paginas.Pesticidas
         }
 
 
-        private void buscar()
-        {
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            string value = txtBuscar.Text;
-            List<Pesticida> lstpesti = new List<Pesticida>();
-            lstpesti = Web.buscarVarPesti(value);
-            lstPest.DataSource = null;
-
-            if (txtBuscar.Text != "")
-            {
-                if (lstpesti.Count > 0)
-                {
-                    lstPest.Visible = true;
-                    lblMensajes.Text = "";
-                    lstPest.DataSource = lstpesti;
-                    lstPest.DataBind();
-                }
-                else
-                {
-                    lstPest.Visible = false;
-                    lblMensajes.Text = "No se encontro ningun pesticida.";
-
-                }
-            }
-            else
-            {
-                lblMensajes.Text = "Debe poner algun dato en el buscador.";
-            }
-        }
-
+   
 
 
         private bool phValid()
@@ -183,6 +258,103 @@ namespace Web.Paginas.Pesticidas
         }
 
 
+        private int PagMax()
+        {
+   
+            return 2;
+        }
+
+        private List<Pesticida> obtenerPesticidas()
+        {
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            string buscar = txtBuscar.Text;
+            string impact = "";
+            string ordenar = "";
+            if (listFiltro.SelectedValue != "Seleccionar tipo de impacto")
+            {
+                impact = listFiltro.SelectedValue;
+            }
+
+            if (listOrdenarPor.SelectedValue != "Ordenar por")
+            {
+                ordenar = listOrdenarPor.SelectedValue;
+            }
+
+            List<Pesticida> pesticidas = Web.buscarPesticidaFiltro(buscar, impact, ordenar);
+        
+            return pesticidas;
+        }
+
+        private void listarPagina()
+        {
+            List<Pesticida> pesticidas = obtenerPesticidas();
+            List<Pesticida> pesticidasPagina = new List<Pesticida>();
+            string p = lblPaginaAct.Text.ToString();
+            int pagina = int.Parse(p);
+            int cont = 0;
+            foreach (Pesticida unPesticida in pesticidas)
+            {
+                if (pesticidasPagina.Count == PagMax())
+                {
+                    break;
+                }
+                if (cont >= ((pagina * PagMax()) - PagMax()))
+                {
+                    pesticidasPagina.Add(unPesticida);
+                }
+
+                cont++;
+            }
+
+            if (pesticidasPagina.Count == 0)
+            {
+                lblMensajes.Text = "No se encontro ningún pesticida.";
+
+                lblPaginaAnt.Visible = false;
+                lblPaginaAct.Visible = false;
+                lblPaginaSig.Visible = false;
+                lstPest.Visible = false;
+            }
+            else
+            {
+                lblMensajes.Text = "";
+                modificarPagina();
+                lstPest.Visible = true;
+                lstPest.DataSource = null;
+                lstPest.DataSource = pesticidasPagina;
+                lstPest.DataBind();
+            }
+
+
+        }
+
+        private void modificarPagina()
+        {
+            List<Pesticida> pesticidas = obtenerPesticidas();
+            double pxp = PagMax();
+            double count = pesticidas.Count;
+            double pags = count / pxp;
+            double cantPags = Math.Ceiling(pags);
+
+            string pagAct = lblPaginaAct.Text.ToString();
+
+            lblPaginaSig.Visible = true;
+            lblPaginaAnt.Visible = true;
+            lblPaginaAct.Visible = true;
+            if (pagAct == cantPags.ToString())
+            {
+                lblPaginaSig.Visible = false;
+            }
+            if (pagAct == "1")
+            {
+                lblPaginaAnt.Visible = false;
+            }
+            lblPaginaAnt.Text = (int.Parse(pagAct) - 1).ToString();
+            lblPaginaAct.Text = pagAct.ToString();
+            lblPaginaSig.Text = (int.Parse(pagAct) + 1).ToString();
+        }
+
+
         #endregion
 
 
@@ -192,10 +364,7 @@ namespace Web.Paginas.Pesticidas
         }
 
 
-        protected void btnBuscar_Click(object sender, EventArgs e)
-        {
-            buscar();
-        }
+
 
         protected void btnAlta_Click(object sender, EventArgs e)
         {
@@ -230,7 +399,7 @@ namespace Web.Paginas.Pesticidas
                             {
                                 limpiar();
                                 lblMensajes.Text = "Pesticida dado de alta con éxito.";
-                                listar();
+                                listarPagina();
                             }
 
                         }
@@ -275,7 +444,7 @@ namespace Web.Paginas.Pesticidas
                 {
                     limpiar();
                     lblMensajes.Text = "Se ha eliminado el Pesticida.";
-                    listar();
+                    listarPagina();
                 }
                 else
                 {
@@ -306,9 +475,55 @@ namespace Web.Paginas.Pesticidas
 
         }
 
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            lblPaginaAct.Text = "1";
+            listarPagina();
+        }
+
+        protected void lblPaginaAnt_Click(object sender, EventArgs e)
+        {
+            string p = lblPaginaAct.Text.ToString();
+            int pagina = int.Parse(p);
+            System.Web.HttpContext.Current.Session["PagAct"] = (pagina - 1).ToString();
+            System.Web.HttpContext.Current.Session["Buscar"] = txtBuscar.Text;
+            System.Web.HttpContext.Current.Session["FiltroTipo"] = listFiltro.SelectedValue;
+   
+            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue;
+            Server.TransferRequest(Request.Url.AbsolutePath, false);
+        }
+
+        protected void lblPaginaSig_Click(object sender, EventArgs e)
+        {
+            string p = lblPaginaAct.Text.ToString();
+            int pagina = int.Parse(p);
+            System.Web.HttpContext.Current.Session["PagAct"] = (pagina + 1).ToString();
+            System.Web.HttpContext.Current.Session["Buscar"] = txtBuscar.Text;
+            System.Web.HttpContext.Current.Session["FiltroTipo"] = listFiltro.SelectedValue;
+   
+            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue;
+            Server.TransferRequest(Request.Url.AbsolutePath, false);
+        }
+
         protected void btnLimpiar_Click(object sender, EventArgs e)
         {
             limpiar();
+            listarPagina();
         }
+
+
+        protected void listFiltroTipo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lblPaginaAct.Text = "1";
+            listarPagina();
+        }
+
+        protected void listOrdenarPor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lblPaginaAct.Text = "1";
+            listarPagina();
+        }
+
+
     }
 }

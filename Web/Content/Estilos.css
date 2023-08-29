@@ -114,7 +114,26 @@
     background: #ff7500
 }
 
+.lstOrd {
+    text-align: left !important;
+    background-color: #f2f0f0;
+    outline-color: #808080;
+    
 
+    color: black !important;
+    display: inline-block;
+    margin: 0.25rem;
+    cursor: pointer;
+    padding: 6px 0px;
+    font-family: "Roboto", "Arial", "Helvetica Neue", sans-serif;
+    -webkit-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
 
 .btn--green:hover {
     background: #4dae3c;

@@ -4,7 +4,7 @@
     <div class="container row m-2 text-center">
         <div class="row justify-content-center">
             <div class="col-12 m-3 p-2 text-center backforContent">
-                <div class="row">
+               
 
                     <div class="col-12">
                         <h2 class="title">ABM Lotes </h2>
@@ -12,16 +12,23 @@
 
               
                  
-                     
+                      <div class="row">
 
        
 
                     <div class="col-12">
-                        <asp:TextBox CssClass="d-inline form-control  w-75 m-2 border-0" ID="txtBuscar" runat="server" placeholder="Buscar" MaxLength="100" onkeydown="return(event.keyCode<91 || event.keyCode==189);"></asp:TextBox>
+                        <asp:TextBox CssClass="d-inline form-control  w-50 m-2 border-0" ID="txtBuscar" runat="server" placeholder="Buscar" MaxLength="100" onkeydown="return(event.keyCode<91 || event.keyCode==189);"></asp:TextBox>
                         <asp:Button CssClass="btnE btn--radius btn--green align-self-center btn--srch" ID="btnBuscar" runat="server" Text="Buscar" OnClick="btnBuscar_Click" />
                     </div>
 
-                    
+                        <div class="row text-center  ">
+                            <div class=" col-sm-12">
+                           
+                              
+                                <asp:DropDownList ID="listOrdenarPor" CssClass="lstOrd btn--radius  align-self-center btn--srch " Width="200" AutoPostBack="true" OnSelectedIndexChanged="listOrdenarPor_SelectedIndexChanged" runat="server"></asp:DropDownList>
+                                </div>
+
+                        </div>
              
 
 
@@ -97,6 +104,14 @@
                             </div>
                         </div>
                     </div>
+                       <div class="text-center">
+
+                            <div class="text-center">
+                                <asp:LinkButton ID="lblPaginaAnt" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
+                                <asp:Label ID="lblPaginaAct" runat="server" Text=""></asp:Label>
+                                <asp:LinkButton ID="lblPaginaSig" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>
