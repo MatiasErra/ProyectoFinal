@@ -42,7 +42,7 @@ namespace Persistencia
                         producto.Tipo = reader["tipo"].ToString();
                         producto.TipoVenta = reader["tipoVenta"].ToString();
                         producto.Imagen = reader["imagen"].ToString();
-
+                        producto.CantTotal = reader["cantTotal"].ToString();
                         resultado.Add(producto);
                     }
                 }
@@ -56,42 +56,7 @@ namespace Persistencia
             return resultado;
         }
 
-        public List<Producto> listProductos()
-        {
-            List<Producto> listaProductos = new List<Producto>();
-
-            Producto producto;
-            using (SqlConnection connect = Conexion.Conectar())
-            {
-                try
-                {
-                    SqlCommand cmd = new SqlCommand("LstProductos", connect);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            producto = new Producto();
-                            producto.IdProducto = int.Parse(reader["idProducto"].ToString());
-                            producto.Nombre = reader["nombre"].ToString();
-                            producto.Tipo = reader["tipo"].ToString();
-                            producto.TipoVenta = reader["tipoVenta"].ToString();
-                            producto.Imagen = reader["imagen"].ToString();
-
-                            listaProductos.Add(producto);
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-
-                    return listaProductos;
-
-                }
-            }
-            return listaProductos;
-        }
-
+     
       
         public Producto buscarProducto(int id)
         {

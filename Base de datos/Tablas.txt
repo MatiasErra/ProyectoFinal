@@ -61,7 +61,8 @@ idProducto int primary key,
 nombre varchar(30) not null unique,
 tipo varchar(30) not null,
 tipoVenta varchar(15) not null,
-imagen varchar(MAX) not null
+imagen varchar(MAX) not null,
+cantTotal varchar(40)
 );
 
 

@@ -13,6 +13,7 @@ namespace Clases
         private string _tipo;
         private string _tipoVenta;
         private string _imagen;
+        private string _cantTotal;
 
 
         public int IdProducto { get => _idProducto; set => _idProducto = value; }
@@ -20,10 +21,11 @@ namespace Clases
         public string Tipo { get => _tipo; set => _tipo = value; }
         public string TipoVenta { get => _tipoVenta; set => _tipoVenta = value; }
         public string Imagen { get => _imagen; set => _imagen = value; }
+        public string CantTotal { get => _cantTotal; set => _cantTotal = value; }
 
         public override string ToString()
         {
-            return IdProducto + " - " + Nombre + " - " + Tipo + " - " + TipoVenta;
+            return IdProducto + " - " + Nombre + " - " + Tipo + " - " + TipoVenta + " - " + CantTotal;
         }
 
 

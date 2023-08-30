@@ -213,6 +213,46 @@ namespace Web.Paginas.Lotes
             return dt;
         }
 
+        private string CantTotalProd(string nomProducto, string cantidadAdd)
+        {
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            string d = "";
+            string b = "";
+       
+            int cant = 0;
+            string resultado = "";
+            List<string[]> lotes = Web.buscarFiltrarLotes(d, b);
+            
+        
+
+
+            foreach (string[] unlotes in lotes)
+            {
+                string uwu = unlotes[3];
+                if (unlotes[3].ToString().Equals(nomProducto.ToString()))
+                {
+                    string textCant1 = unlotes[5];
+                    string[] str = textCant1.Split(' ');
+                    textCant1 = str[0];
+                    cant += int.Parse(textCant1);
+
+
+
+                }
+
+            }
+            string[] textCant2 = cantidadAdd.Split(' ');
+
+
+            int cantidad = int.Parse(textCant2[0]);
+            int total = cant - cantidad;
+            resultado = total.ToString() + " " + textCant2[1];
+            return resultado;
+        }
+
+
+
+
         #region Ordenar
 
         public void CargarListOrdenarPor()
@@ -285,13 +325,16 @@ namespace Web.Paginas.Lotes
             string nombreGranja = HttpUtility.HtmlEncode(selectedrow.Cells[0].Text);
             string nombreProducto = HttpUtility.HtmlEncode(selectedrow.Cells[1].Text);
             string fchProduccion = HttpUtility.HtmlEncode(selectedrow.Cells[2].Text);
+            string cantidad = HttpUtility.HtmlEncode(selectedrow.Cells[3].Text);
+
+            string CantTotal = CantTotalProd(nombreProducto, cantidad);
 
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             string[] unLote = Web.buscarLote(nombreGranja, nombreProducto, fchProduccion);
             if (unLote != null)
             {
         
-                if (Web.bajaLote(nombreGranja, nombreProducto, fchProduccion))
+                if (Web.bajaLote(nombreGranja, nombreProducto, fchProduccion, CantTotal))
                 {
                     listarPagina();
                     lblMensajes.Text = "Se ha borrado el lote.";

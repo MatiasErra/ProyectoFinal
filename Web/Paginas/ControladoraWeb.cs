@@ -390,16 +390,6 @@ namespace Web.Paginas
 
         }
 
-        public List<Producto> listProductos()
-        {
-            ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Producto> lst = inst.listProductos();
-            return lst;
-
-        }
-
-        
-
         public Producto buscarProducto(int id)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
@@ -593,11 +583,11 @@ namespace Web.Paginas
 
         }
 
-        public bool altaLote(Lote lote)
+        public bool altaLote(Lote lote, string cantTotal)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            if (inst.altaLote(lote))
+            if (inst.altaLote(lote, cantTotal))
             {
                 return true;
             }
@@ -605,11 +595,11 @@ namespace Web.Paginas
                 return false;
         }
 
-        public bool bajaLote(string nombreGranja, string nombreProducto, string fchProduccion)
+        public bool bajaLote(string nombreGranja, string nombreProducto, string fchProduccion, string cantTotal)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            if (inst.bajaLote(nombreGranja, nombreProducto, fchProduccion))
+            if (inst.bajaLote(nombreGranja, nombreProducto, fchProduccion, cantTotal))
             {
                 return true;
             }
@@ -617,10 +607,10 @@ namespace Web.Paginas
                 return false;
         }
 
-        public bool modLote(Lote lote)
+        public bool modLote(Lote lote, string cantTotal)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            if (inst.modLote(lote))
+            if (inst.modLote(lote, cantTotal))
             {
                 return true;
             }

@@ -22,14 +22,14 @@
                     </div>
 
 
-                          <div class="row text-center  ">
-                            <div class=" col-sm-12">
-                                <asp:DropDownList ID="listFiltroTipo" CssClass="lstOrd btn--radius  align-self-center btn--srch" Width="200" AutoPostBack="true" OnSelectedIndexChanged="listFiltroTipo_SelectedIndexChanged" runat="server"></asp:DropDownList>
-                                 <asp:DropDownList ID="listFiltroVen" CssClass="lstOrd btn--radius  align-self-center btn--srch" Width="200" AutoPostBack="true" OnSelectedIndexChanged="listFiltroTipo_SelectedIndexChanged" runat="server"></asp:DropDownList>
-                                <asp:DropDownList ID="listOrdenarPor" CssClass="lstOrd btn--radius  align-self-center btn--srch " Width="200" AutoPostBack="true" OnSelectedIndexChanged="listOrdenarPor_SelectedIndexChanged" runat="server"></asp:DropDownList>
-                                </div>
-
+                    <div class="row text-center  ">
+                        <div class=" col-sm-12">
+                            <asp:DropDownList ID="listFiltroTipo" CssClass="lstOrd btn--radius  align-self-center btn--srch" Width="200" AutoPostBack="true" OnSelectedIndexChanged="listFiltroTipo_SelectedIndexChanged" runat="server"></asp:DropDownList>
+                            <asp:DropDownList ID="listFiltroVen" CssClass="lstOrd btn--radius  align-self-center btn--srch" Width="200" AutoPostBack="true" OnSelectedIndexChanged="listFiltroTipo_SelectedIndexChanged" runat="server"></asp:DropDownList>
+                            <asp:DropDownList ID="listOrdenarPor" CssClass="lstOrd btn--radius  align-self-center btn--srch " Width="200" AutoPostBack="true" OnSelectedIndexChanged="listOrdenarPor_SelectedIndexChanged" runat="server"></asp:DropDownList>
                         </div>
+
+                    </div>
 
                     <div class="col-12">
                         <asp:Button ID="btnVolver" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Visible="false" Text="Volver" OnClick="btnVolver_Click" />
@@ -39,7 +39,7 @@
                         </button>
                     </div>
 
-                    
+
                     <div class="col-12 my-2">
                         <asp:Label CssClass="text centerText " ID="lblMensajes" runat="server"></asp:Label>
 
@@ -81,7 +81,7 @@
                                         <asp:FileUpload ID="fileImagen" CssClass="m-1 input--style-lst initText" runat="server" />
                                     </div>
 
-                            
+
 
 
 
@@ -133,6 +133,10 @@
                                                     HeaderText="Imagen"
                                                     HtmlEncode="false" />
 
+                                                <asp:BoundField DataField="CantTotal"
+                                                    HeaderText="Cantidad"
+                                                     ItemStyle-CssClass="GridStl" />
+
 
                                                 <asp:TemplateField HeaderText="Opciones del administrador"
                                                     ItemStyle-CssClass="GridStl">
@@ -177,6 +181,10 @@
                                                     HeaderText="Imagen"
                                                     HtmlEncode="false" />
 
+                                                     <asp:BoundField DataField="CantTotal"
+                                                    HeaderText="CantTotal"
+                                                     ItemStyle-CssClass="GridStl" />
+
 
                                                 <asp:TemplateField HeaderText="Opciones del administrador"
                                                     ItemStyle-CssClass="GridStl">
@@ -194,7 +202,7 @@
                                 </div>
                             </div>
                         </div>
-                             <div class="text-center">
+                        <div class="text-center">
 
                             <div class="text-center">
                                 <asp:LinkButton ID="lblPaginaAnt" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>

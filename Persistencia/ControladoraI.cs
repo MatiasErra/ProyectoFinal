@@ -126,10 +126,7 @@ namespace Persistencia
 
 
 
-        public List<Producto> listProductos()
-        {
-            return new pProducto().listProductos();
-        }
+      
 
         public Producto buscarProducto(int id)
         {
@@ -226,19 +223,19 @@ namespace Persistencia
             return new pLote().buscarLote(nombreGranja, nombreProducto, fchProduccion);
         }
 
-        public bool altaLote(Lote lote)
+        public bool altaLote(Lote lote, string cantTotal)
         {
-            return new pLote().altaLote(lote);
+            return new pLote().altaLote(lote, cantTotal );
         }
 
-        public bool bajaLote(string nombreGranja, string nombreProducto, string fchProduccion)
+        public bool bajaLote(string nombreGranja, string nombreProducto, string fchProduccion, string cantTotal)
         {
-            return new pLote().bajaLote(nombreGranja, nombreProducto, fchProduccion);
+            return new pLote().bajaLote(nombreGranja, nombreProducto, fchProduccion, cantTotal);
         }
 
-        public bool modLote(Lote lote)
+        public bool modLote(Lote lote, string cantTotal)
         {
-            return new pLote().modLote(lote);
+            return new pLote().modLote(lote, cantTotal);
         }
 
         #endregion

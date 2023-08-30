@@ -413,67 +413,7 @@ namespace Web.Paginas.Productos
 
         #endregion
 
-        private void buscar()
-        {
-            //    ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            //    string value = txtBuscar.Text.ToLower();
-            //    List<Producto> productos = Web.buscarVarProductos(value);
-            //    lstProducto.DataSource = null;
-            //    foreach (Producto unProducto in productos)
-            //    {
-            //        string Imagen = "data:image/jpeg;base64,";
-            //        Imagen += unProducto.Imagen;
-            //        Imagen = $"<img style=\"max-width:50px\" src=\"{Imagen}\">";
-            //        unProducto.Imagen = Imagen;
-            //    }
-            //    if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
 
-            //    {
-            //        if (txtBuscar.Text != "")
-            //        {
-            //            if (productos.Count > 0)
-            //            {
-            //                lstProductoSelect.Visible = true;
-            //                lblMensajes.Text = "";
-            //                lstProductoSelect.DataSource = productos;
-            //                lstProductoSelect.DataBind();
-            //            }
-            //            else
-            //            {
-            //                lstProductoSelect.Visible = false;
-            //                lblMensajes.Text = "No se encontró ningún producto.";
-            //            }
-            //        }
-            //        else
-            //        {
-            //            lblMensajes.Text = "Debe ingresar algún dato en el buscador para buscar.";
-            //        }
-            //    }
-            //    else
-            //    {
-
-            //        if (txtBuscar.Text != "")
-            //        {
-            //            if (productos.Count > 0)
-            //            {
-            //                lstProducto.Visible = true;
-            //                lblMensajes.Text = "";
-            //                lstProducto.DataSource = productos;
-            //                lstProducto.DataBind();
-            //            }
-            //            else
-            //            {
-            //                lstProducto.Visible = false;
-            //                lblMensajes.Text = "No se encontró ningún producto.";
-            //            }
-            //        }
-            //        else
-            //        {
-            //            lblMensajes.Text = "Debe ingresar algún dato en el buscador para buscar.";
-            //        }
-            //    }
-
-        }
 
  
         static int GenerateUniqueId()
@@ -488,7 +428,7 @@ namespace Web.Paginas.Productos
             }
 
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            List<Producto> lstProductos = Web.listProductos();
+            List<Producto> lstProductos = Web.buscarProductoFiltro(string.Empty, string.Empty, string.Empty, string.Empty);
             foreach (Producto producto in lstProductos)
             {
                 if (producto.IdProducto.Equals(intGuid))

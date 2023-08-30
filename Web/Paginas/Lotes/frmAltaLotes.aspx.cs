@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -49,7 +50,7 @@ namespace Web.Paginas.Lotes
             CargarListDeposito();
         }
 
-            private bool faltanDatos()
+        private bool faltanDatos()
         {
             if (listGranja.SelectedValue == "Seleccione una Granja" || listProducto.SelectedValue == "Seleccione un Producto"
                 || txtFchProduccion.Text == "" || txtCantidad.Text == "" || txtPrecio.Text == ""
@@ -68,7 +69,7 @@ namespace Web.Paginas.Lotes
         {
             lblMensajes.Text = "";
 
-            
+
 
 
 
@@ -135,15 +136,15 @@ namespace Web.Paginas.Lotes
             List<Granja> granjas = Web.buscarGranjaFiltro(var1, var2);
             DataTable dt = new DataTable();
 
-      
-   
+
+
             dt.Columns.Add(new DataColumn("nombre", typeof(String)));
             dt.Columns.Add(new DataColumn("id", typeof(String)));
 
 
             dt.Rows.Add(createRow("Seleccione una Granja", "Seleccione una Granja", dt));
             cargarGranjas(granjas, dt);
-              
+
 
             DataView dv = new DataView(dt);
             return dv;
@@ -179,18 +180,22 @@ namespace Web.Paginas.Lotes
             dt.Columns.Add(new DataColumn("nombre", typeof(String)));
             dt.Columns.Add(new DataColumn("id", typeof(String)));
 
-       
-                productos = Web.listProductos();
-                dt.Rows.Add(createRow("Seleccione un Producto", "Seleccione un Producto", dt));
-         
-         
-       
-              
-    
-            
-                cargarProductos(productos, dt);
+            string b = "";
+            string a = "";
+            string be = "";
+            string bd= "";
 
-            
+            productos = Web.buscarProductoFiltro(b, a,be,bd  );
+            dt.Rows.Add(createRow("Seleccione un Producto", "Seleccione un Producto", dt));
+
+
+
+
+
+
+            cargarProductos(productos, dt);
+
+
 
             DataView dv = new DataView(dt);
             return dv;
@@ -230,18 +235,18 @@ namespace Web.Paginas.Lotes
             string b = "";
             string d = "";
             string o = "";
-            
+
 
             depositos = Web.buscarDepositoFiltro(b, d);
-                dt.Rows.Add(createRow("Seleccione un Deposito", "Seleccione un Deposito", dt));
-          
-            
-                cargarDepositos(depositos, dt);
-            
+            dt.Rows.Add(createRow("Seleccione un Deposito", "Seleccione un Deposito", dt));
 
-       
 
-           
+            cargarDepositos(depositos, dt);
+
+
+
+
+
 
             DataView dv = new DataView(dt);
             return dv;
@@ -276,7 +281,7 @@ namespace Web.Paginas.Lotes
         private void guardarDatos()
         {
 
-          
+
             System.Web.HttpContext.Current.Session["loteDatos"] = "Si";
 
             System.Web.HttpContext.Current.Session["idGranjaSel"] = listGranja.SelectedValue;
@@ -349,104 +354,139 @@ namespace Web.Paginas.Lotes
 
         #endregion
 
-        #region Botones
-
-
-        protected void listProductoUpdate(object sender, EventArgs e)
+        private string CantTotalProd(int idProducto, string cantidadAdd)
         {
-            listProductoUpdate();
-        }
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            string d = "";
+            string b = "";
+            string a = "";
+            int cant = 0;
+            string resultado = "";
+            List<string[]> lotes = Web.buscarFiltrarLotes(d, b);
+            Producto producto = Web.buscarProducto(idProducto);
 
-
-        protected void btnBuscarGranja_Click(object sender, EventArgs e)
-        {
-            CargarListGranja();
-        }
-
-        //protected void btnBuscarProducto_Click(object sender, EventArgs e)
-        //{
-        //    CargarListProducto();
-        //}
-
-        protected void btnBuscarDeposito_Click(object sender, EventArgs e)
-        {
-            CargarListDeposito();
-        }
-
-        protected void btnAltaGranja_Click(object sender, EventArgs e)
-        {
-          
-            guardarDatos();
-            Response.Redirect("/Paginas/Granjas/frmGranjas");
-        }
-
-        protected void btnAltaProducto_Click(object sender, EventArgs e)
-        {
-            guardarDatos();
-            Response.Redirect("/Paginas/Productos/frmProductos");
-        }
-
-        protected void btnAltaDeposito_Click(object sender, EventArgs e)
-        {
-            guardarDatos();
-            Response.Redirect("/Paginas/Depositos/frmDepositos");
-        }
-
-        protected void btnAlta_Click(object sender, EventArgs e)
-        {
-            if (!faltanDatos())
+            foreach ( string[] unlotes in lotes)
             {
-                if (fchNotToday())
+                string uwu= unlotes[2];
+                if (unlotes[2].ToString().Equals(producto.IdProducto.ToString()) )
                 {
-                    if (int.Parse(txtCantidad.Text) > 0)
-                    {
-
-                        ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                    
-                        int idGranja = int.Parse(HttpUtility.HtmlEncode(listGranja.SelectedValue));
-                        int idProducto = int.Parse(HttpUtility.HtmlEncode(listProducto.SelectedValue));
-                        Producto producto = Web.buscarProducto(idProducto);
-                        string fchProduccion = HttpUtility.HtmlEncode(txtFchProduccion.Text);
-                        string cantidad = HttpUtility.HtmlEncode(txtCantidad.Text) + " " + producto.TipoVenta.ToString(); ;
-                        double precio = double.Parse(HttpUtility.HtmlEncode(txtPrecio.Text));
-                        int idDeposito = int.Parse(HttpUtility.HtmlEncode(listDeposito.SelectedValue));
+                    string textCant = unlotes[5];
+                   string[] str =  textCant.Split(' ');
+                     textCant= str[0];
+                    cant += int.Parse(textCant);
 
 
-                        
-                        Lote unLote = new Lote(idGranja, idProducto, fchProduccion, cantidad, precio, idDeposito);
 
-                        if (Web.altaLote(unLote))
+                }
+
+            }
+            
+            int cantidad = int.Parse(cantidadAdd);
+             int total=  cant + cantidad; 
+            resultado = total.ToString() + " " + producto.TipoVenta.ToString();
+            return resultado;
+        } 
+
+    #region Botones
+
+
+    protected void listProductoUpdate(object sender, EventArgs e)
+    {
+        listProductoUpdate();
+    }
+
+
+    protected void btnBuscarGranja_Click(object sender, EventArgs e)
+    {
+        CargarListGranja();
+    }
+
+    protected void btnBuscarDeposito_Click(object sender, EventArgs e)
+    {
+        CargarListDeposito();
+    }
+
+    protected void btnAltaGranja_Click(object sender, EventArgs e)
+    {
+
+        guardarDatos();
+        Response.Redirect("/Paginas/Granjas/frmGranjas");
+    }
+
+    protected void btnAltaProducto_Click(object sender, EventArgs e)
+    {
+        guardarDatos();
+        Response.Redirect("/Paginas/Productos/frmProductos");
+    }
+
+    protected void btnAltaDeposito_Click(object sender, EventArgs e)
+    {
+        guardarDatos();
+        Response.Redirect("/Paginas/Depositos/frmDepositos");
+    }
+
+    protected void btnAlta_Click(object sender, EventArgs e)
+    {
+        if (!faltanDatos())
+        {
+            if (fchNotToday())
+            {
+                if (int.Parse(txtCantidad.Text) > 0)
+                {
+                        if (double.Parse(txtPrecio.Text) > 0)
                         {
-                            limpiar();
-                            listProductoUpdate();
-                            lblMensajes.Text = "Lote dado de alta con éxito.";
-                            System.Web.HttpContext.Current.Session["LoteAlta"] = "si";
-                            Response.Redirect("/Paginas/Lotes/frmLotes");
+
+                            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+
+                            int idGranja = int.Parse(HttpUtility.HtmlEncode(listGranja.SelectedValue));
+                            int idProducto = int.Parse(HttpUtility.HtmlEncode(listProducto.SelectedValue));
+                            Producto producto = Web.buscarProducto(idProducto);
+                            string fchProduccion = HttpUtility.HtmlEncode(txtFchProduccion.Text);
+                            string cantidad = HttpUtility.HtmlEncode(txtCantidad.Text) + " " + producto.TipoVenta.ToString(); ;
+                            double precio = double.Parse(HttpUtility.HtmlEncode(txtPrecio.Text));
+                            int idDeposito = int.Parse(HttpUtility.HtmlEncode(listDeposito.SelectedValue));
+                            string CantTotal = CantTotalProd(idProducto, txtCantidad.Text);
+
+
+                            Lote unLote = new Lote(idGranja, idProducto, fchProduccion, cantidad, precio, idDeposito);
+
+                            if (Web.altaLote(unLote,CantTotal))
+                            {
+                                limpiar();
+                                listProductoUpdate();
+                                lblMensajes.Text = "Lote dado de alta con éxito.";
+                                System.Web.HttpContext.Current.Session["LoteAlta"] = "si";
+                                Response.Redirect("/Paginas/Lotes/frmLotes");
+                            }
+                            else
+                            {
+                                lblMensajes.Text = "No se pudo dar de alta el lote.";
+
+                            }
                         }
                         else
                         {
-                            lblMensajes.Text = "No se pudo dar de alta el lote.";
-
-                        }
-                    }
-                    else
-                    {
-                        lblMensajes.Text = "La cantidad debe ser mayor a cero.";
-                    }
-
+                            lblMensajes.Text = "El precio debe ser mayor a cero.";
+                        }    
                 }
                 else
                 {
-                    lblMensajes.Text = "La fecha de producción debe ser igual o menor a la de hoy.";
+                    lblMensajes.Text = "La cantidad debe ser mayor a cero.";
                 }
+
             }
             else
             {
-                lblMensajes.Text = "Faltan datos.";
+                lblMensajes.Text = "La fecha de producción debe ser igual o menor a la de hoy.";
             }
         }
-
-        #endregion
-
+        else
+        {
+            lblMensajes.Text = "Faltan datos.";
+        }
     }
+
+    #endregion
+
+}
 }

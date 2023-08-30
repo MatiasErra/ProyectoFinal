@@ -101,7 +101,7 @@ namespace Persistencia
             }
             return lote;
         }
-        public bool altaLote(Lote lote)
+        public bool altaLote(Lote lote, string cantTotal)
         {
             bool resultado = false;
 
@@ -117,7 +117,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@cantidad", lote.Cantidad));
                 cmd.Parameters.Add(new SqlParameter("@precio", lote.Precio));
                 cmd.Parameters.Add(new SqlParameter("@idDeposito", lote.IdDeposito));
-        
+                cmd.Parameters.Add(new SqlParameter("@cantTotal", cantTotal));
 
 
                 int resBD = cmd.ExecuteNonQuery();
@@ -141,7 +141,7 @@ namespace Persistencia
         }
 
 
-        public bool bajaLote(string nombreGranja, string nombreProducto, string fchProduccion)
+        public bool bajaLote(string nombreGranja, string nombreProducto, string fchProduccion,string cantTotal)
         {
             bool resultado = false;
 
@@ -154,6 +154,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@nombreGranja", nombreGranja));
                 cmd.Parameters.Add(new SqlParameter("@nombreProducto", nombreProducto));
                 cmd.Parameters.Add(new SqlParameter("@fchProduccion", fchProduccion));
+                cmd.Parameters.Add(new SqlParameter("@cantTotal", cantTotal));
 
                 int resBD = cmd.ExecuteNonQuery();
 
@@ -179,7 +180,7 @@ namespace Persistencia
 
         }
 
-        public bool modLote(Lote lote)
+        public bool modLote(Lote lote, string cantTotal)
         {
             bool resultado = false;
 
@@ -195,6 +196,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@cantidad", lote.Cantidad));
                 cmd.Parameters.Add(new SqlParameter("@precio", lote.Precio));
                 cmd.Parameters.Add(new SqlParameter("@idDeposito", lote.IdDeposito));
+                cmd.Parameters.Add(new SqlParameter("@cantTotal", cantTotal));
 
                 int resBD = cmd.ExecuteNonQuery();
 

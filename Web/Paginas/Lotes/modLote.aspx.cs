@@ -55,6 +55,45 @@ namespace Web.Paginas.Lotes
 
         #region Utilidad
 
+
+
+        private string CantTotalProd(int idGranja, int idProducto, string fchProduccion, string cantidadAdd)
+        {
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            string d = "";
+            string b = "";
+            string a = "";
+            int cant = 0;
+            string resultado = "";
+            List<string[]> lotes = Web.buscarFiltrarLotes(d, b);
+            Producto producto = Web.buscarProducto(idProducto);
+
+            foreach (string[] unlotes in lotes)
+            {
+                string uwu = unlotes[2];
+                if (unlotes[2].ToString().Equals(producto.IdProducto.ToString())
+                    && !unlotes[0].Equals(idGranja.ToString())
+                     && !unlotes[4].Equals(fchProduccion.ToString()))
+                {
+                    string textCant = unlotes[5];
+                    string[] str = textCant.Split(' ');
+                    textCant = str[0];
+                    cant += int.Parse(textCant);
+
+
+
+                }
+
+            }
+
+            int cantidad = int.Parse(cantidadAdd);
+            int total = cant + cantidad;
+            resultado = total.ToString() + " " + producto.TipoVenta.ToString();
+            return resultado;
+        }
+
+
+
         private void limpiarIdSession()
         {
             System.Web.HttpContext.Current.Session["nombreGranjaSel"] = null;
@@ -270,33 +309,39 @@ namespace Web.Paginas.Lotes
             {
                 if (int.Parse(txtCantidad.Text) > 0)
                 {
-                    ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-
-                    int idGranja = int.Parse(HttpUtility.HtmlEncode(txtIdGranja.Text));
-                    int idProducto = int.Parse(HttpUtility.HtmlEncode(txtIdProducto.Text));
-                    string fchProduccion = HttpUtility.HtmlEncode(txtFchProduccion.Text);
-                    Producto producto = Web.buscarProducto(idProducto);
-                    string cantidad = HttpUtility.HtmlEncode(txtCantidad.Text) + " " + producto.TipoVenta.ToString();
-                    double precio = double.Parse(HttpUtility.HtmlEncode(txtPrecio.Text));
-                    int idDeposito = int.Parse(HttpUtility.HtmlEncode(listDeposito.SelectedValue));
-
-
-                    Lote unLote = new Lote(idGranja, idProducto, fchProduccion, cantidad, precio, idDeposito);
-
-                    if (Web.modLote(unLote))
+                    if (double.Parse(txtPrecio.Text) > 0)
                     {
-                        limpiar();
-                        lblMensajes.Text = "Lote modificado con éxito.";
-                        limpiarIdSession();
-                        System.Web.HttpContext.Current.Session["LoteMod"] = "si";
-                        Response.Redirect("/Paginas/Lotes/frmLotes");
+                        ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
 
+                        int idGranja = int.Parse(HttpUtility.HtmlEncode(txtIdGranja.Text));
+                        int idProducto = int.Parse(HttpUtility.HtmlEncode(txtIdProducto.Text));
+                        string fchProduccion = HttpUtility.HtmlEncode(txtFchProduccion.Text);
+                        Producto producto = Web.buscarProducto(idProducto);
+                        string cantidad = HttpUtility.HtmlEncode(txtCantidad.Text) + " " + producto.TipoVenta.ToString();
+                        double precio = double.Parse(HttpUtility.HtmlEncode(txtPrecio.Text));
+                        int idDeposito = int.Parse(HttpUtility.HtmlEncode(listDeposito.SelectedValue));
+                        string CantTotal = CantTotalProd(idGranja, idProducto, fchProduccion, txtCantidad.Text);
+
+                        Lote unLote = new Lote(idGranja, idProducto, fchProduccion, cantidad, precio, idDeposito);
+
+                        if (Web.modLote(unLote, CantTotal))
+                        {
+                            limpiar();
+                            lblMensajes.Text = "Lote modificado con éxito.";
+                            limpiarIdSession();
+                            System.Web.HttpContext.Current.Session["LoteMod"] = "si";
+                            Response.Redirect("/Paginas/Lotes/frmLotes");
+
+                        }
+                        else
+                        {
+                            lblMensajes.Text = "No se modifico el lote";
+                        }
                     }
                     else
                     {
-                        lblMensajes.Text = "No se modifico el lote";
+                        lblMensajes.Text = "El precio debe ser mayor a cero.";
                     }
-
                 }
                 else
                 {
