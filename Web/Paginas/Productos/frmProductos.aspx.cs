@@ -519,10 +519,10 @@ namespace Web.Paginas.Productos
             string b = "";
             string d = "";
       
-            List<string[]> lotes = Web.buscarFiltrarLotes(b,d);
-            foreach (string[] unLote in lotes)
+            List<Lote> lotes = Web.buscarFiltrarLotes(b,d);
+            foreach (Lote unLote in lotes)
             {
-                if (int.Parse(unLote[0].ToString()) == idProducto)
+                if (unLote.IdProducto == idProducto)
                 {
                     return true;
                 }

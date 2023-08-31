@@ -14,6 +14,9 @@ namespace Clases
         private string _cantidad;
         private double _precio;
         private int _idDeposito;
+        private string _nombreGranja;
+        private string _nombreProducto;
+        private string _ubicacionDeps;
 
         public override string ToString()
         {
@@ -38,5 +41,8 @@ namespace Clases
         public string Cantidad { get => _cantidad; set => _cantidad = value; }
         public double Precio { get => _precio; set => _precio = value; }
         public int IdDeposito { get => _idDeposito; set => _idDeposito = value; }
+        public string NombreGranja { get => _nombreGranja; set => _nombreGranja = value; }
+        public string NombreProducto { get => _nombreProducto; set => _nombreProducto = value; }
+        public string UbicacionDeps { get => _ubicacionDeps; set => _ubicacionDeps = value; }
     }
 }

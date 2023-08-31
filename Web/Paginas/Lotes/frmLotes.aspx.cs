@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Policy;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -87,12 +88,12 @@ namespace Web.Paginas.Lotes
         private int PagMax()
         {
 
-            return 2;
+            return 6;
         }
 
 
 
-        private List<string[]> obtenerLote()
+        private List<Lote> obtenerLote()
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             string buscar = txtBuscar.Text;
@@ -107,7 +108,7 @@ namespace Web.Paginas.Lotes
 
 
 
-            List<string[]> Lote = Web.buscarFiltrarLotes(buscar, ordenar);
+            List<Lote> Lote = Web.buscarFiltrarLotes(buscar, ordenar);
 
             return Lote;
         }
@@ -115,13 +116,13 @@ namespace Web.Paginas.Lotes
 
         private void listarPagina()
         {
-            List<string[]> lotes = obtenerLote();
-            List<string[]> LotesPagina = new List<string[]>();
+            List<Lote> lotes = obtenerLote();
+            List<Lote> LotesPagina = new List<Lote>();
 
             string p = lblPaginaAct.Text.ToString();
             int pagina = int.Parse(p);
             int cont = 0;
-            foreach (string[] unLote in lotes)
+            foreach (Lote unLote in lotes)
             {
                 if (LotesPagina.Count == PagMax())
                 {
@@ -159,7 +160,7 @@ namespace Web.Paginas.Lotes
 
         private void modificarPagina()
         {
-            List<string[]> lotes = obtenerLote();
+            List<Lote> lotes = obtenerLote();
             double pxp = PagMax();
             double count = lotes.Count;
             double pags = count / pxp;
@@ -187,7 +188,7 @@ namespace Web.Paginas.Lotes
 
 
 
-        public DataTable ObtenerDatos(List<string[]> lotes)
+        public DataTable ObtenerDatos(List<Lote> lotes)
         {
             DataTable dt = new DataTable();
             dt.Columns.AddRange(new DataColumn[6] {
@@ -198,15 +199,15 @@ namespace Web.Paginas.Lotes
                 new DataColumn("Precio", typeof(double)),
                 new DataColumn("UbicacionDeposito", typeof(string))});
 
-            foreach (string[] unLote in lotes)
+            foreach (Lote unLote in lotes)
             {
                 DataRow dr = dt.NewRow();
-                dr["NombreGranja"] = unLote[1];
-                dr["NombreProducto"] = unLote[3];
-                dr["FchProduccion"] = unLote[4];
-                dr["Cantidad"] = unLote[5];
-                dr["Precio"] = double.Parse(unLote[6]);
-                dr["UbicacionDeposito"] = unLote[8];
+                dr["NombreGranja"] = unLote.NombreGranja.ToString();
+                dr["NombreProducto"] = unLote.NombreProducto.ToString();
+                dr["FchProduccion"] = unLote.FchProduccion.ToString();
+                dr["Cantidad"] = unLote.Cantidad.ToString();
+                dr["Precio"] = unLote.Precio;
+                dr["UbicacionDeposito"] = unLote.UbicacionDeps.ToString();
 
                 dt.Rows.Add(dr);
             }
@@ -221,17 +222,17 @@ namespace Web.Paginas.Lotes
        
             int cant = 0;
             string resultado = "";
-            List<string[]> lotes = Web.buscarFiltrarLotes(d, b);
+            List<Lote> lotes = Web.buscarFiltrarLotes(d, b);
             
         
 
 
-            foreach (string[] unlotes in lotes)
+            foreach (Lote unlotes in lotes)
             {
-                string uwu = unlotes[3];
-                if (unlotes[3].ToString().Equals(nomProducto.ToString()))
+           
+                if (unlotes.NombreProducto.Equals(nomProducto))
                 {
-                    string textCant1 = unlotes[5];
+                    string textCant1 = unlotes.Cantidad.ToString();
                     string[] str = textCant1.Split(' ');
                     textCant1 = str[0];
                     cant += int.Parse(textCant1);
@@ -303,7 +304,7 @@ namespace Web.Paginas.Lotes
             lblMensajes.Text = "";
             txtBuscar.Text = "";
             listOrdenarPor.SelectedValue = "Ordenar por";
-
+            lblPaginaAct.Text = "1";
             lstLote.SelectedIndex = -1;
           
 
@@ -330,12 +331,13 @@ namespace Web.Paginas.Lotes
             string CantTotal = CantTotalProd(nombreProducto, cantidad);
 
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            string[] unLote = Web.buscarLote(nombreGranja, nombreProducto, fchProduccion);
+            Lote unLote = Web.buscarLote(nombreGranja, nombreProducto, fchProduccion);
             if (unLote != null)
             {
         
                 if (Web.bajaLote(nombreGranja, nombreProducto, fchProduccion, CantTotal))
                 {
+                    limpiar();
                     listarPagina();
                     lblMensajes.Text = "Se ha borrado el lote.";
                 }

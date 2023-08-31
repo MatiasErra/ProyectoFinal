@@ -14,35 +14,36 @@ namespace Persistencia
     {
         
 
-        public List<string[]> FertisEnLote(int idGranja, int idProducto, string fchProduccion)
+        public List<Lote_Ferti> FertisEnLote(int idGranja, int idProducto, string fchProduccion, string buscar, string ord)
         {
-            List<string[]> resultado = new List<string[]>();
+            List<Lote_Ferti> resultado = new List<Lote_Ferti>();
 
          
             using (SqlConnection connect = Conexion.Conectar())
             {
                 try
                 {
-                    SqlCommand cmd = new SqlCommand("LstFertisEnLote", connect);
+                    SqlCommand cmd = new SqlCommand("LstFertisEnLoteFiltro", connect);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add(new SqlParameter("@idGranja", idGranja));
                     cmd.Parameters.Add(new SqlParameter("@idProducto", idProducto));
                     cmd.Parameters.Add(new SqlParameter("@fchProduccion", fchProduccion));
+                    cmd.Parameters.Add(new SqlParameter("@buscar", buscar));
+                    cmd.Parameters.Add(new SqlParameter("@ordenar", ord));
+
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            string[] fert = new string[5];
-                            int IdFertilizante = int.Parse(reader["idFerti"].ToString());
-                            string Nombre = reader["nombre"].ToString();
-                            string Tipo = reader["tipo"].ToString();
-                            string Cantidad = reader["cantidad"].ToString();
-
-                            fert[0] = IdFertilizante.ToString();
-                            fert[1] = Nombre;
-                            fert[2] = Tipo;
-                            fert[3] = Cantidad;
+                            Lote_Ferti fert = new Lote_Ferti ();
+                            fert.IdFertilizante= int.Parse(reader["idFerti"].ToString());
+                         
+                            fert.NombreFert  = reader["nombre"].ToString();
+                            fert.TipoFert  = reader["tipo"].ToString();
+                            fert.Cantidad = reader["cantidad"].ToString();
+                            fert.PHFert = double.Parse(reader["pH"].ToString());
+                     
 
                             resultado.Add(fert);
                         }

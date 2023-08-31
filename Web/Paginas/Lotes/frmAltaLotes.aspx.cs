@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
+using System.Security.Policy;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -362,15 +363,15 @@ namespace Web.Paginas.Lotes
             string a = "";
             int cant = 0;
             string resultado = "";
-            List<string[]> lotes = Web.buscarFiltrarLotes(d, b);
+            List<Lote> lotes = Web.buscarFiltrarLotes(d, b);
             Producto producto = Web.buscarProducto(idProducto);
 
-            foreach ( string[] unlotes in lotes)
+            foreach (Lote unlotes in lotes)
             {
-                string uwu= unlotes[2];
-                if (unlotes[2].ToString().Equals(producto.IdProducto.ToString()) )
+
+                if (unlotes.IdProducto.Equals(producto.IdProducto))
                 {
-                    string textCant = unlotes[5];
+                    string textCant = unlotes.Cantidad;
                    string[] str =  textCant.Split(' ');
                      textCant= str[0];
                     cant += int.Parse(textCant);

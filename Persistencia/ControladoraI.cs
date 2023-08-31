@@ -213,12 +213,12 @@ namespace Persistencia
         #region Lotes
 
   
-        public List<string[]> buscarFiltrarLotes(string buscar, string ordenar)
+        public List<Lote> buscarFiltrarLotes(string buscar, string ordenar)
         {
             return new pLote().buscarFiltrarLotes(buscar, ordenar);
         }
 
-        public string[] buscarLote(string nombreGranja, string nombreProducto, string fchProduccion)
+        public Lote buscarLote(string nombreGranja, string nombreProducto, string fchProduccion)
         {
             return new pLote().buscarLote(nombreGranja, nombreProducto, fchProduccion);
         }
@@ -242,9 +242,9 @@ namespace Persistencia
 
         #region Lotes_Fertis
 
-        public List<string[]> FertisEnLote(int idGranja, int idProducto, string fchProduccion)
+        public List<Lote_Ferti> FertisEnLote(int idGranja, int idProducto, string fchProduccion, string buscar, string ord)
         {
-            return new pLote_Ferti().FertisEnLote(idGranja, idProducto, fchProduccion);
+            return new pLote_Ferti().FertisEnLote(idGranja, idProducto, fchProduccion, buscar, ord);
         }
 
         public Lote_Ferti buscarLoteFerti(int idFertilizante, int idGranja, int idProducto, string fchProduccion)
@@ -270,9 +270,9 @@ namespace Persistencia
 
         #region Lotes_Pestis
 
-        public List<string[]> PestisEnLote(int idGranja, int idProducto, string fchProduccion)
+        public List<Lote_Pesti> PestisEnLote(int idGranja, int idProducto, string fchProduccion, string buscar, string ord)
         {
-            return new pLote_Pesti().PestisEnLote(idGranja, idProducto, fchProduccion);
+            return new pLote_Pesti().PestisEnLote(idGranja, idProducto, fchProduccion, buscar, ord);
         }
 
         public Lote_Pesti buscarLotePesti(int idFertilizante, int idGranja, int idProducto, string fchProduccion)

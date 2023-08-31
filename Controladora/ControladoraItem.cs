@@ -338,18 +338,18 @@ namespace Controladoras
         #region Lotes
 
      
-        public List<string[]> buscarFiltrarLotes(string buscar, string ordenar)
+        public List<Lote> buscarFiltrarLotes(string buscar, string ordenar)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<string[]> lst = inst.buscarFiltrarLotes(buscar, ordenar);
+            List<Lote> lst = inst.buscarFiltrarLotes(buscar, ordenar);
             return lst;
         }
 
-        public string[] buscarLote(string nombreGranja, string nombreProducto, string fchProduccion)
+        public Lote buscarLote(string nombreGranja, string nombreProducto, string fchProduccion)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
 
-            string[] lote = inst.buscarLote(nombreGranja, nombreProducto, fchProduccion);
+            Lote lote = inst.buscarLote(nombreGranja, nombreProducto, fchProduccion);
             return lote;
 
         }
@@ -396,10 +396,10 @@ namespace Controladoras
         #region Lotes_Pestis
 
  
-        public List<string[]> PestisEnLote(int idGranja, int idProducto, string fchProduccion)
+        public List<Lote_Pesti> PestisEnLote(int idGranja, int idProducto, string fchProduccion, string buscar, string ord)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<string[]> lst = inst.PestisEnLote(idGranja, idProducto, fchProduccion);
+            List<Lote_Pesti> lst = inst.PestisEnLote(idGranja, idProducto, fchProduccion, buscar, ord);
             return lst;
         }
 
@@ -453,10 +453,10 @@ namespace Controladoras
 
         #region Lotes_Fertis
 
-        public List<string[]> FertisEnLote(int idGranja, int idProducto, string fchProduccion)
+        public List<Lote_Ferti> FertisEnLote(int idGranja, int idProducto, string fchProduccion, string buscar, string ord)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<string[]> lst = inst.FertisEnLote(idGranja, idProducto, fchProduccion);
+            List<Lote_Ferti> lst = inst.FertisEnLote(idGranja, idProducto, fchProduccion, buscar, ord);
             return lst;
         }
 

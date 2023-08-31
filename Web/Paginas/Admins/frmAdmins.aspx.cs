@@ -566,7 +566,7 @@ namespace Web.Paginas.Admins
                                     Admin unAdmin = new Admin(id, nombre, apellido, email, tele, txtFc, user, hashedPassword, tipoAdm, estado);
                                     if (Web.altaAdmin(unAdmin))
                                     {
-                                        limpiar();
+                                       
                                         lblMensajes.Text = "Administrador dado de alta con éxito.";
                                         listarPagina();
 
@@ -629,8 +629,7 @@ namespace Web.Paginas.Admins
                 {
                     limpiar();
                     lblMensajes.Text = "Se ha eliminado el Administrador.";
-                    txtId.Text = "";
-                    txtBuscar.Text = "";
+                    lblPaginaAct.Text = "1";
                     listarPagina();
                 }
                 else

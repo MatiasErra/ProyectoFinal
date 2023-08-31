@@ -13,35 +13,33 @@ namespace Persistencia
     class pLote_Pesti
     {
  
-        public List<string[]> PestisEnLote(int idGranja, int idProducto, string fchProduccion)
+        public List<Lote_Pesti> PestisEnLote(int idGranja, int idProducto, string fchProduccion, string buscar, string ord)
         {
-            List<string[]> resultado = new List<string[]>();
+            List<Lote_Pesti> resultado = new List<Lote_Pesti>();
 
 
             using (SqlConnection connect = Conexion.Conectar())
             {
                 try
                 {
-                    SqlCommand cmd = new SqlCommand("LstPestisEnLote", connect);
+                    SqlCommand cmd = new SqlCommand("LstPestiEnLoteFiltro", connect);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add(new SqlParameter("@idGranja", idGranja));
                     cmd.Parameters.Add(new SqlParameter("@idProducto", idProducto));
                     cmd.Parameters.Add(new SqlParameter("@fchProduccion", fchProduccion));
+                    cmd.Parameters.Add(new SqlParameter("@buscar", buscar));
+                    cmd.Parameters.Add(new SqlParameter("@ordenar", ord));
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            string[] pest = new string[5];
-                            int IdPesticida = int.Parse(reader["idPesti"].ToString());
-                            string Nombre = reader["nombre"].ToString();
-                            string Tipo = reader["tipo"].ToString();
-                            string Cantidad = reader["cantidad"].ToString();
-
-                            pest[0] = IdPesticida.ToString();
-                            pest[1] = Nombre;
-                            pest[2] = Tipo;
-                            pest[3] = Cantidad;
+                            Lote_Pesti pest = new Lote_Pesti();
+                            pest.IdPesticida = int.Parse(reader["idPesti"].ToString());
+                            pest.NombrePesti = reader["nombre"].ToString();
+                            pest.TipoPesti  = reader["tipo"].ToString();
+                            pest.Cantidad = reader["cantidad"].ToString();
+                            pest.PHPesti = double.Parse(reader["pH"].ToString());
 
                             resultado.Add(pest);
                         }

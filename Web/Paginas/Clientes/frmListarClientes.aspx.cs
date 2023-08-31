@@ -324,8 +324,7 @@ namespace Web.Paginas.Clientes
                     {
                         limpiar();
                         lblMensajes.Text = "Se ha borrado el Cliente.";
-                        txtId.Text = "";
-                        txtBuscar.Text = "";
+                      
                         listarPagina();
                     }
                     else

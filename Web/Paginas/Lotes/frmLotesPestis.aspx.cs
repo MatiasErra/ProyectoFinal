@@ -38,11 +38,22 @@ namespace Web.Paginas.Lotes
             if (!IsPostBack)
 
             {
+                if (System.Web.HttpContext.Current.Session["PagAct"] == null)
+                {
+                    lblPaginaAct.Text = "1";
+                }
+                else
+                {
+                    lblPaginaAct.Text = System.Web.HttpContext.Current.Session["PagAct"].ToString();
+                    System.Web.HttpContext.Current.Session["PagAct"] = null;
+                }
+
+
                 string nombreGranja = System.Web.HttpContext.Current.Session["nombreGranjaSel"].ToString();
                 string nombreProducto = System.Web.HttpContext.Current.Session["nombreProductoSel"].ToString();
                 string fchProduccion = System.Web.HttpContext.Current.Session["fchProduccionSel"].ToString();
                 ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                string[] lote = Web.buscarLote(nombreGranja, nombreProducto, fchProduccion);
+                Lote lote = Web.buscarLote(nombreGranja, nombreProducto, fchProduccion);
 
                 if (System.Web.HttpContext.Current.Session["loteDatosMod"] != null)
                 {
@@ -58,8 +69,32 @@ namespace Web.Paginas.Lotes
                     cargarDatos();
                 }
                 CargarLote(nombreGranja, nombreProducto, fchProduccion);
-                CargarListPesticida(int.Parse(lote[0]), int.Parse(lote[2]), fchProduccion);
-                CargarLotesPestis(int.Parse(lote[0]), int.Parse(lote[2]), fchProduccion);
+                CargarListPesticida(lote.IdGranja, lote.IdProducto, fchProduccion);
+
+
+                CargarListOrdenarPor();
+
+                if (System.Web.HttpContext.Current.Session["Buscar"] != null)
+                {
+                    txtBuscar.Text = System.Web.HttpContext.Current.Session["Buscar"].ToString();
+                    System.Web.HttpContext.Current.Session["Buscar"] = null;
+                }
+
+
+                if (System.Web.HttpContext.Current.Session["OrdenarPor"] != null)
+                {
+                    listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"].ToString();
+                    System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
+                }
+
+
+                listarPagina(lote.IdGranja, lote.IdProducto, fchProduccion);
+
+
+
+
+
+
             }
 
             if (txtGranja.Text == "" ||
@@ -117,7 +152,7 @@ namespace Web.Paginas.Lotes
                 string ordenar = "";
 
                 pesticidas = Web.buscarPesticidaFiltro(value, impact, ordenar);
-             
+
             }
             if (pesticidas.Count == 0)
             {
@@ -127,13 +162,15 @@ namespace Web.Paginas.Lotes
             else
             {
                 listPesticida.Visible = true;
-                List<string[]> filtro = Web.PestisEnLote(idGranja, idProducto, fchProduccion);
+                string b = "";
+                string o = "";
+                List<Lote_Pesti> filtro = Web.PestisEnLote(idGranja, idProducto, fchProduccion,b,o);
                 foreach (Pesticida unPesti in pesticidas)
                 {
                     int cont = 0;
-                    foreach (string[] pestL in filtro)
+                    foreach (Lote_Pesti pestL in filtro)
                     {
-                        if (int.Parse(pestL[0]).Equals(unPesti.IdPesticida))
+                        if (pestL.IdProducto.Equals(unPesti.IdPesticida))
                         {
                             cont++;
                         }
@@ -157,6 +194,7 @@ namespace Web.Paginas.Lotes
                 }
                 else
                 {
+                    listPesticida.Visible = true;
                     cargarPesticidas(mostrar, dt);
                 }
             }
@@ -187,7 +225,7 @@ namespace Web.Paginas.Lotes
             DataView dv = new DataView(dt);
             return dv;
         }
-    
+
         protected void btnAltaPesticida_Click(object sender, EventArgs e)
         {
             guardarDatos();
@@ -197,11 +235,11 @@ namespace Web.Paginas.Lotes
         protected void btnBuscarPesticida_Click(object sender, EventArgs e)
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            string[] lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
+            Lote lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
 
-            int idGranja = int.Parse(lote[0]);
-            int idProducto = int.Parse(lote[2]);
-            string fchProduccion = lote[4];
+            int idGranja = lote.IdGranja;
+            int idProducto = lote.IdProducto;
+            string fchProduccion = lote.FchProduccion;
 
             CargarListPesticida(idGranja, idProducto, fchProduccion);
         }
@@ -248,34 +286,140 @@ namespace Web.Paginas.Lotes
 
         #region Cargar lista pesticidas
 
-        private void CargarLotesPestis(int idGranja, int idProducto, string fchProduccion)
+        private int PagMax()
         {
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
 
-            List<string[]> pesticidas = Web.PestisEnLote(idGranja, idProducto, fchProduccion);
-
-            lstLotPestiSel.DataSource = null;
-            lstLotPestiSel.DataSource = ObtenerDatos(pesticidas);
-            lstLotPestiSel.DataBind();
+            return 2;
         }
 
-        public DataTable ObtenerDatos(List<string[]> pesticidas)
+
+
+        private List<Lote_Pesti> obtenerLote_Pesti(int idGranja, int idProducto, string fchProduccion)
+        {
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            string buscar = txtBuscar.Text;
+
+            string ordenar = "";
+
+
+            if (listOrdenarPor.SelectedValue != "Ordenar por")
+            {
+                ordenar = listOrdenarPor.SelectedValue;
+            }
+
+
+
+            List<Lote_Pesti> Lote_Pesti = Web.PestisEnLote(idGranja, idProducto, fchProduccion, buscar, ordenar);
+
+            return Lote_Pesti;
+        }
+
+
+        private void listarPagina(int idGranja, int idProducto, string fchProduccion)
+        {
+            List<Lote_Pesti> lotes_pest = obtenerLote_Pesti(idGranja, idProducto, fchProduccion);
+            List<Lote_Pesti> Lotes_pestPagina = new List<Lote_Pesti>();
+
+            string p = lblPaginaAct.Text.ToString();
+            int pagina = int.Parse(p);
+            int cont = 0;
+            foreach (Lote_Pesti unLote in lotes_pest)
+            {
+                if (Lotes_pestPagina.Count == PagMax())
+                {
+                    break;
+                }
+                if (cont >= ((pagina * PagMax()) - PagMax()))
+                {
+                    Lotes_pestPagina.Add(unLote);
+                }
+
+                cont++;
+            }
+
+            if (Lotes_pestPagina.Count == 0)
+            {
+                lblMensajes.Text = "No se encontro ningún Pesticida en el lote.";
+
+                lblPaginaAnt.Visible = false;
+                lblPaginaAct.Visible = false;
+                lblPaginaSig.Visible = false;
+                lstLotPestiSel.Visible = false;
+
+
+                txtBuscar.Visible = false;
+                btnBuscar.Visible = false;
+                listOrdenarPor.Visible = false;
+                btnLimpiar.Visible = false;
+
+            }
+            else
+            {
+                lblMensajes.Text = "";
+                txtBuscar.Visible = true;
+                btnBuscar.Visible = true;
+                listOrdenarPor.Visible = true;
+                btnLimpiar.Visible = true;
+
+
+                modificarPagina(idGranja, idProducto, fchProduccion);
+                lstLotPestiSel.Visible = true;
+                lstLotPestiSel.DataSource = null;
+                lstLotPestiSel.DataSource = ObtenerDatos(Lotes_pestPagina);
+                lstLotPestiSel.DataBind();
+            }
+
+
+        }
+
+        private void modificarPagina(int idGranja, int idProducto, string fchProduccion)
+        {
+            List<Lote_Pesti> lotes = obtenerLote_Pesti(idGranja, idProducto, fchProduccion);
+            double pxp = PagMax();
+            double count = lotes.Count;
+            double pags = count / pxp;
+            double cantPags = Math.Ceiling(pags);
+
+            string pagAct = lblPaginaAct.Text.ToString();
+
+            lblPaginaSig.Visible = true;
+            lblPaginaAnt.Visible = true;
+            lblPaginaAct.Visible = true;
+            if (pagAct == cantPags.ToString())
+            {
+                lblPaginaSig.Visible = false;
+            }
+            if (pagAct == "1")
+            {
+                lblPaginaAnt.Visible = false;
+            }
+            lblPaginaAnt.Text = (int.Parse(pagAct) - 1).ToString();
+            lblPaginaAct.Text = pagAct.ToString();
+            lblPaginaSig.Text = (int.Parse(pagAct) + 1).ToString();
+        }
+
+
+
+
+
+        public DataTable ObtenerDatos(List<Lote_Pesti> pesticidas)
         {
             DataTable dt = new DataTable();
-            dt.Columns.AddRange(new DataColumn[4] {
-                new DataColumn("IdPesticida", typeof(int)),
+            dt.Columns.AddRange(new DataColumn[5] {
+            new DataColumn("IdPesticida", typeof(int)),
                 new DataColumn("Nombre", typeof(string)),
                 new DataColumn("Tipo", typeof(string)),
-             new DataColumn("Cantidad", typeof(string))});
-
-            foreach (string[] str in pesticidas)
+             new DataColumn("Cantidad", typeof(string)),
+            new DataColumn("PH", typeof(string))});
+            foreach (Lote_Pesti str in pesticidas)
             {
-                int id = int.Parse(str[0].ToString());
+
                 DataRow dr = dt.NewRow();
-                dr["IdPesticida"] = id;
-                dr["Nombre"] = str[1].ToString();
-                dr["Tipo"] = str[2].ToString();
-                dr["Cantidad"] = str[3].ToString();
+                dr["IdPesticida"] = str.IdPesticida;
+                dr["Nombre"] = str.NombrePesti;
+                dr["Tipo"] = str.TipoPesti;
+                dr["PH"] = str.PHPesti;
+                dr["Cantidad"] = str.Cantidad;
 
                 dt.Rows.Add(dr);
             }
@@ -283,7 +427,41 @@ namespace Web.Paginas.Lotes
 
 
         }
+
+
         #endregion
+
+        #region Ordenar
+
+        public void CargarListOrdenarPor()
+        {
+            listOrdenarPor.DataSource = null;
+            listOrdenarPor.DataSource = createDataSourceOrdenarPor();
+            listOrdenarPor.DataTextField = "nombre";
+            listOrdenarPor.DataValueField = "id";
+            listOrdenarPor.DataBind();
+        }
+
+        ICollection createDataSourceOrdenarPor()
+        {
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+            dt.Columns.Add(new DataColumn("id", typeof(String)));
+
+            dt.Rows.Add(createRow("Ordenar por", "Ordenar por", dt));
+            dt.Rows.Add(createRow("Nombre", "Nombre", dt));
+            dt.Rows.Add(createRow("Tipo", "Cantidad", dt));
+            dt.Rows.Add(createRow("pH", "pH", dt));
+            dt.Rows.Add(createRow("Cantidad", "Cantidad", dt));
+
+
+            DataView dv = new DataView(dt);
+            return dv;
+        }
+        #endregion
+
 
         #region Lote
 
@@ -306,6 +484,16 @@ namespace Web.Paginas.Lotes
         #endregion
 
         #region Botones
+        private void limpiar()
+        {
+            lblMensajes.Text = "";
+            txtBuscar.Text = "";
+            listOrdenarPor.SelectedValue = "Ordenar por";
+            lblPaginaAct.Text = "1";
+
+
+        }
+
 
         protected void btnSelectPesticida_Click(object sender, EventArgs e)
         {
@@ -314,19 +502,19 @@ namespace Web.Paginas.Lotes
                 if (txtCantidadPesti.Text != "" && int.Parse(txtCantidadPesti.Text) > 0)
                 {
                     ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                    string[] lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
+                    Lote lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
 
                     int idPesticida = int.Parse(HttpUtility.HtmlEncode(listPesticida.SelectedValue));
-                    int idGranja = int.Parse(lote[0]);
-                    int idProducto = int.Parse(lote[2]);
-                    string fchProduccion = lote[4];
+                    int idGranja = lote.IdGranja;
+                    int idProducto = lote.IdProducto;
+                    string fchProduccion = lote.FchProduccion;
 
                     string cantidad = HttpUtility.HtmlEncode(txtCantidadPesti.Text);
                     Lote_Pesti loteP = new Lote_Pesti(idPesticida, idGranja, idProducto, fchProduccion, cantidad);
                     if (Web.altaLotePesti(loteP))
                     {
                         CargarListPesticida(idGranja, idProducto, fchProduccion);
-                        CargarLotesPestis(idGranja, idProducto, fchProduccion);
+                        listarPagina(idGranja, idProducto, fchProduccion);
                         txtCantidadPesti.Text = "";
                         lblMensajes.Text = "Pesticida dado de alta en el Lote con éxito.";
                     }
@@ -352,16 +540,17 @@ namespace Web.Paginas.Lotes
             Button btnConstultar = (Button)sender;
             GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            string[] lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
+            Lote lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
 
             int idPesticida = int.Parse(HttpUtility.HtmlEncode(selectedrow.Cells[0].Text));
-            int idGranja = int.Parse(lote[0]);
-            int idProducto = int.Parse(lote[2]);
-            string fchProduccion = lote[4];
+            int idGranja = lote.IdGranja;
+            int idProducto = lote.IdProducto;
+            string fchProduccion = lote.FchProduccion;
 
             if (Web.bajaLotePesti(idPesticida, idGranja, idProducto, fchProduccion))
             {
-                CargarLotesPestis(idGranja, idProducto, fchProduccion);
+                limpiar();
+                listarPagina(idGranja, idProducto, fchProduccion);
                 CargarListPesticida(idGranja, idProducto, fchProduccion);
                 lblMensajes.Text = "Se eliminó el Pesticida del Lote.";
             }
@@ -388,12 +577,12 @@ namespace Web.Paginas.Lotes
             Button btnConstultar = (Button)sender;
             GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            string[] lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
+            Lote lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
 
             int idPesticida = int.Parse(HttpUtility.HtmlEncode(selectedrow.Cells[0].Text));
-            int idGranja = int.Parse(lote[0]);
-            int idProducto = int.Parse(lote[2]);
-            string fchProduccion = lote[4];
+            int idGranja = lote.IdGranja;
+            int idProducto = lote.IdProducto;
+            string fchProduccion = lote.FchProduccion;
 
             System.Web.HttpContext.Current.Session["idPestiSel"] = idPesticida;
 
@@ -402,9 +591,19 @@ namespace Web.Paginas.Lotes
 
             txtCantidadPesti.Text = loteP.Cantidad;
 
+
+            txtBuscar.Visible = false;
+            btnBuscar.Visible = false;
+            listOrdenarPor.Visible = false;
+            btnLimpiar.Visible = false;
+            lstLotPestiSel.Visible = false;
+            lblPaginaAct.Text = "1";
+            lblPaginaAct.Visible = false;
+
             listPesticida.Visible = false;
             listPesticida.Enabled = false;
             listPesticidaSel.DataSource = null;
+            listPesticidaSel.Enabled = false;
             listPesticidaSel.DataSource = createDataSourcePesticidaSel(pesti);
             listPesticidaSel.DataTextField = "nombre";
             listPesticidaSel.DataValueField = "id";
@@ -427,12 +626,12 @@ namespace Web.Paginas.Lotes
             if (txtCantidadPesti.Text != "" && int.Parse(txtCantidadPesti.Text) > 0)
             {
                 ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                string[] lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
+                Lote lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
 
                 int idPesticida = (int)System.Web.HttpContext.Current.Session["idPestiSel"];
-                int idGranja = int.Parse(lote[0]);
-                int idProducto = int.Parse(lote[2]);
-                string fchProduccion = lote[4];
+                int idGranja = lote.IdGranja;
+                int idProducto = lote.IdProducto;
+                string fchProduccion = lote.FchProduccion;
                 string cantidad = HttpUtility.HtmlEncode(txtCantidadPesti.Text);
 
                 Lote_Pesti loteP = new Lote_Pesti(idPesticida, idGranja, idProducto, fchProduccion, cantidad);
@@ -452,9 +651,24 @@ namespace Web.Paginas.Lotes
         {
             System.Web.HttpContext.Current.Session["idPestiSel"] = null;
             txtCantidadPesti.Text = "";
-            listPesticidaSel.Visible= false;
+            listPesticidaSel.Visible = false;
             listPesticida.Visible = true;
             listPesticida.Enabled = true;
+
+
+
+            txtBuscar.Visible = true;
+            btnBuscar.Visible = true;
+            listOrdenarPor.Visible = true;
+            btnLimpiar.Visible = true;
+            lstLotPestiSel.Visible = true;
+            lblPaginaAct.Text = "1";
+            lblPaginaAct.Visible = true;
+
+
+
+
+
             btnSelect.Visible = true;
             btnAltaPesticida.Visible = true;
             btnBuscarPesticida.Visible = true;
@@ -464,13 +678,13 @@ namespace Web.Paginas.Lotes
             btnModificarCantidadPestiLote.Visible = false;
 
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            string[] lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
+            Lote lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
 
-            int idGranja = int.Parse(lote[0]);
-            int idProducto = int.Parse(lote[2]);
-            string fchProduccion = lote[4];
+            int idGranja = lote.IdGranja;
+            int idProducto = lote.IdProducto;
+            string fchProduccion = lote.FchProduccion;
 
-            CargarLotesPestis(idGranja, idProducto, fchProduccion);
+            listarPagina(idGranja, idProducto, fchProduccion);
 
             if (System.Web.HttpContext.Current.Session["loteDatosMod"] != null)
             {
@@ -500,6 +714,67 @@ namespace Web.Paginas.Lotes
             limpiarLote();
             Response.Redirect("/Paginas/Lotes/modLote");
         }
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            lblPaginaAct.Text = "1";
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+
+            Lote lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
+            listarPagina(lote.IdGranja, lote.IdProducto, lote.FchProduccion);
+        }
+
+        protected void lblPaginaAnt_Click(object sender, EventArgs e)
+        {
+            string p = lblPaginaAct.Text.ToString();
+            int pagina = int.Parse(p);
+            System.Web.HttpContext.Current.Session["PagAct"] = (pagina - 1).ToString();
+            System.Web.HttpContext.Current.Session["Buscar"] = txtBuscar.Text;
+
+
+            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue;
+            Server.TransferRequest(Request.Url.AbsolutePath, false);
+        }
+
+        protected void lblPaginaSig_Click(object sender, EventArgs e)
+        {
+            string p = lblPaginaAct.Text.ToString();
+            int pagina = int.Parse(p);
+            System.Web.HttpContext.Current.Session["PagAct"] = (pagina + 1).ToString();
+            System.Web.HttpContext.Current.Session["Buscar"] = txtBuscar.Text;
+
+
+            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue;
+            Server.TransferRequest(Request.Url.AbsolutePath, false);
+        }
+
+        protected void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            limpiar();
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+
+            Lote lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
+            listarPagina(lote.IdGranja, lote.IdProducto, lote.FchProduccion);
+        }
+
+
+        protected void listFiltroTipo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lblPaginaAct.Text = "1";
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+
+            Lote lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
+            listarPagina(lote.IdGranja, lote.IdProducto, lote.FchProduccion);
+        }
+
+        protected void listOrdenarPor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lblPaginaAct.Text = "1";
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+
+            Lote lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
+            listarPagina(lote.IdGranja, lote.IdProducto, lote.FchProduccion);
+        }
+
 
         #endregion
     }

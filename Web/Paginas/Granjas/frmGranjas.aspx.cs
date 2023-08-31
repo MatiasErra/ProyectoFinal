@@ -618,10 +618,10 @@ namespace Web.Paginas.Granjass
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             string buscar = "";
                 string ord = "";
-            List<string[]> lotes = Web.buscarFiltrarLotes(buscar, ord);
-            foreach (string[] unLote in lotes)
+            List<Lote> lotes = Web.buscarFiltrarLotes(buscar, ord);
+            foreach (Lote unLote in lotes)
             {
-                if (int.Parse(unLote[0]).Equals(id))
+                if (unLote.IdGranja.Equals(id))
                 {
                     return true;
                 }
@@ -643,6 +643,7 @@ namespace Web.Paginas.Granjass
                 {
                     if (Web.bajaGranja(id))
                     {
+                        limpiar();
                         listarPagina();
                         lblMensajes.Text = "Se ha borrado la granja.";
                     }

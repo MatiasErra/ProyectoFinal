@@ -165,6 +165,7 @@ namespace Web.Paginas.Camioneros
             listOrdenarPor.SelectedValue = "Ordenar por";
             txtFchManejo.Text = "";
             lstCamionero.SelectedIndex = -1;
+            lblPaginaAct.Text = "1";
             listarPagina();
         }
 

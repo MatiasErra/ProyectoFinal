@@ -65,17 +65,17 @@ namespace Web.Paginas.Lotes
             string a = "";
             int cant = 0;
             string resultado = "";
-            List<string[]> lotes = Web.buscarFiltrarLotes(d, b);
+            List<Lote> lotes = Web.buscarFiltrarLotes(d, b);
             Producto producto = Web.buscarProducto(idProducto);
 
-            foreach (string[] unlotes in lotes)
+            foreach (Lote unlotes in lotes)
             {
-                string uwu = unlotes[2];
-                if (unlotes[2].ToString().Equals(producto.IdProducto.ToString())
-                    && !unlotes[0].Equals(idGranja.ToString())
-                     && !unlotes[4].Equals(fchProduccion.ToString()))
+                
+                if (unlotes.IdProducto.Equals(producto.IdProducto)
+                    && !unlotes.IdGranja.Equals(idGranja)
+                     && !unlotes.FchProduccion.Equals(fchProduccion))
                 {
-                    string textCant = unlotes[5];
+                    string textCant = unlotes.Cantidad;
                     string[] str = textCant.Split(' ');
                     textCant = str[0];
                     cant += int.Parse(textCant);
@@ -104,17 +104,17 @@ namespace Web.Paginas.Lotes
         private void cargarLote(string nombreGranja, string nombreProducto, string fchProduccion)
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            string[] lote = Web.buscarLote(nombreGranja, nombreProducto, fchProduccion);
-            txtIdGranja.Text = lote[0].ToString();
-            txtIdProducto.Text = lote[2].ToString();
-            txtFchProduccion.Text = DateTime.Parse(lote[4]).ToString("dd/MM/yyyy");
-            string cantidad = lote[5].ToString();
+            Lote lote = Web.buscarLote(nombreGranja, nombreProducto, fchProduccion);
+            txtIdGranja.Text = lote.IdGranja.ToString();
+            txtIdProducto.Text = lote.IdProducto.ToString();
+            txtFchProduccion.Text = DateTime.Parse(lote.FchProduccion).ToString("dd/MM/yyyy");
+            string cantidad = lote.Cantidad.ToString();
             string[] cant = cantidad.Split(' ');
             string count = cant[0].ToString();
 
             txtCantidad.Text = count;
-            txtPrecio.Text = lote[6].ToString();
-            listDeposito.SelectedValue = lote[7].ToString();
+            txtPrecio.Text = lote.Precio.ToString();
+            listDeposito.SelectedValue = lote.IdDeposito.ToString();
         }
 
         private bool faltanDatos()

@@ -15,9 +15,9 @@ namespace Persistencia
 
       
 
-        public List<string[]> buscarFiltrarLotes(string buscar, string ordenar)
+        public List<Lote> buscarFiltrarLotes(string buscar, string ordenar)
         {
-            List<string[]> resultado = new List<string[]>();
+            List<Lote> resultado = new List<Lote>();
             try
             {
 
@@ -34,17 +34,17 @@ namespace Persistencia
                 {
                     while (reader.Read())
                     {
-                        string[] lote = new string[9];
-                        lote[0] = reader["idGranja"].ToString();
-                        lote[1] = reader["nombreGranja"].ToString();
-                        lote[2] = reader["idProducto"].ToString();
-                        lote[3] = reader["nombreProducto"].ToString();
+                        Lote lote = new Lote();
+                        lote.IdGranja = int.Parse( reader["idGranja"].ToString());
+                        lote.NombreGranja = reader["nombreGranja"].ToString();
+                        lote.IdProducto = int.Parse(reader["idProducto"].ToString());
+                        lote.NombreProducto = reader["nombreProducto"].ToString();
                         string[] DateArr = reader["fchProduccion"].ToString().Split(' ');
-                        lote[4] = DateArr[0];
-                        lote[5] = reader["cantidad"].ToString();
-                        lote[6] = reader["precio"].ToString();
-                        lote[7] = reader["idDeposito"].ToString();
-                        lote[8] = reader["ubicacionDeposito"].ToString();
+                        lote.FchProduccion = DateArr[0];
+                        lote.Cantidad = reader["cantidad"].ToString();
+                        lote.Precio = double.Parse(reader["precio"].ToString());
+                        lote.IdDeposito = int.Parse(reader["idDeposito"].ToString());
+                        lote.UbicacionDeps = reader["ubicacionDeposito"].ToString();
 
                         resultado.Add(lote);
                     }
@@ -59,9 +59,9 @@ namespace Persistencia
             return resultado;
         }
 
-        public string[] buscarLote(string nombreGranja, string nombreProducto, string fchProduccion)
+        public Lote buscarLote(string nombreGranja, string nombreProducto, string fchProduccion)
         {
-            string[] lote = new string[9];
+            Lote lote = new Lote();
 
             using (SqlConnection connect = Conexion.Conectar())
             {
@@ -79,16 +79,17 @@ namespace Persistencia
                         while (reader.Read())
                         {
 
-                            lote[0] = reader["idGranja"].ToString();
-                            lote[1] = reader["nombreGranja"].ToString();
-                            lote[2] = reader["idProducto"].ToString();
-                            lote[3] = reader["nombreProducto"].ToString();
+                            lote.IdGranja = int.Parse(reader["idGranja"].ToString());
+                            lote.NombreGranja = reader["nombreGranja"].ToString();
+                            lote.IdProducto = int.Parse(reader["idProducto"].ToString());
+                            lote.NombreProducto = reader["nombreProducto"].ToString();
                             string[] DateArr = reader["fchProduccion"].ToString().Split(' ');
-                            lote[4] = DateArr[0];
-                            lote[5] = reader["cantidad"].ToString();
-                            lote[6] = reader["precio"].ToString();
-                            lote[7] = reader["idDeposito"].ToString();
-                            lote[8] = reader["ubicacionDeposito"].ToString();
+                            lote.FchProduccion = DateArr[0];
+                            lote.Cantidad = reader["cantidad"].ToString();
+                            lote.Precio = double.Parse(reader["precio"].ToString());
+                            lote.IdDeposito = int.Parse(reader["idDeposito"].ToString());
+                            lote.UbicacionDeps = reader["ubicacionDeposito"].ToString();
+
                         }
                     }
                 }
