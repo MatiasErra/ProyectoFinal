@@ -5,26 +5,87 @@
         <div class="row justify-content-center">
             <div class="col-12 m-3 p-2 text-center" style="border-radius: 20px; background-color: #f2f0f0">
                 <div class="row">
-                    <div class="col-12">
-                        <h2 class="title">ABM Depósito </h2>
-                    </div>
+                    <div class="col-12 p-3">
+                        <h2 class="title">Gestion de Depósitos </h2>
+                        <div class="row text-center">
+                            <div class=" col-sm-12">
+                                <asp:DropDownList ID="listBuscarPor" CssClass="lstOrd btn--radius  align-self-center btn--srch" Width="200" AutoPostBack="true" OnSelectedIndexChanged="listBuscarPor_SelectedIndexChanged" runat="server"></asp:DropDownList>
+                                <asp:DropDownList ID="listOrdenarPor" CssClass="lstOrd btn--radius  align-self-center btn--srch " Width="200" runat="server"></asp:DropDownList>
+                                <asp:Button CssClass="btnE btn--radius btn--green align-self-center btn--srch" ID="btnBuscar" runat="server" Text="Buscar" OnClick="btnBuscar_Click" />
+                            </div>
+                        </div>
 
-                    <div class="col-12">
+                        <div class="row text-center">
+                            <div class="col-sm-12">
+                                <asp:TextBox Visible="false" ID="txtCondicionesBuscar" CssClass="input--style-text-search" runat="server" placeholder="Condiciones" MaxLength="80" onkeydown="return(!(event.keyCode>=91) && event.keyCode!=32);"></asp:TextBox>
+                                <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text centerText"
+                                    ControlToValidate="txtCondicionesBuscar"
+                                    ValidationExpression="^[a-zA-Z ]*$"
+                                    ErrorMessage="No es una letra valida" />
+
+                                <asp:TextBox Visible="false" ID="txtUbicacionBuscar" CssClass="input--style-text-search" runat="server" placeholder="Ubicacion" MaxLength="40" onkeydown="return(!(event.keyCode>=91) && event.keyCode!=32);"></asp:TextBox>
+                                <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text centerText"
+                                    ControlToValidate="txtUbicacionBuscar"
+                                    ValidationExpression="^[a-zA-Z0-9 ]*$" />
+
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-6">
+                                        <asp:Label Visible="false" ID="lblTemperaturaMenorBuscar" class="text initText" Text="Desde:" runat="server" />
+                                        <asp:TextBox Visible="false" ID="txtTemperaturaMenorBuscar" CssClass="input--style-text-search" runat="server" MaxLength="3" placeholder="Temperatura en °C" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
+                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
+                                            ControlToValidate="txtTemperaturaMenorBuscar"
+                                            ValidationExpression="^[0-9]*$"
+                                            ErrorMessage="No es un numero valido" />
+
+                                        <asp:Label Visible="false" ID="lblTemperaturaMayorBuscar" class="text initText" Text="Hasta:" runat="server" />
+                                        <asp:TextBox Visible="false" ID="txtTemperaturaMayorBuscar" CssClass="input--style-text-search" runat="server" MaxLength="3" placeholder="Temperatura en °C" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
+                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
+                                            ControlToValidate="txtTemperaturaMayorBuscar"
+                                            ValidationExpression="^[0-9]*$"
+                                            ErrorMessage="No es un numero valido" />
+                                    </div>
+                                </div>
+
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-6">
+                                        <asp:Label Visible="false" ID="lblCapacidadMenorBuscar" class="text initText" Text="Desde:" runat="server" />
+                                        <asp:TextBox Visible="false" ID="txtCapacidadMenorBuscar" CssClass="input--style-text-search" runat="server" placeholder="Capacidad" MaxLength="10" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
+                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
+                                            ControlToValidate="txtCapacidadMenorBuscar"
+                                            ValidationExpression="^[0-9]*$"
+                                            ErrorMessage="No es un numero valido" />
+
+                                        <asp:Label Visible="false" ID="lblCapacidadMayorBuscar" class="text initText" Text="Desde:" runat="server" />
+                                        <asp:TextBox Visible="false" ID="txtCapacidadMayorBuscar" CssClass="input--style-text-search" runat="server" placeholder="Capacidad" MaxLength="10" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
+                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
+                                            ControlToValidate="txtCapacidadMayorBuscar"
+                                            ValidationExpression="^[0-9]*$"
+                                            ErrorMessage="No es un numero valido" />
+                                    </div>
+                                </div>
+                                <asp:DropDownList Visible="false" ID="lstDisponibleBuscar" CssClass="input--style-lst-search" runat="server">
+                                </asp:DropDownList>
+
+                            </div>
+                        </div>
 
 
-                        <asp:TextBox CssClass="d-inline form-control  w-50 m-2 border-0  " ID="txtBuscar" runat="server" placeholder="Buscar" MaxLength="100" onkeydown="return(( event.keyCode<91 &&  event.keyCode>64  ) || (event.keyCode>=48) && (event.keyCode<=57)   || event.keyCode==32 || event.keyCode==8);"></asp:TextBox>
-                        <asp:Button CssClass="btnE btn--radius btn--green align-self-center btn--srch" ID="btnBuscar" runat="server" Text="Buscar" OnClick="btnBuscar_Click" />
-                    </div>
+                        <div class="col-12">
+                            <asp:Button ID="btnVolver" class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Text="Volver" Visible="false" OnClick="btnVolver_Click" />
+                            <asp:Button ID="btnLimpiar" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" />
+                            <button type="button" class="btnE btn--radius btn--blue align-self-center btn--lst" data-bs-toggle="modal" data-bs-target="#altaModal">
+                                Añadir Depósito
+                            </button>
 
-                    <div class="col-12">
-                        <asp:Button ID="btnVolver" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Visible="false" Text="Volver" OnClick="btnVolver_Click" />
-                        <asp:Button ID="btnLimpiar" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" />
+                        </div>
 
 
-                        <button type="button" class="btnE btn--radius btn--blue align-self-center btn--lst" data-bs-toggle="modal" data-bs-target="#altaModal">
-                            Añadir Depósito
-                        </button>
-                        <asp:DropDownList ID="listOrdenarPor" CssClass="lstOrd btn--radius  align-self-center btn--srch " Width="200" AutoPostBack="true" OnSelectedIndexChanged="listOrdenarPor_SelectedIndexChanged" runat="server"></asp:DropDownList>
+
+                        <div class="col-12 my-2">
+                            <asp:Label CssClass="text centerText" ID="lblMensajes" runat="server"></asp:Label>
+
+                        </div>
+                        <div class="rowLine" />
                     </div>
 
 
@@ -85,20 +146,7 @@
                         </div>
                     </div>
 
-
-                    <div class="col-12 my-2">
-                        <asp:Label CssClass="text centerText " ID="lblMensajes" runat="server"></asp:Label>
-
-                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
-                            ControlToValidate="txtBuscar"
-                            ValidationExpression="^[a-zA-Z0-9 ]+$"
-                            ErrorMessage="No es un carácter válido" />
-
-                    </div>
                     <div class="col-md-12 align-self-center">
-
-
-
                         <div class="row align-self-center">
                             <div class="col-md-11 col-md-offset-1">
                                 <div class="form-group">
@@ -112,7 +160,7 @@
                                             <Columns>
 
                                                 <asp:BoundField DataField="IdDeposito"
-                                                    HeaderText="Id de Depósito"
+                                                    HeaderText="Identificador del Depósito"
                                                     ItemStyle-CssClass="GridStl" />
 
                                                 <asp:BoundField DataField="Capacidad"

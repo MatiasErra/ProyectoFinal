@@ -156,10 +156,10 @@ namespace Controladoras
 
 
 
-        public List<Deposito> buscarDepositoFiltro(string buscar, string ordenar)
+        public List<Deposito> buscarDepositoFiltro(Deposito pDeposito, int capacidadMenor, int capacidadMayor, int temperaturaMenor, int temperaturaMayor, string ordenar)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Deposito> lst = inst.buscarDepositoFiltro(buscar, ordenar);
+            List<Deposito> lst = inst.buscarDepositoFiltro(pDeposito, capacidadMenor, capacidadMayor, temperaturaMenor, temperaturaMayor, ordenar);
             return lst;
         }
 
@@ -216,10 +216,10 @@ namespace Controladoras
 
 
 
-        public List<Granja> buscarGranjaFiltro(string buscar, string orden)
+        public List<Granja> buscarGranjaFiltro(Granja pGranja, string ordenar)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Granja> lst = inst.buscarGranjaFiltro(buscar, orden);
+            List<Granja> lst = inst.buscarGranjaFiltro(pGranja, ordenar);
             return lst;
         }
 
@@ -346,10 +346,10 @@ namespace Controladoras
 
 
 
-        public List<Pesticida> buscarPesticidaFiltro(string buscar, string impact, string ordenar)
+        public List<Pesticida> buscarPesticidaFiltro(Pesticida pPesticida, double phMenor, double phMayor, string ordenar)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Pesticida> lst = inst.buscarPesticidaFiltro(buscar, impact, ordenar);
+            List<Pesticida> lst = inst.buscarPesticidaFiltro(pPesticida, phMenor, phMayor, ordenar);
             return lst;
         }
 
@@ -409,10 +409,10 @@ namespace Controladoras
 
 
 
-        public List<Fertilizante> buscarFertilizanteFiltro(string buscar, string impact, string ordenar)
+        public List<Fertilizante> buscarFertilizanteFiltro(Fertilizante pFertilizante, double phMenor, double phMayor, string ordenar)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Fertilizante> lst = inst.buscarFertilizanteFiltro(buscar, impact, ordenar);
+            List<Fertilizante> lst = inst.buscarFertilizanteFiltro(pFertilizante, phMenor, phMayor, ordenar);
             return lst;
         }
 
@@ -645,10 +645,10 @@ namespace Controladoras
 
 
 
-        public List<Camion> buscarFiltroCam(string buscar, string disp, string ordenar)
+        public List<Camion> buscarFiltroCam(Camion pCamion, double cargaMenor, double cargaMayor, string ordenar)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Camion> lst = inst.buscarFiltroCam(buscar, disp, ordenar);
+            List<Camion> lst = inst.buscarFiltroCam(pCamion, cargaMenor, cargaMayor, ordenar);
             return lst;
         }
 

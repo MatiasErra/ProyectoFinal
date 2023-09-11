@@ -5,44 +5,61 @@
         <div class="row justify-content-center">
             <div class="col-12 m-3 p-2 text-center backforContent">
                 <div class="row">
-                    <div class="col-12">
-                        <h2 class="title">ABM Granjas </h2>
-                    </div>
-                    <div class="col-12">
-                        <asp:TextBox CssClass="d-inline form-control  w-75 m-2 border-0" ID="txtBuscar" runat="server" placeholder="Buscar" MaxLength="100"  onkeydown="return(( event.keyCode<91 &&  event.keyCode>64  ) || (event.keyCode>=48) && (event.keyCode<=57)   || event.keyCode==32 || event.keyCode==8);"></asp:TextBox>
-                        <asp:Button CssClass="btnE btn--radius btn--green align-self-center btn--srch" ID="btnBuscar" runat="server" Text="Buscar" OnClick="btnBuscar_Click" />
-                    </div>
-                      <div class="col-12 ">
-                         <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
-                            ControlToValidate="txtBuscar"
-                            ValidationExpression="^[a-zA-Z0-9 ]+$"
-                            ErrorMessage="No es un carácter válido" />
-                           </div>
+                    <div class="col-12 p-3">
+                        <h2 class="title">Gestion de Granjas </h2>
 
 
-
-                     <div class="row text-center  ">
+                        <div class="row text-center">
                             <div class=" col-sm-12">
-                                <asp:DropDownList ID="listOrdenarPor" CssClass="lstOrd btn--radius  align-self-center btn--srch " Width="200" AutoPostBack="true" OnSelectedIndexChanged="listOrdenarPor_SelectedIndexChanged" runat="server"></asp:DropDownList>
-                                </div>
+                                <asp:DropDownList ID="listBuscarPor" CssClass="lstOrd btn--radius  align-self-center btn--srch" Width="200" AutoPostBack="true" OnSelectedIndexChanged="listBuscarPor_SelectedIndexChanged" runat="server"></asp:DropDownList>
+                                <asp:DropDownList ID="listOrdenarPor" CssClass="lstOrd btn--radius  align-self-center btn--srch " Width="200" runat="server"></asp:DropDownList>
+                                <asp:Button CssClass="btnE btn--radius btn--green align-self-center btn--srch" ID="btnBuscar" runat="server" Text="Buscar" OnClick="btnBuscar_Click" />
+                            </div>
+                        </div>
+
+                        <div class="row text-center">
+                            <div class="col-sm-12">
+                                <asp:TextBox Visible="false" ID="txtNombreBuscar" CssClass="input--style-text-search" runat="server" placeholder="Nombre" MaxLength="40" onkeydown="return(!(event.keyCode>=91) && event.keyCode!=32);"></asp:TextBox>
+                                <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text centerText"
+                                    ControlToValidate="txtNombreBuscar"
+                                    ValidationExpression="^[a-zA-Z ]*$"
+                                    ErrorMessage="No es una letra valida" />
+
+                                <asp:TextBox Visible="false" ID="txtUbicacionBuscar" CssClass="input--style-text-search" runat="server" placeholder="Ubicacion" MaxLength="40" onkeydown="return(!(event.keyCode>=91) && event.keyCode!=32);"></asp:TextBox>
+                                <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text centerText"
+                                    ControlToValidate="txtUbicacionBuscar"
+                                    ValidationExpression="^[a-zA-Z0-9 ]*$" />
 
 
-                    <div class="col-12">
+                                <asp:DropDownList Visible="false" ID="lstDueñoBuscar" CssClass="input--style-lst-search" runat="server">
+                                </asp:DropDownList>
+                                <asp:Button Visible="false" CssClass="btnE btn--radius btn--green  align-self-center btn--srch" ID="btnBuscarDueñoBuscar" runat="server" Text="Buscar Dueño" OnClick="btnBuscarDueñoBuscar_Click" />
 
-                        <asp:Button ID="btnVolver" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Visible="false" Text="Volver" OnClick="btnVolver_Click" />
-                        <asp:Button ID="btnLimpiar" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" />
+                            </div>
+                        </div>
+
+
+                        <div class="col-12">
+                            <asp:Button ID="btnVolver" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Visible="false" Text="Volver" OnClick="btnVolver_Click" />
+                            <asp:Button ID="btnLimpiar" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" />
+                            <button type="button" class="btnE btn--radius btn--blue align-self-center btn--lst" data-bs-toggle="modal" data-bs-target="#altaModal">
+                                Añadir Granja
+                            </button>
+
+                        </div>
 
 
 
-                        <button type="button" class="btnE btn--radius btn--blue align-self-center btn--lst" data-bs-toggle="modal" data-bs-target="#altaModal">
-                            Añadir Granja
-                        </button>
+                        <div class="col-12 my-2">
+                            <asp:Label CssClass="text centerText" ID="lblMensajes" runat="server"></asp:Label>
 
+                        </div>
+                        <div class="rowLine" />
                     </div>
 
 
                     <!-- Modal Nuevo granja -->
-                    
+
                     <div class="modal fade" id="altaModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog modal-none">
                             <div class="modal-content">
@@ -71,8 +88,8 @@
 
                                     <div class="row">
                                         <div class="col-xl-7 col-lg-12">
-                                           <asp:DropDownList ID="listDueño" CssClass="input--style-lst" runat="server">
-                                        </asp:DropDownList>
+                                            <asp:DropDownList ID="listDueño" CssClass="input--style-lst" runat="server">
+                                            </asp:DropDownList>
 
                                         </div>
                                         <div class="col-xl-5 col-lg-12">
@@ -81,14 +98,14 @@
                                     </div>
 
 
-                              
+
 
 
 
 
                                     <div class="modal-footer">
                                         <asp:Button ID="btnAlta" class="btnE btn--radius btn--green" runat="server" Text="Alta" OnClick="btnAlta_Click" />
-                                      
+
                                         <button type="button" class="btnE btn--radius btn--gray" data-bs-dismiss="modal">Cerrar</button>
 
                                     </div>
@@ -97,16 +114,6 @@
                         </div>
 
                     </div>
-
-                        <div class="col-12 my-2">
-                    <asp:Label CssClass="text centerText " ID="lblMensajes" runat="server"></asp:Label>
-
-                      <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
-                            ControlToValidate="txtBuscar"
-                            ValidationExpression="^[a-zA-Z0-9 ]+$"
-                            ErrorMessage="No es un carácter válido" />
-
-                </div>
 
                 </div>
                 <div class="col-md-12 align-self-center">
@@ -123,7 +130,7 @@
                                         <Columns>
 
                                             <asp:BoundField DataField="IdGranja"
-                                                HeaderText="Id de Granja"
+                                                HeaderText="Identificador de la Granja"
                                                 ItemStyle-CssClass="GridStl" />
 
                                             <asp:BoundField DataField="Nombre"
@@ -133,7 +140,7 @@
                                             <asp:BoundField DataField="Ubicacion"
                                                 HeaderText="Ubicación"
                                                 ItemStyle-CssClass="GridStl" />
-                                           
+
                                             <asp:BoundField DataField="NomDue"
                                                 HeaderText="Nombre del dueño"
                                                 ItemStyle-CssClass="GridStl" />
@@ -144,8 +151,8 @@
                                                 <ItemTemplate>
 
 
-                                                    
-                                                    
+
+
                                                     <asp:Button ID="btnBaja" CssClass="btnE btn--radius btn--red" runat="server" Text="Baja" OnClientClick="return confirm('¿Desea eliminar esta Granja?')" OnClick="btnBaja_Click" />
                                                     <asp:Button ID="btnModificar" CssClass="btnE btn--radius btn--yellow" runat="server" Text="Modificar" OnClick="btnModificar_Click" />
 
@@ -160,7 +167,7 @@
 
 
 
-                                    <asp:GridView ID="lstGranjaSelect" Width="100%" SelectedIndex="1" AutoGenerateColumns="false" Visible ="false"
+                                    <asp:GridView ID="lstGranjaSelect" Width="100%" SelectedIndex="1" AutoGenerateColumns="false" Visible="false"
                                         CssClass="table table-bordered table-condensed table-responsive table-hover"
                                         runat="server">
                                         <AlternatingRowStyle BackColor="White" />
@@ -179,7 +186,7 @@
                                             <asp:BoundField DataField="Ubicacion"
                                                 HeaderText="Ubicacion"
                                                 ItemStyle-CssClass="GridStl" />
-                                           
+
                                             <asp:BoundField DataField="NomDue"
                                                 HeaderText="Nombre del dueño"
                                                 ItemStyle-CssClass="GridStl" />
@@ -190,8 +197,8 @@
                                                 <ItemTemplate>
 
 
-                                                    
-                                                     <asp:Button ID="btnSelect" CssClass="btnE btn--radius btn--blue" runat="server" Text="Seleccionar"  OnClick="btnSelected_Click" />
+
+                                                    <asp:Button ID="btnSelect" CssClass="btnE btn--radius btn--blue" runat="server" Text="Seleccionar" OnClick="btnSelected_Click" />
                                                     <asp:Button ID="btnBaja" CssClass="btnE btn--radius btn--red" runat="server" Text="Baja" OnClientClick="return confirm('¿Desea eliminar esta Granja?')" OnClick="btnBaja_Click" />
                                                     <asp:Button ID="btnModificar" CssClass="btnE btn--radius btn--yellow" runat="server" Text="Modificar" OnClick="btnModificar_Click" />
 
@@ -202,11 +209,11 @@
 
                                         </Columns>
                                     </asp:GridView>
-                                      <div class="text-center">
-                            <asp:LinkButton ID="lblPaginaAnt" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
-                            <asp:Label ID="lblPaginaAct" runat="server" Text=""></asp:Label>
-                            <asp:LinkButton ID="lblPaginaSig" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
-                        </div>
+                                    <div class="text-center">
+                                        <asp:LinkButton ID="lblPaginaAnt" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
+                                        <asp:Label ID="lblPaginaAct" runat="server" Text=""></asp:Label>
+                                        <asp:LinkButton ID="lblPaginaSig" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
+                                    </div>
 
 
 

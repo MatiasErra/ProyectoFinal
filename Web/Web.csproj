@@ -131,17 +131,17 @@
     <Content Include="Paginas\Camiones\modCamiones.aspx" />
     <Content Include="Paginas\Catalogo\frmCatalogo.aspx" />
     <Content Include="Paginas\Catalogo\frmVerProducto.aspx" />
+    <Content Include="Paginas\Clientes\frmListarClientes.aspx" />
+    <Content Include="Paginas\Depositos\frmDepositos.aspx" />
+    <Content Include="Paginas\Fertilizantes\frmFertilizantes.aspx" />
+    <Content Include="Paginas\Granjas\frmGranjas.aspx" />
     <Content Include="Paginas\Pedidos\VerCarrito.aspx" />
     <Content Include="Paginas\Pedidos\VerPedidosCli.aspx" />
-    <Content Include="Paginas\Clientes\frmListarClientes.aspx" />
     <Content Include="Paginas\Clientes\frmModificarCuenta.aspx" />
     <Content Include="Paginas\Clientes\iniciarSesion.aspx" />
     <Content Include="Paginas\Clientes\RegCliente.aspx" />
-    <Content Include="Paginas\Depositos\frmDepositos.aspx" />
     <Content Include="Paginas\Depositos\modDep.aspx" />
-    <Content Include="Paginas\Fertilizantes\frmFertilizantes.aspx" />
     <Content Include="Paginas\Fertilizantes\modFert.aspx" />
-    <Content Include="Paginas\Granjas\frmGranjas.aspx" />
     <Content Include="Paginas\Granjas\modGranja.aspx" />
     <Content Include="Paginas\Lotes\frmAltaLotes.aspx" />
     <Content Include="Paginas\Lotes\frmLotes.aspx" />
@@ -317,6 +317,34 @@
     <Compile Include="Paginas\Catalogo\frmVerProducto.aspx.designer.cs">
       <DependentUpon>frmVerProducto.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Paginas\Clientes\frmListarClientes.aspx.cs">
+      <DependentUpon>frmListarClientes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Clientes\frmListarClientes.aspx.designer.cs">
+      <DependentUpon>frmListarClientes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Depositos\frmDepositos.aspx.cs">
+      <DependentUpon>frmDepositos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Depositos\frmDepositos.aspx.designer.cs">
+      <DependentUpon>frmDepositos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Fertilizantes\frmFertilizantes.aspx.cs">
+      <DependentUpon>frmFertilizantes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Fertilizantes\frmFertilizantes.aspx.designer.cs">
+      <DependentUpon>frmFertilizantes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Granjas\frmGranjas.aspx.cs">
+      <DependentUpon>frmGranjas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Granjas\frmGranjas.aspx.designer.cs">
+      <DependentUpon>frmGranjas.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Paginas\Pedidos\VerCarrito.aspx.cs">
       <DependentUpon>VerCarrito.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -330,13 +358,6 @@
     </Compile>
     <Compile Include="Paginas\Pedidos\VerPedidosCli.aspx.designer.cs">
       <DependentUpon>VerPedidosCli.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Paginas\Clientes\frmListarClientes.aspx.cs">
-      <DependentUpon>frmListarClientes.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Paginas\Clientes\frmListarClientes.aspx.designer.cs">
-      <DependentUpon>frmListarClientes.aspx</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Clientes\frmModificarCuenta.aspx.cs">
       <DependentUpon>frmModificarCuenta.aspx</DependentUpon>
@@ -360,13 +381,6 @@
       <DependentUpon>RegCliente.aspx</DependentUpon>
     </Compile>
     <Compile Include="Paginas\ControladoraWeb.cs" />
-    <Compile Include="Paginas\Depositos\frmDepositos.aspx.cs">
-      <DependentUpon>frmDepositos.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Paginas\Depositos\frmDepositos.aspx.designer.cs">
-      <DependentUpon>frmDepositos.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Paginas\Depositos\modDep.aspx.cs">
       <DependentUpon>modDep.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -374,26 +388,12 @@
     <Compile Include="Paginas\Depositos\modDep.aspx.designer.cs">
       <DependentUpon>modDep.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Fertilizantes\frmFertilizantes.aspx.cs">
-      <DependentUpon>frmFertilizantes.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Paginas\Fertilizantes\frmFertilizantes.aspx.designer.cs">
-      <DependentUpon>frmFertilizantes.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Paginas\Fertilizantes\modFert.aspx.cs">
       <DependentUpon>modFert.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Paginas\Fertilizantes\modFert.aspx.designer.cs">
       <DependentUpon>modFert.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Paginas\Granjas\frmGranjas.aspx.cs">
-      <DependentUpon>frmGranjas.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Paginas\Granjas\frmGranjas.aspx.designer.cs">
-      <DependentUpon>frmGranjas.aspx</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Granjas\modGranja.aspx.cs">
       <DependentUpon>modGranja.aspx</DependentUpon>

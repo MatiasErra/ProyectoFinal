@@ -100,15 +100,16 @@ namespace Web.Paginas.Granjas
                 string b = "";
                 string d = "";
                 string o = "";
-                clientes = Web.buscarCliFiltro(b, d);
+                Cliente cliente = new Cliente();
+                clientes = Web.buscarCliFiltro(cliente,b, d,o);
 
                 dt.Rows.Add(createRow("Seleccione un Dueño", "Seleccione un Dueño", dt));
             }
             else
             {
-                string buscar = txtBuscarDueño.Text.ToLower();
-                string ordenar = "";
-                clientes = Web.buscarCliFiltro(buscar, ordenar);
+                //string buscar = txtBuscarDueño.Text.ToLower();
+                //string ordenar = "";
+                //clientes = Web.buscarCliFiltro(buscar, ordenar);
                
             }
             if (clientes.Count == 0)

@@ -193,10 +193,10 @@ namespace Web.Paginas
         }
    
 
-        public List<Admin> buscarAdminFiltro(string buscar, string varEst, string varAdm, string ordenar)
+        public List<Admin> buscarAdminFiltro(Admin adminBuscar, string fchDesde, string fchHasta, string ordenar)
         {
             ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
-            List<Admin> lst = ins.buscarAdminFiltro(buscar, varEst, varAdm, ordenar);
+            List<Admin> lst = ins.buscarAdminFiltro(adminBuscar, fchDesde, fchHasta, ordenar);
             return lst;
         }
 
@@ -271,10 +271,10 @@ namespace Web.Paginas
             return id;
         }
        
-        public List<Cliente> buscarCliFiltro(string buscar, string ordenar)
+        public List<Cliente> buscarCliFiltro(Cliente cliente, string fchDesde, string fchHasta, string ordenar)
         {
             ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
-            List<Cliente> lst = ins.buscarCliFiltro(buscar, ordenar);
+            List<Cliente> lst = ins.buscarCliFiltro(cliente, fchDesde, fchHasta, ordenar);
             return lst;
         }
 
@@ -335,10 +335,10 @@ namespace Web.Paginas
         #region Camioneros
 
 
-        public List<Camionero> buscarCamioneroFiltro(string buscar, string disp, string ordenar)
+        public List<Camionero> buscarCamioneroFiltro(Camionero pCamionero, string fchNacDesde, string fchNacHasta, string fchVencDesde, string fchVencHasta, string ordenar)
         {
             ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
-            List<Camionero> lst = ins.buscarCamioneroFiltro(buscar, disp, ordenar);
+            List<Camionero> lst = ins.buscarCamioneroFiltro(pCamionero, fchNacDesde, fchNacHasta, fchVencDesde, fchVencHasta, ordenar);
             return lst;
         }
 
@@ -396,10 +396,10 @@ namespace Web.Paginas
 
 
 
-        public List<Deposito> buscarDepositoFiltro(string buscar, string ordenar)
+        public List<Deposito> buscarDepositoFiltro(Deposito pDeposito, int capacidadMenor, int capacidadMayor, int temperaturaMenor, int temperaturaMayor, string ordenar)
         {
             ControladoraItem ins = ControladoraItem.obtenerInstancia();
-            List<Deposito> lst = ins.buscarDepositoFiltro(buscar, ordenar);
+            List<Deposito> lst = ins.buscarDepositoFiltro(pDeposito, capacidadMenor, capacidadMayor, temperaturaMenor, temperaturaMayor, ordenar);
             return lst;
         }
 
@@ -458,10 +458,10 @@ namespace Web.Paginas
 
  
 
-        public List<Granja> buscarGranjaFiltro(string buscar, string orden)
+        public List<Granja> buscarGranjaFiltro(Granja pGranja, string ordenar)
         {
             ControladoraItem ins = ControladoraItem.obtenerInstancia();
-            List<Granja> lst = ins.buscarGranjaFiltro(buscar, orden);
+            List<Granja> lst = ins.buscarGranjaFiltro(pGranja, ordenar);
             return lst;
         }
 
@@ -582,10 +582,10 @@ namespace Web.Paginas
         #region Pesticida
 
 
-        public List<Pesticida> buscarPesticidaFiltro(string buscar, string impact, string ordenar)
+        public List<Pesticida> buscarPesticidaFiltro(Pesticida pPesticida, double phMenor, double phMayor, string ordenar)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Pesticida> lst = inst.buscarPesticidaFiltro(buscar, impact, ordenar);
+            List<Pesticida> lst = inst.buscarPesticidaFiltro(pPesticida, phMenor, phMayor, ordenar);
             return lst;
         }
 
@@ -646,10 +646,10 @@ namespace Web.Paginas
 
     
 
-        public List<Fertilizante> buscarFertilizanteFiltro(string buscar, string impact, string ordenar)
+        public List<Fertilizante> buscarFertilizanteFiltro(Fertilizante pFertilizante, double phMenor, double phMayor, string ordenar)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Fertilizante> lst = inst.buscarFertilizanteFiltro(buscar, impact, ordenar);
+            List<Fertilizante> lst = inst.buscarFertilizanteFiltro(pFertilizante, phMenor, phMayor, ordenar);
             return lst;
         }
 
@@ -885,10 +885,10 @@ namespace Web.Paginas
  
  
 
-        public List<Camion> buscarFiltroCam(string buscar, string disp, string ordenar)
+        public List<Camion> buscarFiltroCam(Camion pCamion, double cargaMenor, double cargaMayor, string ordenar)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Camion> lst = inst.buscarFiltroCam(buscar, disp, ordenar);
+            List<Camion> lst = inst.buscarFiltroCam(pCamion, cargaMenor, cargaMayor, ordenar);
             return lst;
         }
 

@@ -143,7 +143,7 @@ namespace Web.Paginas.Lotes
                 string impact = "";
                 string ordenar = "";
 
-                pesticidas = Web.buscarPesticidaFiltro(value, impact, ordenar);
+                //pesticidas = Web.buscarPesticidaFiltro(value, impact, ordenar);
             }
             else
             {
@@ -151,7 +151,7 @@ namespace Web.Paginas.Lotes
                 string impact = "";
                 string ordenar = "";
 
-                pesticidas = Web.buscarPesticidaFiltro(value, impact, ordenar);
+                //pesticidas = Web.buscarPesticidaFiltro(value, impact, ordenar);
 
             }
             if (pesticidas.Count == 0)

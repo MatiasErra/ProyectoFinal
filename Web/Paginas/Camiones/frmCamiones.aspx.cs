@@ -12,6 +12,9 @@ namespace Web.Paginas.Camiones
 {
     public partial class frmCamiones : System.Web.UI.Page
     {
+
+        #region Load
+
         protected void Page_PreInit(object sender, EventArgs e)
         {
             this.MasterPageFile = "~/Master/AGlobal.Master";
@@ -21,14 +24,10 @@ namespace Web.Paginas.Camiones
         {
             if (!IsPostBack)
             {
-              
-              
 
-                if (System.Web.HttpContext.Current.Session["idCamionMod"] != null)
-                {
-                    lblMensajes.Text = "Camión Modificado";
-                    System.Web.HttpContext.Current.Session["idCamionMod"] = null;
-                }
+                lblMensajes.Text = System.Web.HttpContext.Current.Session["idCamioneroMod"] != null ? "Camión Modificado" : "";
+                System.Web.HttpContext.Current.Session["idCamioneroMod"] = null;
+
 
                 System.Web.HttpContext.Current.Session["idCamionSel"] = null;
 
@@ -43,156 +42,59 @@ namespace Web.Paginas.Camiones
                     lblPaginaAct.Text = System.Web.HttpContext.Current.Session["PagAct"].ToString();
                     System.Web.HttpContext.Current.Session["PagAct"] = null;
                 }
+
                 cargarDisponible();
-                CargarListFiltroTipo();
                 CargarListOrdenarPor();
+                CargarListBuscar();
 
-                if (System.Web.HttpContext.Current.Session["Buscar"] != null)
-                {
-                    txtBuscar.Text = System.Web.HttpContext.Current.Session["Buscar"].ToString();
-                    System.Web.HttpContext.Current.Session["Buscar"] = null;
-                }
+                // Buscador
+                txtMarcaBuscar.Text = System.Web.HttpContext.Current.Session["marcaCamionBuscar"] != null ? System.Web.HttpContext.Current.Session["marcaCamionBuscar"].ToString() : "";
+                System.Web.HttpContext.Current.Session["marcaCamionBuscar"] = null;
+                txtModeloBuscar.Text = System.Web.HttpContext.Current.Session["modeloCamionBuscar"] != null ? System.Web.HttpContext.Current.Session["modeloCamionBuscar"].ToString() : "";
+                System.Web.HttpContext.Current.Session["modeloCamionBuscar"] = null;
+                txtCargaMenorBuscar.Text = System.Web.HttpContext.Current.Session["cargaMenorCamionBuscar"] != null ? System.Web.HttpContext.Current.Session["cargaMenorCamionBuscar"].ToString() : "";
+                System.Web.HttpContext.Current.Session["cargaMenorCamionBuscar"] = null;
+                txtCargaMayorBuscar.Text = System.Web.HttpContext.Current.Session["cargaMayorCamionBuscar"] != null ? System.Web.HttpContext.Current.Session["cargaMayorCamionBuscar"].ToString() : "";
+                System.Web.HttpContext.Current.Session["cargaMayorCamionBuscar"] = null;
 
-                if (System.Web.HttpContext.Current.Session["FiltroTipo"] != null)
-                {
-                    listFiltroTipo.SelectedValue = System.Web.HttpContext.Current.Session["FiltroTipo"].ToString();
-                    System.Web.HttpContext.Current.Session["FiltroTipo"] = null;
-                }
+                // Listas
+                lstDisponibleBuscar.SelectedValue = System.Web.HttpContext.Current.Session["disponibleCamionBuscar"] != null ? System.Web.HttpContext.Current.Session["disponibleCamionBuscar"].ToString() : "Seleccionar disponibilidad";
+                System.Web.HttpContext.Current.Session["disponibleCamionBuscar"] = null;
+                listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"] != null ? System.Web.HttpContext.Current.Session["OrdenarPor"].ToString() : "Ordernar por";
+                System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
 
-
-                if (System.Web.HttpContext.Current.Session["OrdenarPor"] != null)
-                {
-                    listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"].ToString();
-                    System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
-
-                }
-            
                 listarPagina();
 
             }
         }
 
-   
+        #endregion
+
+        #region Utilidad
+
         private bool faltanDatos()
         {
             if (txtModelo.Text == "" || txtMarca.Text == "" || txtCarga.Text == "")
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
-        }
-
-        #region Filtro
-
-        public void CargarListFiltroTipo()
-        {
-            listFiltroTipo.DataSource = null;
-            listFiltroTipo.DataSource = createDataSourceFiltroTipoHab();
-            listFiltroTipo.DataTextField = "nombre";
-            listFiltroTipo.DataValueField = "id";
-            listFiltroTipo.DataBind();
-        }
-
-        ICollection createDataSourceFiltroTipoHab()
-        {
-
-            DataTable dt = new DataTable();
-
-            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
-            dt.Columns.Add(new DataColumn("id", typeof(String)));
-            dt.Rows.Add(createRow("Seleccionar disponibilidad", "Seleccionar disponibilidad", dt));
-            dt.Rows.Add(createRow("Disponible", "Disponible", dt));
-            dt.Rows.Add(createRow("No disponible", "No disponible", dt));
-
-
-
-
-            DataView dv = new DataView(dt);
-            return dv;
-        }
-
-        #endregion
-
-
-        #region Ordenar
-
-        public void CargarListOrdenarPor()
-        {
-            listOrdenarPor.DataSource = null;
-            listOrdenarPor.DataSource = createDataSourceOrdenarPor();
-            listOrdenarPor.DataTextField = "nombre";
-            listOrdenarPor.DataValueField = "id";
-            listOrdenarPor.DataBind();
-        }
-
-        ICollection createDataSourceOrdenarPor()
-        {
-
-            DataTable dt = new DataTable();
-
-            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
-            dt.Columns.Add(new DataColumn("id", typeof(String)));
-
-            dt.Rows.Add(createRow("Ordenar por", "Ordenar por", dt));
-            dt.Rows.Add(createRow("Marca", "Marca", dt));
-            dt.Rows.Add(createRow("Modelo", "Modelo", dt));
-            dt.Rows.Add(createRow("Carga", "Carga", dt));
-            dt.Rows.Add(createRow("Disponible", "Disponible", dt));
-            DataView dv = new DataView(dt);
-            return dv;
-        }
-
-        #endregion
-
-
-        public void cargarDisponible()
-        {
-            lstDisponible.DataSource = createDataSource();
-            lstDisponible.DataTextField = "nombre";
-            lstDisponible.DataValueField = "id";
-            lstDisponible.DataBind();
-        }
-
-        ICollection createDataSource()
-        {
-            DataTable dt = new DataTable();
-
-            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
-            dt.Columns.Add(new DataColumn("id", typeof(String)));
-
-            // Populate the table with sample values.
-            dt.Rows.Add(createRow("Seleccionar disponibilidad", "Seleccionar disponibilidad", dt));
-            dt.Rows.Add(createRow("Disponible", "Disponible", dt));
-            dt.Rows.Add(createRow("No disponible", "No disponible", dt));
-
-
-            DataView dv = new DataView(dt);
-            return dv;
-        }
-
-        DataRow createRow(String Text, String Value, DataTable dt)
-        {
-            DataRow dr = dt.NewRow();
-
-            dr[0] = Text;
-            dr[1] = Value;
-
-            return dr;
+            return false;
         }
 
         private void limpiar()
         {
             lblMensajes.Text = "";
             txtModelo.Text = "";
-            txtBuscar.Text = "";
             txtMarca.Text = "";
             txtCarga.Text = "";
 
+            txtModeloBuscar.Text = "";
+            txtMarcaBuscar.Text = "";
+            txtCargaMayorBuscar.Text = "";
+            txtCargaMenorBuscar.Text = "";
+            lstDisponibleBuscar.SelectedValue = "Seleccionar disponibilidad";
+
             lstDisponible.SelectedValue = "Seleccionar disponibilidad";
-            listFiltroTipo.SelectedValue = "Seleccionar disponibilidad";
             listOrdenarPor.SelectedValue = "Ordenar por";
             lblPaginaAct.Text = "1";
             listarPagina();
@@ -210,10 +112,8 @@ namespace Web.Paginas.Camiones
             }
 
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            string b = "";
-            string d = "";
-            string o = "";
-            List<Camion> lstCam = Web.buscarFiltroCam(b, d,o);
+            Camion cam = new Camion(0, "", "", 0, "");
+            List<Camion> lstCam = Web.buscarFiltroCam(cam, 0, 0, "");
             foreach (Camion camion in lstCam)
             {
                 if (camion.IdCamion.Equals(intGuid))
@@ -229,13 +129,12 @@ namespace Web.Paginas.Camiones
             else return GenerateUniqueId();
         }
 
+        #region Paginas
+
         private int PagMax()
         {
-
-            return 5;
+            return 2;
         }
-
-
 
         private void listarPagina()
         {
@@ -309,57 +208,175 @@ namespace Web.Paginas.Camiones
         private List<Camion> obtenerCamiones()
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            string buscar = txtBuscar.Text;
-            string disp = "";
+            Camion camion = new Camion();
+            camion.Marca = HttpUtility.HtmlEncode(txtMarcaBuscar.Text);
+            camion.Modelo = HttpUtility.HtmlEncode(txtModeloBuscar.Text);
+            camion.Disponible = lstDisponibleBuscar.SelectedValue != "Seleccionar disponibilidad" ? lstDisponibleBuscar.SelectedValue : "";
+            double cargaMenor = txtCargaMenorBuscar.Text == "" ? 0 : double.Parse(txtCargaMenorBuscar.Text);
+            double cargaMayor = txtCargaMayorBuscar.Text == "" ? 0 : double.Parse(txtCargaMayorBuscar.Text);
+            string ordenar = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : "";
 
-            string ordenar = "";
-            if (listFiltroTipo.SelectedValue != "Seleccionar disponibilidad")
-            {
-                disp = listFiltroTipo.SelectedValue;
-            }
-
-            if (listOrdenarPor.SelectedValue != "Ordenar por")
-            {
-                ordenar = listOrdenarPor.SelectedValue;
-            }
-
-            List<Camion> camiones = Web.buscarFiltroCam(buscar, disp, ordenar);
-
+            List<Camion> camiones = Web.buscarFiltroCam(camion, cargaMenor, cargaMayor, ordenar);
 
             return camiones;
         }
 
+        #endregion
+
+        #region DropDownBoxes
+
+        #region Disponible
+
+        public void cargarDisponible()
+        {
+            lstDisponible.DataSource = createDataSource();
+            lstDisponible.DataTextField = "nombre";
+            lstDisponible.DataValueField = "id";
+            lstDisponible.DataBind();
+
+            lstDisponibleBuscar.DataSource = createDataSource();
+            lstDisponibleBuscar.DataTextField = "nombre";
+            lstDisponibleBuscar.DataValueField = "id";
+            lstDisponibleBuscar.DataBind();
+        }
+
+        ICollection createDataSource()
+        {
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+            dt.Columns.Add(new DataColumn("id", typeof(String)));
+
+            // Populate the table with sample values.
+            dt.Rows.Add(createRow("Seleccionar disponibilidad", "Seleccionar disponibilidad", dt));
+            dt.Rows.Add(createRow("Disponible", "Disponible", dt));
+            dt.Rows.Add(createRow("No disponible", "No disponible", dt));
 
 
+            DataView dv = new DataView(dt);
+            return dv;
+        }
 
+        #endregion
 
+        #region Ordenar
 
+        public void CargarListOrdenarPor()
+        {
+            listOrdenarPor.DataSource = null;
+            listOrdenarPor.DataSource = createDataSourceOrdenarPor();
+            listOrdenarPor.DataTextField = "nombre";
+            listOrdenarPor.DataValueField = "id";
+            listOrdenarPor.DataBind();
+        }
+
+        ICollection createDataSourceOrdenarPor()
+        {
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+            dt.Columns.Add(new DataColumn("id", typeof(String)));
+
+            dt.Rows.Add(createRow("Ordenar por", "Ordenar por", dt));
+            dt.Rows.Add(createRow("Marca", "Marca", dt));
+            dt.Rows.Add(createRow("Modelo", "Modelo", dt));
+            dt.Rows.Add(createRow("Carga", "Carga", dt));
+            dt.Rows.Add(createRow("Disponible", "Disponible", dt));
+            DataView dv = new DataView(dt);
+            return dv;
+        }
+
+        #endregion
+
+        #region Buscador
+
+        public void CargarListBuscar()
+        {
+            listBuscarPor.DataSource = null;
+            listBuscarPor.DataSource = createDataSourceBuscar();
+            listBuscarPor.DataTextField = "nombre";
+            listBuscarPor.DataValueField = "id";
+            listBuscarPor.DataBind();
+        }
+
+        ICollection createDataSourceBuscar()
+        {
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+            dt.Columns.Add(new DataColumn("id", typeof(String)));
+
+            dt.Rows.Add(createRow("Buscar por", "Buscar por", dt));
+            dt.Rows.Add(createRow("Marca", "Marca", dt));
+            dt.Rows.Add(createRow("Carga", "Carga", dt));
+            dt.Rows.Add(createRow("Disponibilidad", "Disponibilidad", dt));
+
+            DataView dv = new DataView(dt);
+            return dv;
+        }
+
+        #endregion
+
+        DataRow createRow(String Text, String Value, DataTable dt)
+        {
+            DataRow dr = dt.NewRow();
+
+            dr[0] = Text;
+            dr[1] = Value;
+
+            return dr;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Botones
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            lblPaginaAct.Text = "1";
-            listarPagina();
-        }
-        protected void listFiltroTipo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            lblPaginaAct.Text = "1";
-            listarPagina();
+            if (txtCargaMenorBuscar.Text == "" && txtCargaMayorBuscar.Text == "")
+            {
+                lblPaginaAct.Text = "1";
+                listarPagina();
+            }
+            else if (txtCargaMenorBuscar.Text != "" && txtCargaMayorBuscar.Text != "")
+            {
+                if (double.Parse(txtCargaMenorBuscar.Text) <= double.Parse(txtCargaMayorBuscar.Text))
+                {
+                    lblPaginaAct.Text = "1";
+                    listarPagina();
+                }
+                else lblMensajes.Text = "La cantidad de carga menor es mayor";
+            }
+            else lblMensajes.Text = "La cantidad de carga menor o mayor esta vacía.";
         }
 
-        protected void listOrdenarPor_SelectedIndexChanged(object sender, EventArgs e)
+        protected void listBuscarPor_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lblPaginaAct.Text = "1";
-            listarPagina();
+            txtMarcaBuscar.Visible = listBuscarPor.SelectedValue == "Marca" ? true : false;
+            txtModeloBuscar.Visible = listBuscarPor.SelectedValue == "Marca" ? true : false;
+            lblCargaMenorBuscar.Visible = listBuscarPor.SelectedValue == "Carga" ? true : false;
+            txtCargaMenorBuscar.Visible = listBuscarPor.SelectedValue == "Carga" ? true : false;
+            lblCargaMayorBuscar.Visible = listBuscarPor.SelectedValue == "Carga" ? true : false;
+            txtCargaMayorBuscar.Visible = listBuscarPor.SelectedValue == "Carga" ? true : false;
+            lstDisponibleBuscar.Visible = listBuscarPor.SelectedValue == "Disponibilidad" ? true : false;
         }
+
         protected void lblPaginaAnt_Click(object sender, EventArgs e)
         {
             string p = lblPaginaAct.Text.ToString();
             int pagina = int.Parse(p);
             System.Web.HttpContext.Current.Session["PagAct"] = (pagina - 1).ToString();
-            System.Web.HttpContext.Current.Session["Buscar"] = txtBuscar.Text;
-            System.Web.HttpContext.Current.Session["FiltroTipo"] = listFiltroTipo.SelectedValue;
 
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue;
+            System.Web.HttpContext.Current.Session["marcaCamionBuscar"] = txtMarcaBuscar.Text;
+            System.Web.HttpContext.Current.Session["modeloCamionBuscar"] = txtModeloBuscar.Text;
+            System.Web.HttpContext.Current.Session["cargaMenorCamionBuscar"] = txtCargaMenorBuscar.Text;
+            System.Web.HttpContext.Current.Session["cargaMayorCamionBuscar"] = txtCargaMayorBuscar.Text;
+            System.Web.HttpContext.Current.Session["disponibleCamionBuscar"] = lstDisponibleBuscar.SelectedValue != "Seleccionar disponibilidad" ? lstDisponibleBuscar.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+
             Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
 
@@ -368,10 +385,14 @@ namespace Web.Paginas.Camiones
             string p = lblPaginaAct.Text.ToString();
             int pagina = int.Parse(p);
             System.Web.HttpContext.Current.Session["PagAct"] = (pagina + 1).ToString();
-            System.Web.HttpContext.Current.Session["Buscar"] = txtBuscar.Text;
-            System.Web.HttpContext.Current.Session["FiltroTipo"] = listFiltroTipo.SelectedValue;
 
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue;
+            System.Web.HttpContext.Current.Session["marcaCamionBuscar"] = txtMarcaBuscar.Text;
+            System.Web.HttpContext.Current.Session["modeloCamionBuscar"] = txtModeloBuscar.Text;
+            System.Web.HttpContext.Current.Session["cargaMenorCamionBuscar"] = txtCargaMenorBuscar.Text;
+            System.Web.HttpContext.Current.Session["cargaMayorCamionBuscar"] = txtCargaMayorBuscar.Text;
+            System.Web.HttpContext.Current.Session["disponibleCamionBuscar"] = lstDisponibleBuscar.SelectedValue != "Seleccionar disponibilidad" ? lstDisponibleBuscar.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+
             Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
 
@@ -396,22 +417,11 @@ namespace Web.Paginas.Camiones
                         lblMensajes.Text = "Camión dado de alta con éxito.";
                         listarPagina();
                     }
-                    else
-                    {
-                        lblMensajes.Text = "No se pudo dar de alta el Camión.";
-
-                    }
-
+                    else lblMensajes.Text = "No se pudo dar de alta el Camión.";
                 }
-                else
-                {
-                    lblMensajes.Text = "Falta seleccionar la disponibilidad.";
-                }
+                else lblMensajes.Text = "Falta seleccionar la disponibilidad.";
             }
-            else
-            {
-                lblMensajes.Text = "Faltan datos.";
-            }
+            else lblMensajes.Text = "Faltan datos.";
         }
 
 
@@ -434,21 +444,20 @@ namespace Web.Paginas.Camiones
                     lblMensajes.Text = "Se ha borrado el Camión.";
                     listarPagina();
                 }
-                else
-                {
-
-                    lblMensajes.Text = "No se ha podido borrar el Camión.";
-                }
+                else lblMensajes.Text = "No se ha podido borrar el Camión.";
             }
-            else
-            {
-                lblMensajes.Text = "El Camión no existe.";
-            }
-
+            else lblMensajes.Text = "El Camión no existe.";
         }
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
+            System.Web.HttpContext.Current.Session["PagAct"] = "1";
+            System.Web.HttpContext.Current.Session["marcaCamionBuscar"] = txtMarcaBuscar.Text;
+            System.Web.HttpContext.Current.Session["modeloCamionBuscar"] = txtModeloBuscar.Text;
+            System.Web.HttpContext.Current.Session["cargaMenorCamionBuscar"] = txtCargaMenorBuscar.Text;
+            System.Web.HttpContext.Current.Session["cargaMayorCamionBuscar"] = txtCargaMayorBuscar.Text;
+            System.Web.HttpContext.Current.Session["disponibleCamionBuscar"] = lstDisponibleBuscar.SelectedValue != "Seleccionar disponibilidad" ? lstDisponibleBuscar.SelectedValue : null;
+
             int id;
             Button btnConstultar = (Button)sender;
             GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
@@ -456,16 +465,14 @@ namespace Web.Paginas.Camiones
 
             System.Web.HttpContext.Current.Session["idCamionSel"] = id;
             Response.Redirect("/Paginas/Camiones/modCamiones");
-
-
         }
 
         protected void btnLimpiar_Click(object sender, EventArgs e)
         {
             limpiar();
         }
+
+        #endregion
+
     }
-
-
-
 }

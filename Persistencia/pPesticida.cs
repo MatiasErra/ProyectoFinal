@@ -13,10 +13,9 @@ namespace Persistencia
     internal class pPesticida
     {
 
-      
 
 
-        public List<Pesticida> buscarPesticidaFiltro(string buscar, string impact, string ordenar)
+        public List<Pesticida> buscarPesticidaFiltro(Pesticida pPesticida, double phMenor, double phMayor, string ordenar)
         {
             List<Pesticida> resultado = new List<Pesticida>();
             try
@@ -29,8 +28,11 @@ namespace Persistencia
                 SqlCommand cmd = new SqlCommand("BuscarPesticidaFiltro", conect);
 
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@buscar", buscar));
-                cmd.Parameters.Add(new SqlParameter("@impact", impact));
+                cmd.Parameters.Add(new SqlParameter("@nombre", pPesticida.Nombre));
+                cmd.Parameters.Add(new SqlParameter("@tipo", pPesticida.Tipo));
+                cmd.Parameters.Add(new SqlParameter("@phMenor", phMenor));
+                cmd.Parameters.Add(new SqlParameter("@phMayor", phMayor));
+                cmd.Parameters.Add(new SqlParameter("@impacto", pPesticida.Impacto));
                 cmd.Parameters.Add(new SqlParameter("@ordenar", ordenar));
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -56,7 +58,6 @@ namespace Persistencia
             }
             return resultado;
         }
-
         public Pesticida buscarPesti(int id)
         {
             Pesticida pesticida = new Pesticida();

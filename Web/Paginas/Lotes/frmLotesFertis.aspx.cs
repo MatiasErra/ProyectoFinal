@@ -162,14 +162,14 @@ namespace Web.Paginas.Lotes
                 string impact = "";
                 string ord = "";
        
-                fertilizantes = Web.buscarFertilizanteFiltro(value,impact,ord);
+                //fertilizantes = Web.buscarFertilizanteFiltro(value,impact,ord);
             }
             else
             {
                 string value = txtBuscarFertilizante.Text.ToLower();
                 string impact = "";
                 string ord = "";
-                fertilizantes = Web.buscarFertilizanteFiltro(value, impact ,ord);
+                //fertilizantes = Web.buscarFertilizanteFiltro(value, impact ,ord);
 
             }
             if (fertilizantes.Count == 0)

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -12,6 +13,9 @@ namespace Web.Paginas.Depositos
 {
     public partial class frmDepositos : System.Web.UI.Page
     {
+
+        #region Load
+
         protected void Page_PreInit(object sender, EventArgs e)
         {
             this.MasterPageFile = "~/Master/AGlobal.Master";
@@ -47,18 +51,25 @@ namespace Web.Paginas.Depositos
                 System.Web.HttpContext.Current.Session["idDep"] = null;
 
                 CargarListOrdenarPor();
-                if (System.Web.HttpContext.Current.Session["Buscar"] != null)
-                {
-                    txtBuscar.Text = System.Web.HttpContext.Current.Session["Buscar"].ToString();
-                    System.Web.HttpContext.Current.Session["Buscar"] = null;
-                }
+                CargarListBuscar();
 
-                if (System.Web.HttpContext.Current.Session["OrdenarPor"] != null)
-                {
-                    listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"].ToString();
-                    System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
+                // Buscador
+                txtCondicionesBuscar.Text = System.Web.HttpContext.Current.Session["condicionesDepositoBuscar"] != null ? System.Web.HttpContext.Current.Session["condicionesDepositoBuscar"].ToString() : "";
+                System.Web.HttpContext.Current.Session["condicionesDepositoBuscar"] = null;
+                txtUbicacionBuscar.Text = System.Web.HttpContext.Current.Session["ubicacionDepositoBuscar"] != null ? System.Web.HttpContext.Current.Session["ubicacionDepositoBuscar"].ToString() : "";
+                System.Web.HttpContext.Current.Session["ubicacionDepositoBuscar"] = null;
+                txtTemperaturaMenorBuscar.Text = System.Web.HttpContext.Current.Session["temperaturaMenorDepositoBuscar"] != null ? System.Web.HttpContext.Current.Session["temperaturaMenorDepositoBuscar"].ToString() : "";
+                System.Web.HttpContext.Current.Session["temperaturaMenorDepositoBuscar"] = null;
+                txtTemperaturaMayorBuscar.Text = System.Web.HttpContext.Current.Session["temperaturaMayorDepositoBuscar"] != null ? System.Web.HttpContext.Current.Session["temperaturaMayorDepositoBuscar"].ToString() : "";
+                System.Web.HttpContext.Current.Session["temperaturaMayorDepositoBuscar"] = null;
+                txtCapacidadMenorBuscar.Text = System.Web.HttpContext.Current.Session["capacidadMenorDepositoBuscar"] != null ? System.Web.HttpContext.Current.Session["capacidadMenorDepositoBuscar"].ToString() : "";
+                System.Web.HttpContext.Current.Session["capacidadMenorDepositoBuscar"] = null;
+                txtCapacidadMayorBuscar.Text = System.Web.HttpContext.Current.Session["capacidadMayorDepositoBuscar"] != null ? System.Web.HttpContext.Current.Session["capacidadMayorDepositoBuscar"].ToString() : "";
+                System.Web.HttpContext.Current.Session["capacidadMayorDepositoBuscar"] = null;
 
-                }
+                // Listas
+                listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"] != null ? System.Web.HttpContext.Current.Session["OrdenarPor"].ToString() : "Ordernar por";
+                System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
 
                 listarPagina();
 
@@ -66,34 +77,81 @@ namespace Web.Paginas.Depositos
             }
         }
 
-        //private void listar()
-        //{
-        //    ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-        //    List<Deposito> lst = Web.listDeps();
-        //    if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
-        //    {
+        #endregion
 
-        //        lstDepositoSelect.Visible=true;
-        //        lstDepositoSelect.DataSource =lst;
-        //        lstDepositoSelect.DataBind();
-        //    }
-        //    else
-        //    {
+        #region Utilidad
 
-        //        lstDeposito.Visible = true;
-        //        lstDeposito.DataSource = lst;
-        //        lstDeposito.DataBind();
-        //    }
-        //}
+        private bool faltanDatos()
+        {
+            if (txtCapacidad.Text == "" || txtCondiciones.Text == "" || txtTemperatura.Text == "" || txtUbicacion.Text == "")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
+        private void limpiar()
+        {
+            lblMensajes.Text = "";
+            txtId.Text = "";
+
+            txtCondicionesBuscar.Text = "";
+            txtUbicacionBuscar.Text = "";
+            txtTemperaturaMayorBuscar.Text = "";
+            txtTemperaturaMenorBuscar.Text = "";
+            txtCapacidadMayorBuscar.Text = "";
+            txtCapacidadMenorBuscar.Text = "";
+
+            txtCapacidad.Text = "";
+            txtCondiciones.Text = "";
+            txtTemperatura.Text = "";
+            txtUbicacion.Text = "";
+            lstDeposito.SelectedIndex = -1;
+            lblMensajes.Text = "";
+            listOrdenarPor.SelectedValue = "Ordenar por";
+            lblPaginaAct.Text = "1";
+            listarPagina();
+        }
+
+        static int GenerateUniqueId()
+        {
+            Guid guid = Guid.NewGuid();
+            int intGuid = guid.GetHashCode();
+            int i = 0;
+
+            while (intGuid < 0)
+            {
+                return GenerateUniqueId();
+            }
+
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+
+            Deposito dep = new Deposito();
+            List<Deposito> lstDep = Web.buscarDepositoFiltro(dep, 0, 0, -1, -1, "");
+            foreach (Deposito deposito in lstDep)
+            {
+                if (deposito.IdDeposito.Equals(intGuid))
+                {
+                    i++;
+                }
+            }
+
+            if (i == 0)
+            {
+                return intGuid;
+            }
+            else return GenerateUniqueId();
+        }
+
+        #region Paginas
 
         private int PagMax()
         {
-
             return 2;
         }
-
-
 
         private void listarPagina()
         {
@@ -149,8 +207,8 @@ namespace Web.Paginas.Depositos
                     lstDeposito.DataBind();
                 }
             }
-
         }
+
         private void modificarPagina()
         {
             List<Deposito> deposito = obtenerDepositos();
@@ -177,24 +235,26 @@ namespace Web.Paginas.Depositos
             lblPaginaSig.Text = (int.Parse(pagAct) + 1).ToString();
         }
 
-
         private List<Deposito> obtenerDepositos()
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            string buscar = txtBuscar.Text;
+            Deposito deposito = new Deposito();
+            deposito.Condiciones = HttpUtility.HtmlEncode(txtCondicionesBuscar.Text);
+            deposito.Ubicacion = HttpUtility.HtmlEncode(txtUbicacionBuscar.Text);   
+            int capacidadMenor = txtCapacidadMenorBuscar.Text == "" ? 0 : int.Parse(txtCapacidadMenorBuscar.Text);
+            int capacidadMayor = txtCapacidadMayorBuscar.Text == "" ? 0 : int.Parse(txtCapacidadMayorBuscar.Text);
+            int temperaturaMenor = txtTemperaturaMenorBuscar.Text == "" ? -1 : int.Parse(txtTemperaturaMenorBuscar.Text);
+            int temperaturaMayor = txtTemperaturaMayorBuscar.Text == "" ? -1 : int.Parse(txtTemperaturaMayorBuscar.Text);
+            string ordenar = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : "";
 
-            string ordenar = "";
-
-
-            if (listOrdenarPor.SelectedValue != "Ordenar por")
-            {
-                ordenar = listOrdenarPor.SelectedValue;
-            }
-
-            List<Deposito> depositos = Web.buscarDepositoFiltro(buscar, ordenar);
+            List<Deposito> depositos = Web.buscarDepositoFiltro(deposito,capacidadMenor, capacidadMayor, temperaturaMenor, temperaturaMayor, ordenar);
 
             return depositos;
         }
+
+        #endregion
+
+        #region DropDownBoxes
 
         #region Ordenar
 
@@ -209,7 +269,6 @@ namespace Web.Paginas.Depositos
 
         ICollection createDataSourceOrdenarPor()
         {
-
             DataTable dt = new DataTable();
 
             dt.Columns.Add(new DataColumn("nombre", typeof(String)));
@@ -225,113 +284,135 @@ namespace Web.Paginas.Depositos
             return dv;
         }
 
+        #endregion
+
+        #region Buscador
+
+        public void CargarListBuscar()
+        {
+            listBuscarPor.DataSource = null;
+            listBuscarPor.DataSource = createDataSourceBuscar();
+            listBuscarPor.DataTextField = "nombre";
+            listBuscarPor.DataValueField = "id";
+            listBuscarPor.DataBind();
+        }
+
+        ICollection createDataSourceBuscar()
+        {
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+            dt.Columns.Add(new DataColumn("id", typeof(String)));
+
+            dt.Rows.Add(createRow("Buscar por", "Buscar por", dt));
+            dt.Rows.Add(createRow("Capacidad", "Capacidad", dt));
+            dt.Rows.Add(createRow("Ubicación", "Ubicación", dt));
+            dt.Rows.Add(createRow("Temperatura", "Temperatura", dt));
+            dt.Rows.Add(createRow("Condiciones", "Condiciones", dt));
+
+            DataView dv = new DataView(dt);
+            return dv;
+        }
+
+        #endregion
+
 
         DataRow createRow(String Text, String Value, DataTable dt)
         {
-
-
             DataRow dr = dt.NewRow();
 
             dr[0] = Text;
             dr[1] = Value;
 
             return dr;
-
         }
+
         #endregion
 
+        #endregion
 
-        private bool faltanDatos()
-        {
-            if (txtCapacidad.Text == "" || txtCondiciones.Text == "" || txtTemperatura.Text == "" || txtUbicacion.Text == "")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-
-
-        private void limpiar()
-        {
-            lblMensajes.Text = "";
-            txtId.Text = "";
-            txtBuscar.Text = "";
-
-            txtCapacidad.Text = "";
-            txtCondiciones.Text = "";
-            txtTemperatura.Text = "";
-            txtUbicacion.Text = "";
-            lstDeposito.SelectedIndex = -1;
-            lblMensajes.Text = "";
-            listOrdenarPor.SelectedValue = "Ordenar por";
-            lblPaginaAct.Text = "1";
-            listarPagina();
-        }
-
-
-
-
-        static int GenerateUniqueId()
-        {
-            Guid guid = Guid.NewGuid();
-            int intGuid = guid.GetHashCode();
-            int i = 0;
-
-            while (intGuid < 0)
-            {
-                return GenerateUniqueId();
-            }
-
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            string b = "";
-            string d = "";
-           
-            List<Deposito> lstDep = Web.buscarDepositoFiltro(b,d);
-            foreach (Deposito deposito in lstDep)
-            {
-                if (deposito.IdDeposito.Equals(intGuid))
-                {
-                    i++;
-                }
-            }
-
-            if (i == 0)
-            {
-                return intGuid;
-            }
-            else return GenerateUniqueId();
-        }
-
-
+        #region Botones
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            lblPaginaAct.Text = "1";
-            listarPagina();
-        }
-        protected void listFiltroTipo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            lblPaginaAct.Text = "1";
-            listarPagina();
+            if (comprobarNumeros())
+            {
+                if(txtTemperaturaMenorBuscar.Text != "" && txtCapacidadMenorBuscar.Text != "")
+                {
+                    if ((int.Parse(txtTemperaturaMenorBuscar.Text) <= int.Parse(txtTemperaturaMayorBuscar.Text)) && (int.Parse(txtCapacidadMenorBuscar.Text) <= int.Parse(txtCapacidadMayorBuscar.Text)))
+                    {
+                        lblPaginaAct.Text = "1";
+                        listarPagina();
+                    }
+                    else lblMensajes.Text = "La capacidad o temperatura menor es mayor.";
+                }
+                else if (txtTemperaturaMenorBuscar.Text != "")
+                {
+                    if (int.Parse(txtTemperaturaMenorBuscar.Text) <= int.Parse(txtTemperaturaMayorBuscar.Text))
+                    {
+                        lblPaginaAct.Text = "1";
+                        listarPagina();
+                    }
+                    else lblMensajes.Text = "La temperatura menor es mayor.";
+                }
+                else if (txtCapacidadMenorBuscar.Text != "")
+                {
+                    if (int.Parse(txtCapacidadMenorBuscar.Text) <= int.Parse(txtCapacidadMayorBuscar.Text))
+                    {
+                        lblPaginaAct.Text = "1";
+                        listarPagina();
+                    }
+                    else lblMensajes.Text = "La capacidad menor es mayor.";
+                }
+                else
+                {
+                    lblPaginaAct.Text = "1";
+                    listarPagina();
+                }
+            }
+            else lblMensajes.Text = "La capacidad o temperatura esta incompleta.";
         }
 
-        protected void listOrdenarPor_SelectedIndexChanged(object sender, EventArgs e)
+        private bool comprobarNumeros()
         {
-            lblPaginaAct.Text = "1";
-            listarPagina();
+            int num = 0;
+            num = txtCapacidadMayorBuscar.Text == "" && txtCapacidadMenorBuscar.Text == "" ? num + 1 : num + 0;
+            num = txtCapacidadMayorBuscar.Text != "" && txtCapacidadMenorBuscar.Text != "" ? num + 1 : num + 0;
+            num = txtTemperaturaMayorBuscar.Text == "" && txtTemperaturaMenorBuscar.Text == "" ? num + 1 : num + 0;
+            num = txtTemperaturaMayorBuscar.Text != "" && txtTemperaturaMenorBuscar.Text != "" ? num + 1 : num + 0;
+
+            if (num < 2) return false;
+            return true;
         }
+
+        protected void listBuscarPor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtUbicacionBuscar.Visible = listBuscarPor.SelectedValue == "Ubicación" ? true : false;
+            txtCondicionesBuscar.Visible = listBuscarPor.SelectedValue == "Condiciones" ? true : false;
+            lblCapacidadMayorBuscar.Visible = listBuscarPor.SelectedValue == "Capacidad" ? true : false;
+            lblCapacidadMenorBuscar.Visible = listBuscarPor.SelectedValue == "Capacidad" ? true : false;
+            txtCapacidadMayorBuscar.Visible = listBuscarPor.SelectedValue == "Capacidad" ? true : false;
+            txtCapacidadMenorBuscar.Visible = listBuscarPor.SelectedValue == "Capacidad" ? true : false;
+            lblTemperaturaMayorBuscar.Visible = listBuscarPor.SelectedValue == "Temperatura" ? true : false;
+            lblTemperaturaMenorBuscar.Visible = listBuscarPor.SelectedValue == "Temperatura" ? true : false;
+            txtTemperaturaMayorBuscar.Visible = listBuscarPor.SelectedValue == "Temperatura" ? true : false;
+            txtTemperaturaMenorBuscar.Visible = listBuscarPor.SelectedValue == "Temperatura" ? true : false;
+        }
+
         protected void lblPaginaAnt_Click(object sender, EventArgs e)
         {
             string p = lblPaginaAct.Text.ToString();
             int pagina = int.Parse(p);
             System.Web.HttpContext.Current.Session["PagAct"] = (pagina - 1).ToString();
-            System.Web.HttpContext.Current.Session["Buscar"] = txtBuscar.Text;
 
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue;
+            System.Web.HttpContext.Current.Session["ubicacionDepositoBuscar"] = txtUbicacionBuscar.Text;
+            System.Web.HttpContext.Current.Session["condicionesDepositoBuscar"] = txtCondicionesBuscar.Text;
+            System.Web.HttpContext.Current.Session["capacidadMenorDepositoBuscar"] = txtCapacidadMenorBuscar.Text;
+            System.Web.HttpContext.Current.Session["capacidadMayorDepositoBuscar"] = txtCapacidadMayorBuscar.Text;
+            System.Web.HttpContext.Current.Session["temperaturaMenorDepositoBuscar"] = txtTemperaturaMenorBuscar.Text;
+            System.Web.HttpContext.Current.Session["temperaturaMayorDepositoBuscar"] = txtTemperaturaMayorBuscar.Text;
+            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+
             Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
 
@@ -340,10 +421,15 @@ namespace Web.Paginas.Depositos
             string p = lblPaginaAct.Text.ToString();
             int pagina = int.Parse(p);
             System.Web.HttpContext.Current.Session["PagAct"] = (pagina + 1).ToString();
-            System.Web.HttpContext.Current.Session["Buscar"] = txtBuscar.Text;
 
+            System.Web.HttpContext.Current.Session["ubicacionDepositoBuscar"] = txtUbicacionBuscar.Text;
+            System.Web.HttpContext.Current.Session["condicionesDepositoBuscar"] = txtCondicionesBuscar.Text;
+            System.Web.HttpContext.Current.Session["capacidadMenorDepositoBuscar"] = txtCapacidadMenorBuscar.Text;
+            System.Web.HttpContext.Current.Session["capacidadMayorDepositoBuscar"] = txtCapacidadMayorBuscar.Text;
+            System.Web.HttpContext.Current.Session["temperaturaMenorDepositoBuscar"] = txtTemperaturaMenorBuscar.Text;
+            System.Web.HttpContext.Current.Session["temperaturaMayorDepositoBuscar"] = txtTemperaturaMayorBuscar.Text;
+            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
 
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue;
             Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
 
@@ -379,19 +465,10 @@ namespace Web.Paginas.Depositos
                         listarPagina();
 
                     }
-
                 }
-                else
-                {
-
-                    lblMensajes.Text = "Ya existe un Depósito con estos datos. Estos son los posibles datos repetidos (Ubicación).";
-
-                }
+                else lblMensajes.Text = "Ya existe un Depósito con estos datos. Estos son los posibles datos repetidos (Ubicación).";
             }
-            else
-            {
-                lblMensajes.Text = "Faltan datos.";
-            }
+            else lblMensajes.Text = "Faltan datos.";
         }
 
         protected void btnSelected_Click(object sender, EventArgs e)
@@ -405,9 +482,6 @@ namespace Web.Paginas.Depositos
             System.Web.HttpContext.Current.Session["idDepositoSel"] = id;
 
             Response.Redirect("/Paginas/Lotes/frmAltaLotes");
-
-
-
         }
 
 
@@ -428,17 +502,20 @@ namespace Web.Paginas.Depositos
                     lblMensajes.Text = "Se ha eliminado el Depósito.";
                     listarPagina();
                 }
-                else
-                {
-                    lblMensajes.Text = "No se ha podido eliminar el Depósito.";
-                }
-
+                else lblMensajes.Text = "No se ha podido eliminar el Depósito.";
             }
-
         }
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
+            System.Web.HttpContext.Current.Session["PagAct"] = "1";
+            System.Web.HttpContext.Current.Session["ubicacionDepositoBuscar"] = txtUbicacionBuscar.Text;
+            System.Web.HttpContext.Current.Session["condicionesDepositoBuscar"] = txtCondicionesBuscar.Text;
+            System.Web.HttpContext.Current.Session["capacidadMenorDepositoBuscar"] = txtCapacidadMenorBuscar.Text;
+            System.Web.HttpContext.Current.Session["capacidadMayorDepositoBuscar"] = txtCapacidadMayorBuscar.Text;
+            System.Web.HttpContext.Current.Session["temperaturaMenorDepositoBuscar"] = txtTemperaturaMenorBuscar.Text;
+            System.Web.HttpContext.Current.Session["temperaturaMayorDepositoBuscar"] = txtTemperaturaMayorBuscar.Text;
+            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
 
             int id;
             Button btnConstultar = (Button)sender;
@@ -454,5 +531,8 @@ namespace Web.Paginas.Depositos
         {
             limpiar();
         }
+
+        #endregion
+ 
     }
 }

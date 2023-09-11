@@ -12,10 +12,10 @@ namespace Persistencia
 {
     public class pFertilizante
     {
-       
 
-     
-        public List<Fertilizante> buscarFertilizanteFiltro(string buscar, string impact, string ordenar)
+
+
+        public List<Fertilizante> buscarFertilizanteFiltro(Fertilizante pFertilizante, double phMenor, double phMayor, string ordenar)
         {
             List<Fertilizante> resultado = new List<Fertilizante>();
             try
@@ -28,8 +28,11 @@ namespace Persistencia
                 SqlCommand cmd = new SqlCommand("BuscarFertilizanteFiltro", conect);
 
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@buscar", buscar));
-                cmd.Parameters.Add(new SqlParameter("@impact", impact));
+                cmd.Parameters.Add(new SqlParameter("@nombre", pFertilizante.Nombre));
+                cmd.Parameters.Add(new SqlParameter("@tipo", pFertilizante.Tipo));
+                cmd.Parameters.Add(new SqlParameter("@phMenor", phMenor));
+                cmd.Parameters.Add(new SqlParameter("@phMayor", phMayor));
+                cmd.Parameters.Add(new SqlParameter("@impacto", pFertilizante.Impacto));
                 cmd.Parameters.Add(new SqlParameter("@ordenar", ordenar));
 
                 using (SqlDataReader reader = cmd.ExecuteReader())

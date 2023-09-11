@@ -132,9 +132,9 @@ namespace Web.Paginas.Lotes
         ICollection createDataSourceGranja()
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            string var1 = "";
+            Granja granja = new Granja();
             string var2 = "";
-            List<Granja> granjas = Web.buscarGranjaFiltro(var1, var2);
+            List<Granja> granjas = Web.buscarGranjaFiltro(granja, var2);
             DataTable dt = new DataTable();
 
 

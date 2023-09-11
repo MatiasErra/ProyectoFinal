@@ -9,6 +9,8 @@
                         <h2 class="title">Ver Pedidos </h2>
                     </div>
 
+                    <asp:Label ID="PedSinCon" runat="server"> <h5 class="title">Pedidos sin Confirmar</h5>  </asp:Label>
+
                     <div class="col-12 my-2">
                         <asp:Label CssClass="text centerText " ID="lblMensajes" runat="server"></asp:Label>
                     </div>
@@ -23,7 +25,7 @@
                         </div>
                         <div class="row align-self-center">
                             <div class="col-md-10 col-md-offset-1">
-                                <asp:Label ID="PedSinCon" runat="server"> <h5 class="title">Pedidos sin Confirmar</h5>  </asp:Label>
+
                                 <div class="form-group">
                                     <div class="table-responsive">
                                         <asp:GridView ID="LstPedSinCon" Width="100%" SelectedIndex="1" AutoGenerateColumns="false"

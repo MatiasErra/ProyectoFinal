@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="frmCamiones.aspx.cs" Inherits="Web.Paginas.Camiones.frmCamiones" %>
+﻿<%@ Page Title="Gestion de camiones" Language="C#" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="frmCamiones.aspx.cs" Inherits="Web.Paginas.Camiones.frmCamiones" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -6,50 +6,75 @@
         <div class="row justify-content-center">
             <div class="col-12 m-3 p-2 text-center backforContent">
                 <div class="row">
-                    <div class="col-12">
-                        <h2 class="title">ABM Camiones </h2>
-                    </div>
-
-                    <div class="col-12">
+                    <div class="col-12 p-3">
+                        <h2 class="title">Gestion de Camiones </h2>
 
 
-                        <asp:TextBox CssClass="d-inline form-control  w-50 m-2 border-0  " ID="txtBuscar" runat="server" placeholder="Buscar" MaxLength="100" onkeydown="return(!(event.keyCode>=91));"></asp:TextBox>
-                        <asp:Button CssClass="btnE btn--radius btn--green align-self-center btn--srch" ID="btnBuscar" runat="server" Text="Buscar" OnClick="btnBuscar_Click" />
-                    </div>
-
-                    <div class="row text-center  ">
-                        <div class=" col-sm-12">
-                            <asp:DropDownList ID="listFiltroTipo" CssClass="lstOrd btn--radius  align-self-center btn--srch" Width="250" AutoPostBack="true" OnSelectedIndexChanged="listFiltroTipo_SelectedIndexChanged" runat="server"></asp:DropDownList>
-
-                            <asp:DropDownList ID="listOrdenarPor" CssClass="lstOrd btn--radius  align-self-center btn--srch " Width="200" AutoPostBack="true" OnSelectedIndexChanged="listOrdenarPor_SelectedIndexChanged" runat="server"></asp:DropDownList>
+                        <div class="row text-center">
+                            <div class=" col-sm-12">
+                                <asp:DropDownList ID="listBuscarPor" CssClass="lstOrd btn--radius  align-self-center btn--srch" Width="200" AutoPostBack="true" OnSelectedIndexChanged="listBuscarPor_SelectedIndexChanged" runat="server"></asp:DropDownList>
+                                <asp:DropDownList ID="listOrdenarPor" CssClass="lstOrd btn--radius  align-self-center btn--srch " Width="200" runat="server"></asp:DropDownList>
+                                <asp:Button CssClass="btnE btn--radius btn--green align-self-center btn--srch" ID="btnBuscar" runat="server" Text="Buscar" OnClick="btnBuscar_Click" />
+                            </div>
                         </div>
 
-                    </div>
+                        <div class="row text-center">
+                            <div class="col-sm-12">
+                                <asp:TextBox Visible="false" ID="txtMarcaBuscar" CssClass="input--style-text-search" runat="server" placeholder="Marca" MaxLength="40" onkeydown="return(!(event.keyCode>=91) && event.keyCode!=32);"></asp:TextBox>
+                                <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text centerText"
+                                    ControlToValidate="txtMarcaBuscar"
+                                    ValidationExpression="^[a-zA-Z ]*$"
+                                    ErrorMessage="No es una letra valida" />
+
+                                <asp:TextBox Visible="false" ID="txtModeloBuscar" CssClass="input--style-text-search" runat="server" placeholder="Modelo" MaxLength="40" onkeydown="return(!(event.keyCode>=91) && event.keyCode!=32);"></asp:TextBox>
+                                <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text centerText"
+                                    ControlToValidate="txtModeloBuscar"
+                                    ValidationExpression="^[a-zA-Z ]*$" />
+
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-6">
+                                        <asp:Label Visible="false" ID="lblCargaMenorBuscar" class="text initText" Text="Desde:" runat="server" />
+                                        <asp:TextBox Visible="false" ID="txtCargaMenorBuscar" CssClass="input--style-text-search" runat="server" placeholder="Carga" MaxLength="10" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
+                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
+                                            ControlToValidate="txtCargaMenorBuscar"
+                                            ValidationExpression="^[0-9]*$"
+                                            ErrorMessage="No es un numero valido" />
+
+                                        <asp:Label Visible="false" ID="lblCargaMayorBuscar" class="text initText" Text="Desde:" runat="server" />
+                                        <asp:TextBox Visible="false" ID="txtCargaMayorBuscar" CssClass="input--style-text-search" runat="server" placeholder="Carga" MaxLength="10" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
+                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
+                                            ControlToValidate="txtCargaMenorBuscar"
+                                            ValidationExpression="^[0-9]*$"
+                                            ErrorMessage="No es un numero valido" />
+                                    </div>
+                                </div>
 
 
 
 
-                    <div class="col-12">
+                                <asp:DropDownList Visible="false" ID="lstDisponibleBuscar" CssClass="input--style-lst-search" runat="server">
+                                </asp:DropDownList>
 
-                        <asp:Button ID="btnLimpiar" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" />
-
-
-
-                        <button type="button" class="btnE btn--radius btn--blue align-self-center btn--lst" data-bs-toggle="modal" data-bs-target="#altaModal">
-                            Añadir Camiones
-                        </button>
-
-                    </div>
+                            </div>
+                        </div>
 
 
-                           <div class="col-12 my-2">
-                        <asp:Label CssClass="text centerText " ID="lblMensajes" runat="server"></asp:Label>
+                        <div class="col-12">
 
-                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
-                            ControlToValidate="txtBuscar"
-                            ValidationExpression="^[a-zA-Z0-9 ]+$"
-                            ErrorMessage="No es un carácter válido" />
+                            <asp:Button ID="btnLimpiar" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" />
+                            <button type="button" class="btnE btn--radius btn--blue align-self-center btn--lst" data-bs-toggle="modal" data-bs-target="#altaModal">
+                                Añadir Camión
+                            </button>
 
+                        </div>
+
+
+
+                        <div class="col-12 my-2">
+                            <asp:Label CssClass="text centerText" ID="lblMensajes" runat="server"></asp:Label>
+
+                        </div>
+                        <div class="rowLine" />
                     </div>
 
                     <div class="modal fade" id="altaModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -108,7 +133,7 @@
                     </div>
 
 
-             
+
 
                     <div class="col-md-12 align-self-center">
 
@@ -127,7 +152,7 @@
                                             <Columns>
 
                                                 <asp:BoundField DataField="IdCamion"
-                                                    HeaderText="Id de Camion"
+                                                    HeaderText="Identificador del Camion"
                                                     ItemStyle-CssClass="GridStl" />
 
                                                 <asp:BoundField DataField="Marca"

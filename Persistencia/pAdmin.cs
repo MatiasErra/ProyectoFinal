@@ -82,9 +82,7 @@ namespace Persistencia
 
         }
 
-     
-
-        public List<Admin> buscarAdminFiltro(string buscar, string varEst, string varAdm, string ordenar)
+        public List<Admin> buscarAdminFiltro(Admin adminBuscar, string fchDesde, string fchHasta, string ordenar)
         {
             List<Admin> resultado = new List<Admin>();
             try
@@ -97,9 +95,15 @@ namespace Persistencia
                 SqlCommand cmd = new SqlCommand("BuscarAdminFiltro", conect);
 
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@buscar", buscar));
-                cmd.Parameters.Add(new SqlParameter("@varEst", varEst));
-                cmd.Parameters.Add(new SqlParameter("@varAdm", varAdm));
+                cmd.Parameters.Add(new SqlParameter("@nombre", adminBuscar.Nombre));
+                cmd.Parameters.Add(new SqlParameter("@apellido", adminBuscar.Apellido));
+                cmd.Parameters.Add(new SqlParameter("@email", adminBuscar.Email));
+                cmd.Parameters.Add(new SqlParameter("@telefono", adminBuscar.Telefono));
+                cmd.Parameters.Add(new SqlParameter("@usuario", adminBuscar.User));
+                cmd.Parameters.Add(new SqlParameter("@tipoAdmin", adminBuscar.TipoDeAdmin));
+                cmd.Parameters.Add(new SqlParameter("@estado", adminBuscar.Estado));
+                cmd.Parameters.Add(new SqlParameter("@fchDesde", fchDesde));
+                cmd.Parameters.Add(new SqlParameter("@fchHasta", fchHasta));
                 cmd.Parameters.Add(new SqlParameter("@ordenar", ordenar));
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -130,6 +134,8 @@ namespace Persistencia
             }
             return resultado;
         }
+
+
 
 
 

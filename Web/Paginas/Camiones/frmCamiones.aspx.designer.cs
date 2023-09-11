@@ -15,13 +15,22 @@ namespace Web.Paginas.Camiones
     {
 
         /// <summary>
-        /// Control txtBuscar.
+        /// Control listBuscarPor.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtBuscar;
+        protected global::System.Web.UI.WebControls.DropDownList listBuscarPor;
+
+        /// <summary>
+        /// Control listOrdenarPor.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList listOrdenarPor;
 
         /// <summary>
         /// Control btnBuscar.
@@ -33,22 +42,67 @@ namespace Web.Paginas.Camiones
         protected global::System.Web.UI.WebControls.Button btnBuscar;
 
         /// <summary>
-        /// Control listFiltroTipo.
+        /// Control txtMarcaBuscar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList listFiltroTipo;
+        protected global::System.Web.UI.WebControls.TextBox txtMarcaBuscar;
 
         /// <summary>
-        /// Control listOrdenarPor.
+        /// Control txtModeloBuscar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList listOrdenarPor;
+        protected global::System.Web.UI.WebControls.TextBox txtModeloBuscar;
+
+        /// <summary>
+        /// Control lblCargaMenorBuscar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCargaMenorBuscar;
+
+        /// <summary>
+        /// Control txtCargaMenorBuscar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCargaMenorBuscar;
+
+        /// <summary>
+        /// Control lblCargaMayorBuscar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCargaMayorBuscar;
+
+        /// <summary>
+        /// Control txtCargaMayorBuscar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCargaMayorBuscar;
+
+        /// <summary>
+        /// Control lstDisponibleBuscar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList lstDisponibleBuscar;
 
         /// <summary>
         /// Control btnLimpiar.

@@ -12,11 +12,11 @@ namespace Persistencia
 {
     class pDeposito
     {
-   
 
-     
 
-        public List<Deposito> buscarDepositoFiltro(string buscar, string ordenar)
+
+
+        public List<Deposito> buscarDepositoFiltro(Deposito pDeposito, int capacidadMenor, int capacidadMayor, int temperaturaMenor, int temperaturaMayor, string ordenar)
         {
             List<Deposito> resultado = new List<Deposito>();
             try
@@ -29,7 +29,12 @@ namespace Persistencia
                 SqlCommand cmd = new SqlCommand("BuscarDepositoFiltro", conect);
 
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@buscar", buscar));
+                cmd.Parameters.Add(new SqlParameter("@ubicacion", pDeposito.Ubicacion));
+                cmd.Parameters.Add(new SqlParameter("@condiciones", pDeposito.Condiciones));
+                cmd.Parameters.Add(new SqlParameter("@capacidadMenor", capacidadMenor));
+                cmd.Parameters.Add(new SqlParameter("@capacidadMayor", capacidadMayor));
+                cmd.Parameters.Add(new SqlParameter("@temperaturaMenor", temperaturaMenor));
+                cmd.Parameters.Add(new SqlParameter("@temperaturaMayor", temperaturaMayor));
                 cmd.Parameters.Add(new SqlParameter("@ordenar", ordenar));
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -54,6 +59,7 @@ namespace Persistencia
             }
             return resultado;
         }
+
 
         public Deposito buscarDeps(int id)
         {

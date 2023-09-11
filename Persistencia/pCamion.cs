@@ -12,10 +12,9 @@ namespace Persistencia
 {
     class pCamion
     {
-      
 
-  
-        public List<Camion> buscarFiltroCam(string buscar, string disp, string ordenar)
+
+        public List<Camion> buscarFiltroCam(Camion pCamion, double cargaMenor, double cargaMayor, string ordenar)
         {
             List<Camion> resultado = new List<Camion>();
             try
@@ -28,8 +27,11 @@ namespace Persistencia
                 SqlCommand cmd = new SqlCommand("BuscarFiltroCam", conect);
 
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@buscar", buscar));
-                cmd.Parameters.Add(new SqlParameter("@disp", disp));
+                cmd.Parameters.Add(new SqlParameter("@marca", pCamion.Marca));
+                cmd.Parameters.Add(new SqlParameter("@modelo", pCamion.Modelo));
+                cmd.Parameters.Add(new SqlParameter("@cargaMenor", cargaMenor));
+                cmd.Parameters.Add(new SqlParameter("@cargaMayor", cargaMayor));
+                cmd.Parameters.Add(new SqlParameter("@disponible", pCamion.Disponible));
                 cmd.Parameters.Add(new SqlParameter("@ordenar", ordenar));
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -54,6 +56,8 @@ namespace Persistencia
             }
             return resultado;
         }
+
+
 
         public Camion buscarCam(int id)
         {

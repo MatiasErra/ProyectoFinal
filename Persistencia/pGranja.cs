@@ -12,10 +12,10 @@ namespace Persistencia
 {
     class pGranja
     {
-   
 
 
-        public List<Granja> buscarGranjaFiltro(string buscar, string orden)
+
+        public List<Granja> buscarGranjaFiltro(Granja pGranja, string ordenar)
         {
             List<Granja> resultado = new List<Granja>();
             try
@@ -28,8 +28,11 @@ namespace Persistencia
                 SqlCommand cmd = new SqlCommand("BuscarGranjaFiltro", conect);
 
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@buscar", buscar));
-                cmd.Parameters.Add(new SqlParameter("@orden", orden));
+                cmd.Parameters.Add(new SqlParameter("@nombre", pGranja.Nombre));
+                cmd.Parameters.Add(new SqlParameter("@ubicacion", pGranja.Ubicacion));
+                cmd.Parameters.Add(new SqlParameter("@idCli", pGranja.IdCliente));
+                cmd.Parameters.Add(new SqlParameter("@ordenar", ordenar));
+
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
@@ -38,7 +41,7 @@ namespace Persistencia
                         granja.IdGranja = int.Parse(reader["idGranja"].ToString());
                         granja.Nombre = reader["nombre"].ToString();
                         granja.Ubicacion = reader["ubicacion"].ToString();
-                        granja.IdCliente = int.Parse(reader["idCliente"].ToString());
+                        granja.NombreCliente = reader["nombreCliente"].ToString();
 
                         resultado.Add(granja);
                     }
@@ -46,7 +49,7 @@ namespace Persistencia
 
                 conect.Close();
             }
-            catch (Exception )
+            catch (Exception)
             {
                 return resultado;
             }

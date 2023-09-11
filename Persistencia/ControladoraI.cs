@@ -96,9 +96,9 @@ namespace Persistencia
         #region Depositos
 
 
-        public List<Deposito> buscarDepositoFiltro(string buscar, string ordenar)
+        public List<Deposito> buscarDepositoFiltro(Deposito pDeposito, int capacidadMenor, int capacidadMayor, int temperaturaMenor, int temperaturaMayor, string ordenar)
         {
-            return new pDeposito().buscarDepositoFiltro( buscar, ordenar);
+            return new pDeposito().buscarDepositoFiltro(pDeposito, capacidadMenor, capacidadMayor, temperaturaMenor, temperaturaMayor, ordenar);
         }
 
         public Deposito buscarDeps(int id)
@@ -127,9 +127,9 @@ namespace Persistencia
 
 
     
-        public List<Granja> buscarGranjaFiltro(string buscar, string orden)
+        public List<Granja> buscarGranjaFiltro(Granja pGranja, string ordenar)
         {
-            return new pGranja().buscarGranjaFiltro(buscar, orden);
+            return new pGranja().buscarGranjaFiltro(pGranja, ordenar);
         }
 
         public Granja buscarGranja(int id)
@@ -159,9 +159,9 @@ namespace Persistencia
    
 
 
-        public List<Camion> buscarFiltroCam(string buscar, string disp, string ordenar)
+        public List<Camion> buscarFiltroCam(Camion pCamion, double cargaMenor, double cargaMayor, string ordenar)
         {
-            return new pCamion().buscarFiltroCam(buscar, disp, ordenar);
+            return new pCamion().buscarFiltroCam(pCamion, cargaMenor, cargaMayor, ordenar);
         }
 
         public Camion buscarCam(int id)
@@ -227,9 +227,9 @@ namespace Persistencia
         #region Pesticida
 
        
-        public List<Pesticida> buscarPesticidaFiltro(string buscar, string impact, string ordenar)
+        public List<Pesticida> buscarPesticidaFiltro(Pesticida pPesticida, double phMenor, double phMayor, string ordenar)
         {
-            return new pPesticida().buscarPesticidaFiltro(buscar, impact, ordenar);
+            return new pPesticida().buscarPesticidaFiltro(pPesticida, phMenor, phMayor, ordenar);
         }
 
         public Pesticida buscarPesti(int id)
@@ -257,9 +257,9 @@ namespace Persistencia
         #region Fertilizantes
 
 
-        public List<Fertilizante> buscarFertilizanteFiltro(string buscar, string impact, string ordenar)
+        public List<Fertilizante> buscarFertilizanteFiltro(Fertilizante pFertilizante, double phMenor, double phMayor, string ordenar)
         {
-            return new pFertilizante().buscarFertilizanteFiltro(buscar, impact,ordenar);
+            return new pFertilizante().buscarFertilizanteFiltro(pFertilizante, phMenor,phMayor,ordenar);
         }
 
         public Fertilizante buscarFerti(int id)

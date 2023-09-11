@@ -42,9 +42,9 @@ namespace Persistencia
         }
 
 
-        public List<Admin> buscarAdminFiltro(string buscar, string varEst, string varAdm, string ordenar)
+        public List<Admin> buscarAdminFiltro(Admin adminBuscar, string fchDesde, string fchHasta, string ordenar)
         {
-            return new pAdmin().buscarAdminFiltro(buscar, varEst, varAdm, ordenar);
+            return new pAdmin().buscarAdminFiltro(adminBuscar, fchDesde, fchHasta, ordenar);
         }
 
 
@@ -85,9 +85,9 @@ namespace Persistencia
 
 
         
-        public List<Cliente> buscarCliFiltro(string buscar, string ordenar)
+        public List<Cliente> buscarCliFiltro(Cliente cliente, string fchDesde, string fchHasta, string ordenar)
         {
-            return new pCliente().buscarCliFiltro( buscar, ordenar);
+            return new pCliente().buscarCliFiltro(cliente, fchDesde, fchHasta, ordenar);
         }
 
 
@@ -123,9 +123,9 @@ namespace Persistencia
         #region Camioneros
 
       
-        public List<Camionero> buscarCamioneroFiltro(string buscar, string disp, string ordenar)
+        public List<Camionero> buscarCamioneroFiltro(Camionero pCamionero, string fchNacDesde, string fchNacHasta, string fchVencDesde, string fchVencHasta, string ordenar)
         {
-            return new pCamionero().buscarCamioneroFiltro(buscar, disp, ordenar);
+            return new pCamionero().buscarCamioneroFiltro(pCamionero, fchNacDesde, fchNacHasta, fchVencDesde, fchVencHasta,  ordenar);
         }
 
         public Camionero buscarCamionero(int id)
