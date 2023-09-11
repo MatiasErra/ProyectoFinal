@@ -52,7 +52,8 @@
     <Compile Include="Lote_Ferti.cs" />
     <Compile Include="Lote_Pesti.cs" />
     <Compile Include="Pedido.cs" />
-    <Compile Include="Pedido_Producto.cs" />
+    <Compile Include="Pedido_Prod.cs" />
+    <Compile Include="Lote_Pedido.cs" />
     <Compile Include="Persona.cs" />
     <Compile Include="Pesticida.cs" />
     <Compile Include="Producto.cs" />

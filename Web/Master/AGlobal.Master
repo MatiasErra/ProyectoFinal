@@ -9,8 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%: Page.Title %> - Frutas y Verduras S.A.</title>
     <link href="~/Content/Estilos.css" rel="stylesheet" type="text/css" />
-     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
 
     <link rel="stylesheet" href="https://drive.google.com/uc?export=view&id=1yTLwNiCZhIdCWolQldwq4spHQkgZDqkG">
 
@@ -26,7 +26,7 @@
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
 
-    
+
 
 </head>
 <body class="bodyStyl">
@@ -34,7 +34,7 @@
         <asp:ScriptManager runat="server">
             <Scripts>
                 <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
-                <%--Framework Scripts--%> 
+                <%--Framework Scripts--%>
 
                 <asp:ScriptReference Path="~/Scripts/jquery-3.6.0.min.js" />
                 <asp:ScriptReference Path="~/Scripts/bootstrap.min.js" />
@@ -56,7 +56,7 @@
         <nav class="navbar navbar-expand-lg bg-dark">
 
             <div class="container-fluid">
-                             
+
                 <a class="navbar-brand text-light h1" href="~/Paginas/Inicio">Frutas y Verduras S.A.</a>
                 <button class="navbar-toggler bg-body-tertiary" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -74,13 +74,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" aria-current="page" href="/Paginas/Catalogo/frmCatalogo">Productos</a>
                         </li>
-                    
+
                     </ul>
 
                     <ul class="navbar-nav mb-2 mb-lg-0">
                         <li class="nav-item dropdown">
                             <select name="Gestion" class="nav-link dropdown-toggle text-light bg-dark me-1" onchange="location = this.value;">
-                                <option style="display:none">Gestion</option>
+                                <option style="display: none">Gestion</option>
                                 <optgroup label="Clientes">
                                     <option value="/Paginas/Clientes/frmListarClientes">Listar/eliminar Clientes</option>
                                 </optgroup>
@@ -91,7 +91,7 @@
                                     <option value="/Paginas/Camioneros/frmCamioneros">ABM Camioneros</option>
                                 </optgroup>
 
-                                  <optgroup label="Camiones">
+                                <optgroup label="Camiones">
                                     <option value="/Paginas/Camiones/frmCamiones">ABM Camiones</option>
                                 </optgroup>
 
@@ -125,27 +125,24 @@
         </nav>
         <div class="body-content container">
 
-   
+
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
-
-
-
             </asp:ContentPlaceHolder>
         </div>
-        <footer class="myFooter bg-dark text-center text-light fixed-md-bottom" >
+        <footer class="myFooter bg-dark text-center text-light fixed-md-bottom">
             <div class="container-fluid ">
-               
+
                 <a name="contacto"></a>
                 <div class="row">
                     <div class="col-md-6 col-12">
                         <div class="row mb-1">
-                            <h5 class ="mb-1">Información de Contacto:</h5>
+                            <h5 class="mb-1">Información de Contacto:</h5>
                         </div>
                         <div class="row">
                             <div class="col-6">
                                 <p class="float-end mb-1"><i class="fas fa-home text-grayish">&nbsp;</i>Rosario, Colonia, Uruguay </p>
                             </div>
-                            <div class="col-6 " >
+                            <div class="col-6 ">
                                 <p class="float-start mb-1">
                                     <i class="fas fa-envelope text-grayish">&nbsp;</i>
                                     rosario@ctc.edu.uy
@@ -168,34 +165,34 @@
                                 <a class="btnE    m-auto  " href="https://www.linkedin.com" target="_blank">
                                     <i class="fab fa-linkedin">&nbsp;</i></a>
 
-                                  <a class="btnE  m-auto " href="https://www.facebook.com" target="_blank">
+                                <a class="btnE  m-auto " href="https://www.facebook.com" target="_blank">
                                     <i class="fab fa-facebook ">&nbsp;</i>
-                                   
+
                                 </a>
 
 
                                 <a class="btnE  m-auto " href="https://www.instagram.com" target="_blank">
                                     <i class="fab fa-instagram ">&nbsp;</i>
-                                
+
                                 </a>
 
-                                  <a class="btnE  m-auto " href="https://www.youtube.com" target="_blank">
+                                <a class="btnE  m-auto " href="https://www.youtube.com" target="_blank">
                                     <i class="fab fa-youtube">&nbsp;</i>
-                                
+
                                 </a>
-                         
+
 
                             </div>
 
-                         
-                           
+
+
                         </div>
                     </div>
                 </div>
-            </div>   
+            </div>
 
         </footer>
-            </form>
+    </form>
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/Scripts/bootstrap.js") %>
     </asp:PlaceHolder>

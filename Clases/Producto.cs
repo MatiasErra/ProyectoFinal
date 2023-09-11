@@ -13,7 +13,9 @@ namespace Clases
         private string _tipo;
         private string _tipoVenta;
         private string _imagen;
+        private double _precio;
         private string _cantTotal;
+        private string _cantRes;
 
 
         public int IdProducto { get => _idProducto; set => _idProducto = value; }
@@ -22,6 +24,8 @@ namespace Clases
         public string TipoVenta { get => _tipoVenta; set => _tipoVenta = value; }
         public string Imagen { get => _imagen; set => _imagen = value; }
         public string CantTotal { get => _cantTotal; set => _cantTotal = value; }
+        public string CantRes { get => _cantRes; set => _cantRes = value; }
+        public double Precio { get => _precio; set => _precio = value; }
 
         public override string ToString()
         {

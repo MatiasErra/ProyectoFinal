@@ -24,9 +24,78 @@ namespace Persistencia
 
         #endregion
 
+        #region Pedidos
+
+        public List<Pedido_Prod> listPedidoCli_Prod(int idProducto)
+        {
+            return new pPedido().listPedidoCli_Prod(idProducto);
+        }
+
+        public Pedido_Prod buscarProductoCli(int idProducto, int idCliente)
+        {
+            return new pPedido().buscarProductoCli(idProducto, idCliente);
+        }
+
+
+
+        public List<Pedido> listPedidoCli(int idCli)
+        {
+            return new pPedido().listPedidoCli(idCli);
+        }
+
+        public List<Pedido> listPedido()
+        {
+            return new pPedido().listPedido();
+        }
+
+        public bool altaPedido(Pedido pedido)
+        {
+            return new pPedido().altaPedido(pedido);
+        }
+
+        public bool bajaPedido(int IdPedido)
+        {
+            return new pPedido().bajaPedido(IdPedido);
+        }
+
+        public bool altaPedido_Prod(Pedido_Prod pedido, string CantRes, double precio)
+        {
+            return new pPedido().altaPedido_Prod(pedido, CantRes, precio);
+        }
+
+
+       public bool cambiarEstadoPed(int idPedido, string estado)
+        {
+            return new pPedido().cambiarEstadoPed(idPedido, estado);
+        }
+
+        public List<string[]> buscarPedidoProd(int idPedido)
+        {
+            return new pPedido().buscarPedidoProd(idPedido);
+        }
+
+
+        public string[] buscarProductoClixNom(int idPedido, string nomProd)
+        {
+            return new pPedido().buscarProductoClixNom(idPedido ,nomProd);
+        }
+
+       public bool modCantPediodCli(int idPedido, int idProducto, string cantidad, string cantRess, double precio)
+        {
+            return new pPedido().modCantPediodCli(idPedido, idProducto, cantidad, cantRess, precio);
+        }
+
+        public bool bajaPedidoProd(int idPedido, int idProducto, string cantRess, double precio)
+        {
+            return new pPedido().bajaPedidoProd(idPedido, idProducto, cantRess, precio);
+        }
+
+
+        #endregion
+
         #region Depositos
 
-       
+
         public List<Deposito> buscarDepositoFiltro(string buscar, string ordenar)
         {
             return new pDeposito().buscarDepositoFiltro( buscar, ordenar);
@@ -124,9 +193,14 @@ namespace Persistencia
             return new pProducto().buscarProductoFiltro(buscar, tipo, tipoVen, ordenar);
         }
 
+        public List<Producto> buscarProductoCatFiltro(string buscar, string tipo, string tipoVen, string ordenar)
+        {
+            return new pProducto().buscarProductoCatFiltro(buscar, tipo, tipoVen, ordenar);
+        }
 
 
-      
+
+
 
         public Producto buscarProducto(int id)
         {

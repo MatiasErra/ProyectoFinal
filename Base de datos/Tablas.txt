@@ -12,7 +12,7 @@ usuario varchar(40) unique not null,
 contrasena varchar(40) not null,
 estado varchar(40) not null, check(estado in ('Habilitado', 'No Habilitado')),
 tipoDeAdmin varchar(30) not null,
-check(tipoDeAdmin in ('Administrador global','Administrador de productos','Administrador de pedidos','Administrador de flota'))
+check(tipoDeAdmin in ('Administrador global','Administrador de productos','Administrador de pedidos'))
 );
 
 Create table Camioneros(
@@ -59,10 +59,12 @@ idCliente int foreign key references Clientes(idCliente)
 create table Productos(
 idProducto int primary key,
 nombre varchar(30) not null unique,
+precio numeric(6) not null, 
 tipo varchar(30) not null,
 tipoVenta varchar(15) not null,
 imagen varchar(MAX) not null,
-cantTotal varchar(40)
+cantTotal varchar(40),
+cantRes varchar(40),
 );
 
 
@@ -114,4 +116,28 @@ primary key(idFertilizante, idGranja, idProducto, fchProduccion),
 foreign key(idGranja, idProducto, fchProduccion) references Lotes(idGranja, idProducto, fchProduccion)
 );
 
+
+
+
+create table Pedidos_Prod(
+idPedido int references Pedidos(idPedido),
+idProducto int references Productos(idProducto),
+cantidad varchar(40) not null,
+primary key (idPedido, idProducto)
+);
+
+
+create table Pedidos(
+idPedido int primary key,
+idCliente int references Clientes(idCliente) not null,
+estado varchar(40)  check(estado in ( 'Sin finalizar','Sin confirmar','Confirmado','En viaje', 'Finalizado')) not null,
+costo numeric(10,2) not null,
+fchPedido date not null check(fchPedido = (CONVERT(date,getdate(),(103)))),
+fechaEntre date  check(fechaEntre >= (CONVERT(date,getdate(),(103)))),
+fechaEspe date  check(fechaEspe >= (CONVERT(date,getdate(),(103)))),
+retraso varchar(100),
+informacionEntrega varchar(80) ,
+idCamion int references Camioneros(idCamionero), 
+idCamionero int references Camiones(idCamion) 
+);
 

@@ -161,9 +161,6 @@ namespace Controladoras
 
         }
 
-
-
-
         public bool altaCli(Cliente cli)
         {
             ControladoraP inst = ControladoraP.obtenerInstancia();

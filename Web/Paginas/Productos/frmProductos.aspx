@@ -134,7 +134,11 @@
                                                     HtmlEncode="false" />
 
                                                 <asp:BoundField DataField="CantTotal"
-                                                    HeaderText="Cantidad"
+                                                    HeaderText="Cantidad Total"
+                                                     ItemStyle-CssClass="GridStl" />
+
+                                                 <asp:BoundField DataField="CantRes"
+                                                    HeaderText="Cantidad Reservada"
                                                      ItemStyle-CssClass="GridStl" />
 
 

@@ -33,6 +33,137 @@ namespace Web.Paginas
 
         #endregion
 
+
+        #region Pedido
+
+        public List<Pedido> listPedidoCli(int idCli)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            List<Pedido> lst = inst.listPedidoCli(idCli);
+            return lst;
+        }
+
+        public List<Pedido> listPedido()
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            List<Pedido> lst = inst.listPedido();
+            return lst;
+        }
+     
+
+        public List<Pedido_Prod> listPedidoCli_Prod(int idProducto)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            List<Pedido_Prod> lst = inst.listPedidoCli_Prod(idProducto);
+            return lst;
+        }
+
+        public List<string[]> buscarPedidoProd(int idPedido)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            List<string[]> lst = inst.buscarPedidoProd(idPedido);
+            return lst;
+        }
+
+
+        public bool altaPedido(Pedido pedido)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+            if (inst.altaPedido(pedido))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+
+        public bool modCantPediodCli(int idPedido, int idProducto, string cantidad, string cantRess, double precio)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+            if (inst.modCantPediodCli(idPedido, idProducto, cantidad, cantRess, precio))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool bajaPedido(int idPedido)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+            if (inst.bajaPedido(idPedido))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+
+        public bool bajaPedidoProd(int idPedido, int idProducto, string cantRess, double precio)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+            if (inst.bajaPedidoProd(idPedido, idProducto, cantRess, precio))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+
+
+        public bool altaPedido_Prod(Pedido_Prod pedido, string CantRes, double precio)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+            if (inst.altaPedido_Prod(pedido, CantRes, precio))
+            {
+                return true;
+            }
+            else
+                return false;
+
+
+        }
+        public Pedido_Prod buscarProductoCli(int idProducto, int idCliente)
+        {
+
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+            Pedido_Prod lst = inst.buscarProductoCli(idProducto, idCliente);
+            return lst;
+        }
+
+
+        public bool cambiarEstadoPed(int idPedido, string estado)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+            if (inst.cambiarEstadoPed(idPedido, estado))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+
+        public string[] buscarProductoClixNom(int idPedido, string nomProd)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            string[] lst = inst.buscarProductoClixNom(idPedido, nomProd);
+            return lst;
+        }
+
+        #endregion
+
+
         #region Personas
 
         public List<Persona> lstIdPersonas()
@@ -156,6 +287,8 @@ namespace Web.Paginas
             return cli;
 
         }
+
+
 
         public bool altaCli(Cliente cli)
         {
@@ -386,6 +519,14 @@ namespace Web.Paginas
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
             List<Producto> lst = inst.buscarProductoFiltro(buscar, tipo, tipoVen, ordenar);
+            return lst;
+
+        }
+
+        public List<Producto> buscarProductoCatFiltro(string buscar, string tipo, string tipoVen, string ordenar)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            List<Producto> lst = inst.buscarProductoCatFiltro(buscar, tipo, tipoVen, ordenar);
             return lst;
 
         }

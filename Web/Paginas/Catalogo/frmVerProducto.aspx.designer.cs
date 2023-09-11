@@ -15,15 +15,6 @@ namespace Web.Paginas
     {
 
         /// <summary>
-        /// Control imgProducto.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image imgProducto;
-
-        /// <summary>
         /// Control nombreProducto.
         /// </summary>
         /// <remarks>
@@ -42,13 +33,13 @@ namespace Web.Paginas
         protected global::System.Web.UI.WebControls.Label tipoProducto;
 
         /// <summary>
-        /// Control lblMensajes.
+        /// Control imgProducto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMensajes;
+        protected global::System.Web.UI.WebControls.Image imgProducto;
 
         /// <summary>
         /// Control tipoVentaProducto.
@@ -69,6 +60,24 @@ namespace Web.Paginas
         protected global::System.Web.UI.WebControls.TextBox txtCantidad;
 
         /// <summary>
+        /// Control lblcantActual.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblcantActual;
+
+        /// <summary>
+        /// Control lblcantRess.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblcantRess;
+
+        /// <summary>
         /// Control btnRealizarPedido.
         /// </summary>
         /// <remarks>
@@ -76,5 +85,14 @@ namespace Web.Paginas
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnRealizarPedido;
+
+        /// <summary>
+        /// Control lblMensajes.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMensajes;
     }
 }

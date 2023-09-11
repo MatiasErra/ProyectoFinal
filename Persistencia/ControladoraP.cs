@@ -97,7 +97,9 @@ namespace Persistencia
         {
             return new pCliente().buscarCli(id);
         }
-       
+
+  
+
         public bool altaCli(Cliente cli)
         {
             return new pCliente().altaCli(cli);

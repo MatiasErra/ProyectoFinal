@@ -54,6 +54,7 @@
     <Compile Include="pLote.cs" />
     <Compile Include="pLote_Ferti.cs" />
     <Compile Include="pLote_Pesti.cs" />
+    <Compile Include="pPedido.cs" />
     <Compile Include="pPesticida.cs" />
     <Compile Include="pProducto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

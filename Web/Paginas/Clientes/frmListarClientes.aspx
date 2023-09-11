@@ -4,35 +4,35 @@
     <div class="container row m-2 text-center">
         <div class="row justify-content-center">
             <div class="col-12 m-3 p-2 text-center backforContent">
-               <div class="row">
+                <div class="row">
                     <div class="col-12">
-                         <h2 class="title">Listar o eliminar un cliente </h2>
-                </div>
+                        <h2 class="title">Listar o eliminar un cliente </h2>
+                    </div>
                     <div class="col-12">
 
                         <asp:TextBox CssClass="d-inline form-control  w-50 m-2 border-0" ID="txtBuscar" runat="server" placeholder="Buscar" MaxLength="100" onkeydown="return(!(event.keyCode>=91));"></asp:TextBox>
                         <asp:Button CssClass="btnE btn--radius btn--green align-self-center btn--srch" ID="btnBuscar" runat="server" Text="Buscar" OnClick="btnBuscar_Click" />
-                  
-                        </div>
+
+                    </div>
 
 
                     <div class="col-12 align-self-center">
-                           <asp:Button ID="btnVolverFrm" class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Text="Volver" visible="false"  OnClick="btnVolverFrm_Click" />
-                         <asp:Button ID="btnLimpiar" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" />
+                        <asp:Button ID="btnVolverFrm" class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Text="Volver" Visible="false" OnClick="btnVolverFrm_Click" />
+                        <asp:Button ID="btnLimpiar" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" />
                         <asp:DropDownList ID="listOrdenarPor" CssClass="lstOrd btn--radius  align-self-center btn--srch " Width="200" AutoPostBack="true" OnSelectedIndexChanged="listOrdenarPor_SelectedIndexChanged" runat="server"></asp:DropDownList>
                     </div>
-                   <div class="col-12 my-2">
-                    <asp:Label CssClass="text centerText " ID="lblMensajes" runat="server"></asp:Label>
+                    <div class="col-12 my-2">
+                        <asp:Label CssClass="text centerText " ID="lblMensajes" runat="server"></asp:Label>
 
-                      <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
+                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                             ControlToValidate="txtBuscar"
                             ValidationExpression="^[a-zA-Z0-9 ]+$"
                             ErrorMessage="No es un carácter válido" />
 
-                </div>
+                    </div>
                 </div>
 
-               <div class="col-md-12 align-self-center">
+                <div class="col-md-12 align-self-center">
                     <div class="row align-self-center">
                         <div class="col-md-11 col-md-offset-1">
                             <div class="form-group">
@@ -78,9 +78,9 @@
 
 
 
-                                                  
+
                                                     <asp:Button ID="btnBaja" CssClass="btnE btn--radius btn--red" runat="server" Text="Baja" OnClientClick="return confirm('¿Desea eliminar este cliente?')" OnClick="btnBaja_Click" />
-                                             
+
 
                                                 </ItemTemplate>
                                             </asp:TemplateField>
@@ -90,7 +90,7 @@
                                         </Columns>
                                     </asp:GridView>
 
-                                     <asp:GridView ID="lstClienteSelect" Width="100%" SelectedIndex="1" AutoGenerateColumns="false" Visible="false"
+                                    <asp:GridView ID="lstClienteSelect" Width="100%" SelectedIndex="1" AutoGenerateColumns="false" Visible="false"
                                         CssClass="table table-bordered table-condensed table-responsive table-hover"
                                         runat="server">
                                         <AlternatingRowStyle BackColor="White" />
@@ -131,9 +131,9 @@
 
 
 
-                                                     <asp:Button ID="btnSelect" CssClass="btnE btn--radius btn--blue" runat="server" Text="Seleccionar"  OnClick="btnSelected_Click" />
+                                                    <asp:Button ID="btnSelect" CssClass="btnE btn--radius btn--blue" runat="server" Text="Seleccionar" OnClick="btnSelected_Click" />
                                                     <asp:Button ID="btnBaja" CssClass="btnE btn--radius btn--red" runat="server" Text="Baja" OnClientClick="return confirm('¿Desea eliminar este cliente?')" OnClick="btnBaja_Click" />
-                                             
+
 
                                                 </ItemTemplate>
                                             </asp:TemplateField>
@@ -147,14 +147,13 @@
                         </div>
                     </div>
                 </div>
-                  <div class="text-center">
-                        
-                        <div class="text-center">
-                            <asp:LinkButton ID="lblPaginaAnt" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
-                            <asp:Label ID="lblPaginaAct" runat="server" Text=""></asp:Label>
-                            <asp:LinkButton ID="lblPaginaSig" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
-                        </div>
-                 
+                <div class="text-center">
+
+                    <div class="text-center">
+                        <asp:LinkButton ID="lblPaginaAnt" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
+                        <asp:Label ID="lblPaginaAct" runat="server" Text=""></asp:Label>
+                        <asp:LinkButton ID="lblPaginaSig" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
+                    </div>
 
 
 
@@ -170,6 +169,8 @@
 
 
 
+
+                </div>
             </div>
         </div>
     </div>

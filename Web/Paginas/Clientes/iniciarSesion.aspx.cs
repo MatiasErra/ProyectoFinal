@@ -28,26 +28,26 @@ namespace Web.Paginas.Clientes
         protected void btnIniciar_Click(object sender, EventArgs e)
         {
             ControladoraWeb web = new ControladoraWeb();
-            string nombre = HttpUtility.HtmlEncode(txtUser.Text);
+            string user = HttpUtility.HtmlEncode(txtUser.Text);
 
 
             string pass = HttpUtility.HtmlEncode(txtPass.Text);
 
             string hashedPassword = FormsAuthentication.HashPasswordForStoringInConfigFile(pass, "SHA1");
-            if (web.iniciarSesionCli(nombre, hashedPassword) > 0 && web.iniciarSesionAdm(nombre, hashedPassword)==0)
+            if (web.iniciarSesionCli(user, hashedPassword) > 0 && web.iniciarSesionAdm(user, hashedPassword)==0)
             {
                 lblMensajes.Text = "Sesión iniciada como cliente ";
-                System.Web.HttpContext.Current.Session["ClienteIniciado"] = nombre;
+                System.Web.HttpContext.Current.Session["ClienteIniciado"] = web.iniciarSesionCli(user, hashedPassword);
 
                 Response.Redirect("/Paginas/Nav/frmInicio");
             
 
             }
-            if (web.iniciarSesionAdm(nombre, hashedPassword) > 0 && web.iniciarSesionCli(nombre, hashedPassword) == 0)
+            if (web.iniciarSesionAdm(user, hashedPassword) > 0 && web.iniciarSesionCli(user, hashedPassword) == 0)
             {
                 lblMensajes.Text = "Sesión iniciada como Administrador ";
             }
-           if (web.iniciarSesionAdm(nombre, hashedPassword) == 0 && web.iniciarSesionCli(nombre, hashedPassword) == 0)
+           if (web.iniciarSesionAdm(user, hashedPassword) == 0 && web.iniciarSesionCli(user, hashedPassword) == 0)
             {
                 lblMensajes.Text = "No se pudo iniciar sesión";
             }

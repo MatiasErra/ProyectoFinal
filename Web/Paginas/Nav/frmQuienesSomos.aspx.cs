@@ -9,6 +9,19 @@ namespace Web.Paginas
 {
     public partial class frmQuienesSomos : System.Web.UI.Page
     {
+        protected void Page_PreInit(object sender, EventArgs e)
+        {
+            if (System.Web.HttpContext.Current.Session["ClienteIniciado"] != null)
+            {
+                this.MasterPageFile = "~/Master/MCliente.Master";
+
+            }
+            else
+            {
+                this.MasterPageFile = "~/Master/AGlobal.Master";
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
 

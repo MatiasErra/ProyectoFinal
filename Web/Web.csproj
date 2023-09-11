@@ -122,6 +122,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Imagenes\Ejemplo.png" />
     <Content Include="Paginas\Admins\frmAdmins.aspx" />
     <Content Include="Paginas\Admins\modAdmin.aspx" />
     <Content Include="Paginas\Camioneros\frmCamioneros.aspx" />
@@ -130,7 +131,10 @@
     <Content Include="Paginas\Camiones\modCamiones.aspx" />
     <Content Include="Paginas\Catalogo\frmCatalogo.aspx" />
     <Content Include="Paginas\Catalogo\frmVerProducto.aspx" />
+    <Content Include="Paginas\Pedidos\VerCarrito.aspx" />
+    <Content Include="Paginas\Pedidos\VerPedidosCli.aspx" />
     <Content Include="Paginas\Clientes\frmListarClientes.aspx" />
+    <Content Include="Paginas\Clientes\frmModificarCuenta.aspx" />
     <Content Include="Paginas\Clientes\iniciarSesion.aspx" />
     <Content Include="Paginas\Clientes\RegCliente.aspx" />
     <Content Include="Paginas\Depositos\frmDepositos.aspx" />
@@ -146,6 +150,7 @@
     <Content Include="Paginas\Lotes\modLote.aspx" />
     <Content Include="Paginas\Nav\frmInicio.aspx" />
     <Content Include="Paginas\Nav\frmQuienesSomos.aspx" />
+    <Content Include="Paginas\Pedidos\VerProductosPedido.aspx" />
     <Content Include="Paginas\Pesticidas\frmPesticidas.aspx" />
     <Content Include="Paginas\Pesticidas\modPest.aspx" />
     <Content Include="Paginas\Productos\frmProductos.aspx" />
@@ -182,7 +187,6 @@
     <Content Include="Master\AGlobal.Master" />
     <Content Include="Master\AProductos.Master" />
     <Content Include="Master\APedidos.Master" />
-    <Content Include="Master\AFlota.Master" />
     <Content Include="Master\MCliente.Master" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
@@ -217,13 +221,6 @@
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Master\AFlota.Master.cs">
-      <DependentUpon>AFlota.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Master\AFlota.Master.designer.cs">
-      <DependentUpon>AFlota.Master</DependentUpon>
-    </Compile>
     <Compile Include="Master\AGlobal.Master.cs">
       <DependentUpon>AGlobal.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -320,12 +317,33 @@
     <Compile Include="Paginas\Catalogo\frmVerProducto.aspx.designer.cs">
       <DependentUpon>frmVerProducto.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Paginas\Pedidos\VerCarrito.aspx.cs">
+      <DependentUpon>VerCarrito.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Pedidos\VerCarrito.aspx.designer.cs">
+      <DependentUpon>VerCarrito.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Pedidos\VerPedidosCli.aspx.cs">
+      <DependentUpon>VerPedidosCli.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Pedidos\VerPedidosCli.aspx.designer.cs">
+      <DependentUpon>VerPedidosCli.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Paginas\Clientes\frmListarClientes.aspx.cs">
       <DependentUpon>frmListarClientes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Paginas\Clientes\frmListarClientes.aspx.designer.cs">
       <DependentUpon>frmListarClientes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Clientes\frmModificarCuenta.aspx.cs">
+      <DependentUpon>frmModificarCuenta.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Clientes\frmModificarCuenta.aspx.designer.cs">
+      <DependentUpon>frmModificarCuenta.aspx</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Clientes\iniciarSesion.aspx.cs">
       <DependentUpon>iniciarSesion.aspx</DependentUpon>
@@ -432,6 +450,13 @@
     </Compile>
     <Compile Include="Paginas\Nav\frmQuienesSomos.aspx.designer.cs">
       <DependentUpon>frmQuienesSomos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Pedidos\VerProductosPedido.aspx.cs">
+      <DependentUpon>VerProductosPedido.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Pedidos\VerProductosPedido.aspx.designer.cs">
+      <DependentUpon>VerProductosPedido.aspx</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Pesticidas\frmPesticidas.aspx.cs">
       <DependentUpon>frmPesticidas.aspx</DependentUpon>

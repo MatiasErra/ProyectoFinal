@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Web.Paginas.Productos;
 
 namespace Web.Paginas
 {
@@ -16,8 +17,15 @@ namespace Web.Paginas
         #region Load
         protected void Page_PreInit(object sender, EventArgs e)
         {
-       
+            if (System.Web.HttpContext.Current.Session["ClienteIniciado"] != null)
+            {
+                this.MasterPageFile = "~/Master/MCliente.Master";
 
+            }
+            else
+            {
+                this.MasterPageFile = "~/Master/AGlobal.Master";
+            }
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -63,7 +71,7 @@ namespace Web.Paginas
                 }
 
 
-       
+
 
                 listarPagina();
 
@@ -73,6 +81,36 @@ namespace Web.Paginas
         #endregion
 
         #region Utilidad
+        static int GenerateUniqueId()
+        {
+            Guid guid = Guid.NewGuid();
+            int intGuid = guid.GetHashCode();
+            int i = 0;
+
+            while (intGuid < 0)
+            {
+                return GenerateUniqueId();
+            }
+
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            List<Pedido> lstPed = Web.listPedido();
+            foreach (Pedido Pedido in lstPed)
+            {
+                if (Pedido.IdPedido.Equals(intGuid))
+                {
+                    i++;
+                }
+            }
+
+            if (i == 0)
+            {
+                return intGuid;
+            }
+            else
+                return GenerateUniqueId();
+
+        }
+
 
 
         private void limpiar()
@@ -85,9 +123,9 @@ namespace Web.Paginas
         }
 
 
-            private int PagMax()
+        private int PagMax()
         {
-            //Devuelve la cantidad de productos por pagina
+
             return 4;
         }
 
@@ -115,7 +153,7 @@ namespace Web.Paginas
                 ordenar = listOrdenarPor.SelectedValue;
             }
 
-            List<Producto> productos = Web.buscarProductoFiltro(buscar, tipo, tipoVen, ordenar);
+            List<Producto> productos = Web.buscarProductoCatFiltro(buscar, tipo, tipoVen, ordenar);
             foreach (Producto unProducto in productos)
             {
                 string Imagen = "data:image/jpeg;base64,";
@@ -131,10 +169,14 @@ namespace Web.Paginas
         {
             List<Producto> productos = obtenerProductos();
             List<Producto> productosPagina = new List<Producto>();
+
+            List<Producto> lstProductos = LstObtenerProductosSinPed(productos);
+
+
             string p = lblPaginaAct.Text.ToString();
             int pagina = int.Parse(p);
             int cont = 0;
-            foreach (Producto unProducto in productos)
+            foreach (Producto unProducto in lstProductos)
             {
                 if (productosPagina.Count == PagMax())
                 {
@@ -152,16 +194,15 @@ namespace Web.Paginas
             {
                 lblMensajes.Text = "No se encontro ningún producto.";
 
-                lblPaginaAnt.Visible = false;
-                lblPaginaAct.Visible = false;
-                lblPaginaSig.Visible = false;
+                lblPaginas.Visible = false;
                 lstProducto.Visible = false;
             }
             else
             {
+                lblPaginas.Visible = true;
                 lblMensajes.Text = "";
                 modificarPagina();
-                lstProducto.Visible= true;
+                lstProducto.Visible = true;
                 lstProducto.DataSource = null;
                 lstProducto.DataSource = productosPagina;
                 lstProducto.DataBind();
@@ -173,13 +214,14 @@ namespace Web.Paginas
         private void modificarPagina()
         {
             List<Producto> productos = obtenerProductos();
+            List<Producto> lstProductos = LstObtenerProductosSinPed(productos);
             double pxp = PagMax();
-            double count = productos.Count;
+            double count = lstProductos.Count;
             double pags = count / pxp;
             double cantPags = Math.Ceiling(pags);
 
             string pagAct = lblPaginaAct.Text.ToString();
-   
+
             lblPaginaSig.Visible = true;
             lblPaginaAct.Visible = true;
             lblPaginaAnt.Visible = true;
@@ -195,6 +237,63 @@ namespace Web.Paginas
             lblPaginaAct.Text = pagAct.ToString();
             lblPaginaSig.Text = (int.Parse(pagAct) + 1).ToString();
         }
+
+        public List<Producto> LstObtenerProductosSinPed(List<Producto> productos)
+        {
+            List<Producto> lstProductos = new List<Producto>();
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+
+
+            if (System.Web.HttpContext.Current.Session["ClienteIniciado"] != null)
+            {
+                int idClinete = int.Parse(System.Web.HttpContext.Current.Session["ClienteIniciado"].ToString());
+                List<Pedido> lstPedido = Web.listPedidoCli(idClinete);
+                int i = 0;
+
+                foreach (Producto ped in productos)
+                {
+                    i = 0;
+                    int idProducto = ped.IdProducto;
+
+
+                    List<Pedido_Prod> lstPedidoProd = Web.listPedidoCli_Prod(idProducto);
+
+                    foreach (Pedido pedido in lstPedido)
+                    {
+                        foreach (Pedido_Prod pedido_Prod in lstPedidoProd)
+                        {
+
+                            if (pedido_Prod.IdProducto == idProducto
+                                && pedido_Prod.IdPedido == pedido.IdPedido)
+                            {
+                                i++;
+                            }
+                        }
+                    }
+
+                    if (i == 0)
+                    {
+                        Producto pedido = new Producto();
+                        pedido.IdProducto = ped.IdProducto;
+                        pedido.Nombre = ped.Nombre;
+                        pedido.Tipo = ped.Tipo;
+                        pedido.TipoVenta = ped.TipoVenta;
+                        pedido.Imagen = ped.Imagen;
+                        lstProductos.Add(pedido);
+                    }
+
+
+                }
+
+
+            }
+            else
+            {
+                lstProductos = productos;
+            }
+            return lstProductos;
+        }
+
 
         #region DropDownBoxes
 
@@ -313,7 +412,7 @@ namespace Web.Paginas
 
         #region Botones
 
-        protected void btnVerProducto_Click(object sender, EventArgs e)
+        protected void btnRealizarPedido_Click(object sender, EventArgs e)
         {
             Producto producto = new Producto();
             List<Producto> productos = obtenerProductos();
@@ -327,8 +426,135 @@ namespace Web.Paginas
                     producto = unProducto;
                 }
             }
-            System.Web.HttpContext.Current.Session["catalogoProducto"] = producto.IdProducto;
-            Response.Redirect("/Paginas/Catalogo/frmVerProducto");
+
+            if (System.Web.HttpContext.Current.Session["ClienteIniciado"] != null)
+            {
+                int idCliente = int.Parse(System.Web.HttpContext.Current.Session["ClienteIniciado"].ToString());
+                int pedSinFin = 0;
+                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+
+
+
+
+
+                int idProducto = producto.IdProducto;
+                Pedido_Prod pedido_Prodbus = Web.buscarProductoCli(producto.IdProducto, idCliente);
+                int idPedido = 0;
+                int idPedidoReg = 0;
+
+                if (System.Web.HttpContext.Current.Session["PedidoCompra"] == null)
+                {
+                    List<Pedido> ped = Web.listPedidoCli(idCliente);
+                    foreach (Pedido pedido in ped)
+                    {
+                        if (pedido.Estado.Equals("Sin finalizar"))
+                        {
+                            pedSinFin++;
+                        }
+
+                    }
+                    if (pedSinFin == 0)
+                    {
+
+                        if (pedido_Prodbus.IdPedido != 0)
+                        {
+                            idPedidoReg = 0;
+
+
+                        }
+                        else
+                        {
+
+                            Pedido pedido = new Pedido();
+
+                            idPedido = GenerateUniqueId();
+
+                            pedido.IdPedido = idPedido;
+                            pedido.IdCliente = idCliente;
+
+                            idPedidoReg = 1;
+                            if (Web.altaPedido(pedido))
+                            {
+                                System.Web.HttpContext.Current.Session["PedidoCompra"] = idPedido;
+                            }
+                            else
+                            {
+                                idPedido = 0;
+                            }
+                        }
+
+                    }
+                }
+                else
+                {
+                    idPedidoReg = 1;
+                    idPedido = int.Parse(System.Web.HttpContext.Current.Session["PedidoCompra"].ToString());
+                }
+
+                if (pedSinFin == 0)
+                {
+                    if (idPedidoReg != 0)
+                    {
+                        if (idPedido != 0)
+                        {
+
+                            Pedido_Prod pedido_prod = new Pedido_Prod();
+                            Producto pre = Web.buscarProducto(idProducto);
+
+                            string cantidadMost = "0 " + pre.TipoVenta.ToString();
+
+                            pedido_prod.IdProducto = idProducto;
+                            pedido_prod.IdPedido = idPedido;
+                            pedido_prod.Cantidad = cantidadMost;
+                            string CantRes = pre.CantRes;
+
+                            string[] string1 = pedido_prod.Cantidad.Split(' ');
+
+
+
+                            double cantidadDouble = double.Parse(string1[0]);
+
+                            double Precio = pre.Precio * cantidadDouble;
+
+
+
+                            if (Web.altaPedido_Prod(pedido_prod, CantRes, Precio))
+                            {
+                                lblMensajes.Text = "Pedido realizado";
+                                lblPaginaAct.Text = "1";
+                                listarPagina();
+
+                            }
+                            else
+                            {
+                                lblMensajes.Text = "Este producto ya se encuentra en el pedido";
+                            }
+                        }
+                        else
+                        {
+                            lblMensajes.Text = "No se pudo realizar el pedido";
+                        }
+                    }
+                    else
+                    {
+                        lblMensajes.Text = "Ya existe un pedido con este producto registrado";
+                    }
+
+                }
+                else
+                {
+                    lblMensajes.Text = "Este cliente ya tiene un pedido sin finalizar";
+
+                }
+
+
+
+
+            }
+            else
+            {
+                lblMensajes.Text = "Debe iniciar sesión para hacer un pedido";
+            }
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)

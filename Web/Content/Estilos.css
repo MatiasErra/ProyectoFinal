@@ -35,6 +35,13 @@
 
 */
 
+.imgPro {
+    border-radius: 20px;
+    width: 40%;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 .myFooter {
     position: fixed;
     bottom: 0;
@@ -51,14 +58,67 @@
     font-size: 16px;
     font-weight: 500;
 }
+.styleBox {
+    display: inline-block;
+    align-content: center;
+    text-align: center;
+    background-color: white;
+    border-radius: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 
 .centerText {
+    display: inline;
     align-content: center;
+    text-align: center;
     flex-wrap: wrap;
     padding-top: 9px;
     padding-bottom: 9px;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
+
+}
+
+
+.pagStyle {
+    display: inline;
+    align-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+    padding-top: 0px;
+    padding-bottom: 9px;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+ 
+}
+
+.pagTextAct {
+    display: inline;
+    align-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    color: #1c70cc;
+    padding-left: 2.5px !important;
+    padding-right: 2.5px !important;
+}
+
+.pagText {
+    display: inline;
+    align-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+
+    padding-left: 2.5px !important;
+    padding-right: 2.5px !important;
 }
 
 .initText {
@@ -190,13 +250,13 @@ input {
 }
 
 .input--style-tex {
-    /* align-items: normal; */
+     align-items: normal; 
     margin-left:0 !important;
     padding-top: 9px !important;
     padding-bottom: 9px !important;
     padding-left: 5px !important;
-/*    margin-bottom: 0.5rem !important;
-    margin-top: 0.5rem !important;*/
+    margin-bottom: 0.5rem !important;
+    margin-top: 0.5rem !important;
     color: #666;
     align-items: center;
     width: 100%;
@@ -204,6 +264,20 @@ input {
     font-weight: 500;
     background-color: transparent !important;
 }
+
+
+.input--style-tex-grid {
+    align-items: normal;
+    margin: 0px !important;
+    padding: 0px !important;
+    color: #666;
+    align-items: center;
+    width: 150px;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: transparent !important;
+}
+
 
 .padding-bus {
     margin-bottom: 0.5rem;
@@ -322,6 +396,7 @@ input {
 .GridStl {
     vertical-align: middle;
     height: 50px;
+    max-width: 350px;
     overflow: hidden;
 }
 

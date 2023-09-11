@@ -43,6 +43,7 @@ namespace Persistencia
                         producto.TipoVenta = reader["tipoVenta"].ToString();
                         producto.Imagen = reader["imagen"].ToString();
                         producto.CantTotal = reader["cantTotal"].ToString();
+                        producto.CantRes = reader["cantRes"].ToString();
                         resultado.Add(producto);
                     }
                 }
@@ -56,8 +57,52 @@ namespace Persistencia
             return resultado;
         }
 
-     
-      
+        public List<Producto> buscarProductoCatFiltro(string buscar, string tipo, string tipoVen, string ordenar)
+        {
+            List<Producto> resultado = new List<Producto>();
+            try
+            {
+                Producto producto;
+
+
+                SqlConnection connect = Conexion.Conectar();
+
+                SqlCommand cmd = new SqlCommand("BuscarProductoCatFiltro", connect);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter("@buscar", buscar));
+                cmd.Parameters.Add(new SqlParameter("@tipo", tipo));
+                cmd.Parameters.Add(new SqlParameter("@tipoVen", tipoVen));
+                cmd.Parameters.Add(new SqlParameter("@ordenar", ordenar));
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        producto = new Producto();
+                        producto.IdProducto = int.Parse(reader["idProducto"].ToString());
+                        producto.Nombre = reader["nombre"].ToString();
+                        producto.Tipo = reader["tipo"].ToString();
+                        producto.TipoVenta = reader["tipoVenta"].ToString();
+                        producto.Imagen = reader["imagen"].ToString();
+                        producto.CantTotal = reader["cantTotal"].ToString();
+                        producto.CantRes = reader["cantRes"].ToString();
+                        resultado.Add(producto);
+                    }
+                }
+
+                connect.Close();
+            }
+            catch (Exception)
+            {
+                return resultado;
+            }
+            return resultado;
+        }
+
+
+
+
         public Producto buscarProducto(int id)
         {
             Producto producto = new Producto();
@@ -78,8 +123,11 @@ namespace Persistencia
                             producto.IdProducto = int.Parse(reader["idProducto"].ToString());
                             producto.Nombre = reader["nombre"].ToString();
                             producto.Tipo = reader["tipo"].ToString();
+                            producto.Precio = double.Parse(reader["precio"].ToString());
                             producto.TipoVenta = reader["tipoVenta"].ToString();
                             producto.Imagen = reader["imagen"].ToString();
+                            producto.CantTotal = reader["cantTotal"].ToString();
+                            producto.CantRes = reader["cantRes"].ToString();
                         }
                     }
                 }
@@ -92,6 +140,13 @@ namespace Persistencia
             }
             return producto;
         }
+
+      
+
+
+
+
+
 
         public bool altaProducto(Producto producto)
         {

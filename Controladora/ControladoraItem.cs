@@ -27,11 +27,135 @@ namespace Controladoras
 
         #endregion
 
+
+        #region Pedido
+
+        public List<Pedido_Prod> listPedidoCli_Prod(int idProducto)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Pedido_Prod> lst = inst.listPedidoCli_Prod(idProducto);
+            return lst;
+
+        }
+
+        public List<Pedido> listPedidoCli(int idCli)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Pedido> lst = inst.listPedidoCli(idCli);
+            return lst;
+        }
+
+        public List<Pedido> listPedido()
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Pedido> lst = inst.listPedido();
+            return lst;
+        }
+
+        public bool altaPedido(Pedido pedido)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            if (inst.altaPedido(pedido))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+        public Pedido_Prod buscarProductoCli(int idProducto, int idCliente)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            Pedido_Prod lst = inst.buscarProductoCli(idProducto, idCliente);
+            return lst;
+        }
+
+        public List<string[]> buscarPedidoProd(int idPedido)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<string[]> lst = inst.buscarPedidoProd(idPedido);
+            return lst;
+        }
+
+
+        public string[] buscarProductoClixNom(int idPedido, string nomProd)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            string[] lst = inst.buscarProductoClixNom(idPedido, nomProd);
+            return lst;
+        }
+        public bool altaPedido_Prod(Pedido_Prod pedido, string CantRes, double precio)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            if (inst.altaPedido_Prod(pedido, CantRes, precio))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool bajaPedido(int idPedido)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            if (inst.bajaPedido(idPedido))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+
+
+
+        public bool bajaPedidoProd(int idPedido, int idProducto, string cantRess, double precio)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            if (inst.bajaPedidoProd(idPedido, idProducto, cantRess, precio))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool modCantPediodCli(int idPedido, int idProducto, string cantidad, string cantRess, double precio)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            if (inst.modCantPediodCli(idPedido, idProducto, cantidad, cantRess, precio))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+
+
+        public bool cambiarEstadoPed(int idPedido, string estado)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            if (inst.cambiarEstadoPed(idPedido, estado))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        #endregion
+
         #region Depositos
 
-  
 
-       
+
+
         public List<Deposito> buscarDepositoFiltro(string buscar, string ordenar)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
@@ -91,7 +215,7 @@ namespace Controladoras
         #region Granjas
 
 
- 
+
         public List<Granja> buscarGranjaFiltro(string buscar, string orden)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
@@ -158,6 +282,15 @@ namespace Controladoras
         }
 
 
+        public List<Producto> buscarProductoCatFiltro(string buscar, string tipo, string tipoVen, string ordenar)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Producto> lst = inst.buscarProductoCatFiltro(buscar, tipo, tipoVen, ordenar);
+            return lst;
+        }
+
+
+
         public Producto buscarProducto(int id)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
@@ -209,9 +342,9 @@ namespace Controladoras
 
         #region Pesticida
 
-    
 
-      
+
+
 
         public List<Pesticida> buscarPesticidaFiltro(string buscar, string impact, string ordenar)
         {
@@ -337,7 +470,7 @@ namespace Controladoras
 
         #region Lotes
 
-     
+
         public List<Lote> buscarFiltrarLotes(string buscar, string ordenar)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
@@ -395,7 +528,7 @@ namespace Controladoras
 
         #region Lotes_Pestis
 
- 
+
         public List<Lote_Pesti> PestisEnLote(int idGranja, int idProducto, string fchProduccion, string buscar, string ord)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
@@ -509,9 +642,9 @@ namespace Controladoras
         #endregion
 
         #region Camiones
-     
 
-    
+
+
         public List<Camion> buscarFiltroCam(string buscar, string disp, string ordenar)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();

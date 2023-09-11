@@ -240,6 +240,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@tele", cliente.Telefono));
                 cmd.Parameters.Add(new SqlParameter("@fchNac", cliente.FchNacimiento));
                 cmd.Parameters.Add(new SqlParameter("@user", cliente.User));
+                cmd.Parameters.Add(new SqlParameter("@pass", cliente.Contrasena));
                 cmd.Parameters.Add(new SqlParameter("@dirr", cliente.Direccion));
 
 
@@ -259,8 +260,9 @@ namespace Persistencia
                 }
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                string a = e.ToString();
                 resultado = false;
                 return resultado;
 
@@ -325,6 +327,7 @@ namespace Persistencia
             return cliente;
 
         }
+
 
 
 
