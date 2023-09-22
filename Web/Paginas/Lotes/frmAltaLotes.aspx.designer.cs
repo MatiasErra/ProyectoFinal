@@ -60,6 +60,15 @@ namespace Web.Paginas.Lotes
         protected global::System.Web.UI.WebControls.TextBox txtFchProduccion;
 
         /// <summary>
+        /// Control txtFchCaducidad.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFchCaducidad;
+
+        /// <summary>
         /// Control lblCantidad.
         /// </summary>
         /// <remarks>

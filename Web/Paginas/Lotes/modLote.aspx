@@ -11,99 +11,85 @@
                 <div class="row rowLine">
                     <h2 class="title">Modificar Lote </h2>
 
-                    </div>
-                    
+                </div>
+
                 <div class="row">
 
                     <div class="col-xl-4  col-lg-12">
                         <asp:Label CssClass="text centerText " Text="Nombre de la Granja" runat="server"></asp:Label>
-
+                        <div class=" col-lg-12">
+                            <asp:Label ID="txtIdGranja" Visible="false" CssClass="text centerText " runat="server"></asp:Label>
+                            <asp:Label ID="txtNomGranja" CssClass="text centerText " runat="server"></asp:Label>
+                        </div>
 
                     </div>
 
                     <div class="col-xl-4 col-lg-12">
                         <asp:Label CssClass="text centerText " Text="Nombre del Producto" runat="server"></asp:Label>
-
+                        <div class=" col-lg-12">
+                            <asp:Label ID="txtIdProducto" Visible="false" CssClass="text centerText " runat="server"></asp:Label>
+                            <asp:Label ID="txtNomProd" CssClass="text centerText " runat="server"></asp:Label>
+                        </div>
 
                     </div>
 
                     <div class="col-xl-4 col-lg-12">
                         <asp:Label CssClass="text centerText " Text="Fecha de producción" runat="server"></asp:Label>
+                        <div class="col-lg-12">
+                            <asp:Label ID="txtFchProduccion" CssClass="text centerText" runat="server"></asp:Label>
 
+                        </div>
 
                     </div>
 
                 </div>
 
 
-                <div class="row">
 
-                    <div class="col-xl-4 col-lg-12">
-                        <asp:Label ID="txtIdGranja" CssClass="text centerText " runat="server"></asp:Label>
 
-                    </div>
-                    <div class="col-xl-4 col-lg-12">
-                        <asp:Label ID="txtIdProducto" CssClass="text centerText " runat="server"></asp:Label>
 
-                    </div>
-                    <div class=" col-xl-4 col-lg-12">
-                        <asp:Label ID="txtFchProduccion" CssClass="text centerText " runat="server"></asp:Label>
-
-                    </div>
-                </div>
                 <div class="rowLine">
                 </div>
 
 
-
-
-
-
-                    <div class="input-group">
-                       <asp:Label ID="lblCantidad" class="text initText" Text="Cantidad"  runat="server" />
-                        <asp:TextBox ID="txtCantidad" CssClass="input--style-tex" runat="server" placeholder="Cantidad" MaxLength="10" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==8);"></asp:TextBox>
-                        <asp:RegularExpressionValidator Display="Dynamic" runat="server"
-                            ControlToValidate="txtCantidad"
-                            ValidationExpression="^[0-9]+$"
-                            ErrorMessage="No es un carácter válido" />
-                    </div>
-
-                    <div class="input-group">
-                <asp:Label  class="text initText" Text="Precio"  runat="server" />
-                        <asp:TextBox ID="txtPrecio" CssClass="input--style-tex" runat="server" placeholder="Stock" MaxLength="10" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==188 || event.keyCode==8);"></asp:TextBox>
-                        <asp:RegularExpressionValidator Display="Dynamic" runat="server"
-                            ControlToValidate="txtPrecio"
-                            ValidationExpression="([0-9])[0-9]*[,]?[0-9]*"
-                            ErrorMessage="No es un carácter válido">
-                        </asp:RegularExpressionValidator>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-xl-9 col-lg-12">
-                            <asp:TextBox CssClass="form-control padding-bus" ID="txtBuscarDeposito" runat="server" placeholder="Buscar deposito" MaxLength="100" onkeydown="return(!(event.keyCode>=91));"></asp:TextBox>
-
-                        </div>
-                        <div class="col-xl-3 col-lg-12">
-                            <asp:Button CssClass="btnE btn--radius btn--green align-self-center btn--srch" ID="btnBuscarDeposito" runat="server" Text="Buscar" OnClick="btnBuscarDeposito_Click" />
-                        </div>
-                    </div>
-
-
-
-
-
-                                <div class="row">
-                <div class="col-xl-9 col-lg-12">
-                    <asp:DropDownList ID="listDeposito" CssClass="input--style-lst" runat="server">
-                    </asp:DropDownList>
+                <div class="input-group">
+                    <asp:Label class="text initText" Text=" Fecha de caducidad" runat="server" />
+                    <asp:TextBox ID="txtFchCaducidad" runat="server" CssClass=" input--style-tex js-datepicker " placeholder="Fecha" TextMode="Date"></asp:TextBox>
                 </div>
-                <div class="col-xl-3 col-lg-12">
-                    <asp:Button ID="btnAltaDeposito" class="btnE btn--radius btn--blue align-self-center btn--srch" runat="server" Text="Añadir Depósito" OnClick="btnAltaDeposito_Click" />
+                <div class="input-group">
+                    <asp:Label ID="lblCantidad" class="text initText" Text="Cantidad" runat="server" />
+                    <asp:TextBox ID="txtCantidad" CssClass="input--style-tex" runat="server" placeholder="Cantidad" MaxLength="10" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==8);"></asp:TextBox>
+                    <asp:RegularExpressionValidator Display="Dynamic" runat="server"
+                        ControlToValidate="txtCantidad"
+                        ValidationExpression="^[0-9]+$"
+                        ErrorMessage="No es un carácter válido" />
                 </div>
 
-            </div>
+                <div class="input-group">
+                    <asp:Label class="text initText" Text="Precio" runat="server" />
+                    <asp:TextBox ID="txtPrecio" CssClass="input--style-tex" runat="server" placeholder="Stock" MaxLength="10" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==188 || event.keyCode==8);"></asp:TextBox>
+                    <asp:RegularExpressionValidator Display="Dynamic" runat="server"
+                        ControlToValidate="txtPrecio"
+                        ValidationExpression="([0-9])[0-9]*[,]?[0-9]*"
+                        ErrorMessage="No es un carácter válido">
+                    </asp:RegularExpressionValidator>
+                </div>
 
-                  <div class ="rowLine"></div>
+
+
+                <div class="row">
+                    <div class="col-xl-9 col-lg-12">
+                        <asp:DropDownList ID="listDeposito" CssClass="input--style-lst" runat="server">
+                        </asp:DropDownList>
+                    </div>
+                    <div class="col-xl-3 col-lg-12">
+                        <asp:Button CssClass="btnE btn--radius btn--green align-self-center btn--srch" ID="btnBuscarDeposito" runat="server" Text="Buscar" OnClick="btnBuscarDeposito_Click" />
+                    </div>
+                </div>
+
+
+
+                <div class="rowLine"></div>
 
 
 
@@ -120,8 +106,7 @@
                 </div>
             </div>
         </div>
+    </div>
 
-                 </div>
-        
-        
+
 </asp:Content>

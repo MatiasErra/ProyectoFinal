@@ -130,13 +130,12 @@
     <Content Include="Paginas\Camiones\frmCamiones.aspx" />
     <Content Include="Paginas\Camiones\modCamiones.aspx" />
     <Content Include="Paginas\Catalogo\frmCatalogo.aspx" />
-    <Content Include="Paginas\Catalogo\frmVerProducto.aspx" />
     <Content Include="Paginas\Clientes\frmListarClientes.aspx" />
     <Content Include="Paginas\Depositos\frmDepositos.aspx" />
     <Content Include="Paginas\Fertilizantes\frmFertilizantes.aspx" />
     <Content Include="Paginas\Granjas\frmGranjas.aspx" />
-    <Content Include="Paginas\Pedidos\VerCarrito.aspx" />
-    <Content Include="Paginas\Pedidos\VerPedidosCli.aspx" />
+    <Content Include="Paginas\PedidosAdm\confPedido.aspx" />
+    <Content Include="Paginas\PedidosAdm\frmPedido.aspx" />
     <Content Include="Paginas\Clientes\frmModificarCuenta.aspx" />
     <Content Include="Paginas\Clientes\iniciarSesion.aspx" />
     <Content Include="Paginas\Clientes\RegCliente.aspx" />
@@ -150,7 +149,9 @@
     <Content Include="Paginas\Lotes\modLote.aspx" />
     <Content Include="Paginas\Nav\frmInicio.aspx" />
     <Content Include="Paginas\Nav\frmQuienesSomos.aspx" />
-    <Content Include="Paginas\Pedidos\VerProductosPedido.aspx" />
+    <Content Include="Paginas\PedidosCli\VerCarrito.aspx" />
+    <Content Include="Paginas\PedidosCli\VerPedidosCli.aspx" />
+    <Content Include="Paginas\PedidosCli\VerProductosPedido.aspx" />
     <Content Include="Paginas\Pesticidas\frmPesticidas.aspx" />
     <Content Include="Paginas\Pesticidas\modPest.aspx" />
     <Content Include="Paginas\Productos\frmProductos.aspx" />
@@ -184,10 +185,10 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Master\Default.Master" />
-    <Content Include="Master\AGlobal.Master" />
     <Content Include="Master\AProductos.Master" />
     <Content Include="Master\APedidos.Master" />
     <Content Include="Master\MCliente.Master" />
+    <Content Include="Master\AGlobal.Master" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />
@@ -310,13 +311,6 @@
     <Compile Include="Paginas\Catalogo\frmCatalogo.aspx.designer.cs">
       <DependentUpon>frmCatalogo.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Catalogo\frmVerProducto.aspx.cs">
-      <DependentUpon>frmVerProducto.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Paginas\Catalogo\frmVerProducto.aspx.designer.cs">
-      <DependentUpon>frmVerProducto.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Paginas\Clientes\frmListarClientes.aspx.cs">
       <DependentUpon>frmListarClientes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -345,19 +339,19 @@
     <Compile Include="Paginas\Granjas\frmGranjas.aspx.designer.cs">
       <DependentUpon>frmGranjas.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Pedidos\VerCarrito.aspx.cs">
-      <DependentUpon>VerCarrito.aspx</DependentUpon>
+    <Compile Include="Paginas\PedidosAdm\confPedido.aspx.cs">
+      <DependentUpon>confPedido.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\Pedidos\VerCarrito.aspx.designer.cs">
-      <DependentUpon>VerCarrito.aspx</DependentUpon>
+    <Compile Include="Paginas\PedidosAdm\confPedido.aspx.designer.cs">
+      <DependentUpon>confPedido.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Pedidos\VerPedidosCli.aspx.cs">
-      <DependentUpon>VerPedidosCli.aspx</DependentUpon>
+    <Compile Include="Paginas\PedidosAdm\frmPedido.aspx.cs">
+      <DependentUpon>frmPedido.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\Pedidos\VerPedidosCli.aspx.designer.cs">
-      <DependentUpon>VerPedidosCli.aspx</DependentUpon>
+    <Compile Include="Paginas\PedidosAdm\frmPedido.aspx.designer.cs">
+      <DependentUpon>frmPedido.aspx</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Clientes\frmModificarCuenta.aspx.cs">
       <DependentUpon>frmModificarCuenta.aspx</DependentUpon>
@@ -451,11 +445,25 @@
     <Compile Include="Paginas\Nav\frmQuienesSomos.aspx.designer.cs">
       <DependentUpon>frmQuienesSomos.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Pedidos\VerProductosPedido.aspx.cs">
+    <Compile Include="Paginas\PedidosCli\VerCarrito.aspx.cs">
+      <DependentUpon>VerCarrito.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\PedidosCli\VerCarrito.aspx.designer.cs">
+      <DependentUpon>VerCarrito.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\PedidosCli\VerPedidosCli.aspx.cs">
+      <DependentUpon>VerPedidosCli.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\PedidosCli\VerPedidosCli.aspx.designer.cs">
+      <DependentUpon>VerPedidosCli.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\PedidosCli\VerProductosPedido.aspx.cs">
       <DependentUpon>VerProductosPedido.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\Pedidos\VerProductosPedido.aspx.designer.cs">
+    <Compile Include="Paginas\PedidosCli\VerProductosPedido.aspx.designer.cs">
       <DependentUpon>VerProductosPedido.aspx</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Pesticidas\frmPesticidas.aspx.cs">

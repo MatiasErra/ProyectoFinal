@@ -60,13 +60,13 @@ namespace Web.Paginas.Camiones
         protected global::System.Web.UI.WebControls.TextBox txtModeloBuscar;
 
         /// <summary>
-        /// Control lblCargaMenorBuscar.
+        /// Control lblCarga.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCargaMenorBuscar;
+        protected global::System.Web.UI.WebControls.Label lblCarga;
 
         /// <summary>
         /// Control txtCargaMenorBuscar.
@@ -76,15 +76,6 @@ namespace Web.Paginas.Camiones
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtCargaMenorBuscar;
-
-        /// <summary>
-        /// Control lblCargaMayorBuscar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCargaMayorBuscar;
 
         /// <summary>
         /// Control txtCargaMayorBuscar.
@@ -175,6 +166,24 @@ namespace Web.Paginas.Camiones
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView lstCamiones;
+
+        /// <summary>
+        /// Control lblPaginas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPaginas;
+
+        /// <summary>
+        /// Control txtPaginas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtPaginas;
 
         /// <summary>
         /// Control lblPaginaAnt.

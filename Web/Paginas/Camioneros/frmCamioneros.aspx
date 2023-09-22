@@ -46,23 +46,27 @@
 
                                 <div class="row justify-content-center">
                                     <div class="col-lg-6">
-                                        <asp:Label Visible="false" ID="lblFchNacBuscarPasada" class="text initText" Text="Desde:" runat="server" />
-                                        <asp:TextBox Visible="false" ID="txtFchNacBuscarPasada" runat="server" CssClass=" input--style-text-search js-datepicker" placeholder="Fecha" TextMode="Date"></asp:TextBox>
+                                        <asp:Label Visible="false" runat="server" ID="lblFchNac">
+                                            <asp:Label class="text initText" Text="Desde:" runat="server" />
+                                            <asp:TextBox ID="txtFchNacBuscarPasada" runat="server" CssClass=" input--style-text-search js-datepicker" placeholder="Fecha" TextMode="Date"></asp:TextBox>
 
 
-                                        <asp:Label Visible="false" ID="lblFchNacBuscarFutura" class="text initText" Text="Hasta:" runat="server" />
-                                        <asp:TextBox Visible="false" ID="txtFchNacBuscarFutura" runat="server" CssClass=" input--style-text-search js-datepicker" placeholder="Fecha" TextMode="Date"></asp:TextBox>
+                                            <asp:Label class="text initText" Text="Hasta:" runat="server" />
+                                            <asp:TextBox ID="txtFchNacBuscarFutura" runat="server" CssClass=" input--style-text-search js-datepicker" placeholder="Fecha" TextMode="Date"></asp:TextBox>
+                                        </asp:Label>
                                     </div>
                                 </div>
 
                                 <div class="row justify-content-center">
                                     <div class="col-lg-6">
-                                        <asp:Label Visible="false" ID="lblFchVencBuscarPasada" class="text initText" Text="Desde:" runat="server" />
-                                        <asp:TextBox Visible="false" ID="txtFchVencBuscarPasada" runat="server" CssClass=" input--style-text-search js-datepicker" placeholder="Fecha" TextMode="Date"></asp:TextBox>
+                                        <asp:Label Visible="false" runat="server" ID="lblFchVenc">
+                                            <asp:Label class="text initText" Text="Desde:" runat="server" />
+                                            <asp:TextBox ID="txtFchVencBuscarPasada" runat="server" CssClass=" input--style-text-search js-datepicker" placeholder="Fecha" TextMode="Date"></asp:TextBox>
 
 
-                                        <asp:Label Visible="false" ID="lblFchVencBuscarFutura" class="text initText" Text="Hasta:" runat="server" />
-                                        <asp:TextBox Visible="false" ID="txtFchVencBuscarFutura" runat="server" CssClass=" input--style-text-search js-datepicker" placeholder="Fecha" TextMode="Date"></asp:TextBox>
+                                            <asp:Label class="text initText" Text="Hasta:" runat="server" />
+                                            <asp:TextBox ID="txtFchVencBuscarFutura" runat="server" CssClass=" input--style-text-search js-datepicker" placeholder="Fecha" TextMode="Date"></asp:TextBox>
+                                        </asp:Label>
                                     </div>
                                 </div>
 
@@ -237,14 +241,18 @@
                             </div>
                         </div>
                     </div>
-                    <div class="text-center">
+                        <asp:Label runat="server" ID="lblPaginas" CssClass="text pagStyle">
+                            <div class="text-center">
 
-                        <div class="text-center">
-                            <asp:LinkButton ID="lblPaginaAnt" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
-                            <asp:Label ID="lblPaginaAct" runat="server" Text=""></asp:Label>
-                            <asp:LinkButton ID="lblPaginaSig" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
-                        </div>
-                    </div>
+                                <asp:Label runat="server" ID="txtPaginas" CssClass="text pagStyle" Text="Paginas" />
+                                <div class="text-center">
+                                    <asp:LinkButton ID="lblPaginaAnt" CssClass="text pagTextAct" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
+                                    <asp:Label ID="lblPaginaAct" CssClass="text pagText" runat="server" Text=""></asp:Label>
+                                    <asp:LinkButton ID="lblPaginaSig" CssClass="text pagTextAct" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
+                                </div>
+                            </div>
+                        </asp:Label>
+
 
 
 

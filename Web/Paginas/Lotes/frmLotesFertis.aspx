@@ -10,77 +10,65 @@
                 <div class="row rowLine">
                     <h2 class="title">Gestionar Fertilizantes en Lotes </h2>
 
-                    
-                <div class="row">
 
-                    <div class="col-xl-4  col-lg-12">
-                        <asp:Label CssClass="text centerText " Text="Nombre de la Granja" runat="server"></asp:Label>
+                    <div class="row mb-4">
 
+                        <div class="col-xl-4  col-lg-12">
+                            <asp:Label CssClass="text centerText " Text="Nombre de la Granja" runat="server"></asp:Label>
+                            <div class="col-lg-12">
+                                <asp:Label ID="txtGranja" CssClass="text centerText " runat="server"></asp:Label>
 
-                    </div>
+                            </div>
 
-                    <div class="col-xl-4 col-lg-12">
-                        <asp:Label CssClass="text centerText " Text="Nombre del Producto" runat="server"></asp:Label>
+                        </div>
 
+                        <div class="col-xl-4 col-lg-12">
+                            <asp:Label CssClass="text centerText " Text="Nombre del Producto" runat="server"></asp:Label>
+                            <div class="col-lg-12">
+                                <asp:Label ID="txtProducto" CssClass="text centerText " runat="server"></asp:Label>
 
-                    </div>
-
-                    <div class="col-xl-4 col-lg-12">
-                        <asp:Label CssClass="text centerText " Text="Fecha de producción" runat="server"></asp:Label>
-
-
-                    </div>
-
-                </div>
+                            </div>
 
 
-                <div class="row">
+                        </div>
 
-                    <div class="col-xl-4 col-lg-12">
-                        <asp:Label ID="txtGranja" CssClass="text centerText " runat="server"></asp:Label>
+                        <div class="col-xl-4 col-lg-12">
+                            <asp:Label CssClass="text centerText " Text="Fecha de producción" runat="server"></asp:Label>
+                            
+                        <div class="col-lg-12">
+                            <asp:Label ID="txtFechProd" CssClass="text centerText " runat="server"></asp:Label>
 
-                    </div>
-                    <div class="col-xl-4 col-lg-12">
-                        <asp:Label ID="txtProducto" CssClass="text centerText " runat="server"></asp:Label>
+                        </div>
 
-                    </div>
-                    <div class=" col-xl-4 col-lg-12">
-                        <asp:Label ID="txtFechProd" CssClass="text centerText " runat="server"></asp:Label>
+                        </div>
 
                     </div>
-                </div>
-                </div>
 
 
 
 
 
-              
 
 
-                <div class="row">
-                    <div class="col-xl-9 col-lg-12">
-                        <asp:TextBox CssClass="padding-bus form-control" ID="txtBuscarFertilizante" runat="server" placeholder="Buscar fertilizante" MaxLength="100" onkeydown="return(!(event.keyCode>=91));"></asp:TextBox>
 
-                    </div>
-                    <div class="col-xl-3 col-lg-12">
-                        <asp:Button CssClass="btnE btn--radius btn--green align-self-center btn--srch" ID="btnBuscarFertilizante" runat="server" Text="Buscar" OnClick="btnBuscarFertilizante_Click" />
-                    </div>
-                </div>
+
+
+
+
                 <div class="row">
 
                     <div class="col-xl-9 col-lg-12">
                         <asp:DropDownList ID="listFertilizante" CssClass="input--style-lst" runat="server">
                         </asp:DropDownList>
 
-                            <asp:DropDownList ID="listFertilizanteSel" visible ="false" CssClass="input--style-lst" runat="server">
+                        <asp:DropDownList ID="listFertilizanteSel" Visible="false" CssClass="input--style-lst" runat="server">
                         </asp:DropDownList>
                     </div>
 
 
                     <div class="col-xl-3 col-lg-12">
                         <asp:Button ID="btnModificarCantidadFertiLote" CssClass="btnE btn--radius btn--green  align-self-center btn--srch" Visible="false" runat="server" Text="Modificar cantidad" OnClick="btnModificarCantidadFertiLote_Click" />
-                        <asp:Button ID="btnAltaFertilizante" class="btnE btn--radius btn--blue  align-self-center btn--srch" runat="server" Text="Añadir Fertilizante" OnClick="btnAltaFertilizante_Click" />
+                        <asp:Button CssClass="btnE btn--radius btn--green align-self-center btn--srch" ID="btnBuscarFertilizante" runat="server" Text="Buscar" OnClick="btnBuscarFertilizante_Click" />
                     </div>
                 </div>
                 <div class="row">
@@ -98,10 +86,10 @@
                 <div class="col-12">
                     <asp:TextBox CssClass="d-inline form-control  w-50 m-2 border-0" ID="txtBuscar" runat="server" placeholder="Buscar" MaxLength="100" onkeydown="return(event.keyCode<91 || event.keyCode==189);"></asp:TextBox>
                     <asp:Button CssClass="btnE btn--radius btn--green align-self-center btn--srch" ID="btnBuscar" runat="server" Text="Buscar" OnClick="btnBuscar_Click" />
-        
+
                 </div>
 
-                <div class ="col-12">
+                <div class="col-12">
                     <asp:DropDownList ID="listOrdenarPor" CssClass="lstOrd btn--radius  align-self-center btn--srch " Width="200" AutoPostBack="true" OnSelectedIndexChanged="listOrdenarPor_SelectedIndexChanged" runat="server"></asp:DropDownList>
                     <asp:Button ID="btnLimpiar" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" />
                 </div>
@@ -110,10 +98,6 @@
                 <div class="col-12 my-2">
                     <asp:Label CssClass="text centerText " ID="lblMensajes" runat="server"></asp:Label>
 
-                    <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
-                        ControlToValidate="txtBuscarFertilizante"
-                        ValidationExpression="^[a-zA-Z0-9 ]+$"
-                        ErrorMessage="No es un carácter válido" />
 
 
 
@@ -150,7 +134,7 @@
                                                 HeaderText="Tipo"
                                                 ItemStyle-CssClass="GridStl" />
 
-                                            
+
                                             <asp:BoundField DataField="PH"
                                                 HeaderText="pH"
                                                 ItemStyle-CssClass="GridStl" />
@@ -176,14 +160,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class="text-center">
+                 <asp:Label runat="server" ID="lblPaginas" CssClass="text pagStyle">
+                            <div class="text-center">
 
-                        <div class="text-center">
-                            <asp:LinkButton ID="lblPaginaAnt" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
-                            <asp:Label ID="lblPaginaAct" runat="server" Text=""></asp:Label>
-                            <asp:LinkButton ID="lblPaginaSig" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
-                        </div>
-                    </div>
+                                <asp:Label runat="server" ID="txtPaginas" CssClass="text pagStyle" Text="Paginas" />
+                                <div class="text-center">
+                                    <asp:LinkButton ID="lblPaginaAnt" CssClass="text pagTextAct" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
+                                    <asp:Label ID="lblPaginaAct" CssClass="text pagText" runat="server" Text=""></asp:Label>
+                                    <asp:LinkButton ID="lblPaginaSig" CssClass="text pagTextAct" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
+                                </div>
+                            </div>
+                        </asp:Label>
                 </div>
 
 

@@ -34,3 +34,15 @@ C:\Users\Mrgat\OneDrive\Escritorio\Proyecto\Clases\obj\Debug\Clases.csproj.Assem
 C:\Users\Mrgat\OneDrive\Escritorio\Proyecto\Clases\obj\Debug\Clases.csproj.CoreCompileInputs.cache
 C:\Users\Mrgat\OneDrive\Escritorio\Proyecto\Clases\obj\Debug\Clases.dll
 C:\Users\Mrgat\OneDrive\Escritorio\Proyecto\Clases\obj\Debug\Clases.pdb
+C:\Users\Mrgat\OneDrive\Escritorio\ProyectoGithub\Proyecto\Clases\bin\Debug\Clases.dll
+C:\Users\Mrgat\OneDrive\Escritorio\ProyectoGithub\Proyecto\Clases\bin\Debug\Clases.pdb
+C:\Users\Mrgat\OneDrive\Escritorio\ProyectoGithub\Proyecto\Clases\obj\Debug\Clases.csproj.AssemblyReference.cache
+C:\Users\Mrgat\OneDrive\Escritorio\ProyectoGithub\Proyecto\Clases\obj\Debug\Clases.csproj.CoreCompileInputs.cache
+C:\Users\Mrgat\OneDrive\Escritorio\ProyectoGithub\Proyecto\Clases\obj\Debug\Clases.dll
+C:\Users\Mrgat\OneDrive\Escritorio\ProyectoGithub\Proyecto\Clases\obj\Debug\Clases.pdb
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Respaldo\Proyecto\Proyecto\Clases\bin\Debug\Clases.dll
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Respaldo\Proyecto\Proyecto\Clases\bin\Debug\Clases.pdb
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Respaldo\Proyecto\Proyecto\Clases\obj\Debug\Clases.csproj.AssemblyReference.cache
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Respaldo\Proyecto\Proyecto\Clases\obj\Debug\Clases.csproj.CoreCompileInputs.cache
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Respaldo\Proyecto\Proyecto\Clases\obj\Debug\Clases.dll
+D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Respaldo\Proyecto\Proyecto\Clases\obj\Debug\Clases.pdb

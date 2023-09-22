@@ -79,8 +79,8 @@
                         <li class="nav-item dropdown">
                             <select name="Gestion" class="nav-link dropdown-toggle text-light bg-dark me-1" onchange="location = this.value;" >
                                 <option id="cuenta" style="display: none">Mi cuenta</option>
-                                 <option value="/Paginas/Pedidos/VerCarrito">Ver Carrito</option>
-                                <option value="/Paginas/Pedidos/VerPedidosCli">Ver Pedidos</option>
+                                 <option value="/Paginas/PedidosCli/VerCarrito">Ver Carrito</option>
+                                <option value="/Paginas/PedidosCli/VerPedidosCli">Ver Pedidos</option>
                                 <option value="/Paginas/Clientes/frmModificarCuenta">Cambiar Datos</option>
                                 
 

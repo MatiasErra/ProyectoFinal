@@ -37,6 +37,8 @@ namespace Web.Paginas.Lotes
                 string nombreProducto = System.Web.HttpContext.Current.Session["nombreProductoSel"].ToString();
                 string fchProduccion = System.Web.HttpContext.Current.Session["fchProduccionSel"].ToString();
 
+                txtNomGranja.Text = nombreGranja;
+                txtNomProd.Text = nombreProducto;
                 CargarListDeposito();
 
                 if (System.Web.HttpContext.Current.Session["loteDatosMod"] != null)
@@ -55,22 +57,30 @@ namespace Web.Paginas.Lotes
 
         #region Utilidad
 
+        private bool fchCadMayorPro()
+        {
+            DateTime caducidad = Convert.ToDateTime(txtFchCaducidad.Text);
+            DateTime produccion = Convert.ToDateTime(txtFchProduccion.Text);
 
+            if (caducidad > produccion)
+            {
+                return true;
+            }
+            return false;
+        }
 
         private string CantTotalProd(int idGranja, int idProducto, string fchProduccion, string cantidadAdd)
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            string d = "";
-            string b = "";
-            string a = "";
+            Lote lote = new Lote(0,0,"","","",0,0);
             int cant = 0;
             string resultado = "";
-            List<Lote> lotes = Web.buscarFiltrarLotes(d, b);
+            List<Lote> lotes = Web.buscarFiltrarLotes(lote, 0, 99999999, "1000-01-01", "3000-12-30", "1000-01-01", "3000-12-30", "");
             Producto producto = Web.buscarProducto(idProducto);
 
             foreach (Lote unlotes in lotes)
             {
-                
+
                 if (unlotes.IdProducto.Equals(producto.IdProducto)
                     && !unlotes.IdGranja.Equals(idGranja)
                      && !unlotes.FchProduccion.Equals(fchProduccion))
@@ -108,6 +118,7 @@ namespace Web.Paginas.Lotes
             txtIdGranja.Text = lote.IdGranja.ToString();
             txtIdProducto.Text = lote.IdProducto.ToString();
             txtFchProduccion.Text = DateTime.Parse(lote.FchProduccion).ToString("dd/MM/yyyy");
+            txtFchCaducidad.Text = DateTime.Parse(lote.FchCaducidad).ToString("yyyy-MM-dd");
             string cantidad = lote.Cantidad.ToString();
             string[] cant = cantidad.Split(' ');
             string count = cant[0].ToString();
@@ -119,7 +130,7 @@ namespace Web.Paginas.Lotes
 
         private bool faltanDatos()
         {
-            if (txtCantidad.Text == "" || txtPrecio.Text == "" || listDeposito.SelectedValue == "Seleccione un Deposito")
+            if (txtFchCaducidad.Text == "" || txtCantidad.Text == "" || txtPrecio.Text == "" || listDeposito.SelectedValue == "Seleccione un Deposito")
             {
                 return true;
             }
@@ -134,7 +145,9 @@ namespace Web.Paginas.Lotes
             lblMensajes.Text = "";
             txtIdGranja.Text = "";
             txtIdProducto.Text = "";
-            txtBuscarDeposito.Text = "";
+ 
+
+
 
             txtCantidad.Text = "";
             txtPrecio.Text = "";
@@ -161,42 +174,25 @@ namespace Web.Paginas.Lotes
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             List<Deposito> depositos = new List<Deposito>();
             DataView dv = new DataView();
-            if (txtBuscarDeposito.Text == "")
-            {
-                string value = "";
-                string ord = "";
+            Deposito dep = new Deposito(0, "", "", 0, "");
 
-                depositos = Web.buscarDepositoFiltro(value, ord);
-            }
-            else
-            {
-                string value = txtBuscarDeposito.Text.ToLower();
-                string ord = "";
-                depositos = Web.buscarDepositoFiltro(value, ord);
+            depositos = Web.buscarDepositoFiltro(dep, 0, 99999999, 0, 999, "");
 
-            }
+            DataTable dt = new DataTable();
 
-            if (depositos.Count == 0)
-            {
-                lblMensajes.Text = "No se encontro ningun Deposito.";
-            }
-            else
-            {
+            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+            dt.Columns.Add(new DataColumn("id", typeof(String)));
 
-                DataTable dt = new DataTable();
+            dt.Rows.Add(createRow("Seleccione un Deposito", "Seleccione un Deposito", dt));
+            cargarDepositos(depositos, dt);
+            dv = new DataView(dt);
 
-                dt.Columns.Add(new DataColumn("nombre", typeof(String)));
-                dt.Columns.Add(new DataColumn("id", typeof(String)));
 
-                dt.Rows.Add(createRow("Seleccione un Deposito", "Seleccione un Deposito", dt));
-                cargarDepositos(depositos, dt);
-                dv = new DataView(dt);
-
-            }
 
 
             return dv;
         }
+
 
         private void cargarDepositos(List<Deposito> depositos, DataTable dt)
         {
@@ -229,6 +225,11 @@ namespace Web.Paginas.Lotes
         {
             System.Web.HttpContext.Current.Session["loteDatosMod"] = "Si";
 
+            if (txtFchCaducidad.Text != "")
+            {
+                System.Web.HttpContext.Current.Session["fchCaducidadSel"] = txtFchCaducidad.Text;
+            }
+
             System.Web.HttpContext.Current.Session["cantidadSel"] = txtCantidad.Text;
             System.Web.HttpContext.Current.Session["precioSel"] = txtPrecio.Text;
             System.Web.HttpContext.Current.Session["idDepositoSel"] = listDeposito.SelectedValue;
@@ -260,6 +261,12 @@ namespace Web.Paginas.Lotes
 
             }
 
+            if (System.Web.HttpContext.Current.Session["fchCaducidadSel"] != null)
+            {
+                txtFchCaducidad.Text = DateTime.Parse(System.Web.HttpContext.Current.Session["fchCaducidadSel"].ToString()).ToString("yyyy-MM-dd");
+                System.Web.HttpContext.Current.Session["fchCaducidadSel"] = null;
+            }
+
             txtCantidad.Text = System.Web.HttpContext.Current.Session["cantidadSel"].ToString();
             System.Web.HttpContext.Current.Session["cantidadSel"] = null;
 
@@ -282,6 +289,16 @@ namespace Web.Paginas.Lotes
         #endregion
 
         #region Botones
+        protected void btnBuscarDeposito_Click(object sender, EventArgs e)
+        {
+            System.Web.HttpContext.Current.Session["LoteDatosMod"] = "Si";
+            guardarDatos();
+            Response.Redirect("/Paginas/Depositos/frmDepositos");
+
+
+        }
+
+
 
         protected void btnAltaDeposito_Click(object sender, EventArgs e)
         {
@@ -289,10 +306,6 @@ namespace Web.Paginas.Lotes
             Response.Redirect("/Paginas/Depositos/frmDepositos");
         }
 
-        protected void btnBuscarDeposito_Click(object sender, EventArgs e)
-        {
-            CargarListDeposito();
-        }
 
 
         protected void btnAtras_Click(object sender, EventArgs e)
@@ -307,52 +320,44 @@ namespace Web.Paginas.Lotes
         {
             if (!faltanDatos())
             {
-                if (int.Parse(txtCantidad.Text) > 0)
+                if (fchCadMayorPro())
                 {
-                    if (double.Parse(txtPrecio.Text) > 0)
+                    if (int.Parse(txtCantidad.Text) > 0)
                     {
-                        ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-
-                        int idGranja = int.Parse(HttpUtility.HtmlEncode(txtIdGranja.Text));
-                        int idProducto = int.Parse(HttpUtility.HtmlEncode(txtIdProducto.Text));
-                        string fchProduccion = HttpUtility.HtmlEncode(txtFchProduccion.Text);
-                        Producto producto = Web.buscarProducto(idProducto);
-                        string cantidad = HttpUtility.HtmlEncode(txtCantidad.Text) + " " + producto.TipoVenta.ToString();
-                        double precio = double.Parse(HttpUtility.HtmlEncode(txtPrecio.Text));
-                        int idDeposito = int.Parse(HttpUtility.HtmlEncode(listDeposito.SelectedValue));
-                        string CantTotal = CantTotalProd(idGranja, idProducto, fchProduccion, txtCantidad.Text);
-
-                        Lote unLote = new Lote(idGranja, idProducto, fchProduccion, cantidad, precio, idDeposito);
-
-                        if (Web.modLote(unLote, CantTotal))
+                        if (double.Parse(txtPrecio.Text) > 0)
                         {
-                            limpiar();
-                            lblMensajes.Text = "Lote modificado con éxito.";
-                            limpiarIdSession();
-                            System.Web.HttpContext.Current.Session["LoteMod"] = "si";
-                            Response.Redirect("/Paginas/Lotes/frmLotes");
+                            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
 
-                        }
-                        else
-                        {
-                            lblMensajes.Text = "No se modifico el lote";
-                        }
-                    }
-                    else
-                    {
-                        lblMensajes.Text = "El precio debe ser mayor a cero.";
-                    }
-                }
-                else
-                {
-                    lblMensajes.Text = "La cantidad debe ser mayor a cero.";
-                }
+                            int idGranja = int.Parse(HttpUtility.HtmlEncode(txtIdGranja.Text));
+                            int idProducto = int.Parse(HttpUtility.HtmlEncode(txtIdProducto.Text));
+                            string fchProduccion = HttpUtility.HtmlEncode(txtFchProduccion.Text);
+                            Producto producto = Web.buscarProducto(idProducto);
+                            string fchCaducidad = HttpUtility.HtmlEncode(txtFchCaducidad.Text);
+                            string cantidad = HttpUtility.HtmlEncode(txtCantidad.Text) + " " + producto.TipoVenta.ToString();
+                            double precio = double.Parse(HttpUtility.HtmlEncode(txtPrecio.Text));
+                            int idDeposito = int.Parse(HttpUtility.HtmlEncode(listDeposito.SelectedValue));
+                            string CantTotal = CantTotalProd(idGranja, idProducto, fchProduccion, txtCantidad.Text);
 
+                            Lote unLote = new Lote(idGranja, idProducto, fchProduccion, fchCaducidad, cantidad, precio, idDeposito);
+
+                            if (Web.modLote(unLote, CantTotal))
+                            {
+                                limpiar();
+                                lblMensajes.Text = "Lote modificado con éxito.";
+                                limpiarIdSession();
+                                System.Web.HttpContext.Current.Session["LoteMod"] = "si";
+                                Response.Redirect("/Paginas/Lotes/frmLotes");
+
+                            }
+                            else lblMensajes.Text = "No se modifico el lote";
+                        }
+                        else lblMensajes.Text = "El precio debe ser mayor a cero.";
+                    }
+                    else lblMensajes.Text = "La fecha de caducidad debe ser mayor a la de producción.";
+                }
+                else lblMensajes.Text = "La cantidad debe ser mayor a cero.";
             }
-            else
-            {
-                lblMensajes.Text = "Faltan datos.";
-            }
+            else lblMensajes.Text = "Faltan datos.";
         }
 
         protected void btnVerPestis_Click(object sender, EventArgs e)

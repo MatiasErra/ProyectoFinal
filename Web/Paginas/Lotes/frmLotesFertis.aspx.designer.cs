@@ -42,24 +42,6 @@ namespace Web.Paginas.Lotes
         protected global::System.Web.UI.WebControls.Label txtFechProd;
 
         /// <summary>
-        /// Control txtBuscarFertilizante.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtBuscarFertilizante;
-
-        /// <summary>
-        /// Control btnBuscarFertilizante.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBuscarFertilizante;
-
-        /// <summary>
         /// Control listFertilizante.
         /// </summary>
         /// <remarks>
@@ -87,13 +69,13 @@ namespace Web.Paginas.Lotes
         protected global::System.Web.UI.WebControls.Button btnModificarCantidadFertiLote;
 
         /// <summary>
-        /// Control btnAltaFertilizante.
+        /// Control btnBuscarFertilizante.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAltaFertilizante;
+        protected global::System.Web.UI.WebControls.Button btnBuscarFertilizante;
 
         /// <summary>
         /// Control txtCantidadFerti.
@@ -175,6 +157,24 @@ namespace Web.Paginas.Lotes
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView lstLotFertSel;
+
+        /// <summary>
+        /// Control lblPaginas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPaginas;
+
+        /// <summary>
+        /// Control txtPaginas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtPaginas;
 
         /// <summary>
         /// Control lblPaginaAnt.

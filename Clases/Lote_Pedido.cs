@@ -6,21 +6,29 @@ using System.Threading.Tasks;
 
 namespace Clases
 {
-    internal class Pedido_Producto
+    public class Lote_Pedido
     {
         private int _idPedido;
         private int _idProducto;
-        private int _idGrnja;
+        private int _idGranja;
+        private string _fchProduccion;
+        private string _cant;
 
-        public Pedido_Producto(int idPedido, int idProducto, int idGrnja)
+        public Lote_Pedido(int idPedido, int idProducto, int idGrnaja, string fchProduccion, string cant)
         {
             IdPedido = idPedido;
             IdProducto = idProducto;
-            IdGrnja = idGrnja;
+            IdGranja = idGrnaja;
+            FchProduccion = fchProduccion;
+            Cant = cant;
         }
+        public Lote_Pedido()
+        { }
 
         public int IdPedido { get => _idPedido; set => _idPedido = value; }
         public int IdProducto { get => _idProducto; set => _idProducto = value; }
-        public int IdGrnja { get => _idGrnja; set => _idGrnja = value; }
+        public int IdGranja { get => _idGranja; set => _idGranja = value; }
+        public string FchProduccion { get => _fchProduccion; set => _fchProduccion = value; }
+        public string Cant { get => _cant; set => _cant = value; }
     }
 }

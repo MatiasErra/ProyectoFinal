@@ -10,7 +10,7 @@
 }
 
 .rowLine {
-    margin-bottom: 32px;
+    margin-bottom: 24px;
     border-bottom: 1px solid #c1c1c1
 }
 
@@ -265,6 +265,20 @@ input {
     background-color: transparent !important;
 }
 
+.input--style-text-search {
+    /* align-items: normal; */
+    margin-left: 0 !important;
+    padding-top: 9px !important;
+    padding-bottom: 9px !important;
+    padding-left: 5px !important;
+    /*    margin-bottom: 0.5rem !important;
+    margin-top: 0.5rem !important;*/
+    color: #666;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: transparent !important;
+}
 
 .input--style-tex-grid {
     align-items: normal;
@@ -296,6 +310,19 @@ input {
     color: #666;
     align-items: center;
     width: 100%;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: transparent !important;
+}
+
+.input--style-lst-search {
+    /* align-items: normal; */
+    align-content: center;
+    padding: 9px 0px;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    color: #666;
+    align-items: center;
     font-size: 16px;
     font-weight: 500;
     background-color: transparent !important;

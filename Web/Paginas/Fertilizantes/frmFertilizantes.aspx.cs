@@ -3,11 +3,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Web.Paginas.Granjas;
+using Web.Paginas.Productos;
 
 namespace Web.Paginas.Fertilizantes
 {
@@ -36,12 +39,10 @@ namespace Web.Paginas.Fertilizantes
                 if (System.Web.HttpContext.Current.Session["loteFertiDatos"] != null)
                 {
                     btnVolverFerti.Visible = true;
+                    lstFert.Visible = false;
+                    lstFertSel.Visible = true;
                 }
-                if (System.Web.HttpContext.Current.Session["FertiMod"] != null)
-                {
-                    lblMensajes.Text = "Fertilizante modificado";
-                    System.Web.HttpContext.Current.Session["FertiMod"] = null;
-                }
+
                 System.Web.HttpContext.Current.Session["idFert"] = null;
 
 
@@ -62,13 +63,19 @@ namespace Web.Paginas.Fertilizantes
                 // Listas
                 lstImpactoBuscar.SelectedValue = System.Web.HttpContext.Current.Session["impactoFertilizanteBuscar"] != null ? System.Web.HttpContext.Current.Session["impactoFertilizanteBuscar"].ToString() : "Seleccionar tipo de impacto";
                 System.Web.HttpContext.Current.Session["impactoFertilizanteBuscar"] = null;
+                listBuscarPor.SelectedValue = System.Web.HttpContext.Current.Session["BuscarLst"] != null ? System.Web.HttpContext.Current.Session["BuscarLst"].ToString() : "Buscar por";
+                System.Web.HttpContext.Current.Session["BuscarLst"] = null;
                 listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"] != null ? System.Web.HttpContext.Current.Session["OrdenarPor"].ToString() : "Ordernar por";
                 System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
-
+                comprobarBuscar();
                 listarPagina();
 
+                if (System.Web.HttpContext.Current.Session["FertiMod"] != null)
+                {
+                    lblMensajes.Text = "Fertilizante modificado";
+                    System.Web.HttpContext.Current.Session["FertiMod"] = null;
+                }
             }
-
         }
 
         #endregion
@@ -90,12 +97,13 @@ namespace Web.Paginas.Fertilizantes
 
             txtPH.Text = "";
             lstImpacto.SelectedValue = "Seleccionar tipo de impacto";
+            listBuscarPor.SelectedValue = "Buscar por";
             listOrdenarPor.SelectedValue = "Ordenar por";
-            lstFert.SelectedIndex = -1;
+            comprobarBuscar();
             lblPaginaAct.Text = "1";
             listarPagina();
         }
- 
+
 
         private bool faltanDatos()
         {
@@ -119,10 +127,12 @@ namespace Web.Paginas.Fertilizantes
 
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             Fertilizante ferti = new Fertilizante();
-            List<Fertilizante> lstFer = Web.buscarFertilizanteFiltro(ferti, -1, -1, "");
-            foreach (Fertilizante fertilizante in lstFer)
+            Fertilizante fertilizante = new Fertilizante(0, "", "", 0, "");
+
+            List<Fertilizante> lstFer = Web.buscarFertilizanteFiltro(ferti, 0, 15, "", 0, 0, "30/12/3000");
+            foreach (Fertilizante fertilizantes in lstFer)
             {
-                if (fertilizante.IdFertilizante.Equals(intGuid))
+                if (fertilizantes.IdFertilizante.Equals(intGuid))
                 {
                     i++;
                 }
@@ -148,11 +158,30 @@ namespace Web.Paginas.Fertilizantes
             }
         }
 
+        private void comprobarBuscar()
+        {
+            txtNombreBuscar.Visible = listBuscarPor.SelectedValue == "Nombre" ? true : false;
+            txtTipoBuscar.Visible = listBuscarPor.SelectedValue == "Tipo" ? true : false;
+            lblPh.Visible = listBuscarPor.SelectedValue == "PH" ? true : false;
+            lstImpactoBuscar.Visible = listBuscarPor.SelectedValue == "Impacto" ? true : false;
+        }
+
+        private void guardarBuscar()
+        {
+            System.Web.HttpContext.Current.Session["nombreFertilizanteBuscar"] = txtNombreBuscar.Text;
+            System.Web.HttpContext.Current.Session["tipoFertilizanteBuscar"] = txtTipoBuscar.Text;
+            System.Web.HttpContext.Current.Session["phMenorFertilizanteBuscar"] = txtPhMenorBuscar.Text;
+            System.Web.HttpContext.Current.Session["phMayorFertilizanteBuscar"] = txtPhMayorBuscar.Text;
+            System.Web.HttpContext.Current.Session["impactoFertilizanteBuscar"] = lstImpactoBuscar.SelectedValue != "Seleccionar tipo de impacto" ? lstImpactoBuscar.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["BuscarLst"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+        }
+
         #region Paginas
 
         private int PagMax()
         {
-            return 2;
+            return 4;
         }
 
         private List<Fertilizante> obtenerFertilizantes()
@@ -162,18 +191,47 @@ namespace Web.Paginas.Fertilizantes
             fertilizante.Nombre = HttpUtility.HtmlEncode(txtNombreBuscar.Text);
             fertilizante.Tipo = HttpUtility.HtmlEncode(txtTipoBuscar.Text);
             fertilizante.Impacto = lstImpactoBuscar.SelectedValue != "Seleccionar tipo de impacto" ? lstImpactoBuscar.SelectedValue : "";
-            double phMenor = txtPhMenorBuscar.Text == "" ? -1 : double.Parse(txtPhMenorBuscar.Text);
-            double phMayor = txtPhMayorBuscar.Text == "" ? -1 : double.Parse(txtPhMayorBuscar.Text);
+            double phMenor = txtPhMenorBuscar.Text == "" ? 0 : double.Parse(txtPhMenorBuscar.Text);
+            double phMayor = txtPhMayorBuscar.Text == "" ? 15 : double.Parse(txtPhMayorBuscar.Text);
             string ordenar = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : "";
-            List<Fertilizante> fertilizantes = Web.buscarFertilizanteFiltro(fertilizante, phMenor, phMayor, ordenar);
+            List<Fertilizante> fertilizantes = Web.buscarFertilizanteFiltro(fertilizante, phMenor, phMayor, ordenar, 0, 0, "30/12/3000");
 
-            return fertilizantes;
+            if (System.Web.HttpContext.Current.Session["loteFertiDatos"] != null)
+            {
+                string nombreGranja = System.Web.HttpContext.Current.Session["nombreGranjaSel"].ToString();
+                string nombreProducto = System.Web.HttpContext.Current.Session["nombreProductoSel"].ToString();
+                string fchProduccion = System.Web.HttpContext.Current.Session["fchProduccionSel"].ToString();
+                Lote lote = Web.buscarLote(nombreGranja, nombreProducto, fchProduccion);
+                List<Fertilizante> mostrar = new List<Fertilizante>();
+                List<Lote_Ferti> fertisEnLote = Web.FertisEnLote(lote.IdGranja, lote.IdProducto, lote.FchProduccion, "", "");
+                foreach (Fertilizante ferti in fertilizantes)
+                {
+                    int cont = 0;
+                    foreach (Lote_Ferti loteF in fertisEnLote)
+                    {
+                        if (loteF.IdFertilizante.Equals(ferti.IdFertilizante))
+                        {
+                            cont++;
+                        }
+                    }
+                    if (cont == 0)
+                    {
+                        mostrar.Add(ferti);
+                    }
+                }
+                return mostrar;
+            }
+            else
+            {
+                return fertilizantes;
+            }
         }
 
         private void listarPagina()
         {
             List<Fertilizante> fertilizantes = obtenerFertilizantes();
             List<Fertilizante> fertilizantesPagina = new List<Fertilizante>();
+
             string p = lblPaginaAct.Text.ToString();
             int pagina = int.Parse(p);
             int cont = 0;
@@ -193,30 +251,47 @@ namespace Web.Paginas.Fertilizantes
 
             if (fertilizantesPagina.Count == 0)
             {
+
+                lblPaginas.Visible = false;
                 lblMensajes.Text = "No se encontro ningún fertilizante.";
 
                 lblPaginaAnt.Visible = false;
                 lblPaginaAct.Visible = false;
                 lblPaginaSig.Visible = false;
                 lstFert.Visible = false;
+                lstFertSel.Visible = false;
             }
             else
             {
 
-                lblMensajes.Text = "";
-                modificarPagina();
-                lstFert.Visible = true;
-                lstFert.DataSource = null;
-                lstFert.DataSource = fertilizantesPagina;
-                lstFert.DataBind();
+                if (System.Web.HttpContext.Current.Session["loteFertiDatos"] != null)
+                {
+
+                    lblPaginas.Visible = true;
+                    lblMensajes.Text = "";
+                    modificarPagina(fertilizantes);
+                    lstFertSel.Visible = true;
+                    lstFertSel.DataSource = null;
+                    lstFertSel.DataSource = fertilizantesPagina;
+                    lstFertSel.DataBind();
+
+                }
+                else
+                {
+                    lblPaginas.Visible = true;
+                    lblMensajes.Text = "";
+                    modificarPagina(fertilizantes);
+                    lstFert.Visible = true;
+                    lstFert.DataSource = null;
+                    lstFert.DataSource = fertilizantesPagina;
+                    lstFert.DataBind();
+                }
             }
-
-
         }
 
-        private void modificarPagina()
+        private void modificarPagina(List<Fertilizante> fertilizantes)
         {
-            List<Fertilizante> fertilizantes = obtenerFertilizantes();
+
             double pxp = PagMax();
             double count = fertilizantes.Count;
             double pags = count / pxp;
@@ -234,6 +309,14 @@ namespace Web.Paginas.Fertilizantes
             {
                 lblPaginaAnt.Visible = false;
             }
+            if (pagAct == cantPags.ToString() && pagAct == "1")
+            {
+                txtPaginas.Visible = false;
+                lblPaginaAct.Visible = false;
+
+            }
+
+
             lblPaginaAnt.Text = (int.Parse(pagAct) - 1).ToString();
             lblPaginaAct.Text = pagAct.ToString();
             lblPaginaSig.Text = (int.Parse(pagAct) + 1).ToString();
@@ -355,34 +438,48 @@ namespace Web.Paginas.Fertilizantes
 
         #region Botones
 
+        protected void btnSelected_Click(object sender, EventArgs e)
+        {
+
+            Button btnConstultar = (Button)sender;
+            GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
+            string id = (HttpUtility.HtmlEncode(selectedrow.Cells[0].Text));
+
+            System.Web.HttpContext.Current.Session["idFertilizanteSel"] = id;
+
+            Response.Redirect("/Paginas/Lotes/frmLotesFertis");
+
+        }
+
+
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            if (txtPhMenorBuscar.Text == "" && txtPhMayorBuscar.Text == "")
+            int num = 0;
+            try
+            {
+                if (double.Parse(txtPhMenorBuscar.Text) <= double.Parse(txtPhMayorBuscar.Text)) num++;
+            }
+            catch
+            {
+                num++;
+            }
+
+            if (num == 1)
             {
                 lblPaginaAct.Text = "1";
                 listarPagina();
             }
-            else if (txtPhMenorBuscar.Text != "" && txtPhMayorBuscar.Text != "")
+            else
             {
-                if (double.Parse(txtPhMenorBuscar.Text) <= double.Parse(txtPhMayorBuscar.Text))
-                {
-                    lblPaginaAct.Text = "1";
-                    listarPagina();
-                }
-                else lblMensajes.Text = "El pH menor es mayor";
+                lblMensajes.Text = "El pH menor es mayor.";
+                listBuscarPor.SelectedValue = "PH";
+                comprobarBuscar();
             }
-            else lblMensajes.Text = "El pH menor o mayor esta vacía.";
         }
 
         protected void listBuscarPor_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txtNombreBuscar.Visible = listBuscarPor.SelectedValue == "Nombre" ? true : false;
-            txtTipoBuscar.Visible = listBuscarPor.SelectedValue == "Tipo" ? true : false;
-            lblPhMenorBuscar.Visible = listBuscarPor.SelectedValue == "PH" ? true : false;
-            txtPhMenorBuscar.Visible = listBuscarPor.SelectedValue == "PH" ? true : false;
-            lblPhMayorBuscar.Visible = listBuscarPor.SelectedValue == "PH" ? true : false;
-            txtPhMayorBuscar.Visible = listBuscarPor.SelectedValue == "PH" ? true : false;
-            lstImpactoBuscar.Visible = listBuscarPor.SelectedValue == "Impacto" ? true : false;
+            comprobarBuscar();
         }
 
         protected void lblPaginaAnt_Click(object sender, EventArgs e)
@@ -391,12 +488,7 @@ namespace Web.Paginas.Fertilizantes
             int pagina = int.Parse(p);
             System.Web.HttpContext.Current.Session["PagAct"] = (pagina - 1).ToString();
 
-            System.Web.HttpContext.Current.Session["nombreFertilizanteBuscar"] = txtNombreBuscar.Text;
-            System.Web.HttpContext.Current.Session["tipoFertilizanteBuscar"] = txtTipoBuscar.Text;
-            System.Web.HttpContext.Current.Session["phMenorFertilizanteBuscar"] = txtPhMenorBuscar.Text;
-            System.Web.HttpContext.Current.Session["phMayorFertilizanteBuscar"] = txtPhMayorBuscar.Text;
-            System.Web.HttpContext.Current.Session["impactoFertilizanteBuscar"] = lstImpactoBuscar.SelectedValue != "Seleccionar tipo de impacto" ? lstImpactoBuscar.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+            guardarBuscar();
 
             Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
@@ -407,12 +499,7 @@ namespace Web.Paginas.Fertilizantes
             int pagina = int.Parse(p);
             System.Web.HttpContext.Current.Session["PagAct"] = (pagina + 1).ToString();
 
-            System.Web.HttpContext.Current.Session["nombreFertilizanteBuscar"] = txtNombreBuscar.Text;
-            System.Web.HttpContext.Current.Session["tipoFertilizanteBuscar"] = txtTipoBuscar.Text;
-            System.Web.HttpContext.Current.Session["phMenorFertilizanteBuscar"] = txtPhMenorBuscar.Text;
-            System.Web.HttpContext.Current.Session["phMayorFertilizanteBuscar"] = txtPhMayorBuscar.Text;
-            System.Web.HttpContext.Current.Session["impactoFertilizanteBuscar"] = lstImpactoBuscar.SelectedValue != "Seleccionar tipo de impacto" ? lstImpactoBuscar.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+            guardarBuscar();
 
             Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
@@ -453,6 +540,7 @@ namespace Web.Paginas.Fertilizantes
                             {
                                 limpiar();
                                 lblMensajes.Text = "Fertilizante dado de alta con éxito.";
+                                lblPaginaAct.Text = "1";
                                 listarPagina();
                             }
                         }
@@ -482,23 +570,19 @@ namespace Web.Paginas.Fertilizantes
                 {
                     limpiar();
                     lblMensajes.Text = "Se ha eliminado el Fertilizante.";
+                    lblPaginaAct.Text = "1";
                     listarPagina();
                 }
                 else lblMensajes.Text = "No se ha podido eliminar el Fertilizante.";
             }
-            else  lblMensajes.Text = "El Fertilizante no existe.";
+            else lblMensajes.Text = "El Fertilizante no existe.";
         }
 
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
             System.Web.HttpContext.Current.Session["PagAct"] = "1";
-            System.Web.HttpContext.Current.Session["nombreFertilizanteBuscar"] = txtNombreBuscar.Text;
-            System.Web.HttpContext.Current.Session["tipoFertilizanteBuscar"] = txtTipoBuscar.Text;
-            System.Web.HttpContext.Current.Session["phMenorFertilizanteBuscar"] = txtPhMenorBuscar.Text;
-            System.Web.HttpContext.Current.Session["phMayorFertilizanteBuscar"] = txtPhMayorBuscar.Text;
-            System.Web.HttpContext.Current.Session["impactoFertilizanteBuscar"] = lstImpactoBuscar.SelectedValue != "Seleccionar tipo de impacto" ? lstImpactoBuscar.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+            guardarBuscar();
 
             int id;
             Button btnConstultar = (Button)sender;

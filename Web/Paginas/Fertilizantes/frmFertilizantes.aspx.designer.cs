@@ -60,13 +60,13 @@ namespace Web.Paginas.Fertilizantes
         protected global::System.Web.UI.WebControls.TextBox txtTipoBuscar;
 
         /// <summary>
-        /// Control lblPhMenorBuscar.
+        /// Control lblPh.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPhMenorBuscar;
+        protected global::System.Web.UI.WebControls.Label lblPh;
 
         /// <summary>
         /// Control txtPhMenorBuscar.
@@ -76,15 +76,6 @@ namespace Web.Paginas.Fertilizantes
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPhMenorBuscar;
-
-        /// <summary>
-        /// Control lblPhMayorBuscar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPhMayorBuscar;
 
         /// <summary>
         /// Control txtPhMayorBuscar.
@@ -184,6 +175,33 @@ namespace Web.Paginas.Fertilizantes
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView lstFert;
+
+        /// <summary>
+        /// Control lstFertSel.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView lstFertSel;
+
+        /// <summary>
+        /// Control lblPaginas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPaginas;
+
+        /// <summary>
+        /// Control txtPaginas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtPaginas;
 
         /// <summary>
         /// Control lblPaginaAnt.

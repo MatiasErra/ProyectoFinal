@@ -1,10 +1,13 @@
 ﻿using Clases;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
+using System.Web.Services.Description;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Web.Paginas.Granjas;
@@ -87,7 +90,6 @@ namespace Web.Paginas.Lotes
                     System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
                 }
 
-
                 listarPagina(lote.IdGranja, lote.IdProducto, fchProduccion);
 
 
@@ -110,183 +112,23 @@ namespace Web.Paginas.Lotes
 
         #endregion
 
-        #region DropDownBoxes
+        #region Utilidad
 
-        #region Fertilizante
-
-
-
-        ICollection createDataSourceFertilizanteSel(Fertilizante fert)
+        private void CargarLote(string nombreGranja, string nombreProducto, string fchProduccion)
         {
-            listFertilizanteSel.Visible = true;
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            txtGranja.Text = nombreGranja.ToString();
+            txtProducto.Text = nombreProducto.ToString();
+            txtFechProd.Text = fchProduccion.ToString();
 
-            DataTable dt = new DataTable();
-
-            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
-            dt.Columns.Add(new DataColumn("id", typeof(String)));
-
-            dt.Rows.Add(createRow(fert.Nombre.ToString() + " " + fert.Tipo.ToString(), fert.IdFertilizante.ToString(), dt));
-            DataView dv = new DataView(dt);
-            return dv;
         }
 
-
-
-
-        public void CargarListFertilizante(int idGranja, int idProducto, string fchProduccion)
+        private void limpiarLote()
         {
-            listFertilizante.DataSource = null;
-            listFertilizante.DataSource = createDataSourceFertilizante(idGranja, idProducto, fchProduccion);
-            listFertilizante.DataTextField = "nombre";
-            listFertilizante.DataValueField = "id";
-            listFertilizante.DataBind();
+            txtGranja.Text = "";
+            txtProducto.Text = "";
+            txtFechProd.Text = "";
+
         }
-
-        ICollection createDataSourceFertilizante(int idGranja, int idProducto, string fchProduccion)
-        {
-            listFertilizante.Visible = true;
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            List<Fertilizante> fertilizantes = new List<Fertilizante>();
-            List<Fertilizante> mostrar = new List<Fertilizante>();
-
-            DataTable dt = new DataTable();
-
-            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
-            dt.Columns.Add(new DataColumn("id", typeof(String)));
-
-            if (txtBuscarFertilizante.Text == "")
-            {
-                dt.Rows.Add(createRow("Seleccione un Fertilizante", "Seleccione un Fertilizante", dt));
-                string value = "";
-                string impact = "";
-                string ord = "";
-       
-                //fertilizantes = Web.buscarFertilizanteFiltro(value,impact,ord);
-            }
-            else
-            {
-                string value = txtBuscarFertilizante.Text.ToLower();
-                string impact = "";
-                string ord = "";
-                //fertilizantes = Web.buscarFertilizanteFiltro(value, impact ,ord);
-
-            }
-            if (fertilizantes.Count == 0)
-            {
-                lblMensajes.Text = "No se encontro ningún Fertilizante.";
-                listFertilizante.Visible = false;
-
-            }
-            else
-            {
-                listFertilizante.Visible = true;
-                string b = "";
-                string o = "";
-                List<Lote_Ferti> filtro = Web.FertisEnLote(idGranja, idProducto, fchProduccion, b, o);
-                foreach (Fertilizante unFerti in fertilizantes)
-                {
-                    int cont = 0;
-                    foreach (Lote_Ferti fertL in filtro)
-                    {
-                        if (fertL.IdFertilizante.Equals(unFerti.IdFertilizante))
-                        {
-                            cont++;
-                        }
-                    }
-                    if (cont == 0)
-                    {
-                  
-                        mostrar.Add(unFerti);
-                    }
-                }
-
-                if (mostrar.Count == 0)
-                {
-                    lblMensajes.Text = "No se encontro ningún Fertilizante sin añadir.";
-                    listFertilizante.Visible = false;
-                }
-                else
-                {
-                    listFertilizante.Visible= true;
-                    cargarFertilizantes(mostrar, dt);
-                }
-            }
-                DataView dv = new DataView(dt);
-                return dv;
-           
-        }
-
-        private void cargarFertilizantes(List<Fertilizante> fertilizantes, DataTable dt)
-        {
-            foreach (Fertilizante unFertilizante in fertilizantes)
-            {
-                dt.Rows.Add(createRow(unFertilizante.Nombre+ " " + unFertilizante.Tipo, unFertilizante.IdFertilizante.ToString(), dt));
-            }
-        }
-
-        protected void btnAltaFertilizante_Click(object sender, EventArgs e)
-        {
-            guardarDatos();
-            Response.Redirect("/Paginas/Fertilizantes/frmFertilizantes");
-        }
-
-        protected void btnBuscarFertilizante_Click(object sender, EventArgs e)
-        {
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            Lote lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
-
-            int idGranja = lote.IdGranja;
-            int idProducto = lote.IdProducto;
-            string fchProduccion = lote.FchProduccion;
-
-            CargarListFertilizante(idGranja, idProducto, fchProduccion);
-        }
-
-        #endregion
-
-        DataRow createRow(String Text, String Value, DataTable dt)
-        {
-            DataRow dr = dt.NewRow();
-
-            dr[0] = Text;
-            dr[1] = Value;
-
-            return dr;
-        }
-
-        #endregion
-
-        #region Guardar y cargar datos
-
-        private void guardarDatos()
-        {
-
-
-            System.Web.HttpContext.Current.Session["loteFertiDatos"] = "Si";
-
-            System.Web.HttpContext.Current.Session["idFerCantSel"] = txtCantidadFerti.Text;
-        }
-
-        private void cargarDatos()
-        {
-
-
-
-
-
-
-            System.Web.HttpContext.Current.Session["loteFertiDatos"] = null;
-            if (System.Web.HttpContext.Current.Session["idFertilizanteSel"] != null)
-            {
-                listFertilizante.SelectedValue = System.Web.HttpContext.Current.Session["idFertilizanteSel"].ToString();
-                System.Web.HttpContext.Current.Session["idFertilizanteSel"] = null;
-            }
-            txtCantidadFerti.Text = System.Web.HttpContext.Current.Session["idFerCantSel"].ToString();
-        }
-
-
-        #endregion
 
         #region Cargar lista fertilizantes
 
@@ -313,7 +155,7 @@ namespace Web.Paginas.Lotes
 
 
 
-            List<Lote_Ferti> Lote_Fert = Web.FertisEnLote(idGranja, idProducto, fchProduccion,  buscar, ordenar);
+            List<Lote_Ferti> Lote_Fert = Web.FertisEnLote(idGranja, idProducto, fchProduccion, buscar, ordenar);
 
             return Lote_Fert;
         }
@@ -343,6 +185,7 @@ namespace Web.Paginas.Lotes
 
             if (Lotes_fertPagina.Count == 0)
             {
+                lblPaginas.Visible = false;
                 lblMensajes.Text = "No se encontro ningún Fertilizante en el lote.";
 
                 lblPaginaAnt.Visible = false;
@@ -358,6 +201,7 @@ namespace Web.Paginas.Lotes
             }
             else
             {
+                lblPaginas.Visible = true;
                 lblMensajes.Text = "";
                 txtBuscar.Visible = true;
                 btnBuscar.Visible = true;
@@ -396,6 +240,14 @@ namespace Web.Paginas.Lotes
             {
                 lblPaginaAnt.Visible = false;
             }
+            if (pagAct == cantPags.ToString() && pagAct == "1")
+            {
+                txtPaginas.Visible = false;
+                lblPaginaAct.Visible = false;
+
+            }
+
+
             lblPaginaAnt.Text = (int.Parse(pagAct) - 1).ToString();
             lblPaginaAct.Text = pagAct.ToString();
             lblPaginaSig.Text = (int.Parse(pagAct) + 1).ToString();
@@ -416,7 +268,7 @@ namespace Web.Paginas.Lotes
 
             foreach (Lote_Ferti str in fertilizantes)
             {
-                
+
                 DataRow dr = dt.NewRow();
                 dr["IdFertilizante"] = str.IdFertilizante;
                 dr["Nombre"] = str.NombreFert;
@@ -444,30 +296,134 @@ namespace Web.Paginas.Lotes
 
         #endregion
 
-        #region Lote
+        #region Guardar y cargar datos
 
-        private void CargarLote(string nombreGranja, string nombreProducto, string fchProduccion)
+        private void guardarDatos()
         {
-            txtGranja.Text = nombreGranja.ToString();
-            txtProducto.Text = nombreProducto.ToString();
-            txtFechProd.Text = fchProduccion.ToString();
 
+
+            System.Web.HttpContext.Current.Session["loteFertiDatos"] = "Si";
+
+            System.Web.HttpContext.Current.Session["idFerCantSel"] = txtCantidadFerti.Text;
+
+            System.Web.HttpContext.Current.Session["idFertilizanteSel"] = listFertilizante.SelectedValue != "Seleccione un Fertilizante" ? listFertilizante.SelectedValue : null;
         }
 
-        private void limpiarLote()
+        private void cargarDatos()
         {
-            txtGranja.Text = "";
-            txtProducto.Text = "";
-            txtFechProd.Text = "";
 
+
+
+
+
+
+            System.Web.HttpContext.Current.Session["loteFertiDatos"] = null;
+            if (System.Web.HttpContext.Current.Session["idFertilizanteSel"] != null)
+            {
+                listFertilizante.SelectedValue = System.Web.HttpContext.Current.Session["idFertilizanteSel"].ToString();
+                System.Web.HttpContext.Current.Session["idFertilizanteSel"] = null;
+            }
+            txtCantidadFerti.Text = System.Web.HttpContext.Current.Session["idFerCantSel"].ToString();
         }
-
-
 
 
         #endregion
 
+        #region DropDownBoxes
 
+        #region Fertilizante
+
+
+
+        ICollection createDataSourceFertilizanteSel(Fertilizante fert)
+        {
+            listFertilizanteSel.Visible = true;
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+            dt.Columns.Add(new DataColumn("id", typeof(String)));
+
+            dt.Rows.Add(createRow("Seleccione un Fertilizante", "Seleccione un Fertilizante", dt));
+
+            dt.Rows.Add(createRow(fert.Nombre.ToString() + " " + fert.Tipo.ToString(), fert.IdFertilizante.ToString(), dt));
+            DataView dv = new DataView(dt);
+            return dv;
+        }
+
+
+
+
+        public void CargarListFertilizante(int idGranja, int idProducto, string fchProduccion)
+        {
+            listFertilizante.DataSource = null;
+            listFertilizante.DataSource = createDataSourceFertilizante(idGranja, idProducto, fchProduccion);
+            listFertilizante.DataTextField = "nombre";
+            listFertilizante.DataValueField = "id";
+            listFertilizante.DataBind();
+        }
+
+        ICollection createDataSourceFertilizante(int idGranja, int idProducto, string fchProduccion)
+        {
+            listFertilizante.Visible = true;
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+            dt.Columns.Add(new DataColumn("id", typeof(String)));
+
+            Fertilizante fert = new Fertilizante(0, "", "", 0, "");
+
+            // Pesticidas fuera del lote
+            List<Fertilizante> fertilizantes = Web.buscarFertilizanteFiltro(fert, 0, 15, "", idGranja, idProducto, fchProduccion);
+
+            List<Fertilizante> mostrar = new List<Fertilizante>();
+            List<Lote_Ferti> fertisEnLote = Web.FertisEnLote(idGranja, idProducto, fchProduccion, "", "");
+            foreach (Fertilizante ferti in fertilizantes)
+            {
+                int cont = 0;
+                foreach (Lote_Ferti loteF in fertisEnLote)
+                {
+                    if (loteF.IdFertilizante.Equals(ferti.IdFertilizante))
+                    {
+                        cont++;
+                    }
+                }
+                if (cont == 0)
+                {
+                    mostrar.Add(ferti);
+                }
+            }
+
+            if (mostrar.Count == 0)
+            {
+                lblMensajes.Text = "No se encontro ningún Fertilizante para añadír.";
+                listFertilizante.Visible = false;
+            }
+            else
+            {
+                dt.Rows.Add(createRow("Seleccione un Fertilizante", "Seleccione un Fertilizante", dt));
+                listFertilizante.Visible = true;
+                cargarFertilizantes(mostrar, dt);
+            }
+            DataView dv = new DataView(dt);
+            return dv;
+
+        }
+
+        private void cargarFertilizantes(List<Fertilizante> fertilizantes, DataTable dt)
+        {
+            foreach (Fertilizante unFertilizante in fertilizantes)
+            {
+                dt.Rows.Add(createRow(unFertilizante.Nombre + " " + unFertilizante.Tipo, unFertilizante.IdFertilizante.ToString(), dt));
+            }
+        }
+
+
+
+        #endregion
 
         #region Ordenar
 
@@ -500,7 +456,28 @@ namespace Web.Paginas.Lotes
         }
         #endregion
 
+        DataRow createRow(String Text, String Value, DataTable dt)
+        {
+            DataRow dr = dt.NewRow();
+
+            dr[0] = Text;
+            dr[1] = Value;
+
+            return dr;
+        }
+
+        #endregion
+
+        #endregion
+
         #region Botones
+
+        protected void btnBuscarFertilizante_Click(object sender, EventArgs e)
+        {
+            guardarDatos();
+            Response.Redirect("/Paginas/Fertilizantes/frmFertilizantes");
+
+        }
 
         protected void btnSelectFertilizante_Click(object sender, EventArgs e)
         {
@@ -625,12 +602,12 @@ namespace Web.Paginas.Lotes
 
 
             btnSelect.Visible = false;
-            btnAltaFertilizante.Visible = false;
+
             btnCancelar.Visible = true;
             btnModificarCantidadFertiLote.Visible = true;
             btnBuscarFertilizante.Visible = false;
             btnBuscarFertilizante.Enabled = false;
-            txtBuscarFertilizante.Visible = false;
+
             btnAtrasFrm.Visible = false;
             btnAtrasMod.Visible = false;
 
@@ -686,10 +663,10 @@ namespace Web.Paginas.Lotes
 
 
             btnSelect.Visible = true;
-            btnAltaFertilizante.Visible = true;
+    
             btnBuscarFertilizante.Visible = true;
             btnBuscarFertilizante.Enabled = true;
-            txtBuscarFertilizante.Visible = true;
+       
             btnCancelar.Visible = false;
             btnModificarCantidadFertiLote.Visible = false;
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();

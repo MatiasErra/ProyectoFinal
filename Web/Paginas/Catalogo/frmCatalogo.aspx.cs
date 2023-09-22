@@ -204,7 +204,7 @@ namespace Web.Paginas
                 modificarPagina();
                 lstProducto.Visible = true;
                 lstProducto.DataSource = null;
-                lstProducto.DataSource = productosPagina;
+                lstProducto.DataSource = ObtenerDatos(productosPagina);
                 lstProducto.DataBind();
             }
 
@@ -233,6 +233,13 @@ namespace Web.Paginas
             {
                 lblPaginaAnt.Visible = false;
             }
+            if (pagAct == cantPags.ToString() && pagAct == "1")
+            {
+                txtPaginas.Visible = false;
+                lblPaginaAct.Visible = false;
+
+            }
+
             lblPaginaAnt.Text = (int.Parse(pagAct) - 1).ToString();
             lblPaginaAct.Text = pagAct.ToString();
             lblPaginaSig.Text = (int.Parse(pagAct) + 1).ToString();
@@ -279,6 +286,7 @@ namespace Web.Paginas
                         pedido.Tipo = ped.Tipo;
                         pedido.TipoVenta = ped.TipoVenta;
                         pedido.Imagen = ped.Imagen;
+                        pedido.Precio = ped.Precio;
                         lstProductos.Add(pedido);
                     }
 
@@ -292,6 +300,42 @@ namespace Web.Paginas
                 lstProductos = productos;
             }
             return lstProductos;
+
+
+
+
+
+        }
+
+        public DataTable ObtenerDatos(List<Producto> Productos)
+        {
+            DataTable dt = new DataTable();
+
+
+            dt.Columns.AddRange(new DataColumn[5] {
+                new DataColumn("Nombre", typeof(string)),
+                new DataColumn("Tipo", typeof(string)),
+                new DataColumn("TipoVenta", typeof(string)),
+                new DataColumn("Precio", typeof(string)),
+                new DataColumn("Imagen", typeof(string))
+       
+           });
+
+            foreach (Producto unProducto in Productos)
+            {
+                DataRow dr = dt.NewRow();
+                dr["Nombre"] = unProducto.Nombre.ToString();
+                dr["Tipo"] = unProducto.Tipo.ToString();
+                dr["TipoVenta"] = unProducto.TipoVenta.ToString();
+                dr["Precio"] = unProducto.Precio.ToString() + " $";
+                dr["Imagen"] = unProducto.Imagen.ToString();
+
+
+
+
+                dt.Rows.Add(dr);
+            }
+            return dt;
         }
 
 
@@ -471,6 +515,8 @@ namespace Web.Paginas
 
                             pedido.IdPedido = idPedido;
                             pedido.IdCliente = idCliente;
+                            Cliente cli = Web.buscarCli(idCliente);
+                            pedido.InformacionEnvio = cli.Direccion.ToString();
 
                             idPedidoReg = 1;
                             if (Web.altaPedido(pedido))

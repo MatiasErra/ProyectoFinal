@@ -32,19 +32,21 @@
 
                                 <div class="row justify-content-center">
                                     <div class="col-lg-6">
-                                        <asp:Label Visible="false" ID="lblPhMenorBuscar" class="text initText" Text="Desde:" runat="server" />
-                                        <asp:TextBox Visible="false" ID="txtPhMenorBuscar" CssClass="input--style-text-search" runat="server" placeholder="pH" MaxLength="4" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==188 || event.keyCode==8);"></asp:TextBox>
-                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
-                                            ControlToValidate="txtPhMenorBuscar"
-                                            ValidationExpression="([0-9])[0-9]*[,]?[0-9]*"
-                                            ErrorMessage="Solo numeros" />
+                                        <asp:Label Visible="false" runat="server" ID="lblPh">
+                                            <asp:Label class="text initText" Text="Desde:" runat="server" />
+                                            <asp:TextBox ID="txtPhMenorBuscar" CssClass="input--style-text-search" runat="server" placeholder="pH" MaxLength="4" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==188 || event.keyCode==8);"></asp:TextBox>
+                                            <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
+                                                ControlToValidate="txtPhMenorBuscar"
+                                                ValidationExpression="([0-9])[0-9]*[,]?[0-9]*"
+                                                ErrorMessage="Solo numeros" />
 
-                                        <asp:Label Visible="false" ID="lblPhMayorBuscar" class="text initText" Text="Desde:" runat="server" />
-                                        <asp:TextBox Visible="false" ID="txtPhMayorBuscar" CssClass="input--style-text-search" runat="server" placeholder="pH" MaxLength="4" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==188 || event.keyCode==8);"></asp:TextBox>
-                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
-                                            ControlToValidate="txtPhMenorBuscar"
-                                            ValidationExpression="([0-9])[0-9]*[,]?[0-9]*"
-                                            ErrorMessage="Solo numeros" />
+                                            <asp:Label class="text initText" Text="Desde:" runat="server" />
+                                            <asp:TextBox ID="txtPhMayorBuscar" CssClass="input--style-text-search" runat="server" placeholder="pH" MaxLength="4" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==188 || event.keyCode==8);"></asp:TextBox>
+                                            <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
+                                                ControlToValidate="txtPhMenorBuscar"
+                                                ValidationExpression="([0-9])[0-9]*[,]?[0-9]*"
+                                                ErrorMessage="Solo numeros" />
+                                        </asp:Label>
                                     </div>
                                 </div>
 
@@ -73,7 +75,7 @@
                         <div class="rowLine" />
                     </div>
 
-                    
+
                     <!-- Modal -->
 
                     <div class="modal fade" id="altaModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -97,15 +99,15 @@
                                     <div class="input-group">
 
                                         <asp:TextBox ID="txtTipo" CssClass="input--style-tex" runat="server" placeholder="Tipo" MaxLength="40" onkeydown="return(!(event.keyCode>=91) || event.keyCode==32 || event.keyCode==8 );"></asp:TextBox>
-                                    <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
-                                        ControlToValidate="txtTipo"
-                                        ValidationExpression="^[a-zA-Z ]*$"
-                                        ErrorMessage="No es una letra valida" />
+                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
+                                            ControlToValidate="txtTipo"
+                                            ValidationExpression="^[a-zA-Z ]*$"
+                                            ErrorMessage="No es una letra valida" />
 
-                                        
-                                    
+
+
                                     </div>
-                                  
+
 
 
                                     <div class="input-group">
@@ -194,34 +196,96 @@
                                             </Columns>
                                         </asp:GridView>
                                     </div>
+
+
+
+
+
+
+
+
+
+
+                                    <asp:GridView ID="lstFertSel" Width="100%" SelectedIndex="1" AutoGenerateColumns="false"
+                                        CssClass="table table-bordered table-condensed table-responsive table-hover"
+                                        runat="server">
+                                        <AlternatingRowStyle BackColor="White" />
+                                        <HeaderStyle BackColor="#6B696B" Font-Bold="true" Font-Size="Medium" ForeColor="White" />
+                                        <RowStyle BackColor="#f5f5f5" />
+                                        <Columns>
+
+                                            <asp:BoundField DataField="IdFertilizante"
+                                                HeaderText="Identificador del Fertilizante"
+                                                ItemStyle-CssClass="GridStl" />
+
+                                            <asp:BoundField DataField="Nombre"
+                                                HeaderText="Nombre"
+                                                ItemStyle-CssClass="GridStl" />
+
+                                            <asp:BoundField DataField="Tipo"
+                                                HeaderText="Tipo" ItemStyle-CssClass="GridStl" />
+
+                                            <asp:BoundField DataField="pH"
+                                                HeaderText="PH" ItemStyle-CssClass="GridStl" />
+
+
+                                            <asp:BoundField DataField="Impacto"
+                                                HeaderText="Impacto" ItemStyle-CssClass="GridStl" />
+
+                                            <asp:TemplateField HeaderText="Opciones del administrador"
+                                                ItemStyle-CssClass="GridStl">
+                                                <ItemTemplate>
+
+
+
+                                                    <asp:Button ID="btnSelect" CssClass="btnE btn--radius btn--blue" runat="server" Text="Seleccionar" OnClick="btnSelected_Click" />
+                                                    <asp:Button ID="btnBaja" CssClass="btnE btn--radius btn--red" runat="server" Text="Baja" OnClientClick="return confirm('¿Desea eliminar este Fertilizante?')" OnClick="btnBaja_Click" />
+                                                    <asp:Button ID="btmModificar" CssClass="btnE btn--radius btn--yellow" runat="server" Text="Modificar" OnClick="btnModificar_Click" />
+
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+
+
+
+                                        </Columns>
+                                    </asp:GridView>
+                                </div>
+
+
+
+
+                            </div>
+                        </div>
+                    
+                            <asp:Label runat="server" ID="lblPaginas" CssClass="text pagStyle">
+                            <div class="text-center">
+
+                                <asp:Label runat="server" ID="txtPaginas" CssClass="text pagStyle" Text="Paginas" />
+                                <div class="text-center">
+                                    <asp:LinkButton ID="lblPaginaAnt" CssClass="text pagTextAct" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
+                                    <asp:Label ID="lblPaginaAct" CssClass="text pagText" runat="server" Text=""></asp:Label>
+                                    <asp:LinkButton ID="lblPaginaSig" CssClass="text pagTextAct" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
                                 </div>
                             </div>
+                        </asp:Label>
                         </div>
-                                <div class="text-center">
-
-                            <div class="text-center">
-                                <asp:LinkButton ID="lblPaginaAnt" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
-                                <asp:Label ID="lblPaginaAct" runat="server" Text=""></asp:Label>
-                                <asp:LinkButton ID="lblPaginaSig" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
-                            </div>
-                        </div>
- </div>
-                    </div>
-
-
-
-
-
-
-
-
-
-
-
                 </div>
-
             </div>
+
+
+
+
+
+
+
+
+
+
+
         </div>
+
+    </div>
+    </div>
     </div>
 
     <asp:TextBox Visible="false" CssClass="form-control m-1" ID="txtId" runat="server" Enabled="False"></asp:TextBox>

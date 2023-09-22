@@ -13,6 +13,67 @@ namespace Persistencia
 {
     class pPedido
     {
+
+        public List<Pedido> BuscarPedidoFiltro(string NombreCli, string Estado, double CostoMin, double CostoMax, string Ordenar)
+        {
+            List<Pedido> resultado = new List<Pedido>();
+            try
+            {
+                Pedido pedido;
+
+
+                SqlConnection conect = Conexion.Conectar();
+
+                SqlCommand cmd = new SqlCommand("BuscarPedidoFiltro", conect);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+
+                cmd.Parameters.Add(new SqlParameter("@NombreCli", NombreCli));
+                cmd.Parameters.Add(new SqlParameter("@Estado", Estado));
+                cmd.Parameters.Add(new SqlParameter("@CostoMin", CostoMin));
+                cmd.Parameters.Add(new SqlParameter("@CostoMax", CostoMax));
+                cmd.Parameters.Add(new SqlParameter("@ordenar", Ordenar));
+
+
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        pedido = new Pedido();
+
+                        pedido.IdPedido = int.Parse(reader["idPedido"].ToString());
+                        pedido.IdCliente = int.Parse(reader["idCliente"].ToString());
+                        pedido.NombreCli = reader["NombreCli"].ToString();
+                        pedido.Estado = reader["estado"].ToString();
+                        pedido.Costo = double.Parse(reader["costo"].ToString());
+                        pedido.FechaPedido = reader["fchPedido"].ToString();
+                        pedido.FechaEspe = reader["fechaEspe"].ToString();
+                        pedido.FechaEntre = reader["fechaEntre"].ToString();
+     
+                        pedido.InformacionEnvio = reader["informacionEntrega"].ToString();
+
+                        resultado.Add(pedido);
+                    }
+                }
+
+                conect.Close();
+            }
+            catch (Exception)
+            {
+                return resultado;
+            }
+            return resultado;
+        }
+
+
+
+
+
+
+
+
         public List<Pedido_Prod> listPedidoCli_Prod(int idProducto)
         {
 
@@ -83,6 +144,7 @@ namespace Persistencia
                         string[] DateArr = reader["fchPedido"].ToString().Split(' ');
                         pedido.FechaPedido = DateArr[0];
                         pedido.Costo = double.Parse(reader["costo"].ToString());
+                        pedido.InformacionEnvio = reader["informacionEntrega"].ToString();
 
 
 
@@ -155,7 +217,7 @@ namespace Persistencia
 
                 cmd.Parameters.Add(new SqlParameter("@IdPedido", pedido.IdPedido));
                 cmd.Parameters.Add(new SqlParameter("@IdCliente", pedido.IdCliente));
-
+                cmd.Parameters.Add(new SqlParameter("@infoEnv", pedido.InformacionEnvio));
 
 
                 int resBD = cmd.ExecuteNonQuery();
@@ -222,6 +284,48 @@ namespace Persistencia
 
         }
 
+        public bool altaPedido_Lote(Lote_Pedido lote_Pedido, string CantLote, string CantDisp, string CantRess)
+        {
+            bool resultado = false;
+
+            try
+            {
+                SqlConnection conect = Conexion.Conectar();
+                SqlCommand cmd = new SqlCommand("AltaPedido_Lote", conect);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(new SqlParameter("@IdPedido", lote_Pedido.IdPedido));
+                cmd.Parameters.Add(new SqlParameter("@IdProducto", lote_Pedido.IdProducto));
+                cmd.Parameters.Add(new SqlParameter("@IdGranja", lote_Pedido.IdGranja));
+                cmd.Parameters.Add(new SqlParameter("@fchProduccion", lote_Pedido.FchProduccion));
+                cmd.Parameters.Add(new SqlParameter("@Cantidad", lote_Pedido.Cant));
+                cmd.Parameters.Add(new SqlParameter("@CantLote", CantLote));
+                cmd.Parameters.Add(new SqlParameter("@CantDisp", CantDisp));
+                cmd.Parameters.Add(new SqlParameter("@CantRess", CantRess));
+
+                int resBD = cmd.ExecuteNonQuery();
+
+                if (resBD > 0)  
+                {
+
+                    resultado = true;
+                }
+                if (conect.State == ConnectionState.Open)
+                {
+                    conect.Close();
+                    resultado = true;
+                }
+
+            }
+            catch (Exception)
+            {
+                resultado = false;
+                return resultado;
+            }
+
+            return resultado;
+
+        }
         public bool altaPedido_Prod(Pedido_Prod pedido_Prod, string CantidadRes, double precio)
         {
             bool resultado = false;
@@ -392,6 +496,59 @@ namespace Persistencia
 
         }
 
+        public List<string[]> buscarPedidoLote(int idPedido)
+        {
+            {
+                List<string[]> resultado = new List<string[]>();
+                try
+                {
+                    string[] producto;
+
+
+                    SqlConnection conect = Conexion.Conectar();
+
+                    SqlCommand cmd = new SqlCommand("BuscarPedidoLote", conect);
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new SqlParameter("@idPedido", idPedido));
+
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            producto = new string[12];
+
+                            producto[0] = reader["idPedido"].ToString();
+                            producto[1] = reader["idProducto"].ToString();
+                            producto[2] = reader["nombreProd"].ToString();
+                            producto[3] = reader["idGranja"].ToString();
+                            producto[4] = reader["nomGranja"].ToString();
+                            string[] DateArr = reader["fchProduccion"].ToString().Split(' ');
+                            producto[5] = DateArr[0];
+                            producto[6] = reader["tipo"].ToString();
+                            producto[7] = reader["precio"].ToString();
+                            producto[8] = reader["imagen"].ToString();
+                            producto[9] = reader["cantidad"].ToString();
+                            producto[10] = reader["cantTotal"].ToString();
+                            producto[11] = reader["cantRes"].ToString();
+                            resultado.Add(producto);
+                        }
+                    }
+
+                    conect.Close();
+                }
+                catch (Exception)
+                {
+                    return resultado;
+                }
+                return resultado;
+            }
+
+
+
+        }
 
 
 
@@ -442,14 +599,14 @@ namespace Persistencia
 
         }
 
-        public bool modCantPediodCli(int idPedido, int idProducto, string cantidad, string cantRess, double precio)
+        public bool modCantPedidoCli(int idPedido, int idProducto, string cantidad, string cantRess, double precio)
         {
             bool resultado = false;
 
             try
             {
                 SqlConnection connect = Conexion.Conectar();
-                SqlCommand cmd = new SqlCommand("ModCantPediodCli", connect);
+                SqlCommand cmd = new SqlCommand("ModCantPedidoCli", connect);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.Add(new SqlParameter("@idPedido", idPedido));
@@ -457,6 +614,52 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@cant", cantidad));
                 cmd.Parameters.Add(new SqlParameter("@cantRess", cantRess));
                 cmd.Parameters.Add(new SqlParameter("@precio", precio));
+
+
+                int resBD = cmd.ExecuteNonQuery();
+
+                if (resBD > 0)
+                {
+                    resultado = true;
+                }
+                if (connect.State == ConnectionState.Open)
+                {
+                    connect.Close();
+                    resultado = true;
+
+                }
+
+            }
+            catch (Exception)
+            {
+                resultado = false;
+                return resultado;
+            }
+
+            return resultado;
+
+        }
+
+        public bool modCantPedidoLote (Lote_Pedido lote_Pedido, string CantLote, string CantDisp, string CantRess)
+        {
+            bool resultado = false;
+
+            try
+            {
+                SqlConnection connect = Conexion.Conectar();
+                SqlCommand cmd = new SqlCommand("ModCantPedidoLote", connect);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(new SqlParameter("@idPedido", lote_Pedido.IdPedido));
+                cmd.Parameters.Add(new SqlParameter("@idGranja", lote_Pedido.IdGranja));
+                cmd.Parameters.Add(new SqlParameter("@idProducto", lote_Pedido.IdProducto));
+                cmd.Parameters.Add(new SqlParameter("@fchProduccion", lote_Pedido.FchProduccion));
+                cmd.Parameters.Add(new SqlParameter("@Cantidad", lote_Pedido.Cant));
+                cmd.Parameters.Add(new SqlParameter("@CantLote", CantLote));
+                cmd.Parameters.Add(new SqlParameter("@CantDisp", CantDisp));
+                cmd.Parameters.Add(new SqlParameter("@CantRess", CantRess));
+
+
 
 
                 int resBD = cmd.ExecuteNonQuery();
@@ -522,6 +725,52 @@ namespace Persistencia
             return resultado;
 
         }
+
+
+        public bool bajaLotesPedido(int idPedido, int idGranja, int idProducto, string fchProduccion, string cantLote, string CantDisp, string CantRess) 
+        {
+            bool resultado = false;
+
+            try
+            {
+                SqlConnection connect = Conexion.Conectar();
+                SqlCommand cmd = new SqlCommand("BajaLotesPedido", connect);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(new SqlParameter("@idPedido", idPedido));
+                cmd.Parameters.Add(new SqlParameter("@idGranja", idGranja));
+                cmd.Parameters.Add(new SqlParameter("@idProducto", idProducto));
+                cmd.Parameters.Add(new SqlParameter("@fchProduccion", fchProduccion));
+                cmd.Parameters.Add(new SqlParameter("@cantLote", cantLote));
+                cmd.Parameters.Add(new SqlParameter("@CantDisp", CantDisp));
+                cmd.Parameters.Add(new SqlParameter("@CantRess", CantRess));
+
+
+
+                int resBD = cmd.ExecuteNonQuery();
+
+                if (resBD > 0)
+                {
+                    resultado = true;
+                }
+                if (connect.State == ConnectionState.Open)
+                {
+                    connect.Close();
+                    resultado = true;
+
+                }
+
+            }
+            catch (Exception)
+            {
+                resultado = false;
+                return resultado;
+            }
+
+            return resultado;
+
+        }
+
 
     }
 }

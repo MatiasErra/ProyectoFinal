@@ -135,7 +135,6 @@ namespace Web.Paginas.Admins
             dt.Rows.Add(createRow("Administrador global", "Administrador global", dt));
             dt.Rows.Add(createRow("Administrador de productos", "Administrador de productos", dt));
             dt.Rows.Add(createRow("Administrador de pedidos", "Administrador de pedidos", dt));
-            dt.Rows.Add(createRow("Administrador de flota", "Administrador de flota", dt));
 
 
             DataView dv = new DataView(dt);

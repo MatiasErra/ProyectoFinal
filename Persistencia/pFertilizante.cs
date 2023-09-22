@@ -15,7 +15,7 @@ namespace Persistencia
 
 
 
-        public List<Fertilizante> buscarFertilizanteFiltro(Fertilizante pFertilizante, double phMenor, double phMayor, string ordenar)
+        public List<Fertilizante> buscarFertilizanteFiltro(Fertilizante pFertilizante, double phMenor, double phMayor, string ordenar, int idGranja, int idProducto, string fchProduccion)
         {
             List<Fertilizante> resultado = new List<Fertilizante>();
             try
@@ -33,6 +33,9 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@phMenor", phMenor));
                 cmd.Parameters.Add(new SqlParameter("@phMayor", phMayor));
                 cmd.Parameters.Add(new SqlParameter("@impacto", pFertilizante.Impacto));
+                cmd.Parameters.Add(new SqlParameter("@idGranja", idGranja));
+                cmd.Parameters.Add(new SqlParameter("@idProducto", idProducto));
+                cmd.Parameters.Add(new SqlParameter("@fchProduccion", fchProduccion));
                 cmd.Parameters.Add(new SqlParameter("@ordenar", ordenar));
 
                 using (SqlDataReader reader = cmd.ExecuteReader())

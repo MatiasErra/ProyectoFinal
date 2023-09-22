@@ -36,7 +36,7 @@ namespace Web.Paginas.Clientes
                 }
 
 
-                if (System.Web.HttpContext.Current.Session["GranjaDatosFrm"] != null)
+                if (System.Web.HttpContext.Current.Session["GranjaDatosFrm"] != null || System.Web.HttpContext.Current.Session["GranjaDatosMod"] != null)
                 {
                     btnVolverFrm.Visible = true;
 
@@ -66,9 +66,11 @@ namespace Web.Paginas.Clientes
                 System.Web.HttpContext.Current.Session["fchFuturaClienteBuscar"] = null;
 
                 // Listas
+                listBuscarPor.SelectedValue = System.Web.HttpContext.Current.Session["BuscarLst"] != null ? System.Web.HttpContext.Current.Session["BuscarLst"].ToString() : "Buscar por";
+                System.Web.HttpContext.Current.Session["BuscarLst"] = null;
                 listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"] != null ? System.Web.HttpContext.Current.Session["OrdenarPor"].ToString() : "Ordernar por";
                 System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
-
+                comprobarBuscar();
                 listarPagina();
 
             }
@@ -91,8 +93,9 @@ namespace Web.Paginas.Clientes
             txtFchNacBuscarPasada.Text = "";
             txtFchNacBuscarFutura.Text = "";
             txtDireccionBuscar.Text = "";
-
+            listBuscarPor.SelectedValue = "Buscar por";
             listOrdenarPor.SelectedValue = "Ordenar por";
+            comprobarBuscar();
             lblPaginaAct.Text = "1";
             listarPagina();
         }
@@ -118,6 +121,31 @@ namespace Web.Paginas.Clientes
 
         }
 
+        private void comprobarBuscar()
+        {
+            txtNombreBuscar.Visible = listBuscarPor.SelectedValue == "Nombre y Apellido" ? true : false;
+            txtApellidoBuscar.Visible = listBuscarPor.SelectedValue == "Nombre y Apellido" ? true : false;
+            txtEmailBuscar.Visible = listBuscarPor.SelectedValue == "Email" ? true : false;
+            txtTelBuscar.Visible = listBuscarPor.SelectedValue == "Telefono" ? true : false;
+            lblFchNac.Visible = listBuscarPor.SelectedValue == "Fecha de nacimiento" ? true : false;
+            txtUsuarioBuscar.Visible = listBuscarPor.SelectedValue == "Usuario" ? true : false;
+            txtDireccionBuscar.Visible = listBuscarPor.SelectedValue == "Direccion" ? true : false;
+        }
+
+        private void guardarBuscar()
+        {
+            System.Web.HttpContext.Current.Session["nombreClienteBuscar"] = txtNombreBuscar.Text;
+            System.Web.HttpContext.Current.Session["apellidoClienteBuscar"] = txtApellidoBuscar.Text;
+            System.Web.HttpContext.Current.Session["emailClienteBuscar"] = txtEmailBuscar.Text;
+            System.Web.HttpContext.Current.Session["telClienteBuscar"] = txtTelBuscar.Text;
+            System.Web.HttpContext.Current.Session["usuarioClienteBuscar"] = txtUsuarioBuscar.Text;
+            System.Web.HttpContext.Current.Session["direccionClienteBuscar"] = txtDireccionBuscar.Text;
+            System.Web.HttpContext.Current.Session["fchPasadaClienteBuscar"] = txtFchNacBuscarPasada.Text != "" ? txtFchNacBuscarPasada.Text : null;
+            System.Web.HttpContext.Current.Session["fchFuturaClienteBuscar"] = txtFchNacBuscarFutura.Text != "" ? txtFchNacBuscarFutura.Text : null;
+            System.Web.HttpContext.Current.Session["BuscarLst"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+        }
+
         #region Paginas
 
         private int PagMax()
@@ -135,8 +163,8 @@ namespace Web.Paginas.Clientes
             cliente.Telefono = HttpUtility.HtmlEncode(txtTelBuscar.Text);
             cliente.User = HttpUtility.HtmlEncode(txtUsuarioBuscar.Text);
             cliente.Direccion = HttpUtility.HtmlEncode(txtDireccionBuscar.Text);
-            string fchDesde = txtFchNacBuscarPasada.Text != "" ? txtFchNacBuscarPasada.Text : "";
-            string fchHasta = txtFchNacBuscarFutura.Text != "" ? txtFchNacBuscarFutura.Text : "";
+            string fchDesde = txtFchNacBuscarPasada.Text != "" ? txtFchNacBuscarPasada.Text : "1000-01-01";
+            string fchHasta = txtFchNacBuscarFutura.Text != "" ? txtFchNacBuscarFutura.Text : "3000-12-30";
             string ordenar = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : "";
 
             List<Cliente> clientes = Web.buscarCliFiltro(cliente, fchDesde, fchHasta, ordenar);
@@ -167,7 +195,8 @@ namespace Web.Paginas.Clientes
 
             if (ClientePagina.Count == 0)
             {
-                lblMensajes.Text = "No se encontro ningún administrador.";
+                lblPaginas.Visible = false;
+                lblMensajes.Text = "No se encontro ningún cliente.";
 
                 lblPaginaAnt.Visible = false;
                 lblPaginaAct.Visible = false;
@@ -177,8 +206,9 @@ namespace Web.Paginas.Clientes
             }
             else
             {
-                if (System.Web.HttpContext.Current.Session["GranjaDatosFrm"] != null)
+                if (System.Web.HttpContext.Current.Session["GranjaDatosFrm"] != null || System.Web.HttpContext.Current.Session["GranjaDatosMod"] != null)
                 {
+                    lblPaginas.Visible = true;
                     lstClienteSelect.Visible = true;
                     modificarPagina();
                     lstClienteSelect.DataSource = null;
@@ -187,6 +217,7 @@ namespace Web.Paginas.Clientes
                 }
                 else
                 {
+                    lblPaginas.Visible = true;
                     lblMensajes.Text = "";
                     modificarPagina();
                     lstCliente.Visible = true;
@@ -218,10 +249,19 @@ namespace Web.Paginas.Clientes
             {
                 lblPaginaAnt.Visible = false;
             }
+            if (pagAct == cantPags.ToString() && pagAct == "1")
+            {
+                txtPaginas.Visible = false;
+                lblPaginaAct.Visible = false;
+
+            }
+
+
             lblPaginaAnt.Text = (int.Parse(pagAct) - 1).ToString();
             lblPaginaAct.Text = pagAct.ToString();
             lblPaginaSig.Text = (int.Parse(pagAct) + 1).ToString();
         }
+
 
         #endregion
 
@@ -249,11 +289,7 @@ namespace Web.Paginas.Clientes
             dt.Rows.Add(createRow("Ordenar por", "Ordenar por", dt));
             dt.Rows.Add(createRow("Nombre", "Nombre", dt));
             dt.Rows.Add(createRow("Apellido", "Apellido", dt));
-            dt.Rows.Add(createRow("E-Mail", "E-Mail", dt));
-            dt.Rows.Add(createRow("Teléfono", "Teléfono", dt));
             dt.Rows.Add(createRow("Fecha de Nacimiento", "Fecha de Nacimiento", dt));
-            dt.Rows.Add(createRow("Usuario", "Usuario", dt));
-            dt.Rows.Add(createRow("Dirección", "Dirección", dt));
 
             DataView dv = new DataView(dt);
             return dv;
@@ -311,42 +347,36 @@ namespace Web.Paginas.Clientes
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            if (comprobarFechas() == 1)
+            int num = 0;
+            try
             {
+                if (DateTime.Parse(txtFchNacBuscarPasada.Text) <= DateTime.Parse(txtFchNacBuscarFutura.Text)) num++;
+            }
+            catch
+            {
+                num++;
+            }
+
+            if (num == 1)
+            {
+
                 lblPaginaAct.Text = "1";
                 listarPagina();
             }
-            else if (comprobarFechas() == 2)
+            else
             {
-                if (Convert.ToDateTime(txtFchNacBuscarPasada.Text) <= Convert.ToDateTime(txtFchNacBuscarFutura.Text))
-                {
-                    lblPaginaAct.Text = "1";
-                    listarPagina();
-                }
-                else lblMensajes.Text = "La fecha futura es menor que la fecha pasada.";
+                lblMensajes.Text = "La fecha de nacimiento menor es mayor.";
+                listBuscarPor.SelectedValue = "Fecha de nacimiento";
+                comprobarBuscar();
             }
-            else lblMensajes.Text = "La fecha pasada o futura esta vacía.";
         }
 
-        private int comprobarFechas()
-        {
-            if (txtFchNacBuscarFutura.Text == "" && txtFchNacBuscarPasada.Text == "") return 1;
-            else if (txtFchNacBuscarFutura.Text != "" && txtFchNacBuscarPasada.Text != "") return 2;
-            return 0;
-        }
+        
+
 
         protected void listBuscarPor_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txtNombreBuscar.Visible = listBuscarPor.SelectedValue == "Nombre y Apellido" ? true : false;
-            txtApellidoBuscar.Visible = listBuscarPor.SelectedValue == "Nombre y Apellido" ? true : false;
-            txtEmailBuscar.Visible = listBuscarPor.SelectedValue == "Email" ? true : false;
-            txtTelBuscar.Visible = listBuscarPor.SelectedValue == "Telefono" ? true : false;
-            txtFchNacBuscarPasada.Visible = listBuscarPor.SelectedValue == "Fecha de nacimiento" ? true : false;
-            lblFchNacBuscarPasada.Visible = listBuscarPor.SelectedValue == "Fecha de nacimiento" ? true : false;
-            txtFchNacBuscarFutura.Visible = listBuscarPor.SelectedValue == "Fecha de nacimiento" ? true : false;
-            lblFchNacBuscarFutura.Visible = listBuscarPor.SelectedValue == "Fecha de nacimiento" ? true : false;
-            txtUsuarioBuscar.Visible = listBuscarPor.SelectedValue == "Usuario" ? true : false;
-            txtDireccionBuscar.Visible = listBuscarPor.SelectedValue == "Direccion" ? true : false;
+            comprobarBuscar();
         }
 
         protected void lblPaginaAnt_Click(object sender, EventArgs e)
@@ -355,15 +385,7 @@ namespace Web.Paginas.Clientes
             int pagina = int.Parse(p);
             System.Web.HttpContext.Current.Session["PagAct"] = (pagina - 1).ToString();
 
-            System.Web.HttpContext.Current.Session["nombreClienteBuscar"] = txtNombreBuscar.Text;
-            System.Web.HttpContext.Current.Session["apellidoClienteBuscar"] = txtApellidoBuscar.Text;
-            System.Web.HttpContext.Current.Session["emailClienteBuscar"] = txtEmailBuscar.Text;
-            System.Web.HttpContext.Current.Session["telClienteBuscar"] = txtTelBuscar.Text;
-            System.Web.HttpContext.Current.Session["usuarioClienteBuscar"] = txtUsuarioBuscar.Text;
-            System.Web.HttpContext.Current.Session["direccionClienteBuscar"] = txtDireccionBuscar.Text;
-            System.Web.HttpContext.Current.Session["fchPasadaClienteBuscar"] = txtFchNacBuscarPasada.Text != "" ? txtFchNacBuscarPasada.Text : null;
-            System.Web.HttpContext.Current.Session["fchFuturaClienteBuscar"] = txtFchNacBuscarFutura.Text != "" ? txtFchNacBuscarFutura.Text : null;
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+            guardarBuscar();
 
             Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
@@ -374,15 +396,7 @@ namespace Web.Paginas.Clientes
             int pagina = int.Parse(p);
             System.Web.HttpContext.Current.Session["PagAct"] = (pagina + 1).ToString();
 
-            System.Web.HttpContext.Current.Session["nombreClienteBuscar"] = txtNombreBuscar.Text;
-            System.Web.HttpContext.Current.Session["apellidoClienteBuscar"] = txtApellidoBuscar.Text;
-            System.Web.HttpContext.Current.Session["emailClienteBuscar"] = txtEmailBuscar.Text;
-            System.Web.HttpContext.Current.Session["telClienteBuscar"] = txtTelBuscar.Text;
-            System.Web.HttpContext.Current.Session["usuarioClienteBuscar"] = txtUsuarioBuscar.Text;
-            System.Web.HttpContext.Current.Session["direccionClienteBuscar"] = txtDireccionBuscar.Text;
-            System.Web.HttpContext.Current.Session["fchPasadaClienteBuscar"] = txtFchNacBuscarPasada.Text != "" ? txtFchNacBuscarPasada.Text : null;
-            System.Web.HttpContext.Current.Session["fchFuturaClienteBuscar"] = txtFchNacBuscarFutura.Text != "" ? txtFchNacBuscarFutura.Text : null;
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+            guardarBuscar();
 
             Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
@@ -390,12 +404,18 @@ namespace Web.Paginas.Clientes
         protected void btnLimpiar_Click(object sender, EventArgs e)
         {
             limpiar();
-            listarPagina();
         }
 
         protected void btnVolverFrm_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/Paginas/Granjas/frmGranjas");
+            if (System.Web.HttpContext.Current.Session["GranjaDatosFrm"] != null)
+            {
+                Response.Redirect("/Paginas/Granjas/frmGranjas");
+            }
+            else if (System.Web.HttpContext.Current.Session["GranjaDatosMod"] != null)
+            {
+                Response.Redirect("/Paginas/Granjas/modGranja");
+            }
         }
 
         protected void btnBaja_Click(object sender, EventArgs e)
@@ -414,7 +434,7 @@ namespace Web.Paginas.Clientes
                     {
                         limpiar();
                         lblMensajes.Text = "Se ha borrado el Cliente.";
-
+                        lblPaginaAct.Text = "1";
                         listarPagina();
                     }
                     else lblMensajes.Text = "No se ha podido borrar el Cliente.";
@@ -431,17 +451,25 @@ namespace Web.Paginas.Clientes
             GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
             string id = (HttpUtility.HtmlEncode(selectedrow.Cells[0].Text));
 
-            if(System.Web.HttpContext.Current.Session["GranjaDatosFrm"].ToString() == "Abm")
+
+            if (System.Web.HttpContext.Current.Session["GranjaDatosFrm"] != null)
+            {
+                if (System.Web.HttpContext.Current.Session["GranjaDatosFrm"].ToString() == "Abm")
+                {
+                    System.Web.HttpContext.Current.Session["DuenoSelected"] = id;
+                }
+                else
+                {
+                    System.Web.HttpContext.Current.Session["duenoGranjaBuscar"] = id;
+                }
+
+                Response.Redirect("/Paginas/Granjas/frmGranjas");
+            }
+            else if (System.Web.HttpContext.Current.Session["GranjaDatosMod"] != null)
             {
                 System.Web.HttpContext.Current.Session["DuenoSelected"] = id;
+                Response.Redirect("/Paginas/Granjas/modGranja");
             }
-            else
-            {
-                System.Web.HttpContext.Current.Session["duenoGranjaBuscar"] = id;
-            }
-
-            Response.Redirect("/Paginas/Granjas/frmGranjas");
-
         }
 
         #endregion

@@ -90,7 +90,8 @@ create table Lotes(
 idGranja int references Granjas(idGranja),
 idProducto int references Productos(idProducto),
 fchProduccion date check(fchProduccion <= CONVERT(date,getdate(),(103))),
-cantidad varchar(40) not null,
+fchCaducidad date,
+cantidad varchar(20) not null,
 precio numeric(10,2) not null,
 idDeposito int references Depositos(idDeposito),
 primary key(idGranja, idProducto, fchProduccion)
@@ -101,6 +102,7 @@ idPesticida int references Pesticidas(idPesti),
 idGranja int,
 idProducto int,
 fchProduccion date,
+fchCaducidad date,
 cantidad varchar(30) not null,
 primary key(idPesticida, idGranja, idProducto, fchProduccion),
 foreign key(idGranja, idProducto, fchProduccion) references Lotes(idGranja, idProducto, fchProduccion)
@@ -135,9 +137,21 @@ costo numeric(10,2) not null,
 fchPedido date not null check(fchPedido = (CONVERT(date,getdate(),(103)))),
 fechaEntre date  check(fechaEntre >= (CONVERT(date,getdate(),(103)))),
 fechaEspe date  check(fechaEspe >= (CONVERT(date,getdate(),(103)))),
-retraso varchar(100),
+
 informacionEntrega varchar(80) ,
 idCamion int references Camioneros(idCamionero), 
 idCamionero int references Camiones(idCamion) 
 );
 
+
+create table Lotes_Pedidos(
+idPedido int references Pedidos(idPedido),
+idGranja int ,
+idProducto int ,
+fchProduccion date ,
+
+cantidad varchar(40) not null,
+FOREIGN key  (idGranja, idProducto, fchProduccion)  references Lotes (idGranja, idProducto, fchProduccion),
+primary key (idPedido,idGranja, idProducto, fchProduccion)
+);
+ 

@@ -35,6 +35,14 @@ namespace Web.Paginas
 
 
         #region Pedido
+        public List<Pedido> BuscarPedidoFiltro(string NombreCli, string Estado, double CostoMin, double CostoMax, string Ordenar)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            List<Pedido> lst = inst.BuscarPedidoFiltro(NombreCli, Estado, CostoMin, CostoMax, Ordenar);
+            return lst;
+
+        }
+
 
         public List<Pedido> listPedidoCli(int idCli)
         {
@@ -65,6 +73,14 @@ namespace Web.Paginas
             return lst;
         }
 
+        public List<string[]> buscarPedidoLote(int idPedido)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            List<string[]> lst = inst.buscarPedidoLote(idPedido);
+            return lst;
+        }
+
+
 
         public bool altaPedido(Pedido pedido)
         {
@@ -79,17 +95,47 @@ namespace Web.Paginas
         }
 
 
-        public bool modCantPediodCli(int idPedido, int idProducto, string cantidad, string cantRess, double precio)
+        public bool modCantPedidoCli(int idPedido, int idProducto, string cantidad, string cantRess, double precio)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            if (inst.modCantPediodCli(idPedido, idProducto, cantidad, cantRess, precio))
+            if (inst.modCantPedidoCli(idPedido, idProducto, cantidad, cantRess, precio))
             {
                 return true;
             }
             else
                 return false;
         }
+
+
+        public bool modCantPedidoLote(Lote_Pedido lote_Pedido, string CantLote, string CantDisp, string CantRess)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+            if (inst.modCantPedidoLote(lote_Pedido, CantLote, CantDisp, CantRess))
+            {
+                return true;
+            }
+            else
+                return false;
+
+
+
+        }
+
+        public bool bajaLotesPedido(int idPedido, int idGranja, int idProducto, string fchProduccion, string cantLote, string CantDisp, string CantRess)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+            if (inst.bajaLotesPedido(idPedido, idGranja, idProducto, fchProduccion, cantLote, CantDisp, CantRess))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+
 
         public bool bajaPedido(int idPedido)
         {
@@ -116,6 +162,19 @@ namespace Web.Paginas
                 return false;
         }
 
+        public bool altaPedido_Lote(Lote_Pedido lote_Pedido,string CantLote, string CantDisp, string CantRess) 
+        {
+            {
+                ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+                if (inst.altaPedido_Lote(lote_Pedido, CantLote, CantDisp, CantRess))
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+        }
 
 
         public bool altaPedido_Prod(Pedido_Prod pedido, string CantRes, double precio)
@@ -515,10 +574,10 @@ namespace Web.Paginas
 
         #region Productos
 
-        public List<Producto> buscarProductoFiltro(string buscar, string tipo, string tipoVen, string ordenar)
+        public List<Producto> buscarProductoFiltro(Producto producto, int precioMenor, int precioMayor, string ordenar)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Producto> lst = inst.buscarProductoFiltro(buscar, tipo, tipoVen, ordenar);
+            List<Producto> lst = inst.buscarProductoFiltro(producto, precioMenor, precioMayor, ordenar);
             return lst;
 
         }
@@ -582,10 +641,10 @@ namespace Web.Paginas
         #region Pesticida
 
 
-        public List<Pesticida> buscarPesticidaFiltro(Pesticida pPesticida, double phMenor, double phMayor, string ordenar)
+        public List<Pesticida> buscarPesticidaFiltro(Pesticida pPesticida, double phMenor, double phMayor, string ordenar, int idGranja, int idProducto, string fchProduccion)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Pesticida> lst = inst.buscarPesticidaFiltro(pPesticida, phMenor, phMayor, ordenar);
+            List<Pesticida> lst = inst.buscarPesticidaFiltro(pPesticida, phMenor, phMayor, ordenar, idGranja, idProducto, fchProduccion);
             return lst;
         }
 
@@ -646,10 +705,10 @@ namespace Web.Paginas
 
     
 
-        public List<Fertilizante> buscarFertilizanteFiltro(Fertilizante pFertilizante, double phMenor, double phMayor, string ordenar)
+        public List<Fertilizante> buscarFertilizanteFiltro(Fertilizante pFertilizante, double phMenor, double phMayor, string ordenar, int idGranja, int idProducto, string fchProduccion)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Fertilizante> lst = inst.buscarFertilizanteFiltro(pFertilizante, phMenor, phMayor, ordenar);
+            List<Fertilizante> lst = inst.buscarFertilizanteFiltro(pFertilizante, phMenor, phMayor, ordenar, idGranja, idProducto, fchProduccion);
             return lst;
         }
 
@@ -708,10 +767,10 @@ namespace Web.Paginas
         #region Lotes
 
       
-        public List<Lote> buscarFiltrarLotes(string buscar, string ordenar)
+        public List<Lote> buscarFiltrarLotes(Lote lote, double precioMenor, double precioMayor, string fchProduccionMenor, string fchProduccionMayor, string fchCaducidadMenor, string fchCaducidadMayor, string ordenar)
         {
             ControladoraItem ins = ControladoraItem.obtenerInstancia();
-            List<Lote> lst = ins.buscarFiltrarLotes(buscar, ordenar);
+            List<Lote> lst = ins.buscarFiltrarLotes(lote, precioMenor, precioMayor, fchProduccionMenor, fchProduccionMayor, fchCaducidadMenor, fchCaducidadMayor, ordenar);
             return lst;
         }
 

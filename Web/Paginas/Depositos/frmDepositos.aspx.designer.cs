@@ -60,13 +60,13 @@ namespace Web.Paginas.Depositos
         protected global::System.Web.UI.WebControls.TextBox txtUbicacionBuscar;
 
         /// <summary>
-        /// Control lblTemperaturaMenorBuscar.
+        /// Control lblTemp.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTemperaturaMenorBuscar;
+        protected global::System.Web.UI.WebControls.Label lblTemp;
 
         /// <summary>
         /// Control txtTemperaturaMenorBuscar.
@@ -78,15 +78,6 @@ namespace Web.Paginas.Depositos
         protected global::System.Web.UI.WebControls.TextBox txtTemperaturaMenorBuscar;
 
         /// <summary>
-        /// Control lblTemperaturaMayorBuscar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTemperaturaMayorBuscar;
-
-        /// <summary>
         /// Control txtTemperaturaMayorBuscar.
         /// </summary>
         /// <remarks>
@@ -96,13 +87,13 @@ namespace Web.Paginas.Depositos
         protected global::System.Web.UI.WebControls.TextBox txtTemperaturaMayorBuscar;
 
         /// <summary>
-        /// Control lblCapacidadMenorBuscar.
+        /// Control lblCapacidad.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCapacidadMenorBuscar;
+        protected global::System.Web.UI.WebControls.Label lblCapacidad;
 
         /// <summary>
         /// Control txtCapacidadMenorBuscar.
@@ -112,15 +103,6 @@ namespace Web.Paginas.Depositos
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtCapacidadMenorBuscar;
-
-        /// <summary>
-        /// Control lblCapacidadMayorBuscar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCapacidadMayorBuscar;
 
         /// <summary>
         /// Control txtCapacidadMayorBuscar.
@@ -229,6 +211,24 @@ namespace Web.Paginas.Depositos
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView lstDepositoSelect;
+
+        /// <summary>
+        /// Control lblPaginas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPaginas;
+
+        /// <summary>
+        /// Control txtPaginas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtPaginas;
 
         /// <summary>
         /// Control lblPaginaAnt.

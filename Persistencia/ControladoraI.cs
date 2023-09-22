@@ -26,6 +26,11 @@ namespace Persistencia
 
         #region Pedidos
 
+        public List<Pedido> BuscarPedidoFiltro(string NombreCli, string Estado, double CostoMin, double CostoMax, string Ordenar)
+        {
+            return new pPedido().BuscarPedidoFiltro(NombreCli, Estado, CostoMin, CostoMax, Ordenar);
+        }
+
         public List<Pedido_Prod> listPedidoCli_Prod(int idProducto)
         {
             return new pPedido().listPedidoCli_Prod(idProducto);
@@ -63,7 +68,10 @@ namespace Persistencia
             return new pPedido().altaPedido_Prod(pedido, CantRes, precio);
         }
 
-
+       public bool altaPedido_Lote(Lote_Pedido lote_Pedido,  string CantLote, string CantDisp, string CantRess)
+        {
+            return new pPedido().altaPedido_Lote(lote_Pedido, CantLote, CantDisp, CantRess);
+        }
        public bool cambiarEstadoPed(int idPedido, string estado)
         {
             return new pPedido().cambiarEstadoPed(idPedido, estado);
@@ -74,20 +82,34 @@ namespace Persistencia
             return new pPedido().buscarPedidoProd(idPedido);
         }
 
+        public List<string[]> buscarPedidoLote(int idPedido)
+        {
+            return new pPedido().buscarPedidoLote(idPedido);
+        }
 
         public string[] buscarProductoClixNom(int idPedido, string nomProd)
         {
             return new pPedido().buscarProductoClixNom(idPedido ,nomProd);
         }
 
-       public bool modCantPediodCli(int idPedido, int idProducto, string cantidad, string cantRess, double precio)
+       public bool modCantPedidoCli(int idPedido, int idProducto, string cantidad, string cantRess, double precio)
         {
-            return new pPedido().modCantPediodCli(idPedido, idProducto, cantidad, cantRess, precio);
+            return new pPedido().modCantPedidoCli(idPedido, idProducto, cantidad, cantRess, precio);
         }
+        public bool modCantPedidoLote(Lote_Pedido lote_Pedido, string CantLote, string CantDisp, string CantRess)
+        {
+            return new pPedido().modCantPedidoLote(lote_Pedido, CantLote, CantDisp, CantRess);
+        }
+
 
         public bool bajaPedidoProd(int idPedido, int idProducto, string cantRess, double precio)
         {
             return new pPedido().bajaPedidoProd(idPedido, idProducto, cantRess, precio);
+        }
+
+        public bool bajaLotesPedido(int idPedido, int idGranja, int idProducto, string fchProduccion, string cantLote, string CantDisp, string CantRess)
+        {
+            return new pPedido().bajaLotesPedido(idPedido, idGranja, idProducto, fchProduccion, cantLote, CantDisp, CantRess);
         }
 
 
@@ -188,9 +210,9 @@ namespace Persistencia
 
         #region Productos
 
-        public List<Producto> buscarProductoFiltro(string buscar, string tipo, string tipoVen, string ordenar)
+        public List<Producto> buscarProductoFiltro(Producto producto, int precioMenor, int precioMayor, string ordenar)
         {
-            return new pProducto().buscarProductoFiltro(buscar, tipo, tipoVen, ordenar);
+            return new pProducto().buscarProductoFiltro(producto, precioMenor, precioMayor, ordenar);
         }
 
         public List<Producto> buscarProductoCatFiltro(string buscar, string tipo, string tipoVen, string ordenar)
@@ -227,9 +249,9 @@ namespace Persistencia
         #region Pesticida
 
        
-        public List<Pesticida> buscarPesticidaFiltro(Pesticida pPesticida, double phMenor, double phMayor, string ordenar)
+        public List<Pesticida> buscarPesticidaFiltro(Pesticida pPesticida, double phMenor, double phMayor, string ordenar, int idGranja, int idProducto, string fchProduccion)
         {
-            return new pPesticida().buscarPesticidaFiltro(pPesticida, phMenor, phMayor, ordenar);
+            return new pPesticida().buscarPesticidaFiltro(pPesticida, phMenor, phMayor, ordenar, idGranja, idProducto, fchProduccion);
         }
 
         public Pesticida buscarPesti(int id)
@@ -257,9 +279,9 @@ namespace Persistencia
         #region Fertilizantes
 
 
-        public List<Fertilizante> buscarFertilizanteFiltro(Fertilizante pFertilizante, double phMenor, double phMayor, string ordenar)
+        public List<Fertilizante> buscarFertilizanteFiltro(Fertilizante pFertilizante, double phMenor, double phMayor, string ordenar, int idGranja, int idProducto, string fchProduccion)
         {
-            return new pFertilizante().buscarFertilizanteFiltro(pFertilizante, phMenor,phMayor,ordenar);
+            return new pFertilizante().buscarFertilizanteFiltro(pFertilizante, phMenor,phMayor,ordenar, idGranja, idProducto, fchProduccion);
         }
 
         public Fertilizante buscarFerti(int id)
@@ -287,9 +309,9 @@ namespace Persistencia
         #region Lotes
 
   
-        public List<Lote> buscarFiltrarLotes(string buscar, string ordenar)
+        public List<Lote> buscarFiltrarLotes(Lote lote, double precioMenor, double precioMayor,  string fchProduccionMenor, string fchProduccionMayor, string fchCaducidadMenor, string fchCaducidadMayor, string ordenar)
         {
-            return new pLote().buscarFiltrarLotes(buscar, ordenar);
+            return new pLote().buscarFiltrarLotes(lote, precioMenor, precioMayor, fchProduccionMenor, fchProduccionMayor, fchCaducidadMenor, fchCaducidadMayor, ordenar);
         }
 
         public Lote buscarLote(string nombreGranja, string nombreProducto, string fchProduccion)

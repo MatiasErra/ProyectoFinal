@@ -33,19 +33,21 @@
 
                                 <div class="row justify-content-center">
                                     <div class="col-lg-6">
-                                        <asp:Label Visible="false" ID="lblCargaMenorBuscar" class="text initText" Text="Desde:" runat="server" />
-                                        <asp:TextBox Visible="false" ID="txtCargaMenorBuscar" CssClass="input--style-text-search" runat="server" placeholder="Carga" MaxLength="10" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
-                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
-                                            ControlToValidate="txtCargaMenorBuscar"
-                                            ValidationExpression="^[0-9]*$"
-                                            ErrorMessage="No es un numero valido" />
+                                        <asp:Label Visible="false" runat="server" ID="lblCarga">
+                                            <asp:Label class="text initText" Text="Desde:" runat="server" />
+                                            <asp:TextBox ID="txtCargaMenorBuscar" CssClass="input--style-text-search" runat="server" placeholder="Carga" MaxLength="10" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
+                                            <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
+                                                ControlToValidate="txtCargaMenorBuscar"
+                                                ValidationExpression="^[0-9]*$"
+                                                ErrorMessage="No es un numero valido" />
 
-                                        <asp:Label Visible="false" ID="lblCargaMayorBuscar" class="text initText" Text="Desde:" runat="server" />
-                                        <asp:TextBox Visible="false" ID="txtCargaMayorBuscar" CssClass="input--style-text-search" runat="server" placeholder="Carga" MaxLength="10" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
-                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
-                                            ControlToValidate="txtCargaMenorBuscar"
-                                            ValidationExpression="^[0-9]*$"
-                                            ErrorMessage="No es un numero valido" />
+                                            <asp:Label class="text initText" Text="Desde:" runat="server" />
+                                            <asp:TextBox ID="txtCargaMayorBuscar" CssClass="input--style-text-search" runat="server" placeholder="Carga" MaxLength="10" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
+                                            <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
+                                                ControlToValidate="txtCargaMenorBuscar"
+                                                ValidationExpression="^[0-9]*$"
+                                                ErrorMessage="No es un numero valido" />
+                                        </asp:Label>
                                     </div>
                                 </div>
 
@@ -190,14 +192,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="text-center">
-
+                  <asp:Label runat="server" ID="lblPaginas" CssClass="text pagStyle">
                             <div class="text-center">
-                                <asp:LinkButton ID="lblPaginaAnt" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
-                                <asp:Label ID="lblPaginaAct" runat="server" Text=""></asp:Label>
-                                <asp:LinkButton ID="lblPaginaSig" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
+
+                                <asp:Label runat="server" ID="txtPaginas" CssClass="text pagStyle" Text="Paginas" />
+                                <div class="text-center">
+                                    <asp:LinkButton ID="lblPaginaAnt" CssClass="text pagTextAct" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
+                                    <asp:Label ID="lblPaginaAct" CssClass="text pagText" runat="server" Text=""></asp:Label>
+                                    <asp:LinkButton ID="lblPaginaSig" CssClass="text pagTextAct" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
+                                </div>
                             </div>
-                        </div>
+                        </asp:Label>
 
 
 

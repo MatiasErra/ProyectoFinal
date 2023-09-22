@@ -15,7 +15,7 @@ namespace Persistencia
 
 
 
-        public List<Pesticida> buscarPesticidaFiltro(Pesticida pPesticida, double phMenor, double phMayor, string ordenar)
+        public List<Pesticida> buscarPesticidaFiltro(Pesticida pPesticida, double phMenor, double phMayor, string ordenar, int idGranja, int idProducto, string fchProduccion)
         {
             List<Pesticida> resultado = new List<Pesticida>();
             try
@@ -30,9 +30,12 @@ namespace Persistencia
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(new SqlParameter("@nombre", pPesticida.Nombre));
                 cmd.Parameters.Add(new SqlParameter("@tipo", pPesticida.Tipo));
+                cmd.Parameters.Add(new SqlParameter("@impacto", pPesticida.Impacto));
                 cmd.Parameters.Add(new SqlParameter("@phMenor", phMenor));
                 cmd.Parameters.Add(new SqlParameter("@phMayor", phMayor));
-                cmd.Parameters.Add(new SqlParameter("@impacto", pPesticida.Impacto));
+                cmd.Parameters.Add(new SqlParameter("@idGranja", idGranja));
+                cmd.Parameters.Add(new SqlParameter("@idProducto", idProducto));
+                cmd.Parameters.Add(new SqlParameter("@fchProduccion", fchProduccion));
                 cmd.Parameters.Add(new SqlParameter("@ordenar", ordenar));
 
                 using (SqlDataReader reader = cmd.ExecuteReader())

@@ -38,6 +38,14 @@ namespace Controladoras
 
         }
 
+        public List<Pedido> BuscarPedidoFiltro(string NombreCli, string Estado, double CostoMin, double CostoMax, string Ordenar)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Pedido> lst = inst.BuscarPedidoFiltro(NombreCli, Estado, CostoMin, CostoMax, Ordenar);
+            return lst;
+
+        }
+
         public List<Pedido> listPedidoCli(int idCli)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
@@ -51,7 +59,7 @@ namespace Controladoras
             List<Pedido> lst = inst.listPedido();
             return lst;
         }
-
+     
         public bool altaPedido(Pedido pedido)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
@@ -77,6 +85,13 @@ namespace Controladoras
             return lst;
         }
 
+        public List<string[]> buscarPedidoLote(int idPedido)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<string[]> lst = inst.buscarPedidoLote(idPedido);
+            return lst;
+        }
+
 
         public string[] buscarProductoClixNom(int idPedido, string nomProd)
         {
@@ -95,6 +110,20 @@ namespace Controladoras
             else
                 return false;
         }
+        public bool altaPedido_Lote(Lote_Pedido lote_Pedido, string CantLote, string CantDisp, string CantRess)
+        {
+            {
+                ControladoraI inst = ControladoraI.obtenerInstancia();
+
+                if (inst.altaPedido_Lote(lote_Pedido, CantLote, CantDisp, CantRess))
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+        }
+
 
         public bool bajaPedido(int idPedido)
         {
@@ -123,11 +152,11 @@ namespace Controladoras
                 return false;
         }
 
-        public bool modCantPediodCli(int idPedido, int idProducto, string cantidad, string cantRess, double precio)
+        public bool bajaLotesPedido(int idPedido, int idGranja, int idProducto, string fchProduccion, string cantLote, string CantDisp, string CantRess)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
 
-            if (inst.modCantPediodCli(idPedido, idProducto, cantidad, cantRess, precio))
+            if (inst.bajaLotesPedido(idPedido, idGranja, idProducto, fchProduccion, cantLote, CantDisp, CantRess))
             {
                 return true;
             }
@@ -135,7 +164,32 @@ namespace Controladoras
                 return false;
         }
 
+        public bool modCantPedidoCli(int idPedido, int idProducto, string cantidad, string cantRess, double precio)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
 
+            if (inst.modCantPedidoCli(idPedido, idProducto, cantidad, cantRess, precio))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+       public bool modCantPedidoLote(Lote_Pedido lote_Pedido, string CantLote, string CantDisp, string CantRess)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            if (inst.modCantPedidoLote(lote_Pedido, CantLote, CantDisp, CantRess))
+            {
+                return true;
+            }
+            else
+                return false;
+
+
+
+        }
 
         public bool cambiarEstadoPed(int idPedido, string estado)
         {
@@ -274,13 +328,12 @@ namespace Controladoras
 
         #region Productos
 
-        public List<Producto> buscarProductoFiltro(string buscar, string tipo, string tipoVen, string ordenar)
+        public List<Producto> buscarProductoFiltro(Producto producto, int precioMenor, int precioMayor, string ordenar)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Producto> lst = inst.buscarProductoFiltro(buscar, tipo, tipoVen, ordenar);
+            List<Producto> lst = inst.buscarProductoFiltro(producto, precioMenor, precioMayor, ordenar);
             return lst;
         }
-
 
         public List<Producto> buscarProductoCatFiltro(string buscar, string tipo, string tipoVen, string ordenar)
         {
@@ -346,10 +399,10 @@ namespace Controladoras
 
 
 
-        public List<Pesticida> buscarPesticidaFiltro(Pesticida pPesticida, double phMenor, double phMayor, string ordenar)
+        public List<Pesticida> buscarPesticidaFiltro(Pesticida pPesticida, double phMenor, double phMayor, string ordenar, int idGranja, int idProducto, string fchProduccion)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Pesticida> lst = inst.buscarPesticidaFiltro(pPesticida, phMenor, phMayor, ordenar);
+            List<Pesticida> lst = inst.buscarPesticidaFiltro(pPesticida, phMenor, phMayor, ordenar, idGranja, idProducto, fchProduccion);
             return lst;
         }
 
@@ -409,10 +462,10 @@ namespace Controladoras
 
 
 
-        public List<Fertilizante> buscarFertilizanteFiltro(Fertilizante pFertilizante, double phMenor, double phMayor, string ordenar)
+        public List<Fertilizante> buscarFertilizanteFiltro(Fertilizante pFertilizante, double phMenor, double phMayor, string ordenar, int idGranja, int idProducto, string fchProduccion)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Fertilizante> lst = inst.buscarFertilizanteFiltro(pFertilizante, phMenor, phMayor, ordenar);
+            List<Fertilizante> lst = inst.buscarFertilizanteFiltro(pFertilizante, phMenor, phMayor, ordenar, idGranja, idProducto, fchProduccion);
             return lst;
         }
 
@@ -471,10 +524,10 @@ namespace Controladoras
         #region Lotes
 
 
-        public List<Lote> buscarFiltrarLotes(string buscar, string ordenar)
+        public List<Lote> buscarFiltrarLotes(Lote lote, double precioMenor, double precioMayor, string fchProduccionMenor, string fchProduccionMayor, string fchCaducidadMenor, string fchCaducidadMayor, string ordenar)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Lote> lst = inst.buscarFiltrarLotes(buscar, ordenar);
+            List<Lote> lst = inst.buscarFiltrarLotes(lote, precioMenor, precioMayor, fchProduccionMenor, fchProduccionMayor, fchCaducidadMenor, fchCaducidadMayor, ordenar);
             return lst;
         }
 

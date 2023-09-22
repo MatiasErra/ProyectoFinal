@@ -46,8 +46,7 @@ namespace Web.Paginas.Admins
                 CargarListBuscar();
                 CargarListOrdenarPor();
 
-                lblMensajes.Text = System.Web.HttpContext.Current.Session["idAdminMod"] != null ?  "Administrador Modificado" : "";
-                System.Web.HttpContext.Current.Session["idAdminMod"] = null; 
+                
 
                 // Buscador
                 txtNombreBuscar.Text = System.Web.HttpContext.Current.Session["nombreAdminBuscar"] != null ? System.Web.HttpContext.Current.Session["nombreAdminBuscar"].ToString() : "";
@@ -70,10 +69,15 @@ namespace Web.Paginas.Admins
                 System.Web.HttpContext.Current.Session["tipoAdminBuscar"] = null;
                 lstEstadoBuscar.SelectedValue = System.Web.HttpContext.Current.Session["estadoAdminBuscar"] != null ? System.Web.HttpContext.Current.Session["estadoAdminBuscar"].ToString() : "Seleccionar estado de Admin";
                 System.Web.HttpContext.Current.Session["estadoAdminBuscar"] = null;
+                listBuscarPor.SelectedValue = System.Web.HttpContext.Current.Session["BuscarLst"] != null ? System.Web.HttpContext.Current.Session["BuscarLst"].ToString() : "Buscar por";
+                System.Web.HttpContext.Current.Session["BuscarLst"] = null;
                 listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"] != null ? System.Web.HttpContext.Current.Session["OrdenarPor"].ToString() : "Ordernar por";
                 System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
-
+                comprobarBuscar();
                 listarPagina();
+
+                lblMensajes.Text = System.Web.HttpContext.Current.Session["idAdminMod"] != null ? "Administrador Modificado" : "";
+                System.Web.HttpContext.Current.Session["idAdminMod"] = null;
 
             }
         }
@@ -129,6 +133,7 @@ namespace Web.Paginas.Admins
 
             listBuscarPor.SelectedValue = "Buscar por";
             listOrdenarPor.SelectedValue = "Ordenar por";
+            comprobarBuscar();
             lblPaginaAct.Text = "1";
             listarPagina();
         }
@@ -195,6 +200,33 @@ namespace Web.Paginas.Admins
             return GenerateUniqueId();
         }
 
+        private void comprobarBuscar()
+        {
+            txtNombreBuscar.Visible = listBuscarPor.SelectedValue == "Nombre y Apellido" ? true : false;
+            txtApellidoBuscar.Visible = listBuscarPor.SelectedValue == "Nombre y Apellido" ? true : false;
+            txtEmailBuscar.Visible = listBuscarPor.SelectedValue == "Email" ? true : false;
+            txtTelBuscar.Visible = listBuscarPor.SelectedValue == "Telefono" ? true : false;
+            lblFchNac.Visible = listBuscarPor.SelectedValue == "Fecha de nacimiento" ? true : false;
+            txtUsuarioBuscar.Visible = listBuscarPor.SelectedValue == "Usuario" ? true : false;
+            lstTipoAdminBuscar.Visible = listBuscarPor.SelectedValue == "Tipo de Admin" ? true : false;
+            lstEstadoBuscar.Visible = listBuscarPor.SelectedValue == "Estado" ? true : false;
+        }
+
+        private void guardarBuscar()
+        {
+            System.Web.HttpContext.Current.Session["nombreAdminBuscar"] = txtNombreBuscar.Text;
+            System.Web.HttpContext.Current.Session["apellidoAdminBuscar"] = txtApellidoBuscar.Text;
+            System.Web.HttpContext.Current.Session["emailAdminBuscar"] = txtEmailBuscar.Text;
+            System.Web.HttpContext.Current.Session["telAdminBuscar"] = txtTelBuscar.Text;
+            System.Web.HttpContext.Current.Session["usuarioAdminBuscar"] = txtUsuarioBuscar.Text;
+            System.Web.HttpContext.Current.Session["fchPasadaAdminBuscar"] = txtFchNacBuscarPasada.Text != "" ? txtFchNacBuscarPasada.Text : null;
+            System.Web.HttpContext.Current.Session["fchFuturaAdminBuscar"] = txtFchNacBuscarFutura.Text != "" ? txtFchNacBuscarFutura.Text : null;
+            System.Web.HttpContext.Current.Session["tipoAdminBuscar"] = lstTipoAdminBuscar.SelectedValue != "Seleccionar tipo de Admin" ? lstTipoAdminBuscar.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["estadoAdminBuscar"] = lstEstadoBuscar.SelectedValue != "Seleccionar estado de Admin" ? lstEstadoBuscar.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["BuscarLst"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+        }
+
         #region Paginas
 
         private int PagMax()
@@ -225,6 +257,7 @@ namespace Web.Paginas.Admins
 
             if (adminPagina.Count == 0)
             {
+                lblPaginas.Visible = false;
                 lblMensajes.Text = "No se encontro ningún administrador.";
 
                 lblPaginaAnt.Visible = false;
@@ -234,7 +267,7 @@ namespace Web.Paginas.Admins
             }
             else
             {
-
+                lblPaginas.Visible = true;
                 lblMensajes.Text = "";
                 modificarPagina();
                 lstAdmin.Visible = true;
@@ -266,6 +299,13 @@ namespace Web.Paginas.Admins
             {
                 lblPaginaAnt.Visible = false;
             }
+            if (pagAct == cantPags.ToString() && pagAct == "1")
+            {
+                txtPaginas.Visible = false;
+                lblPaginaAct.Visible = false;
+
+            }
+
             lblPaginaAnt.Text = (int.Parse(pagAct) - 1).ToString();
             lblPaginaAct.Text = pagAct.ToString();
             lblPaginaSig.Text = (int.Parse(pagAct) + 1).ToString();
@@ -283,8 +323,8 @@ namespace Web.Paginas.Admins
             admin.User = HttpUtility.HtmlEncode(txtUsuarioBuscar.Text);
             admin.TipoDeAdmin = lstTipoAdminBuscar.SelectedValue != "Seleccionar tipo de Admin" ? lstTipoAdminBuscar.SelectedValue : "";
             admin.Estado = lstEstadoBuscar.SelectedValue != "Seleccionar estado de Admin" ? lstEstadoBuscar.SelectedValue : "";
-            string fchDesde = txtFchNacBuscarPasada.Text != "" ? txtFchNacBuscarPasada.Text : "";
-            string fchHasta = txtFchNacBuscarFutura.Text != "" ? txtFchNacBuscarFutura.Text : "";
+            string fchDesde = txtFchNacBuscarPasada.Text != "" ? txtFchNacBuscarPasada.Text : "1000-01-01";
+            string fchHasta = txtFchNacBuscarFutura.Text != "" ? txtFchNacBuscarFutura.Text : "3000-12-30";
             string ordenar = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : "";
 
             List<Admin> admins = Web.buscarAdminFiltro(admin, fchDesde, fchHasta, ordenar);
@@ -333,7 +373,6 @@ namespace Web.Paginas.Admins
             dt.Rows.Add(createRow("Administrador global", "Administrador global", dt));
             dt.Rows.Add(createRow("Administrador de productos", "Administrador de productos", dt));
             dt.Rows.Add(createRow("Administrador de pedidos", "Administrador de pedidos", dt));
-            dt.Rows.Add(createRow("Administrador de flota", "Administrador de flota", dt));
 
 
             DataView dv = new DataView(dt);
@@ -415,8 +454,6 @@ namespace Web.Paginas.Admins
             dt.Rows.Add(createRow("Ordenar por", "Ordenar por", dt));
             dt.Rows.Add(createRow("Nombre", "Nombre", dt));
             dt.Rows.Add(createRow("Apellido", "Apellido", dt));
-            dt.Rows.Add(createRow("E-Mail", "E-Mail", dt));
-            dt.Rows.Add(createRow("Teléfono", "Teléfono", dt));
             dt.Rows.Add(createRow("Fecha de Nacimiento", "Fecha de Nacimiento", dt));
             dt.Rows.Add(createRow("Usuario", "Usuario", dt));
             dt.Rows.Add(createRow("Tipo de Admin", "Tipo de Admin", dt));
@@ -445,41 +482,33 @@ namespace Web.Paginas.Admins
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            if(comprobarFechas() == 1)
+            int num = 0;
+            try
             {
+                if (DateTime.Parse(txtFchNacBuscarPasada.Text) <= DateTime.Parse(txtFchNacBuscarFutura.Text)) num++;
+            }
+            catch
+            {
+                num++;
+            }
+
+            if (num == 1)
+            {
+
                 lblPaginaAct.Text = "1";
                 listarPagina();
-            }else if(comprobarFechas() == 2)
+            }
+            else
             {
-                if (Convert.ToDateTime(txtFchNacBuscarPasada.Text) <= Convert.ToDateTime(txtFchNacBuscarFutura.Text))
-                {
-                    lblPaginaAct.Text = "1";
-                    listarPagina();
-                }
-                else lblMensajes.Text = "La fecha futura es menor que la fecha pasada.";
-            }else lblMensajes.Text = "La fecha pasada o futura esta vacía.";
-        }
-
-        private int comprobarFechas()
-        {
-            if (txtFchNacBuscarFutura.Text == "" && txtFchNacBuscarPasada.Text == "") return 1;
-            else if (txtFchNacBuscarFutura.Text != "" && txtFchNacBuscarPasada.Text != "") return 2;
-            return 0;
+                lblMensajes.Text = "La fecha de nacimiento menor es mayor.";
+                listBuscarPor.SelectedValue = "Fecha de nacimiento";
+                comprobarBuscar();
+            }
         }
 
         protected void listBuscarPor_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txtNombreBuscar.Visible = listBuscarPor.SelectedValue == "Nombre y Apellido" ? true : false;
-            txtApellidoBuscar.Visible = listBuscarPor.SelectedValue == "Nombre y Apellido" ? true : false;
-            txtEmailBuscar.Visible = listBuscarPor.SelectedValue == "Email" ? true : false;
-            txtTelBuscar.Visible = listBuscarPor.SelectedValue == "Telefono" ? true : false;
-            txtFchNacBuscarPasada.Visible = listBuscarPor.SelectedValue == "Fecha de nacimiento" ? true : false;
-            lblFchNacBuscarPasada.Visible = listBuscarPor.SelectedValue == "Fecha de nacimiento" ? true : false;
-            txtFchNacBuscarFutura.Visible = listBuscarPor.SelectedValue == "Fecha de nacimiento" ? true : false;
-            lblFchNacBuscarFutura.Visible = listBuscarPor.SelectedValue == "Fecha de nacimiento" ? true : false;
-            txtUsuarioBuscar.Visible = listBuscarPor.SelectedValue == "Usuario" ? true : false;
-            lstTipoAdminBuscar.Visible = listBuscarPor.SelectedValue == "Tipo de Admin" ? true : false;
-            lstEstadoBuscar.Visible = listBuscarPor.SelectedValue == "Estado" ? true : false;
+            comprobarBuscar();
         }
 
         protected void lblPaginaAnt_Click(object sender, EventArgs e)
@@ -488,16 +517,7 @@ namespace Web.Paginas.Admins
             int pagina = int.Parse(p);
             System.Web.HttpContext.Current.Session["PagAct"] = (pagina - 1).ToString();
 
-            System.Web.HttpContext.Current.Session["nombreAdminBuscar"] = txtNombreBuscar.Text;
-            System.Web.HttpContext.Current.Session["apellidoAdminBuscar"] = txtApellidoBuscar.Text;
-            System.Web.HttpContext.Current.Session["emailAdminBuscar"] = txtEmailBuscar.Text;
-            System.Web.HttpContext.Current.Session["telAdminBuscar"] = txtTelBuscar.Text;
-            System.Web.HttpContext.Current.Session["usuarioAdminBuscar"] = txtUsuarioBuscar.Text;
-            System.Web.HttpContext.Current.Session["fchPasadaAdminBuscar"] = txtFchNacBuscarPasada.Text != "" ? txtFchNacBuscarPasada.Text : null;
-            System.Web.HttpContext.Current.Session["fchFuturaAdminBuscar"] = txtFchNacBuscarFutura.Text != "" ? txtFchNacBuscarFutura.Text : null;
-            System.Web.HttpContext.Current.Session["tipoAdminBuscar"] = lstTipoAdminBuscar.SelectedValue != "Seleccionar tipo de Admin" ? lstTipoAdminBuscar.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["estadoAdminBuscar"] = lstEstadoBuscar.SelectedValue != "Seleccionar estado de Admin" ? lstEstadoBuscar.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+            guardarBuscar();
 
             Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
@@ -508,16 +528,7 @@ namespace Web.Paginas.Admins
             int pagina = int.Parse(p);
             System.Web.HttpContext.Current.Session["PagAct"] = (pagina + 1).ToString();
 
-            System.Web.HttpContext.Current.Session["nombreAdminBuscar"] = txtNombreBuscar.Text;
-            System.Web.HttpContext.Current.Session["apellidoAdminBuscar"] = txtApellidoBuscar.Text;
-            System.Web.HttpContext.Current.Session["emailAdminBuscar"] = txtEmailBuscar.Text;
-            System.Web.HttpContext.Current.Session["telAdminBuscar"] = txtTelBuscar.Text;
-            System.Web.HttpContext.Current.Session["usuarioAdminBuscar"] = txtUsuarioBuscar.Text;
-            System.Web.HttpContext.Current.Session["fchPasadaAdminBuscar"] = txtFchNacBuscarPasada.Text != "" ? txtFchNacBuscarPasada.Text : null;
-            System.Web.HttpContext.Current.Session["fchFuturaAdminBuscar"] = txtFchNacBuscarFutura.Text != "" ? txtFchNacBuscarFutura.Text : null;
-            System.Web.HttpContext.Current.Session["tipoAdminBuscar"] = lstTipoAdminBuscar.SelectedValue != "Seleccionar tipo de Admin" ? lstTipoAdminBuscar.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["estadoAdminBuscar"] = lstEstadoBuscar.SelectedValue != "Seleccionar estado de Admin" ? lstEstadoBuscar.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+            guardarBuscar();
 
             Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
@@ -600,16 +611,8 @@ namespace Web.Paginas.Admins
         {
             System.Web.HttpContext.Current.Session["PagAct"] = "1";
 
-            System.Web.HttpContext.Current.Session["nombreAdminBuscar"] = txtNombreBuscar.Text;
-            System.Web.HttpContext.Current.Session["apellidoAdminBuscar"] = txtApellidoBuscar.Text;
-            System.Web.HttpContext.Current.Session["emailAdminBuscar"] = txtEmailBuscar.Text;
-            System.Web.HttpContext.Current.Session["telAdminBuscar"] = txtTelBuscar.Text;
-            System.Web.HttpContext.Current.Session["usuarioAdminBuscar"] = txtUsuarioBuscar.Text;
-            System.Web.HttpContext.Current.Session["fchPasadaAdminBuscar"] = txtFchNacBuscarPasada.Text != "" ? txtFchNacBuscarPasada.Text : null;
-            System.Web.HttpContext.Current.Session["fchFuturaAdminBuscar"] = txtFchNacBuscarFutura.Text != "" ? txtFchNacBuscarFutura.Text : null;
-            System.Web.HttpContext.Current.Session["tipoAdminBuscar"] = lstTipoAdminBuscar.SelectedValue != "Seleccionar tipo de Admin" ? lstTipoAdminBuscar.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["estadoAdminBuscar"] = lstEstadoBuscar.SelectedValue != "Seleccionar estado de Admin" ? lstEstadoBuscar.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+            guardarBuscar();
+
             int id;
             Button btnConstultar = (Button)sender;
             GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;

@@ -38,6 +38,14 @@
                 </div>
 
                 <div class="input-group">
+                    <asp:TextBox ID="txtPrecio" CssClass="input--style-tex" runat="server" placeholder="Precio" MaxLength="6" onkeydown="return(!(event.keyCode>=91) || (event.keyCode!=32));"></asp:TextBox>
+                    <asp:RegularExpressionValidator Display="Dynamic" runat="server"
+                        ControlToValidate="txtPrecio"
+                        ValidationExpression="^[0-9]+$"
+                        ErrorMessage="No es un caracter valido" />
+                </div>
+
+                <div class="input-group">
                     <asp:Label ID="lblimg" class="text initText" Text="Imagen" runat="server" />
                    
                 </div>

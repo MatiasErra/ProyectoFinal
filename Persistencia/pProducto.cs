@@ -14,7 +14,7 @@ namespace Persistencia
     {
 
 
-        public List<Producto> buscarProductoFiltro(string buscar, string tipo, string tipoVen, string ordenar)
+        public List<Producto> buscarProductoFiltro(Producto pProducto, int precioMenor, int precioMayor, string ordenar)
         {
             List<Producto> resultado = new List<Producto>();
             try
@@ -27,9 +27,11 @@ namespace Persistencia
                 SqlCommand cmd = new SqlCommand("BuscarProductoFiltro", connect);
 
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@buscar", buscar));
-                cmd.Parameters.Add(new SqlParameter("@tipo", tipo));
-                cmd.Parameters.Add(new SqlParameter("@tipoVen", tipoVen));
+                cmd.Parameters.Add(new SqlParameter("@nombre", pProducto.Nombre));
+                cmd.Parameters.Add(new SqlParameter("@tipo", pProducto.Tipo));
+                cmd.Parameters.Add(new SqlParameter("@tipoVenta", pProducto.TipoVenta));
+                cmd.Parameters.Add(new SqlParameter("@precioMenor", precioMenor));
+                cmd.Parameters.Add(new SqlParameter("@precioMayor", precioMayor));
                 cmd.Parameters.Add(new SqlParameter("@ordenar", ordenar));
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -40,6 +42,7 @@ namespace Persistencia
                         producto.IdProducto = int.Parse(reader["idProducto"].ToString());
                         producto.Nombre = reader["nombre"].ToString();
                         producto.Tipo = reader["tipo"].ToString();
+                        producto.Precio = int.Parse(reader["precio"].ToString());
                         producto.TipoVenta = reader["tipoVenta"].ToString();
                         producto.Imagen = reader["imagen"].ToString();
                         producto.CantTotal = reader["cantTotal"].ToString();
@@ -83,6 +86,7 @@ namespace Persistencia
                         producto.IdProducto = int.Parse(reader["idProducto"].ToString());
                         producto.Nombre = reader["nombre"].ToString();
                         producto.Tipo = reader["tipo"].ToString();
+                        producto.Precio = int.Parse(reader["precio"].ToString());
                         producto.TipoVenta = reader["tipoVenta"].ToString();
                         producto.Imagen = reader["imagen"].ToString();
                         producto.CantTotal = reader["cantTotal"].ToString();
@@ -123,7 +127,7 @@ namespace Persistencia
                             producto.IdProducto = int.Parse(reader["idProducto"].ToString());
                             producto.Nombre = reader["nombre"].ToString();
                             producto.Tipo = reader["tipo"].ToString();
-                            producto.Precio = double.Parse(reader["precio"].ToString());
+                            producto.Precio = int.Parse(reader["precio"].ToString());
                             producto.TipoVenta = reader["tipoVenta"].ToString();
                             producto.Imagen = reader["imagen"].ToString();
                             producto.CantTotal = reader["cantTotal"].ToString();
@@ -141,7 +145,7 @@ namespace Persistencia
             return producto;
         }
 
-      
+
 
 
 
@@ -162,6 +166,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@nombre", producto.Nombre));
                 cmd.Parameters.Add(new SqlParameter("@tipo", producto.Tipo));
                 cmd.Parameters.Add(new SqlParameter("@tipoVenta", producto.TipoVenta));
+                cmd.Parameters.Add(new SqlParameter("@precio", producto.Precio));
                 cmd.Parameters.Add(new SqlParameter("@imagen", producto.Imagen));
 
 
@@ -235,6 +240,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@nombre", producto.Nombre));
                 cmd.Parameters.Add(new SqlParameter("@tipo", producto.Tipo));
                 cmd.Parameters.Add(new SqlParameter("@tipoVenta", producto.TipoVenta));
+                cmd.Parameters.Add(new SqlParameter("@precio", producto.Precio));
                 cmd.Parameters.Add(new SqlParameter("@imagen", producto.Imagen));
 
                 int resBD = cmd.ExecuteNonQuery();

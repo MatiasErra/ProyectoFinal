@@ -15,7 +15,6 @@ namespace Web.Paginas.Lotes
     public partial class frmAltaLotes : System.Web.UI.Page
     {
 
-
         #region Load
 
         protected void Page_PreInit(object sender, EventArgs e)
@@ -40,7 +39,6 @@ namespace Web.Paginas.Lotes
         }
         #endregion
 
-
         #region Utilidad
 
 
@@ -54,7 +52,7 @@ namespace Web.Paginas.Lotes
         private bool faltanDatos()
         {
             if (listGranja.SelectedValue == "Seleccione una Granja" || listProducto.SelectedValue == "Seleccione un Producto"
-                || txtFchProduccion.Text == "" || txtCantidad.Text == "" || txtPrecio.Text == ""
+                || txtFchProduccion.Text == "" || txtFchCaducidad.Text == "" || txtCantidad.Text == "" || txtPrecio.Text == ""
                 || listDeposito.SelectedValue == "Seleccione un Deposito"
                 )
             {
@@ -75,6 +73,7 @@ namespace Web.Paginas.Lotes
 
 
             txtFchProduccion.Text = "";
+            txtFchCaducidad.Text = "";
             txtCantidad.Text = "";
             txtPrecio.Text = "";
 
@@ -86,6 +85,18 @@ namespace Web.Paginas.Lotes
         }
 
 
+        private bool fchCadMayorPro()
+        {
+            DateTime caducidad = Convert.ToDateTime(txtFchCaducidad.Text);
+            DateTime produccion = Convert.ToDateTime(txtFchProduccion.Text);
+
+            if (caducidad > produccion)
+            {
+                return true;
+            }
+            return false;
+        }
+
         private bool fchNotToday()
         {
             DateTime fecha = Convert.ToDateTime(txtFchProduccion.Text);
@@ -93,10 +104,7 @@ namespace Web.Paginas.Lotes
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         private void listProductoUpdate()
@@ -114,7 +122,36 @@ namespace Web.Paginas.Lotes
             }
         }
 
-        #endregion
+        private string CantTotalProd(int idProducto, string cantidadAdd)
+        {
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            Lote lote = new Lote(0,0,"","","",0,0);
+            int cant = 0;
+            string resultado = "";
+            List<Lote> lotes = Web.buscarFiltrarLotes(lote, 0, 99999999, "1000-01-01", "3000-12-30", "1000-01-01", "3000-12-30", "");
+            Producto producto = Web.buscarProducto(idProducto);
+
+            foreach (Lote unlotes in lotes)
+            {
+
+                if (unlotes.IdProducto.Equals(producto.IdProducto))
+                {
+                    string textCant = unlotes.Cantidad;
+                    string[] str = textCant.Split(' ');
+                    textCant = str[0];
+                    cant += int.Parse(textCant);
+
+
+
+                }
+
+            }
+
+            int cantidad = int.Parse(cantidadAdd);
+            int total = cant + cantidad;
+            resultado = total.ToString() + " " + producto.TipoVenta.ToString();
+            return resultado;
+        }
 
         #region DropDownBoxes
 
@@ -132,9 +169,8 @@ namespace Web.Paginas.Lotes
         ICollection createDataSourceGranja()
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            Granja granja = new Granja();
-            string var2 = "";
-            List<Granja> granjas = Web.buscarGranjaFiltro(granja, var2);
+            Granja gra = new Granja(0, "", "", 0);
+            List<Granja> granjas = Web.buscarGranjaFiltro(gra, "");
             DataTable dt = new DataTable();
 
 
@@ -181,12 +217,8 @@ namespace Web.Paginas.Lotes
             dt.Columns.Add(new DataColumn("nombre", typeof(String)));
             dt.Columns.Add(new DataColumn("id", typeof(String)));
 
-            string b = "";
-            string a = "";
-            string be = "";
-            string bd= "";
-
-            productos = Web.buscarProductoFiltro(b, a,be,bd  );
+            Producto pro = new Producto(0, "", "", "", "", 0);
+            productos = Web.buscarProductoFiltro(pro, 0, 99999, "");
             dt.Rows.Add(createRow("Seleccione un Producto", "Seleccione un Producto", dt));
 
 
@@ -232,13 +264,8 @@ namespace Web.Paginas.Lotes
             dt.Columns.Add(new DataColumn("nombre", typeof(String)));
             dt.Columns.Add(new DataColumn("id", typeof(String)));
 
-
-            string b = "";
-            string d = "";
-            string o = "";
-
-
-            depositos = Web.buscarDepositoFiltro(b, d);
+            Deposito dep = new Deposito(0, "", "", 0, "");
+            depositos = Web.buscarDepositoFiltro(dep, 0, 99999, 0, 999, "");
             dt.Rows.Add(createRow("Seleccione un Deposito", "Seleccione un Deposito", dt));
 
 
@@ -265,6 +292,7 @@ namespace Web.Paginas.Lotes
 
 
 
+
         DataRow createRow(String Text, String Value, DataTable dt)
         {
             DataRow dr = dt.NewRow();
@@ -274,6 +302,8 @@ namespace Web.Paginas.Lotes
 
             return dr;
         }
+
+        #endregion
 
         #endregion
 
@@ -293,6 +323,11 @@ namespace Web.Paginas.Lotes
             if (txtFchProduccion.Text != "")
             {
                 System.Web.HttpContext.Current.Session["fchProduccionSel"] = txtFchProduccion.Text;
+            }
+
+            if (txtFchCaducidad.Text != "")
+            {
+                System.Web.HttpContext.Current.Session["fchCaducidadSel"] = txtFchCaducidad.Text;
             }
             System.Web.HttpContext.Current.Session["cantidadSel"] = txtCantidad.Text;
             System.Web.HttpContext.Current.Session["precioSel"] = txtPrecio.Text;
@@ -331,6 +366,12 @@ namespace Web.Paginas.Lotes
                 System.Web.HttpContext.Current.Session["fchProduccionSel"] = null;
             }
 
+            if (System.Web.HttpContext.Current.Session["fchCaducidadSel"] != null)
+            {
+                txtFchCaducidad.Text = DateTime.Parse(System.Web.HttpContext.Current.Session["fchCaducidadSel"].ToString()).ToString("yyyy-MM-dd");
+                System.Web.HttpContext.Current.Session["fchCaducidadSel"] = null;
+            }
+
             txtCantidad.Text = System.Web.HttpContext.Current.Session["cantidadSel"].ToString();
             System.Web.HttpContext.Current.Session["cantidadSel"] = null;
             txtPrecio.Text = System.Web.HttpContext.Current.Session["precioSel"].ToString();
@@ -355,139 +396,94 @@ namespace Web.Paginas.Lotes
 
         #endregion
 
-        private string CantTotalProd(int idProducto, string cantidadAdd)
+        #region Botones
+
+
+        protected void listProductoUpdate(object sender, EventArgs e)
         {
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            string d = "";
-            string b = "";
-            string a = "";
-            int cant = 0;
-            string resultado = "";
-            List<Lote> lotes = Web.buscarFiltrarLotes(d, b);
-            Producto producto = Web.buscarProducto(idProducto);
-
-            foreach (Lote unlotes in lotes)
-            {
-
-                if (unlotes.IdProducto.Equals(producto.IdProducto))
-                {
-                    string textCant = unlotes.Cantidad;
-                   string[] str =  textCant.Split(' ');
-                     textCant= str[0];
-                    cant += int.Parse(textCant);
+            listProductoUpdate();
+        }
 
 
-
-                }
-
-            }
-            
-            int cantidad = int.Parse(cantidadAdd);
-             int total=  cant + cantidad; 
-            resultado = total.ToString() + " " + producto.TipoVenta.ToString();
-            return resultado;
-        } 
-
-    #region Botones
-
-
-    protected void listProductoUpdate(object sender, EventArgs e)
-    {
-        listProductoUpdate();
-    }
-
-
-    protected void btnBuscarGranja_Click(object sender, EventArgs e)
-    {
-        CargarListGranja();
-    }
-
-    protected void btnBuscarDeposito_Click(object sender, EventArgs e)
-    {
-        CargarListDeposito();
-    }
-
-    protected void btnAltaGranja_Click(object sender, EventArgs e)
-    {
-
-        guardarDatos();
-        Response.Redirect("/Paginas/Granjas/frmGranjas");
-    }
-
-    protected void btnAltaProducto_Click(object sender, EventArgs e)
-    {
-        guardarDatos();
-        Response.Redirect("/Paginas/Productos/frmProductos");
-    }
-
-    protected void btnAltaDeposito_Click(object sender, EventArgs e)
-    {
-        guardarDatos();
-        Response.Redirect("/Paginas/Depositos/frmDepositos");
-    }
-
-    protected void btnAlta_Click(object sender, EventArgs e)
-    {
-        if (!faltanDatos())
+        protected void btnBuscarGranja_Click(object sender, EventArgs e)
         {
-            if (fchNotToday())
+            CargarListGranja();
+        }
+
+        protected void btnBuscarDeposito_Click(object sender, EventArgs e)
+        {
+            CargarListDeposito();
+        }
+
+        protected void btnAltaGranja_Click(object sender, EventArgs e)
+        {
+
+            guardarDatos();
+            Response.Redirect("/Paginas/Granjas/frmGranjas");
+        }
+
+        protected void btnAltaProducto_Click(object sender, EventArgs e)
+        {
+            guardarDatos();
+            Response.Redirect("/Paginas/Productos/frmProductos");
+        }
+
+        protected void btnAltaDeposito_Click(object sender, EventArgs e)
+        {
+            guardarDatos();
+            Response.Redirect("/Paginas/Depositos/frmDepositos");
+        }
+
+        protected void btnAlta_Click(object sender, EventArgs e)
+        {
+            if (!faltanDatos())
             {
-                if (int.Parse(txtCantidad.Text) > 0)
+                if (fchNotToday())
                 {
-                        if (double.Parse(txtPrecio.Text) > 0)
+                    if (fchCadMayorPro())
+                    {
+                        if (int.Parse(txtCantidad.Text) > 0)
                         {
-
-                            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-
-                            int idGranja = int.Parse(HttpUtility.HtmlEncode(listGranja.SelectedValue));
-                            int idProducto = int.Parse(HttpUtility.HtmlEncode(listProducto.SelectedValue));
-                            Producto producto = Web.buscarProducto(idProducto);
-                            string fchProduccion = HttpUtility.HtmlEncode(txtFchProduccion.Text);
-                            string cantidad = HttpUtility.HtmlEncode(txtCantidad.Text) + " " + producto.TipoVenta.ToString(); ;
-                            double precio = double.Parse(HttpUtility.HtmlEncode(txtPrecio.Text));
-                            int idDeposito = int.Parse(HttpUtility.HtmlEncode(listDeposito.SelectedValue));
-                            string CantTotal = CantTotalProd(idProducto, txtCantidad.Text);
-
-
-                            Lote unLote = new Lote(idGranja, idProducto, fchProduccion, cantidad, precio, idDeposito);
-
-                            if (Web.altaLote(unLote,CantTotal))
+                            if (double.Parse(txtPrecio.Text) > 0)
                             {
-                                limpiar();
-                                listProductoUpdate();
-                                lblMensajes.Text = "Lote dado de alta con éxito.";
-                                System.Web.HttpContext.Current.Session["LoteAlta"] = "si";
-                                Response.Redirect("/Paginas/Lotes/frmLotes");
-                            }
-                            else
-                            {
-                                lblMensajes.Text = "No se pudo dar de alta el lote.";
 
+                                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+
+                                int idGranja = int.Parse(HttpUtility.HtmlEncode(listGranja.SelectedValue));
+                                int idProducto = int.Parse(HttpUtility.HtmlEncode(listProducto.SelectedValue));
+                                Producto producto = Web.buscarProducto(idProducto);
+                                string fchProduccion = HttpUtility.HtmlEncode(txtFchProduccion.Text);
+                                string fchCaducidad = HttpUtility.HtmlEncode(txtFchCaducidad.Text);
+                                string cantidad = HttpUtility.HtmlEncode(txtCantidad.Text) + " " + producto.TipoVenta.ToString(); ;
+                                double precio = double.Parse(HttpUtility.HtmlEncode(txtPrecio.Text));
+                                int idDeposito = int.Parse(HttpUtility.HtmlEncode(listDeposito.SelectedValue));
+                                string CantTotal = CantTotalProd(idProducto, txtCantidad.Text);
+
+
+                                Lote unLote = new Lote(idGranja, idProducto, fchProduccion, fchCaducidad, cantidad, precio, idDeposito);
+
+                                if (Web.altaLote(unLote, CantTotal))
+                                {
+                                    limpiar();
+                                    listProductoUpdate();
+                                    lblMensajes.Text = "Lote dado de alta con éxito.";
+                                    System.Web.HttpContext.Current.Session["LoteAlta"] = "si";
+                                    Response.Redirect("/Paginas/Lotes/frmLotes");
+                                }
+                                else lblMensajes.Text = "No se pudo dar de alta el lote.";
                             }
+                            else lblMensajes.Text = "El precio debe ser mayor a cero.";
                         }
-                        else
-                        {
-                            lblMensajes.Text = "El precio debe ser mayor a cero.";
-                        }    
+                        else lblMensajes.Text = "La cantidad debe ser mayor a cero.";
+                    }
+                    else lblMensajes.Text = "La fecha de caducidad debe ser mayor a la de producción.";
                 }
-                else
-                {
-                    lblMensajes.Text = "La cantidad debe ser mayor a cero.";
-                }
+                else lblMensajes.Text = "La fecha de producción debe ser igual o menor a la de hoy.";
+            }
+            else lblMensajes.Text = "Faltan datos.";
+        }
 
-            }
-            else
-            {
-                lblMensajes.Text = "La fecha de producción debe ser igual o menor a la de hoy.";
-            }
-        }
-        else
-        {
-            lblMensajes.Text = "Faltan datos.";
-        }
+        #endregion
+
     }
-
-    #endregion
-
-}
 }

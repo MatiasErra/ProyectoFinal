@@ -114,13 +114,13 @@ namespace Web.Paginas.Admins
         protected global::System.Web.UI.WebControls.DropDownList lstEstadoBuscar;
 
         /// <summary>
-        /// Control lblFchNacBuscarPasada.
+        /// Control lblFchNac.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFchNacBuscarPasada;
+        protected global::System.Web.UI.WebControls.Label lblFchNac;
 
         /// <summary>
         /// Control txtFchNacBuscarPasada.
@@ -130,15 +130,6 @@ namespace Web.Paginas.Admins
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFchNacBuscarPasada;
-
-        /// <summary>
-        /// Control lblFchNacBuscarFutura.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFchNacBuscarFutura;
 
         /// <summary>
         /// Control txtFchNacBuscarFutura.
@@ -274,6 +265,24 @@ namespace Web.Paginas.Admins
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView lstAdmin;
+
+        /// <summary>
+        /// Control lblPaginas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPaginas;
+
+        /// <summary>
+        /// Control txtPaginas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtPaginas;
 
         /// <summary>
         /// Control lblPaginaAnt.

@@ -13,6 +13,9 @@ namespace Web.Paginas.Productos
 {
     public partial class frmProductos : System.Web.UI.Page
     {
+
+        #region Load 
+
         protected void Page_PreInit(object sender, EventArgs e)
         {
             this.MasterPageFile = "~/Master/AGlobal.Master";
@@ -22,7 +25,7 @@ namespace Web.Paginas.Productos
         {
             if (!IsPostBack)
             {
-              
+
                 CargarListTipo();
                 CargarListTipoVenta();
                 if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
@@ -32,11 +35,8 @@ namespace Web.Paginas.Productos
                     lstProductoSelect.Visible = true;
 
                 }
-                if (System.Web.HttpContext.Current.Session["ProductoMod"] != null)
 
-                {
-                    lblMensajes.Text = "Productos Modificado";
-                }
+                
 
                 System.Web.HttpContext.Current.Session["idProductoMod"] = null;
 
@@ -51,371 +51,72 @@ namespace Web.Paginas.Productos
                     System.Web.HttpContext.Current.Session["PagAct"] = null;
                 }
 
-                CargarListFiltroTipo();
-                CargarListFiltroTipoVen();
+                CargarListBuscar();
                 CargarListOrdenarPor();
 
+                // Buscador
+                txtNombreBuscar.Text = System.Web.HttpContext.Current.Session["nombreProductoBuscar"] != null ? System.Web.HttpContext.Current.Session["nombreProductoBuscar"].ToString() : "";
+                System.Web.HttpContext.Current.Session["nombreProductoBuscar"] = null;
+                txtPrecioMenorBuscar.Text = System.Web.HttpContext.Current.Session["precioMenorProductoBuscar"] != null ? System.Web.HttpContext.Current.Session["precioMenorProductoBuscar"].ToString() : "";
+                System.Web.HttpContext.Current.Session["precioMenorProductoBuscar"] = null;
+                txtPrecioMayorBuscar.Text = System.Web.HttpContext.Current.Session["precioMayorProductoBuscar"] != null ? System.Web.HttpContext.Current.Session["precioMayorProductoBuscar"].ToString() : "";
+                System.Web.HttpContext.Current.Session["precioMayorProductoBuscar"] = null;
 
-                if (System.Web.HttpContext.Current.Session["Buscar"] != null)
-                {
-                    txtBuscar.Text = System.Web.HttpContext.Current.Session["Buscar"].ToString();
-                    System.Web.HttpContext.Current.Session["Buscar"] = null;
-                }
+                // Listas
+                lstTipoBuscar.SelectedValue = System.Web.HttpContext.Current.Session["tipoProductoBuscar"] != null ? System.Web.HttpContext.Current.Session["tipoProductoBuscar"].ToString() : "Seleccione un tipo de producto";
+                System.Web.HttpContext.Current.Session["tipoProductoBuscar"] = null;
+                lstTipoVentaBuscar.SelectedValue = System.Web.HttpContext.Current.Session["tipoVentaProductoBuscar"] != null ? System.Web.HttpContext.Current.Session["tipoVentaProductoBuscar"].ToString() : "Seleccione un tipo de venta";
+                System.Web.HttpContext.Current.Session["tipoVentaProductoBuscar"] = null;
+                listBuscarPor.SelectedValue = System.Web.HttpContext.Current.Session["BuscarLst"] != null ? System.Web.HttpContext.Current.Session["BuscarLst"].ToString() : "Buscar por";
+                System.Web.HttpContext.Current.Session["BuscarLst"] = null;
+                listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"] != null ? System.Web.HttpContext.Current.Session["OrdenarPor"].ToString() : "Ordernar por";
+                System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
 
-                if (System.Web.HttpContext.Current.Session["FiltroTipo"] != null)
-                {
-                    listFiltroTipo.SelectedValue = System.Web.HttpContext.Current.Session["FiltroTipo"].ToString();
-                    System.Web.HttpContext.Current.Session["FiltroTipo"] = null;
-                }
-
-                if (System.Web.HttpContext.Current.Session["FiltroTipoVen"] != null)
-                {
-                    listFiltroVen.SelectedValue = System.Web.HttpContext.Current.Session["FiltroTipoVen"].ToString();
-                    System.Web.HttpContext.Current.Session["FiltroTipoVen"] = null;
-                }
-
-                if (System.Web.HttpContext.Current.Session["OrdenarPor"] != null)
-                {
-                    listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"].ToString();
-                    System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
-                }
-
+                comprobarBuscar();
                 listarPagina();
+
+                if (System.Web.HttpContext.Current.Session["ProductoMod"] != null)
+                {
+                    lblMensajes.Text = "Productos Modificado";
+                }
             }
         }
 
-   
+        #endregion
+
+        #region Utilidad
 
         private bool faltanDatos()
         {
-            if (txtNombre.Text == "" || listTipo.SelectedValue == "Seleccione un tipo de producto" || listTipoVenta.SelectedValue == "Seleccione un tipo de venta" || !fileImagen.HasFile)
+            if (txtNombre.Text == "" || listTipo.SelectedValue == "Seleccione un tipo de producto" || listTipoVenta.SelectedValue == "Seleccione un tipo de venta" || !fileImagen.HasFile || txtPrecio.Text == "")
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         private void limpiar()
         {
             lblMensajes.Text = "";
-            txtBuscar.Text = "";
 
             txtNombre.Text = "";
+            listTipo.SelectedValue = "Seleccione un tipo de producto";
+            listTipoVenta.SelectedValue = "Seleccione un tipo de venta";
             fileImagen.Attributes.Clear();
-            lstProducto.SelectedIndex = -1;
-            listFiltroVen.SelectedValue = "Filtrar por tipo de venta";
-            listFiltroTipo.SelectedValue = "Filtrar por tipo";
-            listOrdenarPor.SelectedValue = "Ordenar por"; 
-            lblPaginaAct.Text = "1";
-            listarPagina();
-        }
-        private int PagMax()
-        {
-            //Devuelve la cantidad de productos por pagina
-            return 4;
-        }
-
-        private List<Producto> obtenerProductos()
-        {
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            string buscar = txtBuscar.Text;
-            string tipo = "";
-            string tipoVen = "";
-            string ordenar = "";
-            if (listFiltroTipo.SelectedValue != "Filtrar por tipo")
-            {
-                tipo = listFiltroTipo.SelectedValue;
-            }
-
-
-            if (listFiltroVen.SelectedValue != "Filtrar por tipo de venta")
-            {
-                tipoVen = listFiltroVen.SelectedValue;
-            }
-
-
-            if (listOrdenarPor.SelectedValue != "Ordenar por")
-            {
-                ordenar = listOrdenarPor.SelectedValue;
-            }
-
-            List<Producto> productos = Web.buscarProductoFiltro(buscar, tipo, tipoVen, ordenar);
-            foreach (Producto unProducto in productos)
-            {
-                string Imagen = "data:image/jpeg;base64,";
-                Imagen += unProducto.Imagen;
-                Imagen = $"<img style=\"max-width:100px\" src=\"{Imagen}\">";
-                unProducto.Imagen = Imagen;
-            }
-
-            return productos;
-        }
-
-        private void listarPagina()
-        {
-            List<Producto> productos = obtenerProductos();
-            List<Producto> productosPagina = new List<Producto>();
-            string p = lblPaginaAct.Text.ToString();
-            int pagina = int.Parse(p);
-            int cont = 0;
-            foreach (Producto unProducto in productos)
-            {
-                if (productosPagina.Count == PagMax())
-                {
-                    break;
-                }
-                if (cont >= ((pagina * PagMax()) - PagMax()))
-                {
-                    productosPagina.Add(unProducto);
-                }
-
-                cont++;
-            }
-
-            if (productosPagina.Count == 0)
-            {
-                lblMensajes.Text = "No se encontro ningún producto.";
-
-                lblPaginaAnt.Visible = false;
-                lblPaginaAct.Visible = false;
-                lblPaginaSig.Visible = false;
-                lstProducto.Visible = false;
-                lstProductoSelect.Visible = false;
-            }
-            else
-            {
-                if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
-
-                {
-                    lblMensajes.Text = "";
-                    modificarPagina();
-                    lstProductoSelect.Visible = true;
-                    lstProductoSelect.DataSource = null;
-                    lstProductoSelect.DataSource = productosPagina;
-                    lstProductoSelect.DataBind();
-                }
-                else
-                {
-                    lblMensajes.Text = "";
-                    modificarPagina();
-                    lstProducto.Visible = true;
-                    lstProducto.DataSource = null;
-                    lstProducto.DataSource = productosPagina;
-                    lstProducto.DataBind();
-                }
-            }
-
-
-        }
-
-        private void modificarPagina()
-        {
-            List<Producto> productos = obtenerProductos();
-            double pxp = PagMax();
-            double count = productos.Count;
-            double pags = count / pxp;
-            double cantPags = Math.Ceiling(pags);
-
-            string pagAct = lblPaginaAct.Text.ToString();
-
-            lblPaginaSig.Visible = true;
-            lblPaginaAnt.Visible = true;
-            if (pagAct == cantPags.ToString())
-            {
-                lblPaginaSig.Visible = false;
-            }
-            if (pagAct == "1")
-            {
-                lblPaginaAnt.Visible = false;
-            }
-            lblPaginaAnt.Text = (int.Parse(pagAct) - 1).ToString();
-            lblPaginaAct.Text = pagAct.ToString();
-            lblPaginaSig.Text = (int.Parse(pagAct) + 1).ToString();
-        }
-
-
-
-
-
-        #region DropDownBoxes
-
-        #region Filtro
-
-        public void CargarListFiltroTipo()
-        {
-            listFiltroTipo.DataSource = null;
-            listFiltroTipo.DataSource = createDataSourceFiltroTipo();
-            listFiltroTipo.DataTextField = "nombre";
-            listFiltroTipo.DataValueField = "id";
-            listFiltroTipo.DataBind();
-        }
-
-        ICollection createDataSourceFiltroTipo()
-        {
-
-            DataTable dt = new DataTable();
-
-            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
-            dt.Columns.Add(new DataColumn("id", typeof(String)));
-
-            dt.Rows.Add(createRow("Filtrar por tipo", "Filtrar por tipo", dt));
-            dt.Rows.Add(createRow("Fruta", "Fruta", dt));
-            dt.Rows.Add(createRow("Verdura", "Verdura", dt));
-
-
-
-            DataView dv = new DataView(dt);
-            return dv;
-        }
-
-        public void CargarListFiltroTipoVen()
-        {
-            listFiltroVen.DataSource = null;
-            listFiltroVen.DataSource = createDataSourceFiltroTipoVen();
-            listFiltroVen.DataTextField = "nombre";
-            listFiltroVen.DataValueField = "id";
-            listFiltroVen.DataBind();
-        }
-
-
-        ICollection createDataSourceFiltroTipoVen()
-        {
-
-            DataTable dt = new DataTable();
-
-            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
-            dt.Columns.Add(new DataColumn("id", typeof(String)));
-
-            dt.Rows.Add(createRow("Filtrar por tipo de venta", "Filtrar por tipo de venta", dt));
-            dt.Rows.Add(createRow("Kilos", "Kilos", dt));
-            dt.Rows.Add(createRow("Unidades", "Unidades", dt));
-
-            DataView dv = new DataView(dt);
-            return dv;
-        }
-        #endregion
-
-        #region Ordenar
-
-        public void CargarListOrdenarPor()
-        {
-            listOrdenarPor.DataSource = null;
-            listOrdenarPor.DataSource = createDataSourceOrdenarPor();
-            listOrdenarPor.DataTextField = "nombre";
-            listOrdenarPor.DataValueField = "id";
-            listOrdenarPor.DataBind();
-        }
-
-        ICollection createDataSourceOrdenarPor()
-        {
-
-            DataTable dt = new DataTable();
-
-            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
-            dt.Columns.Add(new DataColumn("id", typeof(String)));
-
-            dt.Rows.Add(createRow("Ordenar por", "Ordenar por", dt));
-            dt.Rows.Add(createRow("Nombre", "Nombre", dt));
-            dt.Rows.Add(createRow("Tipo", "Tipo", dt));
-            dt.Rows.Add(createRow("Tipo de venta", "Tipo de venta", dt));
-
-            DataView dv = new DataView(dt);
-            return dv;
-        }
-
-        #endregion
-
-        #region Tipo
-
-        public void CargarListTipo()
-        {
-            listTipo.DataSource = null;
-            listTipo.DataSource = createDataSourceTipo();
-            listTipo.DataTextField = "nombre";
-            listTipo.DataValueField = "id";
-            listTipo.DataBind();
-        }
-
-        ICollection createDataSourceTipo()
-        {
-
-            DataTable dt = new DataTable();
-
-            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
-            dt.Columns.Add(new DataColumn("id", typeof(String)));
-
-            dt.Rows.Add(createRow("Seleccione un tipo de producto", "Seleccione un tipo de producto", dt));
-            dt.Rows.Add(createRow("Fruta", "Fruta", dt));
-            dt.Rows.Add(createRow("Verdura", "Verdura", dt));
-
-
-            DataView dv = new DataView(dt);
-            return dv;
-        }
-
-        #endregion
-
-        #region Tipo Venta
-
-        public void CargarListTipoVenta()
-        {
-            listTipoVenta.DataSource = null;
-            listTipoVenta.DataSource = createDataSourceTipoVenta();
-            listTipoVenta.DataTextField = "nombre";
-            listTipoVenta.DataValueField = "id";
-            listTipoVenta.DataBind();
-        }
-
-        ICollection createDataSourceTipoVenta()
-        {
-
-            DataTable dt = new DataTable();
-
-            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
-            dt.Columns.Add(new DataColumn("id", typeof(String)));
-
-            dt.Rows.Add(createRow("Seleccione un tipo de venta", "Seleccione un tipo de venta", dt));
-            dt.Rows.Add(createRow("Kilos", "Kilos", dt));
-            dt.Rows.Add(createRow("Unidades", "Unidades", dt));
-
-            DataView dv = new DataView(dt);
-            return dv;
-        }
-
-        #endregion
-
-        DataRow createRow(String Text, String Value, DataTable dt)
-        {
-            DataRow dr = dt.NewRow();
-
-            dr[0] = Text;
-            dr[1] = Value;
-
-            return dr;
-        }
-
-
-
-        protected void listFiltroTipo_SelectedIndexChanged(object sender, EventArgs e)
-        {
+            txtPrecio.Text = "";
+
+            txtNombreBuscar.Text = "";
+            lstTipoVentaBuscar.SelectedValue = "Seleccione un tipo de venta";
+            lstTipoBuscar.SelectedValue = "Seleccione un tipo de producto";
+            txtPrecioMenorBuscar.Text = "";
+            txtPrecioMayorBuscar.Text = "";
+            listBuscarPor.SelectedValue = "Buscar por";
+            listOrdenarPor.SelectedValue = "Ordenar por";
+            comprobarBuscar();
             lblPaginaAct.Text = "1";
             listarPagina();
         }
 
-        protected void listOrdenarPor_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            lblPaginaAct.Text = "1";
-            listarPagina();
-        }
-
-        #endregion
-
-
-
- 
         static int GenerateUniqueId()
         {
             Guid guid = Guid.NewGuid();
@@ -428,7 +129,8 @@ namespace Web.Paginas.Productos
             }
 
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            List<Producto> lstProductos = Web.buscarProductoFiltro(string.Empty, string.Empty, string.Empty, string.Empty);
+            Producto pro = new Producto(0, "", "", "", "", 0);
+            List<Producto> lstProductos = Web.buscarProductoFiltro(pro, -1, -1, "");
             foreach (Producto producto in lstProductos)
             {
                 if (producto.IdProducto.Equals(intGuid))
@@ -463,6 +165,370 @@ namespace Web.Paginas.Productos
 
         }
 
+        private bool loteExistente(int idProducto)
+        {
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            Lote lote = new Lote(0, 0, "", "", "", 0, 0);
+
+            List<Lote> lotes = Web.buscarFiltrarLotes(lote, 0, 99999999,"1000-01-01", "3000-12-30", "1000-01-01", "3000-12-30", "");
+            foreach (Lote unLote in lotes)
+            {
+                if (unLote.IdProducto == idProducto)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void comprobarBuscar()
+        {
+            txtNombreBuscar.Visible = listBuscarPor.SelectedValue == "Nombre" ? true : false;
+            lstTipoBuscar.Visible = listBuscarPor.SelectedValue == "Tipo" ? true : false;
+            lstTipoVentaBuscar.Visible = listBuscarPor.SelectedValue == "Tipo venta" ? true : false;
+            lblPrecio.Visible = listBuscarPor.SelectedValue == "Precio" ? true : false;
+        }
+
+        private void guardarBuscar()
+        {
+            System.Web.HttpContext.Current.Session["nombreProductoBuscar"] = txtNombreBuscar.Text;
+            System.Web.HttpContext.Current.Session["tipoProductoBuscar"] = lstTipoBuscar.SelectedValue != "Seleccione un tipo de producto" ? lstTipoBuscar.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["tipoProductoBuscar"] = lstTipoBuscar.SelectedValue != "Seleccione un tipo de producto" ? lstTipoBuscar.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["precioMenorProductoBuscar"] = txtPrecioMenorBuscar.Text;
+            System.Web.HttpContext.Current.Session["precioMayorProductoBuscar"] = txtPrecioMayorBuscar.Text;
+            System.Web.HttpContext.Current.Session["BuscarLst"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+        }
+
+        #region Paginas
+
+        private int PagMax()
+        {
+            //Devuelve la cantidad de productos por pagina
+            return 4;
+        }
+
+        private List<Producto> obtenerProductos()
+        {
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            Producto producto = new Producto();
+            producto.Nombre = HttpUtility.HtmlEncode(txtNombreBuscar.Text);
+            producto.Tipo = lstTipoBuscar.SelectedValue != "Seleccione un tipo de producto" ? lstTipoBuscar.SelectedValue : "";
+            producto.TipoVenta = lstTipoVentaBuscar.SelectedValue != "Seleccione un tipo de venta" ? lstTipoVentaBuscar.SelectedValue : "";
+            int precioMenor = txtPrecioMenorBuscar.Text == "" ? 0 : int.Parse(txtPrecioMenorBuscar.Text);
+            int precioMayor = txtPrecioMayorBuscar.Text == "" ? 999999 : int.Parse(txtPrecioMayorBuscar.Text);
+            string ordenar = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : "";
+            List<Producto> productos = Web.buscarProductoFiltro(producto, precioMenor, precioMayor, ordenar);
+
+            foreach (Producto unProducto in productos)
+            {
+                string Imagen = "data:image/jpeg;base64,";
+                Imagen += unProducto.Imagen;
+                Imagen = $"<img style=\"max-width:100px\" src=\"{Imagen}\">";
+                unProducto.Imagen = Imagen;
+                int cant = int.Parse(unProducto.CantTotal.Split(' ')[0]);
+                int cantRes = int.Parse(unProducto.CantRes.Split(' ')[0]);
+                unProducto.CantDisp = (cant - cantRes).ToString() + " Kg";
+            }
+
+            return productos;
+        }
+
+        private void listarPagina()
+        {
+            List<Producto> productos = obtenerProductos();
+            List<Producto> productosPagina = new List<Producto>();
+            string p = lblPaginaAct.Text.ToString();
+            int pagina = int.Parse(p);
+            int cont = 0;
+            foreach (Producto unProducto in productos)
+            {
+                if (productosPagina.Count == PagMax())
+                {
+                    break;
+                }
+                if (cont >= ((pagina * PagMax()) - PagMax()))
+                {
+                    productosPagina.Add(unProducto);
+                }
+
+                cont++;
+            }
+
+            if (productosPagina.Count == 0)
+            {
+                lblPaginas.Visible = false;
+                lblMensajes.Text = "No se encontro ningún producto.";
+
+                lblPaginaAnt.Visible = false;
+                lblPaginaAct.Visible = false;
+                lblPaginaSig.Visible = false;
+                lstProducto.Visible = false;
+                lstProductoSelect.Visible = false;
+            }
+            else
+            {
+                if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
+
+                {
+                    lblPaginas.Visible = true;
+                    lblMensajes.Text = "";
+                    modificarPagina();
+                    lstProductoSelect.Visible = true;
+                    lstProductoSelect.DataSource = null;
+                    lstProductoSelect.DataSource = productosPagina;
+                    lstProductoSelect.DataBind();
+                }
+                else
+                {
+                    lblPaginas.Visible = true;
+                    lblMensajes.Text = "";
+                    modificarPagina();
+                    lstProducto.Visible = true;
+                    lstProducto.DataSource = null;
+                    lstProducto.DataSource = productosPagina;
+                    lstProducto.DataBind();
+                }
+            }
+
+
+        }
+
+        private void modificarPagina()
+        {
+            List<Producto> productos = obtenerProductos();
+            double pxp = PagMax();
+            double count = productos.Count;
+            double pags = count / pxp;
+            double cantPags = Math.Ceiling(pags);
+
+            string pagAct = lblPaginaAct.Text.ToString();
+
+            lblPaginaSig.Visible = true;
+            lblPaginaAnt.Visible = true;
+            if (pagAct == cantPags.ToString())
+            {
+                lblPaginaSig.Visible = false;
+            }
+            if (pagAct == "1")
+            {
+                lblPaginaAnt.Visible = false;
+            }
+            if (pagAct == cantPags.ToString() && pagAct == "1")
+            {
+                txtPaginas.Visible = false;
+                lblPaginaAct.Visible = false;
+
+            }
+
+            lblPaginaAnt.Text = (int.Parse(pagAct) - 1).ToString();
+            lblPaginaAct.Text = pagAct.ToString();
+            lblPaginaSig.Text = (int.Parse(pagAct) + 1).ToString();
+        }
+
+        #endregion
+
+        #region DropDownBoxes
+
+        #region Ordenar
+
+        public void CargarListOrdenarPor()
+        {
+            listOrdenarPor.DataSource = null;
+            listOrdenarPor.DataSource = createDataSourceOrdenarPor();
+            listOrdenarPor.DataTextField = "nombre";
+            listOrdenarPor.DataValueField = "id";
+            listOrdenarPor.DataBind();
+        }
+
+        ICollection createDataSourceOrdenarPor()
+        {
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+            dt.Columns.Add(new DataColumn("id", typeof(String)));
+
+            dt.Rows.Add(createRow("Ordenar por", "Ordenar por", dt));
+            dt.Rows.Add(createRow("Nombre", "Nombre", dt));
+            dt.Rows.Add(createRow("Tipo", "Tipo", dt));
+            dt.Rows.Add(createRow("Tipo de venta", "Tipo de venta", dt));
+            dt.Rows.Add(createRow("Precio", "Precio", dt));
+
+            DataView dv = new DataView(dt);
+            return dv;
+        }
+
+        #endregion
+
+        #region Tipo
+
+        public void CargarListTipo()
+        {
+            listTipo.DataSource = null;
+            listTipo.DataSource = createDataSourceTipo();
+            listTipo.DataTextField = "nombre";
+            listTipo.DataValueField = "id";
+            listTipo.DataBind();
+
+            lstTipoBuscar.DataSource = null;
+            lstTipoBuscar.DataSource = createDataSourceTipo();
+            lstTipoBuscar.DataTextField = "nombre";
+            lstTipoBuscar.DataValueField = "id";
+            lstTipoBuscar.DataBind();
+        }
+
+        ICollection createDataSourceTipo()
+        {
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+            dt.Columns.Add(new DataColumn("id", typeof(String)));
+
+            dt.Rows.Add(createRow("Seleccione un tipo de producto", "Seleccione un tipo de producto", dt));
+            dt.Rows.Add(createRow("Fruta", "Fruta", dt));
+            dt.Rows.Add(createRow("Verdura", "Verdura", dt));
+
+
+            DataView dv = new DataView(dt);
+            return dv;
+        }
+
+        #endregion
+
+        #region Tipo Venta
+
+        public void CargarListTipoVenta()
+        {
+            listTipoVenta.DataSource = null;
+            listTipoVenta.DataSource = createDataSourceTipoVenta();
+            listTipoVenta.DataTextField = "nombre";
+            listTipoVenta.DataValueField = "id";
+            listTipoVenta.DataBind();
+
+            lstTipoVentaBuscar.DataSource = null;
+            lstTipoVentaBuscar.DataSource = createDataSourceTipoVenta();
+            lstTipoVentaBuscar.DataTextField = "nombre";
+            lstTipoVentaBuscar.DataValueField = "id";
+            lstTipoVentaBuscar.DataBind();
+        }
+
+        ICollection createDataSourceTipoVenta()
+        {
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+            dt.Columns.Add(new DataColumn("id", typeof(String)));
+
+            dt.Rows.Add(createRow("Seleccione un tipo de venta", "Seleccione un tipo de venta", dt));
+            dt.Rows.Add(createRow("Kilos", "Kilos", dt));
+            dt.Rows.Add(createRow("Unidades", "Unidades", dt));
+
+            DataView dv = new DataView(dt);
+            return dv;
+        }
+
+        #endregion
+
+        #region Buscador
+
+        public void CargarListBuscar()
+        {
+            listBuscarPor.DataSource = null;
+            listBuscarPor.DataSource = createDataSourceBuscar();
+            listBuscarPor.DataTextField = "nombre";
+            listBuscarPor.DataValueField = "id";
+            listBuscarPor.DataBind();
+        }
+
+        ICollection createDataSourceBuscar()
+        {
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+            dt.Columns.Add(new DataColumn("id", typeof(String)));
+
+            dt.Rows.Add(createRow("Buscar por", "Buscar por", dt));
+            dt.Rows.Add(createRow("Nombre", "Nombre", dt));
+            dt.Rows.Add(createRow("Tipo", "Tipo", dt));
+            dt.Rows.Add(createRow("Tipo venta", "Tipo venta", dt));
+            dt.Rows.Add(createRow("Precio", "Precio", dt));
+            DataView dv = new DataView(dt);
+            return dv;
+        }
+
+        #endregion
+
+        DataRow createRow(String Text, String Value, DataTable dt)
+        {
+            DataRow dr = dt.NewRow();
+
+            dr[0] = Text;
+            dr[1] = Value;
+
+            return dr;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Botones
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            int num = 0;
+            try
+            {
+                if (int.Parse(txtPrecioMenorBuscar.Text) <= int.Parse(txtPrecioMayorBuscar.Text)) num++;
+            }
+            catch
+            {
+                num++;
+            }
+
+            if (num == 1)
+            {
+                lblPaginaAct.Text = "1";
+                listarPagina();
+            }
+            else
+            {
+                lblMensajes.Text = "El precio menor es mayor.";
+                listBuscarPor.SelectedValue = "Precio";
+                comprobarBuscar();
+            }
+        }
+
+        protected void listBuscarPor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            comprobarBuscar();
+        }
+
+        protected void lblPaginaAnt_Click(object sender, EventArgs e)
+        {
+            string p = lblPaginaAct.Text.ToString();
+            int pagina = int.Parse(p);
+            System.Web.HttpContext.Current.Session["PagAct"] = (pagina - 1).ToString();
+
+            guardarBuscar();
+
+            Server.TransferRequest(Request.Url.AbsolutePath, false);
+        }
+
+        protected void lblPaginaSig_Click(object sender, EventArgs e)
+        {
+            string p = lblPaginaAct.Text.ToString();
+            int pagina = int.Parse(p);
+            System.Web.HttpContext.Current.Session["PagAct"] = (pagina + 1).ToString();
+
+            guardarBuscar();
+
+            Server.TransferRequest(Request.Url.AbsolutePath, false);
+        }
+
         protected void btnVolver_Click(object sender, EventArgs e)
         {
             Response.Redirect("/Paginas/Lotes/frmAltaLotes");
@@ -474,60 +540,40 @@ namespace Web.Paginas.Productos
             {
                 if (detectarImagen())
                 {
-                    int id = GenerateUniqueId();
-                    string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
-                    string tipo = HttpUtility.HtmlEncode(listTipo.SelectedValue);
-                    string tipoVenta = HttpUtility.HtmlEncode(listTipoVenta.SelectedValue);
-                    byte[] fileBytes = fileImagen.FileBytes;
-                    string imagen = Convert.ToBase64String(fileBytes);
-
-                    ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                    Producto unProducto = new Producto(id, nombre, tipo, tipoVenta, imagen);
-                    if (Web.altaProducto(unProducto))
+                    if (int.Parse(txtPrecio.Text) > 0)
                     {
-                        if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
-                        {
-                            System.Web.HttpContext.Current.Session["idProductoSel"] = unProducto.IdProducto.ToString();
-                            Response.Redirect("/Paginas/Lotes/frmAltaLotes");
-                        }
-                        else
-                        {
-                            limpiar();
-                            listarPagina();
-                            lblMensajes.Text = "Producto dado de alta con éxito.";
-                        }
-                    }
-                    else
-                    {
-                        lblMensajes.Text = "Ya existe un Producto con estos datos. Estos son los posibles datos repetidos (Nombre).";
-                    }
-                }
-                else
-                {
-                    lblMensajes.Text = "El archivo debe ser una imagen o es muy grande.";
-                }
-            }
-            else
-            {
-                lblMensajes.Text = "Faltan datos.";
-            }
-        }
+                        int id = GenerateUniqueId();
+                        string nombre = HttpUtility.HtmlEncode(txtNombre.Text);
+                        string tipo = HttpUtility.HtmlEncode(listTipo.SelectedValue);
+                        string tipoVenta = HttpUtility.HtmlEncode(listTipoVenta.SelectedValue);
+                        byte[] fileBytes = fileImagen.FileBytes;
+                        string imagen = Convert.ToBase64String(fileBytes);
+                        int precio = int.Parse(HttpUtility.HtmlEncode(txtPrecio.Text));
 
-        private bool loteExistente(int idProducto)
-        {
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            string b = "";
-            string d = "";
-      
-            List<Lote> lotes = Web.buscarFiltrarLotes(b,d);
-            foreach (Lote unLote in lotes)
-            {
-                if (unLote.IdProducto == idProducto)
-                {
-                    return true;
+                        ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                        Producto unProducto = new Producto(id, nombre, tipo, tipoVenta, imagen, precio);
+                        if (Web.altaProducto(unProducto))
+                        {
+                            if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
+                            {
+                                System.Web.HttpContext.Current.Session["idProductoSel"] = unProducto.IdProducto.ToString();
+                                Response.Redirect("/Paginas/Lotes/frmAltaLotes");
+                            }
+                            else
+                            {
+                                limpiar();
+                                lblPaginaAct.Text = "1";
+                                listarPagina();
+                                lblMensajes.Text = "Producto dado de alta con éxito.";
+                            }
+                        }
+                        else lblMensajes.Text = "Ya existe un Producto con estos datos. Estos son los posibles datos repetidos (Nombre).";
+                    }
+                    else lblMensajes.Text = "El precio no puede ser cero.";
                 }
+                else lblMensajes.Text = "El archivo debe ser una imagen o es muy grande.";
             }
-            return false;
+            else lblMensajes.Text = "Faltan datos.";
         }
 
         protected void btnBaja_Click(object sender, EventArgs e)
@@ -544,28 +590,23 @@ namespace Web.Paginas.Productos
                     if (Web.bajaProducto(unProducto.IdProducto))
                     {
                         limpiar();
+                        lblPaginaAct.Text = "1";
                         listarPagina();
                         lblMensajes.Text = "Se ha borrado el producto.";
                     }
-                    else
-                    {
-                        lblMensajes.Text = "No se ha podido borrar el producto.";
-                    }
+                    else lblMensajes.Text = "No se ha podido borrar el producto.";
                 }
-                else
-                {
-                    lblMensajes.Text = "Hay un lote asociado a este producto.";
-                }
-
+                else lblMensajes.Text = "Hay un lote asociado a este producto.";
             }
-            else
-            {
-                lblMensajes.Text = "El producto no existe.";
-            }
+            else lblMensajes.Text = "El producto no existe.";
         }
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
+            System.Web.HttpContext.Current.Session["PagAct"] = "1";
+
+            guardarBuscar();
+
             Button btnConstultar = (Button)sender;
             GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
             int idProducto = int.Parse(HttpUtility.HtmlEncode(selectedrow.Cells[0].Text));
@@ -588,43 +629,13 @@ namespace Web.Paginas.Productos
 
         }
 
-        protected void btnBuscar_Click(object sender, EventArgs e)
-        {
-            lblPaginaAct.Text = "1";
-            listarPagina();
-        }
-
-        protected void lblPaginaAnt_Click(object sender, EventArgs e)
-        {
-            string p = lblPaginaAct.Text.ToString();
-            int pagina = int.Parse(p);
-            System.Web.HttpContext.Current.Session["PagAct"] = (pagina - 1).ToString();
-            System.Web.HttpContext.Current.Session["Buscar"] = txtBuscar.Text;
-            System.Web.HttpContext.Current.Session["FiltroTipo"] = listFiltroTipo.SelectedValue;
-            System.Web.HttpContext.Current.Session["FiltroTipoVen"] = listFiltroVen.SelectedValue;
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue;
-            Server.TransferRequest(Request.Url.AbsolutePath, false);
-        }
-
-        protected void lblPaginaSig_Click(object sender, EventArgs e)
-        {
-            string p = lblPaginaAct.Text.ToString();
-            int pagina = int.Parse(p);
-            System.Web.HttpContext.Current.Session["PagAct"] = (pagina + 1).ToString();
-            System.Web.HttpContext.Current.Session["Buscar"] = txtBuscar.Text;
-            System.Web.HttpContext.Current.Session["FiltroTipo"] = listFiltroTipo.SelectedValue;
-            System.Web.HttpContext.Current.Session["FiltroTipoVen"] = listFiltroVen.SelectedValue;
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue;
-            Server.TransferRequest(Request.Url.AbsolutePath, false);
-        }
-
         protected void btnLimpiar_Click(object sender, EventArgs e)
         {
             limpiar();
             listarPagina();
         }
 
-
+        #endregion
 
     }
-}
+} 

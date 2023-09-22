@@ -13,7 +13,6 @@ namespace Clases
         private string _tipo;
         private double _pH;       
         private string _impacto;
-
         public int IdPesticida { get => _idPesticida; set => _idPesticida = value; }
         public string Nombre { get => _nombre; set => _nombre = value; }
         public string Tipo { get => _tipo; set => _tipo = value; }

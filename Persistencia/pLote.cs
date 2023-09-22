@@ -13,9 +13,9 @@ namespace Persistencia
     class pLote
     {
 
-      
 
-        public List<Lote> buscarFiltrarLotes(string buscar, string ordenar)
+
+        public List<Lote> buscarFiltrarLotes(Lote pLote, double precioMenor, double precioMayor, string fchProduccionMenor, string fchProduccionMayor, string fchCaducidadMenor, string fchCaducidadMayor, string ordenar)
         {
             List<Lote> resultado = new List<Lote>();
             try
@@ -26,7 +26,15 @@ namespace Persistencia
                 SqlCommand cmd = new SqlCommand("BuscarFiltrarLotes", conect);
 
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@buscar", buscar));
+                cmd.Parameters.Add(new SqlParameter("@granja", pLote.IdGranja));
+                cmd.Parameters.Add(new SqlParameter("@producto", pLote.IdProducto));
+                cmd.Parameters.Add(new SqlParameter("@deposito", pLote.IdDeposito));
+                cmd.Parameters.Add(new SqlParameter("@precioMenor", precioMenor));
+                cmd.Parameters.Add(new SqlParameter("@precioMayor", precioMayor));
+                cmd.Parameters.Add(new SqlParameter("@fchProduccionMenor", fchProduccionMenor));
+                cmd.Parameters.Add(new SqlParameter("@fchProduccionMayor", fchProduccionMayor));
+                cmd.Parameters.Add(new SqlParameter("@fchCaducidadMenor", fchCaducidadMenor));
+                cmd.Parameters.Add(new SqlParameter("@fchCaducidadMayor", fchCaducidadMayor));
                 cmd.Parameters.Add(new SqlParameter("@ordenar", ordenar));
 
 
@@ -35,12 +43,14 @@ namespace Persistencia
                     while (reader.Read())
                     {
                         Lote lote = new Lote();
-                        lote.IdGranja = int.Parse( reader["idGranja"].ToString());
+                        lote.IdGranja = int.Parse(reader["idGranja"].ToString());
                         lote.NombreGranja = reader["nombreGranja"].ToString();
                         lote.IdProducto = int.Parse(reader["idProducto"].ToString());
                         lote.NombreProducto = reader["nombreProducto"].ToString();
                         string[] DateArr = reader["fchProduccion"].ToString().Split(' ');
                         lote.FchProduccion = DateArr[0];
+                        string[] DateCadArr = reader["fchCaducidad"].ToString().Split(' ');
+                        lote.FchCaducidad = DateCadArr[0];
                         lote.Cantidad = reader["cantidad"].ToString();
                         lote.Precio = double.Parse(reader["precio"].ToString());
                         lote.IdDeposito = int.Parse(reader["idDeposito"].ToString());
@@ -85,6 +95,8 @@ namespace Persistencia
                             lote.NombreProducto = reader["nombreProducto"].ToString();
                             string[] DateArr = reader["fchProduccion"].ToString().Split(' ');
                             lote.FchProduccion = DateArr[0];
+                            string[] DateCadArr = reader["fchCaducidad"].ToString().Split(' ');
+                            lote.FchCaducidad = DateCadArr[0];
                             lote.Cantidad = reader["cantidad"].ToString();
                             lote.Precio = double.Parse(reader["precio"].ToString());
                             lote.IdDeposito = int.Parse(reader["idDeposito"].ToString());
@@ -115,6 +127,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@idGranja", lote.IdGranja));
                 cmd.Parameters.Add(new SqlParameter("@idProducto", lote.IdProducto));
                 cmd.Parameters.Add(new SqlParameter("@fchProduccion", lote.FchProduccion));
+                cmd.Parameters.Add(new SqlParameter("@fchCaducidad", lote.FchCaducidad));
                 cmd.Parameters.Add(new SqlParameter("@cantidad", lote.Cantidad));
                 cmd.Parameters.Add(new SqlParameter("@precio", lote.Precio));
                 cmd.Parameters.Add(new SqlParameter("@idDeposito", lote.IdDeposito));
@@ -142,7 +155,7 @@ namespace Persistencia
         }
 
 
-        public bool bajaLote(string nombreGranja, string nombreProducto, string fchProduccion,string cantTotal)
+        public bool bajaLote(string nombreGranja, string nombreProducto, string fchProduccion, string cantTotal)
         {
             bool resultado = false;
 
@@ -194,6 +207,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@idGranja", lote.IdGranja));
                 cmd.Parameters.Add(new SqlParameter("@idProducto", lote.IdProducto));
                 cmd.Parameters.Add(new SqlParameter("@fchProduccion", lote.FchProduccion));
+                cmd.Parameters.Add(new SqlParameter("@fchCaducidad", lote.FchCaducidad));
                 cmd.Parameters.Add(new SqlParameter("@cantidad", lote.Cantidad));
                 cmd.Parameters.Add(new SqlParameter("@precio", lote.Precio));
                 cmd.Parameters.Add(new SqlParameter("@idDeposito", lote.IdDeposito));

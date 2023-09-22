@@ -31,9 +31,49 @@ namespace Web.Paginas.Granjas
                 txtId.Text = id.ToString();
                 cargarGranja(id);
                 CargarListDueño();
+
+
+                if (System.Web.HttpContext.Current.Session["GranjaDatosMod"] != null)
+                {
+                    cargarDatos();
+                }
             }
         }
 
+        #region Guardar y cargar datos
+        private void guardarDatos()
+        {
+
+
+            System.Web.HttpContext.Current.Session["Ubicacion"] = txtUbicacion.Text;
+            System.Web.HttpContext.Current.Session["Nombre"] = txtNombre.Text;
+
+        }
+
+        private void cargarDatos()
+        {
+            System.Web.HttpContext.Current.Session["GranjaDatosMod"] = null;
+
+
+
+            txtUbicacion.Text = System.Web.HttpContext.Current.Session["Ubicacion"].ToString();
+            System.Web.HttpContext.Current.Session["Ubicacion"] = null;
+
+            txtNombre.Text = System.Web.HttpContext.Current.Session["Nombre"].ToString();
+            System.Web.HttpContext.Current.Session["Nombre"] = null;
+
+            if (System.Web.HttpContext.Current.Session["DuenoSelected"] != null)
+            {
+                listDueño.SelectedValue = System.Web.HttpContext.Current.Session["DuenoSelected"].ToString();
+                System.Web.HttpContext.Current.Session["DuenoSelected"] = null;
+            }
+
+
+
+        }
+
+
+        #endregion
 
         private void limpiarIdSession()
         {
@@ -70,7 +110,7 @@ namespace Web.Paginas.Granjas
             txtId.Text = "";
             txtNombre.Text = "";
             txtUbicacion.Text = "";
-            txtBuscarDueño.Text = "";
+
 
             CargarListDueño();
         }
@@ -89,40 +129,19 @@ namespace Web.Paginas.Granjas
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             List<Cliente> clientes = new List<Cliente>();
+            Cliente cli = new Cliente(0, "", "", "", "", "", "", "", "");
+            clientes = Web.buscarCliFiltro(cli, "1000-01-01", "3000-12-30", "");
+
+
             DataTable dt = new DataTable();
 
             dt.Columns.Add(new DataColumn("nombre", typeof(String)));
             dt.Columns.Add(new DataColumn("id", typeof(String)));
 
+            dt.Rows.Add(createRow("Seleccione un Dueño", "Seleccione un Dueño", dt));
 
-            if (txtBuscarDueño.Text == "")
-            {
-                string b = "";
-                string d = "";
-                string o = "";
-                Cliente cliente = new Cliente();
-                clientes = Web.buscarCliFiltro(cliente,b, d,o);
+            cargarDueños(clientes, dt);
 
-                dt.Rows.Add(createRow("Seleccione un Dueño", "Seleccione un Dueño", dt));
-            }
-            else
-            {
-                //string buscar = txtBuscarDueño.Text.ToLower();
-                //string ordenar = "";
-                //clientes = Web.buscarCliFiltro(buscar, ordenar);
-               
-            }
-            if (clientes.Count == 0)
-            {
-                lblMensajes.Text = "No se encontro ningun Cliente.";
-            }
-            else
-            {
-                cargarDueños(clientes, dt);
-
-            }
-
-     
             DataView dv = new DataView(dt);
             return dv;
 
@@ -151,9 +170,11 @@ namespace Web.Paginas.Granjas
         }
         protected void btnBuscarDueño_Click(object sender, EventArgs e)
         {
-            CargarListDueño();
-        
-            }
+            System.Web.HttpContext.Current.Session["GranjaDatosMod"] = "Si";
+            guardarDatos();
+            Response.Redirect("/Paginas/Clientes/frmListarClientes");
+        }
+
 
         protected void btnAtras_Click(object sender, EventArgs e)
         {

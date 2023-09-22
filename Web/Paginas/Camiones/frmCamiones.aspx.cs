@@ -25,8 +25,7 @@ namespace Web.Paginas.Camiones
             if (!IsPostBack)
             {
 
-                lblMensajes.Text = System.Web.HttpContext.Current.Session["idCamioneroMod"] != null ? "Camión Modificado" : "";
-                System.Web.HttpContext.Current.Session["idCamioneroMod"] = null;
+
 
 
                 System.Web.HttpContext.Current.Session["idCamionSel"] = null;
@@ -60,11 +59,15 @@ namespace Web.Paginas.Camiones
                 // Listas
                 lstDisponibleBuscar.SelectedValue = System.Web.HttpContext.Current.Session["disponibleCamionBuscar"] != null ? System.Web.HttpContext.Current.Session["disponibleCamionBuscar"].ToString() : "Seleccionar disponibilidad";
                 System.Web.HttpContext.Current.Session["disponibleCamionBuscar"] = null;
+                listBuscarPor.SelectedValue = System.Web.HttpContext.Current.Session["BuscarLst"] != null ? System.Web.HttpContext.Current.Session["BuscarLst"].ToString() : "Buscar por";
+                System.Web.HttpContext.Current.Session["BuscarLst"] = null;
                 listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"] != null ? System.Web.HttpContext.Current.Session["OrdenarPor"].ToString() : "Ordernar por";
                 System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
 
+                comprobarBuscar();
                 listarPagina();
-
+                lblMensajes.Text = System.Web.HttpContext.Current.Session["idCamioneroMod"] != null ? "Camión Modificado" : "";
+                System.Web.HttpContext.Current.Session["idCamioneroMod"] = null;
             }
         }
 
@@ -95,11 +98,12 @@ namespace Web.Paginas.Camiones
             lstDisponibleBuscar.SelectedValue = "Seleccionar disponibilidad";
 
             lstDisponible.SelectedValue = "Seleccionar disponibilidad";
+            listBuscarPor.SelectedValue = "Buscar por";
             listOrdenarPor.SelectedValue = "Ordenar por";
+            comprobarBuscar();
             lblPaginaAct.Text = "1";
             listarPagina();
         }
-
         static int GenerateUniqueId()
         {
             Guid guid = Guid.NewGuid();
@@ -113,7 +117,7 @@ namespace Web.Paginas.Camiones
 
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             Camion cam = new Camion(0, "", "", 0, "");
-            List<Camion> lstCam = Web.buscarFiltroCam(cam, 0, 0, "");
+            List<Camion> lstCam = Web.buscarFiltroCam(cam, 0, 99999, "");
             foreach (Camion camion in lstCam)
             {
                 if (camion.IdCamion.Equals(intGuid))
@@ -127,6 +131,25 @@ namespace Web.Paginas.Camiones
                 return intGuid;
             }
             else return GenerateUniqueId();
+        }
+
+        private void comprobarBuscar()
+        {
+            txtMarcaBuscar.Visible = listBuscarPor.SelectedValue == "Marca" ? true : false;
+            txtModeloBuscar.Visible = listBuscarPor.SelectedValue == "Marca" ? true : false;
+            lblCarga.Visible = listBuscarPor.SelectedValue == "Carga" ? true : false;
+            lstDisponibleBuscar.Visible = listBuscarPor.SelectedValue == "Disponibilidad" ? true : false;
+        }
+
+        private void guardarBuscar()
+        {
+            System.Web.HttpContext.Current.Session["marcaCamionBuscar"] = txtMarcaBuscar.Text;
+            System.Web.HttpContext.Current.Session["modeloCamionBuscar"] = txtModeloBuscar.Text;
+            System.Web.HttpContext.Current.Session["cargaMenorCamionBuscar"] = txtCargaMenorBuscar.Text;
+            System.Web.HttpContext.Current.Session["cargaMayorCamionBuscar"] = txtCargaMayorBuscar.Text;
+            System.Web.HttpContext.Current.Session["disponibleCamionBuscar"] = lstDisponibleBuscar.SelectedValue != "Seleccionar disponibilidad" ? lstDisponibleBuscar.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["BuscarLst"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
         }
 
         #region Paginas
@@ -159,6 +182,8 @@ namespace Web.Paginas.Camiones
 
             if (camiones.Count == 0)
             {
+
+                lblPaginas.Visible = false;
                 lblMensajes.Text = "No se encontro ningún Camión.";
 
                 lblPaginaAnt.Visible = false;
@@ -168,7 +193,7 @@ namespace Web.Paginas.Camiones
             }
             else
             {
-
+                lblPaginas.Visible = true;
                 lblMensajes.Text = "";
                 modificarPagina();
                 lstCamiones.Visible = true;
@@ -199,6 +224,17 @@ namespace Web.Paginas.Camiones
             {
                 lblPaginaAnt.Visible = false;
             }
+            if (pagAct == cantPags.ToString() && pagAct == "1")
+            {
+                txtPaginas.Visible = false;
+                lblPaginaAct.Visible = false;
+
+            }
+
+
+
+
+
             lblPaginaAnt.Text = (int.Parse(pagAct) - 1).ToString();
             lblPaginaAct.Text = pagAct.ToString();
             lblPaginaSig.Text = (int.Parse(pagAct) + 1).ToString();
@@ -213,7 +249,7 @@ namespace Web.Paginas.Camiones
             camion.Modelo = HttpUtility.HtmlEncode(txtModeloBuscar.Text);
             camion.Disponible = lstDisponibleBuscar.SelectedValue != "Seleccionar disponibilidad" ? lstDisponibleBuscar.SelectedValue : "";
             double cargaMenor = txtCargaMenorBuscar.Text == "" ? 0 : double.Parse(txtCargaMenorBuscar.Text);
-            double cargaMayor = txtCargaMayorBuscar.Text == "" ? 0 : double.Parse(txtCargaMayorBuscar.Text);
+            double cargaMayor = txtCargaMayorBuscar.Text == "" ? 99999 : double.Parse(txtCargaMayorBuscar.Text);
             string ordenar = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : "";
 
             List<Camion> camiones = Web.buscarFiltroCam(camion, cargaMenor, cargaMayor, ordenar);
@@ -336,33 +372,35 @@ namespace Web.Paginas.Camiones
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            if (txtCargaMenorBuscar.Text == "" && txtCargaMayorBuscar.Text == "")
+            int num = 0;
+            try
+            {
+                if (int.Parse(txtCargaMenorBuscar.Text) <= int.Parse(txtCargaMayorBuscar.Text)) num++;
+            }
+            catch
+            {
+                num++;
+            }
+
+            if (num == 1)
             {
                 lblPaginaAct.Text = "1";
                 listarPagina();
             }
-            else if (txtCargaMenorBuscar.Text != "" && txtCargaMayorBuscar.Text != "")
+            else
             {
-                if (double.Parse(txtCargaMenorBuscar.Text) <= double.Parse(txtCargaMayorBuscar.Text))
-                {
-                    lblPaginaAct.Text = "1";
-                    listarPagina();
-                }
-                else lblMensajes.Text = "La cantidad de carga menor es mayor";
+                lblMensajes.Text = "La carga menor es mayor.";
+                listBuscarPor.SelectedValue = "Carga";
+                comprobarBuscar();
             }
-            else lblMensajes.Text = "La cantidad de carga menor o mayor esta vacía.";
         }
 
         protected void listBuscarPor_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txtMarcaBuscar.Visible = listBuscarPor.SelectedValue == "Marca" ? true : false;
-            txtModeloBuscar.Visible = listBuscarPor.SelectedValue == "Marca" ? true : false;
-            lblCargaMenorBuscar.Visible = listBuscarPor.SelectedValue == "Carga" ? true : false;
-            txtCargaMenorBuscar.Visible = listBuscarPor.SelectedValue == "Carga" ? true : false;
-            lblCargaMayorBuscar.Visible = listBuscarPor.SelectedValue == "Carga" ? true : false;
-            txtCargaMayorBuscar.Visible = listBuscarPor.SelectedValue == "Carga" ? true : false;
-            lstDisponibleBuscar.Visible = listBuscarPor.SelectedValue == "Disponibilidad" ? true : false;
+            comprobarBuscar();
         }
+
+
 
         protected void lblPaginaAnt_Click(object sender, EventArgs e)
         {
@@ -370,12 +408,7 @@ namespace Web.Paginas.Camiones
             int pagina = int.Parse(p);
             System.Web.HttpContext.Current.Session["PagAct"] = (pagina - 1).ToString();
 
-            System.Web.HttpContext.Current.Session["marcaCamionBuscar"] = txtMarcaBuscar.Text;
-            System.Web.HttpContext.Current.Session["modeloCamionBuscar"] = txtModeloBuscar.Text;
-            System.Web.HttpContext.Current.Session["cargaMenorCamionBuscar"] = txtCargaMenorBuscar.Text;
-            System.Web.HttpContext.Current.Session["cargaMayorCamionBuscar"] = txtCargaMayorBuscar.Text;
-            System.Web.HttpContext.Current.Session["disponibleCamionBuscar"] = lstDisponibleBuscar.SelectedValue != "Seleccionar disponibilidad" ? lstDisponibleBuscar.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+            guardarBuscar();
 
             Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
@@ -386,12 +419,7 @@ namespace Web.Paginas.Camiones
             int pagina = int.Parse(p);
             System.Web.HttpContext.Current.Session["PagAct"] = (pagina + 1).ToString();
 
-            System.Web.HttpContext.Current.Session["marcaCamionBuscar"] = txtMarcaBuscar.Text;
-            System.Web.HttpContext.Current.Session["modeloCamionBuscar"] = txtModeloBuscar.Text;
-            System.Web.HttpContext.Current.Session["cargaMenorCamionBuscar"] = txtCargaMenorBuscar.Text;
-            System.Web.HttpContext.Current.Session["cargaMayorCamionBuscar"] = txtCargaMayorBuscar.Text;
-            System.Web.HttpContext.Current.Session["disponibleCamionBuscar"] = lstDisponibleBuscar.SelectedValue != "Seleccionar disponibilidad" ? lstDisponibleBuscar.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+            guardarBuscar();
 
             Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
@@ -415,6 +443,7 @@ namespace Web.Paginas.Camiones
                     {
                         limpiar();
                         lblMensajes.Text = "Camión dado de alta con éxito.";
+                        lblPaginaAct.Text = "1";
                         listarPagina();
                     }
                     else lblMensajes.Text = "No se pudo dar de alta el Camión.";
@@ -442,6 +471,7 @@ namespace Web.Paginas.Camiones
                 {
                     limpiar();
                     lblMensajes.Text = "Se ha borrado el Camión.";
+                    lblPaginaAct.Text = "1";
                     listarPagina();
                 }
                 else lblMensajes.Text = "No se ha podido borrar el Camión.";
@@ -452,11 +482,7 @@ namespace Web.Paginas.Camiones
         protected void btnModificar_Click(object sender, EventArgs e)
         {
             System.Web.HttpContext.Current.Session["PagAct"] = "1";
-            System.Web.HttpContext.Current.Session["marcaCamionBuscar"] = txtMarcaBuscar.Text;
-            System.Web.HttpContext.Current.Session["modeloCamionBuscar"] = txtModeloBuscar.Text;
-            System.Web.HttpContext.Current.Session["cargaMenorCamionBuscar"] = txtCargaMenorBuscar.Text;
-            System.Web.HttpContext.Current.Session["cargaMayorCamionBuscar"] = txtCargaMayorBuscar.Text;
-            System.Web.HttpContext.Current.Session["disponibleCamionBuscar"] = lstDisponibleBuscar.SelectedValue != "Seleccionar disponibilidad" ? lstDisponibleBuscar.SelectedValue : null;
+            guardarBuscar();
 
             int id;
             Button btnConstultar = (Button)sender;

@@ -24,6 +24,15 @@ namespace Web.Paginas.Lotes
         protected global::System.Web.UI.WebControls.Label txtIdGranja;
 
         /// <summary>
+        /// Control txtNomGranja.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtNomGranja;
+
+        /// <summary>
         /// Control txtIdProducto.
         /// </summary>
         /// <remarks>
@@ -33,6 +42,15 @@ namespace Web.Paginas.Lotes
         protected global::System.Web.UI.WebControls.Label txtIdProducto;
 
         /// <summary>
+        /// Control txtNomProd.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtNomProd;
+
+        /// <summary>
         /// Control txtFchProduccion.
         /// </summary>
         /// <remarks>
@@ -40,6 +58,15 @@ namespace Web.Paginas.Lotes
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label txtFchProduccion;
+
+        /// <summary>
+        /// Control txtFchCaducidad.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFchCaducidad;
 
         /// <summary>
         /// Control lblCantidad.
@@ -69,24 +96,6 @@ namespace Web.Paginas.Lotes
         protected global::System.Web.UI.WebControls.TextBox txtPrecio;
 
         /// <summary>
-        /// Control txtBuscarDeposito.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtBuscarDeposito;
-
-        /// <summary>
-        /// Control btnBuscarDeposito.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBuscarDeposito;
-
-        /// <summary>
         /// Control listDeposito.
         /// </summary>
         /// <remarks>
@@ -96,13 +105,13 @@ namespace Web.Paginas.Lotes
         protected global::System.Web.UI.WebControls.DropDownList listDeposito;
 
         /// <summary>
-        /// Control btnAltaDeposito.
+        /// Control btnBuscarDeposito.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAltaDeposito;
+        protected global::System.Web.UI.WebControls.Button btnBuscarDeposito;
 
         /// <summary>
         /// Control lblMensajes.

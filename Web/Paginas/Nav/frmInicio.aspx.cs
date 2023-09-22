@@ -11,7 +11,7 @@ namespace Web.Paginas
     {
         protected void Page_PreInit(object sender, EventArgs e)
         {
-      // System.Web.HttpContext.Current.Session["ClienteIniciado"] = "1481022565";
+       System.Web.HttpContext.Current.Session["ClienteIniciado"] = "1481022565";
 
             if (System.Web.HttpContext.Current.Session["ClienteIniciado"] != null)
             {

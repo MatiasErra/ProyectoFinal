@@ -33,15 +33,17 @@ namespace Web.Paginas.Granjass
                     lstGranja.Visible = false;
                     lstGranjaSelect.Visible = true;
                 }
-                if (System.Web.HttpContext.Current.Session["GranjaMod"] != null)
-                {
-                    lblMensajes.Text = "Granja Modificada";
-                    System.Web.HttpContext.Current.Session["GranjaMod"] = null;
-                }
+            
                 if (System.Web.HttpContext.Current.Session["GranjaDatosFrm"] != null)
                 {
-                    cargarDatos();
+                    if (System.Web.HttpContext.Current.Session["GranjaDatosFrm"].ToString() == "Abm")
+                    {
+                        cargarDatos();
+                    }
+                
                 }
+
+
                 if (System.Web.HttpContext.Current.Session["PagAct"] == null)
                 {
                     lblPaginaAct.Text = "1";
@@ -64,11 +66,20 @@ namespace Web.Paginas.Granjass
                 // Listas
                 lstDueñoBuscar.SelectedValue = System.Web.HttpContext.Current.Session["duenoGranjaBuscar"] != null ? System.Web.HttpContext.Current.Session["duenoGranjaBuscar"].ToString() : "Seleccionar tipo de impacto";
                 System.Web.HttpContext.Current.Session["duenoGranjaBuscar"] = null;
+                listBuscarPor.SelectedValue = System.Web.HttpContext.Current.Session["BuscarLstGran"] != null ? System.Web.HttpContext.Current.Session["BuscarLstGran"].ToString() : "Buscar por";
+                System.Web.HttpContext.Current.Session["BuscarLstGran"] = null;
+                comprobarBuscar();
                 listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"] != null ? System.Web.HttpContext.Current.Session["OrdenarPor"].ToString() : "Ordernar por";
                 System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
-
+         
                 listarPagina();
 
+
+                if (System.Web.HttpContext.Current.Session["GranjaMod"] != null)
+                {
+                    lblMensajes.Text = "Granja Modificada";
+                    System.Web.HttpContext.Current.Session["GranjaMod"] = null;
+                }
             }
         }
 
@@ -96,8 +107,9 @@ namespace Web.Paginas.Granjass
 
             txtNombre.Text = "";
             txtUbicacion.Text = "";
+            listBuscarPor.SelectedValue = "Buscar por";
             listOrdenarPor.SelectedValue = "Ordenar por";
-            lstGranja.SelectedIndex = -1;
+            comprobarBuscar();
             lblPaginaAct.Text = "1";
             listarPagina();
         }
@@ -162,9 +174,8 @@ namespace Web.Paginas.Granjass
         private bool comprobarProducen(int id)
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            string buscar = "";
-            string ord = "";
-            List<Lote> lotes = Web.buscarFiltrarLotes(buscar, ord);
+            Lote lote = new Lote(0, 0, "", "", "", 0, 0);
+            List<Lote> lotes = Web.buscarFiltrarLotes(lote, 0, 99999999, "1000-01-01", "3000-12-30", "1000-01-01", "3000-12-30", "");
             foreach (Lote unLote in lotes)
             {
                 if (unLote.IdGranja.Equals(id))
@@ -173,6 +184,23 @@ namespace Web.Paginas.Granjass
                 }
             }
             return false;
+        }
+
+        private void comprobarBuscar()
+        {
+            txtNombreBuscar.Visible = listBuscarPor.SelectedValue == "Nombre" ? true : false;
+            txtUbicacionBuscar.Visible = listBuscarPor.SelectedValue == "Ubicación" ? true : false;
+            lstDueñoBuscar.Visible = listBuscarPor.SelectedValue == "Nombre del dueño" ? true : false;
+            btnBuscarDueñoBuscar.Visible = listBuscarPor.SelectedValue == "Nombre del dueño" ? true : false;
+        }
+
+        private void guardarBuscar()
+        {
+            System.Web.HttpContext.Current.Session["BuscarLstGran"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : "";
+            System.Web.HttpContext.Current.Session["nombreGranjaBuscar"] = txtNombreBuscar.Text != "" ? txtNombreBuscar.Text : "" ;
+            System.Web.HttpContext.Current.Session["ubicacionGranjaBuscar"] = txtUbicacionBuscar.Text != "" ? txtUbicacionBuscar.Text : ""; ;
+            System.Web.HttpContext.Current.Session["duenoGranjaBuscar"] = lstDueñoBuscar.SelectedValue != "Seleccione un Dueño" ? lstDueñoBuscar.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
         }
 
         #region Paginas
@@ -222,6 +250,7 @@ namespace Web.Paginas.Granjass
 
             if (granjasPagina.Count == 0)
             {
+                lblPaginas.Visible = false;
                 lblMensajes.Text = "No se encontro ningúna granja.";
 
                 lblPaginaAnt.Visible = false;
@@ -234,6 +263,7 @@ namespace Web.Paginas.Granjass
             {
                 if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
                 {
+                    lblPaginas.Visible = true;
                     lstGranjaSelect.Visible = true;
                     modificarPagina();
                     lstGranjaSelect.DataSource = null;
@@ -243,6 +273,7 @@ namespace Web.Paginas.Granjass
 
                 else
                 {
+                    lblPaginas.Visible = true;
                     lblMensajes.Text = "";
                     modificarPagina();
                     lstGranja.Visible = true;
@@ -296,6 +327,14 @@ namespace Web.Paginas.Granjass
             {
                 lblPaginaAnt.Visible = false;
             }
+            if (pagAct == cantPags.ToString() && pagAct == "1")
+            {
+                txtPaginas.Visible = false;
+                lblPaginaAct.Visible = false;
+
+            }
+
+
             lblPaginaAnt.Text = (int.Parse(pagAct) - 1).ToString();
             lblPaginaAct.Text = pagAct.ToString();
             lblPaginaSig.Text = (int.Parse(pagAct) + 1).ToString();
@@ -304,11 +343,9 @@ namespace Web.Paginas.Granjass
         #endregion
 
         #region Guardar y cargar datos
-
-        private void guardarDatos()
+    private void guardarDatos()
         {
-
-
+           System.Web.HttpContext.Current.Session["DuenoSelected"] = listDueño.SelectedValue != "Seleccione un Dueño"  ? listDueño.SelectedValue : "Seleccione un Dueño";
             System.Web.HttpContext.Current.Session["Ubicacion"] = txtUbicacion.Text;
             System.Web.HttpContext.Current.Session["Nombre"] = txtNombre.Text;
 
@@ -340,6 +377,7 @@ namespace Web.Paginas.Granjass
 
 
         #endregion
+    
 
         #region DropDownBoxes
 
@@ -422,9 +460,8 @@ namespace Web.Paginas.Granjass
         ICollection createDataSource()
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            List<Cliente> clientes = new List<Cliente>();
             Cliente cli = new Cliente(0, "", "", "", "", "", "", "", "");
-            clientes = Web.buscarCliFiltro(cli, "", "", "");
+            List<Cliente> clientes = Web.buscarCliFiltro(cli, "1000-01-01", "3000-12-30", "");
 
 
             DataTable dt = new DataTable();
@@ -477,10 +514,7 @@ namespace Web.Paginas.Granjass
 
         protected void listBuscarPor_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txtNombreBuscar.Visible = listBuscarPor.SelectedValue == "Nombre" ? true : false;
-            txtUbicacionBuscar.Visible = listBuscarPor.SelectedValue == "Ubicación" ? true : false;
-            lstDueñoBuscar.Visible = listBuscarPor.SelectedValue == "Nombre del dueño" ? true : false;
-            btnBuscarDueñoBuscar.Visible = listBuscarPor.SelectedValue == "Nombre del dueño" ? true : false;
+            comprobarBuscar();
         }
 
         protected void lblPaginaAnt_Click(object sender, EventArgs e)
@@ -489,10 +523,7 @@ namespace Web.Paginas.Granjass
             int pagina = int.Parse(p);
             System.Web.HttpContext.Current.Session["PagAct"] = (pagina - 1).ToString();
 
-            System.Web.HttpContext.Current.Session["nombreGranjaBuscar"] = txtNombreBuscar.Text;
-            System.Web.HttpContext.Current.Session["ubicacionGranjaBuscar"] = txtUbicacionBuscar.Text;
-            System.Web.HttpContext.Current.Session["duenoGranjaBuscar"] = lstDueñoBuscar.SelectedValue != "Seleccione un Dueño" ? lstDueñoBuscar.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+            guardarBuscar();
 
             Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
@@ -503,10 +534,7 @@ namespace Web.Paginas.Granjass
             int pagina = int.Parse(p);
             System.Web.HttpContext.Current.Session["PagAct"] = (pagina + 1).ToString();
 
-            System.Web.HttpContext.Current.Session["nombreGranjaBuscar"] = txtNombreBuscar.Text;
-            System.Web.HttpContext.Current.Session["ubicacionGranjaBuscar"] = txtUbicacionBuscar.Text;
-            System.Web.HttpContext.Current.Session["duenoGranjaBuscar"] = lstDueñoBuscar.SelectedValue != "Seleccione un Dueño" ? lstDueñoBuscar.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+            guardarBuscar();
 
             Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
@@ -521,7 +549,7 @@ namespace Web.Paginas.Granjass
         protected void btnBuscarDueñoBuscar_Click(object sender, EventArgs e)
         {
             System.Web.HttpContext.Current.Session["GranjaDatosFrm"] = "Buscar";
-            guardarDatos();
+            guardarBuscar();
             Response.Redirect("/Paginas/Clientes/frmListarClientes");
         }
 
@@ -551,6 +579,8 @@ namespace Web.Paginas.Granjass
                     else
                     {
                         limpiar();
+                        lblPaginaAct.Text = "1";
+                        listarPagina();
                         lblMensajes.Text = "Granja dada de alta con éxito.";
                     }
                 }
@@ -588,7 +618,9 @@ namespace Web.Paginas.Granjass
                     if (Web.bajaGranja(id))
                     {
                         limpiar();
+                        lblPaginaAct.Text = "1";
                         listarPagina();
+
                         lblMensajes.Text = "Se ha borrado la granja.";
                     }
                     else lblMensajes.Text = "No se ha podido borrar la granja.";
@@ -600,6 +632,8 @@ namespace Web.Paginas.Granjass
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
+            System.Web.HttpContext.Current.Session["PagAct"] = "1";
+            guardarBuscar();
 
             int id;
             Button btnConstultar = (Button)sender;
