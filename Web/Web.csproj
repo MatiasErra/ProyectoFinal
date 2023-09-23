@@ -156,6 +156,8 @@
     <Content Include="Paginas\Pesticidas\modPest.aspx" />
     <Content Include="Paginas\Productos\frmProductos.aspx" />
     <Content Include="Paginas\Productos\modProducto.aspx" />
+    <Content Include="Paginas\Viajes\frmViajes.aspx" />
+    <Content Include="Paginas\Viajes\modViaje.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -493,6 +495,20 @@
     </Compile>
     <Compile Include="Paginas\Productos\modProducto.aspx.designer.cs">
       <DependentUpon>modProducto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Viajes\frmViajes.aspx.cs">
+      <DependentUpon>frmViajes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Viajes\frmViajes.aspx.designer.cs">
+      <DependentUpon>frmViajes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Viajes\modViaje.aspx.cs">
+      <DependentUpon>modViaje.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Viajes\modViaje.aspx.designer.cs">
+      <DependentUpon>modViaje.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Mobile.Master.cs">

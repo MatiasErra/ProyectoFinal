@@ -15,6 +15,30 @@ namespace Web.Paginas.Productos
     {
         protected void Page_PreInit(object sender, EventArgs e)
         {
+            if (System.Web.HttpContext.Current.Session["AdminIniciado"] != null)
+            {
+                int id = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                Admin admin = Web.buscarAdm(id);
+
+                if (admin.TipoDeAdmin == "Administrador global")
+                {
+                    this.MasterPageFile = "~/Master/AGlobal.Master";
+                }
+                else if (admin.TipoDeAdmin == "Administrador de productos")
+                {
+                    this.MasterPageFile = "~/Master/AProductos.Master";
+                }
+                else if (admin.TipoDeAdmin == "Administrador de pedidos")
+                {
+                    this.MasterPageFile = "~/Master/APedidos.Master";
+                }
+            }
+            else
+            {
+                Response.Redirect("/Paginas/Nav/frmInicio");
+            }
+
             if (System.Web.HttpContext.Current.Session["idProductoMod"] == null)
             {
                 Response.Redirect("/Paginas/Productos/frmProductos");

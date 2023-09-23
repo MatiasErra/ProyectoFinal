@@ -168,6 +168,15 @@ namespace Web.Paginas.Camioneros
         protected global::System.Web.UI.WebControls.TextBox txtFchVencBuscarFutura;
 
         /// <summary>
+        /// Control btnVolver.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnVolver;
+
+        /// <summary>
         /// Control btnLimpiar.
         /// </summary>
         /// <remarks>
@@ -292,6 +301,15 @@ namespace Web.Paginas.Camioneros
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView lstCamionero;
+
+        /// <summary>
+        /// Control lstCamioneroSel.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView lstCamioneroSel;
 
         /// <summary>
         /// Control lblPaginas.

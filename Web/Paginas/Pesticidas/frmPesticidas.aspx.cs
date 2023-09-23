@@ -18,6 +18,35 @@ namespace Web.Paginas.Pesticidas
 
         #region Load
 
+
+        protected void Page_PreInit(object sender, EventArgs e)
+        {
+            if (System.Web.HttpContext.Current.Session["AdminIniciado"] != null)
+            {
+                int id = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                Admin admin = Web.buscarAdm(id);
+
+                if (admin.TipoDeAdmin == "Administrador global")
+                {
+                    this.MasterPageFile = "~/Master/AGlobal.Master";
+                }
+                else if (admin.TipoDeAdmin == "Administrador de productos")
+                {
+                    this.MasterPageFile = "~/Master/AProductos.Master";
+                }
+                else if (admin.TipoDeAdmin == "Administrador de pedidos")
+                {
+                    this.MasterPageFile = "~/Master/APedidos.Master";
+                }
+            }
+            else
+            {
+                Response.Redirect("/Paginas/Nav/frmInicio");
+            }
+        }
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -42,7 +71,7 @@ namespace Web.Paginas.Pesticidas
                     lstPest.Visible = false;
                     lstPestSelct.Visible = true;
                 }
-        
+
                 System.Web.HttpContext.Current.Session["idPest"] = null;
 
                 CargarListBuscar();
@@ -61,10 +90,10 @@ namespace Web.Paginas.Pesticidas
                 // Listas
                 lstImpactoBuscar.SelectedValue = System.Web.HttpContext.Current.Session["impactoPesticidaBuscar"] != null ? System.Web.HttpContext.Current.Session["impactoPesticidaBuscar"].ToString() : "Seleccionar tipo de impacto";
                 System.Web.HttpContext.Current.Session["impactoPesticidaBuscar"] = null;
-                listBuscarPor.SelectedValue = System.Web.HttpContext.Current.Session["BuscarLst"] != null ? System.Web.HttpContext.Current.Session["BuscarLst"].ToString() : "Buscar por";
-                System.Web.HttpContext.Current.Session["BuscarLst"] = null;
-                listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"] != null ? System.Web.HttpContext.Current.Session["OrdenarPor"].ToString() : "Ordernar por";
-                System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
+                listBuscarPor.SelectedValue = System.Web.HttpContext.Current.Session["BuscarLstPesticida"] != null ? System.Web.HttpContext.Current.Session["BuscarLstPesticida"].ToString() : "Buscar por";
+                System.Web.HttpContext.Current.Session["BuscarLstPesticida"] = null;
+                listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPorPesticida"] != null ? System.Web.HttpContext.Current.Session["OrdenarPorPesticida"].ToString() : "Ordernar por";
+                System.Web.HttpContext.Current.Session["OrdenarPorPesticida"] = null;
                 comprobarBuscar();
                 listarPagina();
 
@@ -169,8 +198,8 @@ namespace Web.Paginas.Pesticidas
             System.Web.HttpContext.Current.Session["phMenorPesticidaBuscar"] = txtPhMenorBuscar.Text;
             System.Web.HttpContext.Current.Session["phMayorPesticidaBuscar"] = txtPhMayorBuscar.Text;
             System.Web.HttpContext.Current.Session["impactoPesticidaBuscar"] = lstImpactoBuscar.SelectedValue != "Seleccionar tipo de impacto" ? lstImpactoBuscar.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["BuscarLst"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["BuscarLstPesticida"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["OrdenarPorPesticida"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
         }
 
         #region Paginas

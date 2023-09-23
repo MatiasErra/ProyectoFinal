@@ -753,5 +753,63 @@ namespace Controladoras
         }
         #endregion
 
+        #region Viajes
+
+        public List<Viaje> buscarViajeFiltro(Viaje pViaje, int costoMenor, int costoMayor, string fechaMenor, string fechaMayor, string ordenar)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Viaje> lst = inst.buscarViajeFiltro(pViaje, costoMenor, costoMayor, fechaMenor, fechaMayor, ordenar);
+            return lst;
+        }
+
+        public Viaje buscarViaje(int id)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            Viaje viaje = inst.buscarViaje(id);
+            return viaje;
+
+        }
+
+        public bool altaViaje(Viaje viaje)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            if (inst.altaViaje(viaje))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool bajaViaje(int id)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+
+            if (inst.bajaViaje(id))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool modViaje(Viaje viaje)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            if (inst.modViaje(viaje))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
     }
 }

@@ -75,7 +75,7 @@
 
 
                         <div class="col-12">
-
+                            <asp:Button ID="btnVolver" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Visible="false" Text="Volver" OnClick="btnVolver_Click" />
                             <asp:Button ID="btnLimpiar" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" />
                             <button type="button" class="btnE btn--radius btn--blue align-self-center btn--lst" data-bs-toggle="modal" data-bs-target="#altaModal">
                                 Añadir Camionero
@@ -236,22 +236,76 @@
 
                                             </Columns>
                                         </asp:GridView>
+                                        <asp:GridView ID="lstCamioneroSel" Width="100%" SelectedIndex="1" AutoGenerateColumns="false"
+                                            CssClass="table table-bordered table-condensed table-responsive table-hover"
+                                            runat="server">
+                                            <AlternatingRowStyle BackColor="White" />
+                                            <HeaderStyle BackColor="#6B696B" Font-Bold="true" Font-Size="Large" ForeColor="White" />
+                                            <RowStyle BackColor="#f5f5f5" />
+                                            <Columns>
+
+                                                <asp:BoundField DataField="IdPersona"
+                                                    HeaderText="Identificador del Camionero"
+                                                    ItemStyle-CssClass="GridStl" />
+
+                                                <asp:BoundField DataField="Nombre"
+                                                    HeaderText="Nombre"
+                                                    ItemStyle-CssClass="GridStl" />
+
+                                                <asp:BoundField DataField="Apellido"
+                                                    HeaderText="Apellido" ItemStyle-CssClass="GridStl" />
+
+                                                <asp:BoundField DataField="Email"
+                                                    HeaderText="E-Mail" ItemStyle-CssClass="GridStl" />
+
+                                                <asp:BoundField DataField="Telefono"
+                                                    HeaderText="Teléfono" ItemStyle-CssClass="GridStl" />
+
+                                                <asp:BoundField DataField="FchNacimiento"
+                                                    HeaderText="Fecha de Nacimiento" ItemStyle-CssClass="GridStl" />
+
+                                                <asp:BoundField DataField="Cedula"
+                                                    HeaderText="Cédula" ItemStyle-CssClass="GridStl" />
+
+                                                <asp:BoundField DataField="FchManejo"
+                                                    HeaderText="Vencimiento de libreta" ItemStyle-CssClass="GridStl" />
+
+                                                <asp:BoundField DataField="Disponible"
+                                                    HeaderText="Disponible" ItemStyle-CssClass="GridStl" />
+
+                                                <asp:TemplateField HeaderText="Opciones del administrador"
+                                                    ItemStyle-CssClass="GridStl">
+                                                    <ItemTemplate>
+
+
+
+                                                        <asp:Button ID="btnSelect" CssClass="btnE btn--radius btn--blue" runat="server" Text="Seleccionar" OnClick="btnSelected_Click" />
+                                                        <asp:Button ID="btnBaja" CssClass="btnE btn--radius btn--red" runat="server" Text="Baja" OnClientClick="return confirm('¿Desea eliminar este Camionero?')" OnClick="btnBaja_Click" />
+                                                        <asp:Button ID="btmModificar" CssClass="btnE btn--radius btn--yellow" runat="server" Text="Modificar" OnClick="btnModificar_Click" />
+
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+
+
+
+                                            </Columns>
+                                        </asp:GridView>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                        <asp:Label runat="server" ID="lblPaginas" CssClass="text pagStyle">
-                            <div class="text-center">
+                    <asp:Label runat="server" ID="lblPaginas" CssClass="text pagStyle">
+                        <div class="text-center">
 
-                                <asp:Label runat="server" ID="txtPaginas" CssClass="text pagStyle" Text="Paginas" />
-                                <div class="text-center">
-                                    <asp:LinkButton ID="lblPaginaAnt" CssClass="text pagTextAct" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
-                                    <asp:Label ID="lblPaginaAct" CssClass="text pagText" runat="server" Text=""></asp:Label>
-                                    <asp:LinkButton ID="lblPaginaSig" CssClass="text pagTextAct" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
-                                </div>
+                            <asp:Label runat="server" ID="txtPaginas" CssClass="text pagStyle" Text="Paginas" />
+                            <div class="text-center">
+                                <asp:LinkButton ID="lblPaginaAnt" CssClass="text pagTextAct" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
+                                <asp:Label ID="lblPaginaAct" CssClass="text pagText" runat="server" Text=""></asp:Label>
+                                <asp:LinkButton ID="lblPaginaSig" CssClass="text pagTextAct" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
                             </div>
-                        </asp:Label>
+                        </div>
+                    </asp:Label>
 
 
 

@@ -62,7 +62,7 @@
 
 
                         <div class="col-12">
-
+                            <asp:Button ID="btnVolver" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Visible="false" Text="Volver" OnClick="btnVolver_Click" />
                             <asp:Button ID="btnLimpiar" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" />
                             <button type="button" class="btnE btn--radius btn--blue align-self-center btn--lst" data-bs-toggle="modal" data-bs-target="#altaModal">
                                 Añadir Camión
@@ -188,11 +188,54 @@
 
                                             </Columns>
                                         </asp:GridView>
+                                        <asp:GridView ID="lstCamionesSel" Visible="false" Width="100%" SelectedIndex="1" AutoGenerateColumns="false"
+                                            CssClass="table table-bordered table-condensed table-responsive table-hover"
+                                            runat="server">
+                                            <AlternatingRowStyle BackColor="White" />
+                                            <HeaderStyle BackColor="#6B696B" Font-Bold="true" Font-Size="Medium" ForeColor="White" />
+                                            <RowStyle BackColor="#f5f5f5" />
+                                            <Columns>
+
+                                                <asp:BoundField DataField="IdCamion"
+                                                    HeaderText="Identificador del Camion"
+                                                    ItemStyle-CssClass="GridStl" />
+
+                                                <asp:BoundField DataField="Marca"
+                                                    HeaderText="Marca"
+                                                    ItemStyle-CssClass="GridStl" />
+
+                                                <asp:BoundField DataField="Modelo"
+                                                    HeaderText="Modelo" ItemStyle-CssClass="GridStl" />
+
+                                                <asp:BoundField DataField="Carga"
+                                                    HeaderText="Carga" ItemStyle-CssClass="GridStl" />
+
+                                                <asp:BoundField DataField="Disponible"
+                                                    HeaderText="Disponible" ItemStyle-CssClass="GridStl" />
+
+
+                                                <asp:TemplateField HeaderText="Opciones del administrador"
+                                                    ItemStyle-CssClass="GridStl">
+                                                    <ItemTemplate>
+
+
+
+                                                        <asp:Button ID="btnSelect" CssClass="btnE btn--radius btn--blue" runat="server" Text="Seleccionar" OnClick="btnSelected_Click" />
+                                                        <asp:Button ID="btnBaja" CssClass="btnE btn--radius btn--red" runat="server" Text="Baja" OnClientClick="return confirm('¿Desea eliminar este Camión?')" OnClick="btnBaja_Click" />
+                                                        <asp:Button ID="btmModificar" CssClass="btnE btn--radius btn--yellow" runat="server" Text="Modificar" OnClick="btnModificar_Click" />
+
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+
+
+
+                                            </Columns>
+                                        </asp:GridView>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                  <asp:Label runat="server" ID="lblPaginas" CssClass="text pagStyle">
+                        <asp:Label runat="server" ID="lblPaginas" CssClass="text pagStyle">
                             <div class="text-center">
 
                                 <asp:Label runat="server" ID="txtPaginas" CssClass="text pagStyle" Text="Paginas" />

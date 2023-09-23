@@ -13,9 +13,6 @@ namespace Web.Paginas.Catalogo
     {
         protected void Page_PreInit(object sender, EventArgs e)
         {
-
-
-
             if (System.Web.HttpContext.Current.Session["ClienteIniciado"] == null)
             {
                 Response.Redirect("/Paginas/Nav/frmInicio");
@@ -24,8 +21,6 @@ namespace Web.Paginas.Catalogo
             {
                 this.MasterPageFile = "~/Master/MCliente.Master";
             }
-
-
         }
 
 

@@ -13,6 +13,35 @@ namespace Web.Paginas.PedidosADM
 {
     public partial class frmPedido : System.Web.UI.Page
     {
+
+
+        protected void Page_PreInit(object sender, EventArgs e)
+        {
+            if (System.Web.HttpContext.Current.Session["AdminIniciado"] != null)
+            {
+                int id = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                Admin admin = Web.buscarAdm(id);
+
+                if (admin.TipoDeAdmin == "Administrador global")
+                {
+                    this.MasterPageFile = "~/Master/AGlobal.Master";
+                }
+                else if (admin.TipoDeAdmin == "Administrador de productos")
+                {
+                    this.MasterPageFile = "~/Master/AProductos.Master";
+                }
+                else if (admin.TipoDeAdmin == "Administrador de pedidos")
+                {
+                    this.MasterPageFile = "~/Master/APedidos.Master";
+                }
+            }
+            else
+            {
+                Response.Redirect("/Paginas/Nav/frmInicio");
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -73,7 +102,7 @@ namespace Web.Paginas.PedidosADM
                 listarPagina();
 
 
-         
+
 
                 lblMensajes.Text = System.Web.HttpContext.Current.Session["pedidoConf"] != null ? "Pedido confirmado" : "";
                 System.Web.HttpContext.Current.Session["pedidoConf"] = null;
@@ -541,7 +570,7 @@ namespace Web.Paginas.PedidosADM
                         if (unProd.IdProducto == unLote.IdProducto)
                         {
 
-                      
+
                             int cant = 0;
                             int idProducto = unProd.IdProducto;
 
@@ -584,7 +613,7 @@ namespace Web.Paginas.PedidosADM
 
 
                     }
-                 
+
 
 
                 }

@@ -392,5 +392,34 @@ namespace Persistencia
 
         #endregion
 
+        #region Viajes
+
+        public List<Viaje> buscarViajeFiltro(Viaje pViaje, int costoMenor, int costoMayor, string fechaMenor, string fechaMayor, string ordenar)
+        {
+            return new pViaje().buscarViajeFiltro(pViaje, costoMenor, costoMayor, fechaMenor, fechaMayor, ordenar);
+        }
+
+        public Viaje buscarViaje(int id)
+        {
+            return new pViaje().buscarViaje(id);
+        }
+
+        public bool altaViaje(Viaje viaje)
+        {
+            return new pViaje().altaViaje(viaje);
+        }
+
+        public bool bajaViaje(int id)
+        {
+            return new pViaje().bajaViaje(id);
+        }
+
+        public bool modViaje(Viaje viaje)
+        {
+            return new pViaje().modViaje(viaje);
+        }
+
+        #endregion
+
     }
 }

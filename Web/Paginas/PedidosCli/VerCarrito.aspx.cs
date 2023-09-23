@@ -51,7 +51,7 @@ namespace Web.Paginas.Pedidos
 
         }
 
-        #region 
+        #region Utilidad
 
         private void listar()
         {
@@ -531,7 +531,7 @@ namespace Web.Paginas.Pedidos
 
                         lblMensajes.Text = "Pedido finalizado";
                         listar();
-                        Response.Redirect("/Paginas/PedidosCli/VerPedidosCli"); 
+                        Response.Redirect("/Paginas/PedidosCli/VerPedidosCli");
                     }
                 }
                 else

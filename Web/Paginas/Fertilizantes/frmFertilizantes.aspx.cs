@@ -18,6 +18,32 @@ namespace Web.Paginas.Fertilizantes
     {
 
         #region Load
+        protected void Page_PreInit(object sender, EventArgs e)
+        {
+            if (System.Web.HttpContext.Current.Session["AdminIniciado"] != null)
+            {
+                int id = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                Admin admin = Web.buscarAdm(id);
+
+                if (admin.TipoDeAdmin == "Administrador global")
+                {
+                    this.MasterPageFile = "~/Master/AGlobal.Master";
+                }
+                else if (admin.TipoDeAdmin == "Administrador de productos")
+                {
+                    this.MasterPageFile = "~/Master/AProductos.Master";
+                }
+                else if (admin.TipoDeAdmin == "Administrador de pedidos")
+                {
+                    this.MasterPageFile = "~/Master/APedidos.Master";
+                }
+            }
+            else
+            {
+                Response.Redirect("/Paginas/Nav/frmInicio");
+            }
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -63,10 +89,10 @@ namespace Web.Paginas.Fertilizantes
                 // Listas
                 lstImpactoBuscar.SelectedValue = System.Web.HttpContext.Current.Session["impactoFertilizanteBuscar"] != null ? System.Web.HttpContext.Current.Session["impactoFertilizanteBuscar"].ToString() : "Seleccionar tipo de impacto";
                 System.Web.HttpContext.Current.Session["impactoFertilizanteBuscar"] = null;
-                listBuscarPor.SelectedValue = System.Web.HttpContext.Current.Session["BuscarLst"] != null ? System.Web.HttpContext.Current.Session["BuscarLst"].ToString() : "Buscar por";
-                System.Web.HttpContext.Current.Session["BuscarLst"] = null;
-                listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"] != null ? System.Web.HttpContext.Current.Session["OrdenarPor"].ToString() : "Ordernar por";
-                System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
+                listBuscarPor.SelectedValue = System.Web.HttpContext.Current.Session["BuscarLstFertilizante"] != null ? System.Web.HttpContext.Current.Session["BuscarLstFertilizante"].ToString() : "Buscar por";
+                System.Web.HttpContext.Current.Session["BuscarLstFertilizante"] = null;
+                listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPorFertilizante"] != null ? System.Web.HttpContext.Current.Session["OrdenarPorFertilizante"].ToString() : "Ordernar por";
+                System.Web.HttpContext.Current.Session["OrdenarPorFertilizante"] = null;
                 comprobarBuscar();
                 listarPagina();
 
@@ -173,8 +199,8 @@ namespace Web.Paginas.Fertilizantes
             System.Web.HttpContext.Current.Session["phMenorFertilizanteBuscar"] = txtPhMenorBuscar.Text;
             System.Web.HttpContext.Current.Session["phMayorFertilizanteBuscar"] = txtPhMayorBuscar.Text;
             System.Web.HttpContext.Current.Session["impactoFertilizanteBuscar"] = lstImpactoBuscar.SelectedValue != "Seleccionar tipo de impacto" ? lstImpactoBuscar.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["BuscarLst"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["BuscarLstFertilizante"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["OrdenarPorFertilizante"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
         }
 
         #region Paginas

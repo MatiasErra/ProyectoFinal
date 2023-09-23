@@ -17,7 +17,29 @@ namespace Web.Paginas.Camiones
 
         protected void Page_PreInit(object sender, EventArgs e)
         {
-            this.MasterPageFile = "~/Master/AGlobal.Master";
+            if (System.Web.HttpContext.Current.Session["AdminIniciado"] != null)
+            {
+                int id = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                Admin admin = Web.buscarAdm(id);
+
+                if (admin.TipoDeAdmin == "Administrador global")
+                {
+                    this.MasterPageFile = "~/Master/AGlobal.Master";
+                }
+                else if (admin.TipoDeAdmin == "Administrador de productos")
+                {
+                    this.MasterPageFile = "~/Master/AProductos.Master";
+                }
+                else if (admin.TipoDeAdmin == "Administrador de pedidos")
+                {
+                    this.MasterPageFile = "~/Master/APedidos.Master";
+                }
+            }
+            else
+            {
+                Response.Redirect("/Paginas/Nav/frmInicio");
+            }
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -25,11 +47,14 @@ namespace Web.Paginas.Camiones
             if (!IsPostBack)
             {
 
-
-
-
                 System.Web.HttpContext.Current.Session["idCamionSel"] = null;
 
+                if (System.Web.HttpContext.Current.Session["ViajeDatosFrm"] != null || System.Web.HttpContext.Current.Session["ViajeDatosMod"] != null)
+                {
+                    btnVolver.Visible = true;
+                    lstCamiones.Visible = false;
+                    lstCamionesSel.Visible = true;
+                }
 
 
                 if (System.Web.HttpContext.Current.Session["PagAct"] == null)
@@ -59,10 +84,10 @@ namespace Web.Paginas.Camiones
                 // Listas
                 lstDisponibleBuscar.SelectedValue = System.Web.HttpContext.Current.Session["disponibleCamionBuscar"] != null ? System.Web.HttpContext.Current.Session["disponibleCamionBuscar"].ToString() : "Seleccionar disponibilidad";
                 System.Web.HttpContext.Current.Session["disponibleCamionBuscar"] = null;
-                listBuscarPor.SelectedValue = System.Web.HttpContext.Current.Session["BuscarLst"] != null ? System.Web.HttpContext.Current.Session["BuscarLst"].ToString() : "Buscar por";
-                System.Web.HttpContext.Current.Session["BuscarLst"] = null;
-                listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"] != null ? System.Web.HttpContext.Current.Session["OrdenarPor"].ToString() : "Ordernar por";
-                System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
+                listBuscarPor.SelectedValue = System.Web.HttpContext.Current.Session["BuscarLstCamion"] != null ? System.Web.HttpContext.Current.Session["BuscarLstCamion"].ToString() : "Buscar por";
+                System.Web.HttpContext.Current.Session["BuscarLstCamion"] = null;
+                listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPorCamion"] != null ? System.Web.HttpContext.Current.Session["OrdenarPorCamion"].ToString() : "Ordernar por";
+                System.Web.HttpContext.Current.Session["OrdenarPorCamion"] = null;
 
                 comprobarBuscar();
                 listarPagina();
@@ -193,13 +218,29 @@ namespace Web.Paginas.Camiones
             }
             else
             {
-                lblPaginas.Visible = true;
-                lblMensajes.Text = "";
-                modificarPagina();
-                lstCamiones.Visible = true;
-                lstCamiones.DataSource = null;
-                lstCamiones.DataSource = camionesPagina;
-                lstCamiones.DataBind();
+                if (System.Web.HttpContext.Current.Session["ViajeDatosFrm"] != null || System.Web.HttpContext.Current.Session["ViajeDatosMod"] != null)
+                {
+
+                    lblPaginas.Visible = true;
+                    lblMensajes.Text = "";
+                    modificarPagina();
+                    lstCamiones.Visible = false;
+                    lstCamionesSel.Visible = true;
+                    lstCamionesSel.DataSource = null;
+                    lstCamionesSel.DataSource = camionesPagina;
+                    lstCamionesSel.DataBind();
+                }
+                else
+                {
+                    lblPaginas.Visible = true;
+                    lblMensajes.Text = "";
+                    modificarPagina();
+                    lstCamionesSel.Visible = false;
+                    lstCamiones.Visible = true;
+                    lstCamiones.DataSource = null;
+                    lstCamiones.DataSource = camionesPagina;
+                    lstCamiones.DataBind();
+                }
             }
 
         }
@@ -248,6 +289,10 @@ namespace Web.Paginas.Camiones
             camion.Marca = HttpUtility.HtmlEncode(txtMarcaBuscar.Text);
             camion.Modelo = HttpUtility.HtmlEncode(txtModeloBuscar.Text);
             camion.Disponible = lstDisponibleBuscar.SelectedValue != "Seleccionar disponibilidad" ? lstDisponibleBuscar.SelectedValue : "";
+            if (System.Web.HttpContext.Current.Session["ViajeDatosFrm"] == "Abm" || System.Web.HttpContext.Current.Session["ViajeDatosMod"] != null)
+            {
+                camion.Disponible = "Disponible";
+            }
             double cargaMenor = txtCargaMenorBuscar.Text == "" ? 0 : double.Parse(txtCargaMenorBuscar.Text);
             double cargaMayor = txtCargaMayorBuscar.Text == "" ? 99999 : double.Parse(txtCargaMayorBuscar.Text);
             string ordenar = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : "";
@@ -441,10 +486,28 @@ namespace Web.Paginas.Camiones
                     Camion camion = new Camion(id, marca, modelo, carga, disponible);
                     if (Web.altaCam(camion))
                     {
-                        limpiar();
-                        lblMensajes.Text = "Camión dado de alta con éxito.";
-                        lblPaginaAct.Text = "1";
-                        listarPagina();
+                        if (System.Web.HttpContext.Current.Session["ViajeDatosMod"] != null)
+                        {
+                            System.Web.HttpContext.Current.Session["Camion"] = camion.IdCamion.ToString();
+                            Response.Redirect("/Paginas/Viajes/modViaje");
+                        }
+                        else if (System.Web.HttpContext.Current.Session["ViajeDatosFrm"] == "Abm")
+                        {
+                            System.Web.HttpContext.Current.Session["Camion"] = camion.IdCamion.ToString();
+                            Response.Redirect("/Paginas/Viajes/frmViajes");
+                        }
+                        else if (System.Web.HttpContext.Current.Session["ViajeDatosFrm"] == "Buscar")
+                        {
+                            System.Web.HttpContext.Current.Session["camionViajeBuscar"] = camion.IdCamion.ToString();
+                            Response.Redirect("/Paginas/Viajes/frmViajes");
+                        }
+                        else
+                        {
+                            limpiar();
+                            lblMensajes.Text = "Camión dado de alta con éxito.";
+                            lblPaginaAct.Text = "1";
+                            listarPagina();
+                        }
                     }
                     else lblMensajes.Text = "No se pudo dar de alta el Camión.";
                 }
@@ -453,7 +516,41 @@ namespace Web.Paginas.Camiones
             else lblMensajes.Text = "Faltan datos.";
         }
 
+        protected void btnSelected_Click(object sender, EventArgs e)
+        {
 
+            Button btnConstultar = (Button)sender;
+            GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
+            string id = (HttpUtility.HtmlEncode(selectedrow.Cells[0].Text));
+
+            if (System.Web.HttpContext.Current.Session["ViajeDatosMod"] != null)
+            {
+                System.Web.HttpContext.Current.Session["Camion"] = id;
+                Response.Redirect("/Paginas/Viajes/modViaje");
+            }
+            else if (System.Web.HttpContext.Current.Session["ViajeDatosFrm"].ToString() == "Abm")
+            {
+                System.Web.HttpContext.Current.Session["Camion"] = id;
+                Response.Redirect("/Paginas/Viajes/frmViajes");
+            }
+            else if (System.Web.HttpContext.Current.Session["ViajeDatosFrm"].ToString() == "Buscar")
+            {
+                System.Web.HttpContext.Current.Session["camionViajeBuscar"] = id;
+                Response.Redirect("/Paginas/Viajes/frmViajes");
+            }
+        }
+
+        protected void btnVolver_Click(object sender, EventArgs e)
+        {
+            if (System.Web.HttpContext.Current.Session["ViajeDatosMod"] != null)
+            {
+                Response.Redirect("/Paginas/Viajes/modViaje");
+            }
+            else
+            {
+                Response.Redirect("/Paginas/Viajes/frmViajes");
+            }
+        }
 
 
         protected void btnBaja_Click(object sender, EventArgs e)

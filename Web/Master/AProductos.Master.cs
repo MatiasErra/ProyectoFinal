@@ -13,5 +13,11 @@ namespace Web
         {
 
         }
+
+        protected void btnCerrarSesion_Click(object sender, EventArgs e)
+        {
+            Session.Abandon();
+            Response.Redirect("/Paginas/Nav/frmInicio");
+        }
     }
 }

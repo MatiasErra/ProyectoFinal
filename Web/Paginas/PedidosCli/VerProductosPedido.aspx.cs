@@ -18,7 +18,29 @@ namespace Web.Paginas.Pedidos
 
             if (System.Web.HttpContext.Current.Session["ClienteIniciado"] == null)
             {
-                this.MasterPageFile = "~/Master/AGlobal.Master";
+                if (System.Web.HttpContext.Current.Session["AdminIniciado"] != null)
+                {
+                    int id = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                    ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                    Admin admin = Web.buscarAdm(id);
+
+                    if (admin.TipoDeAdmin == "Administrador global")
+                    {
+                        this.MasterPageFile = "~/Master/AGlobal.Master";
+                    }
+                    else if (admin.TipoDeAdmin == "Administrador de productos")
+                    {
+                        this.MasterPageFile = "~/Master/AProductos.Master";
+                    }
+                    else if (admin.TipoDeAdmin == "Administrador de pedidos")
+                    {
+                        this.MasterPageFile = "~/Master/APedidos.Master";
+                    }
+                }
+                else
+                {
+                    Response.Redirect("/Paginas/Nav/frmInicio");
+                }
             }
             else
             {

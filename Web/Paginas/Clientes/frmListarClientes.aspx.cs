@@ -18,7 +18,29 @@ namespace Web.Paginas.Clientes
 
         protected void Page_PreInit(object sender, EventArgs e)
         {
-            this.MasterPageFile = "~/Master/AGlobal.Master";
+            if (System.Web.HttpContext.Current.Session["AdminIniciado"] != null)
+            {
+                int id = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                Admin admin = Web.buscarAdm(id);
+
+                if (admin.TipoDeAdmin == "Administrador global")
+                {
+                    this.MasterPageFile = "~/Master/AGlobal.Master";
+                }
+                else if (admin.TipoDeAdmin == "Administrador de productos")
+                {
+                    this.MasterPageFile = "~/Master/AProductos.Master";
+                }
+                else if (admin.TipoDeAdmin == "Administrador de pedidos")
+                {
+                    this.MasterPageFile = "~/Master/APedidos.Master";
+                }
+            }
+            else
+            {
+                Response.Redirect("/Paginas/Nav/frmInicio");
+            }
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -66,10 +88,10 @@ namespace Web.Paginas.Clientes
                 System.Web.HttpContext.Current.Session["fchFuturaClienteBuscar"] = null;
 
                 // Listas
-                listBuscarPor.SelectedValue = System.Web.HttpContext.Current.Session["BuscarLst"] != null ? System.Web.HttpContext.Current.Session["BuscarLst"].ToString() : "Buscar por";
-                System.Web.HttpContext.Current.Session["BuscarLst"] = null;
-                listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"] != null ? System.Web.HttpContext.Current.Session["OrdenarPor"].ToString() : "Ordernar por";
-                System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
+                listBuscarPor.SelectedValue = System.Web.HttpContext.Current.Session["BuscarLstCliente"] != null ? System.Web.HttpContext.Current.Session["BuscarLstCliente"].ToString() : "Buscar por";
+                System.Web.HttpContext.Current.Session["BuscarLstCliente"] = null;
+                listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPorCliente"] != null ? System.Web.HttpContext.Current.Session["OrdenarPorCliente"].ToString() : "Ordernar por";
+                System.Web.HttpContext.Current.Session["OrdenarPorCliente"] = null;
                 comprobarBuscar();
                 listarPagina();
 
@@ -142,8 +164,8 @@ namespace Web.Paginas.Clientes
             System.Web.HttpContext.Current.Session["direccionClienteBuscar"] = txtDireccionBuscar.Text;
             System.Web.HttpContext.Current.Session["fchPasadaClienteBuscar"] = txtFchNacBuscarPasada.Text != "" ? txtFchNacBuscarPasada.Text : null;
             System.Web.HttpContext.Current.Session["fchFuturaClienteBuscar"] = txtFchNacBuscarFutura.Text != "" ? txtFchNacBuscarFutura.Text : null;
-            System.Web.HttpContext.Current.Session["BuscarLst"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["BuscarLstCliente"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["OrdenarPorCliente"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
         }
 
         #region Paginas

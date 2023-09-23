@@ -12,9 +12,6 @@ namespace Web.Paginas.Clientes
 {
     public partial class frmModificarCuenta : System.Web.UI.Page
     {
-        /*
-            
-         */
 
         #region Load
 

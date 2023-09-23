@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Clases;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,19 @@ namespace Web.Paginas.Clientes
 {
     public partial class iniciarSesion : System.Web.UI.Page
     {
+        protected void Page_PreInit(object sender, EventArgs e)
+        {
+            if (System.Web.HttpContext.Current.Session["AdminIniciado"] == null && System.Web.HttpContext.Current.Session["ClienteIniciado"] == null)
+            {
+                this.MasterPageFile = "~/Master/Default.Master";
+            }
+            else
+            {
+                Response.Redirect("/Paginas/Nav/frmInicio");
+            }
+        }
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if(System.Web.HttpContext.Current.Session["CliReg"] != null)
@@ -46,6 +60,9 @@ namespace Web.Paginas.Clientes
             if (web.iniciarSesionAdm(user, hashedPassword) > 0 && web.iniciarSesionCli(user, hashedPassword) == 0)
             {
                 lblMensajes.Text = "Sesión iniciada como Administrador ";
+                System.Web.HttpContext.Current.Session["AdminIniciado"] = web.iniciarSesionAdm(user, hashedPassword);
+
+                Response.Redirect("/Paginas/Nav/frmInicio");
             }
            if (web.iniciarSesionAdm(user, hashedPassword) == 0 && web.iniciarSesionCli(user, hashedPassword) == 0)
             {

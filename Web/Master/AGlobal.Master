@@ -11,10 +11,7 @@
     <link href="~/Content/Estilos.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
-
     <link rel="stylesheet" href="https://drive.google.com/uc?export=view&id=1yTLwNiCZhIdCWolQldwq4spHQkgZDqkG">
-
-
 
     <script src="https://kit.fontawesome.com/35e140fb72.js" crossorigin="anonymous"></script>
 
@@ -57,7 +54,7 @@
 
             <div class="container-fluid">
 
-                <a class="navbar-brand text-light h1" href="~/Paginas/Inicio">Frutas y Verduras S.A.</a>
+                <a class="navbar-brand text-light h1" href="/Paginas/Nav/frmInicio">Frutas y Verduras S.A.</a>
                 <button class="navbar-toggler bg-body-tertiary" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Menu">
@@ -72,13 +69,13 @@
                             <a class="nav-link text-light" aria-current="page" href="/Paginas/Nav/frmQuienesSomos">Quienes somos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" aria-current="page" href="/Paginas/Catalogo/frmCatalogo">Productos</a>
+                            <a class="nav-link text-light" aria-current="page" href="/Paginas/Catalogo/frmCatalogo">Ver productos</a>
                         </li>
 
                     </ul>
 
                     <ul class="navbar-nav mb-2 mb-lg-0">
-                            <li class="me-2">
+                        <li class="me-2">
                             <a class="btn btn-outline-light" href="/Paginas/PedidosADM/frmPedido">Pedidos</a>
                         </li>
 
@@ -90,38 +87,38 @@
                                     <option value="/Paginas/Clientes/frmListarClientes">Listar/eliminar Clientes</option>
                                 </optgroup>
                                 <optgroup label="Admins">
-                                    <option value="/Paginas/Admins/frmAdmins">ABM Admins</option>
+                                    <option value="/Paginas/Admins/frmAdmins">Gestion de Admins</option>
                                 </optgroup>
                                 <optgroup label="Camioneros">
-                                    <option value="/Paginas/Camioneros/frmCamioneros">ABM Camioneros</option>
+                                    <option value="/Paginas/Camioneros/frmCamioneros">Gestion de Camioneros</option>
                                 </optgroup>
 
                                 <optgroup label="Camiones">
-                                    <option value="/Paginas/Camiones/frmCamiones">ABM Camiones</option>
+                                    <option value="/Paginas/Camiones/frmCamiones">Gestion de Camiones</option>
                                 </optgroup>
 
                                 <optgroup label="Depositos">
-                                    <option value="/Paginas/Depositos/frmDepositos">ABM Depositos</option>
+                                    <option value="/Paginas/Depositos/frmDepositos">Gestion de Depositos</option>
                                 </optgroup>
                                 <optgroup label="Granjas">
-                                    <option value="/Paginas/Granjas/frmGranjas">ABM Granjas</option>
+                                    <option value="/Paginas/Granjas/frmGranjas">Gestion de Granjas</option>
                                 </optgroup>
                                 <optgroup label="Productos">
-                                    <option value="/Paginas/Productos/frmProductos">ABM Productos</option>
+                                    <option value="/Paginas/Productos/frmProductos">Gestion de Productos</option>
                                 </optgroup>
                                 <optgroup label="Pesticidas">
-                                    <option value="/Paginas/Pesticidas/frmPesticidas">ABM Pesticidas</option>
+                                    <option value="/Paginas/Pesticidas/frmPesticidas">Gestion de Pesticidas</option>
                                 </optgroup>
                                 <optgroup label="Fertilizantes">
-                                    <option value="/Paginas/Fertilizantes/frmFertilizantes">ABM Fertilizantes</option>
+                                    <option value="/Paginas/Fertilizantes/frmFertilizantes">Gestion de Fertilizantes</option>
                                 </optgroup>
                                 <optgroup label="Lotes">
-                                    <option value="/Paginas/Lotes/frmLotes">ABM Lotes</option>
+                                    <option value="/Paginas/Lotes/frmLotes">Gestion de Lotes</option>
                                 </optgroup>
                             </select>
                         </li>
                         <li class="me-2">
-                            <a class="btn btn-outline-light" href="/Paginas/Clientes/iniciarSesion">Iniciar sesion</a>
+                            <asp:Button runat="server" CssClass="btn btn-outline-light mb-1" OnClick="btnCerrarSesion_Click" Text="Cerrar sesión" />
                         </li>
 
                     </ul>
@@ -129,8 +126,6 @@
             </div>
         </nav>
         <div class="body-content container">
-
-
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
         </div>

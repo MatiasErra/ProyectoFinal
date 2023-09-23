@@ -22,9 +22,28 @@ namespace Web.Paginas
                 this.MasterPageFile = "~/Master/MCliente.Master";
 
             }
+            else if (System.Web.HttpContext.Current.Session["AdminIniciado"] != null)
+            {
+                int id = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                Admin admin = Web.buscarAdm(id);
+
+                if (admin.TipoDeAdmin == "Administrador global")
+                {
+                    this.MasterPageFile = "~/Master/AGlobal.Master";
+                }
+                else if (admin.TipoDeAdmin == "Administrador de productos")
+                {
+                    this.MasterPageFile = "~/Master/AProductos.Master";
+                }
+                else if (admin.TipoDeAdmin == "Administrador de pedidos")
+                {
+                    this.MasterPageFile = "~/Master/APedidos.Master";
+                }
+            }
             else
             {
-                this.MasterPageFile = "~/Master/AGlobal.Master";
+                this.MasterPageFile = "~/Master/Default.Master";
             }
         }
 
@@ -64,10 +83,10 @@ namespace Web.Paginas
                     System.Web.HttpContext.Current.Session["FiltroTipoVen"] = null;
                 }
 
-                if (System.Web.HttpContext.Current.Session["OrdenarPor"] != null)
+                if (System.Web.HttpContext.Current.Session["OrdenarPorCatalogo"] != null)
                 {
-                    listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"].ToString();
-                    System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
+                    listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPorCatalogo"].ToString();
+                    System.Web.HttpContext.Current.Session["OrdenarPorCatalogo"] = null;
                 }
 
 
@@ -617,7 +636,7 @@ namespace Web.Paginas
             System.Web.HttpContext.Current.Session["Buscar"] = txtBuscar.Text;
             System.Web.HttpContext.Current.Session["FiltroTipo"] = listFiltroTipo.SelectedValue;
             System.Web.HttpContext.Current.Session["FiltroTipoVen"] = listFiltroVen.SelectedValue;
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue;
+            System.Web.HttpContext.Current.Session["OrdenarPorCatalogo"] = listOrdenarPor.SelectedValue;
             Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
 
@@ -629,7 +648,7 @@ namespace Web.Paginas
             System.Web.HttpContext.Current.Session["Buscar"] = txtBuscar.Text;
             System.Web.HttpContext.Current.Session["FiltroTipo"] = listFiltroTipo.SelectedValue;
             System.Web.HttpContext.Current.Session["FiltroTipoVen"] = listFiltroVen.SelectedValue;
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue;
+            System.Web.HttpContext.Current.Session["OrdenarPorCatalogo"] = listOrdenarPor.SelectedValue;
             Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
 

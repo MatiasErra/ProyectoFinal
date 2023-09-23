@@ -10,6 +10,7 @@
     <title><%: Page.Title %> - Frutas y Verduras S.A.</title>
     <link href="~/Content/Estilos.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://drive.google.com/uc?export=view&id=1yTLwNiCZhIdCWolQldwq4spHQkgZDqkG">
     <script src="https://kit.fontawesome.com/35e140fb72.js" crossorigin="anonymous"></script>
 
 
@@ -55,7 +56,7 @@
         <nav class="navbar navbar-expand-lg bg-dark">
 
             <div class="container-fluid">
-                <a class="navbar-brand text-light h1">Frutas y Verduras S.A.</a>
+                <a class="navbar-brand text-light h1" href="/Paginas/Nav/frmInicio">Frutas y Verduras S.A.</a>
                 <button class="navbar-toggler bg-body-tertiary" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Menu">
@@ -74,38 +75,32 @@
                         </li>
                     </ul>
 
-                   
+
                     <ul class="navbar-nav mb-2 mb-lg-0">
                         <li class="nav-item dropdown">
-                            <select name="Gestion" class="nav-link dropdown-toggle text-light bg-dark me-1" onchange="location = this.value;" >
+                            <select name="Gestion" class="nav-link dropdown-toggle text-light bg-dark me-1" onchange="location = this.value;">
                                 <option id="cuenta" style="display: none">Mi cuenta</option>
-                                 <option value="/Paginas/PedidosCli/VerCarrito">Ver Carrito</option>
+                                <option value="/Paginas/PedidosCli/VerCarrito">Ver Carrito</option>
                                 <option value="/Paginas/PedidosCli/VerPedidosCli">Ver Pedidos</option>
                                 <option value="/Paginas/Clientes/frmModificarCuenta">Cambiar Datos</option>
-                                
+
 
                             </select>
-                     
 
-                        <li class="me-2">
 
-                                         <a class="nav-link text-light" aria-current="page"><%= nombre %></a>
+                            <li class="me-2">
+
+                                <a class="nav-link text-light" aria-current="page"><%= nombre %></a>
+
+                            </li>
+
 
                         </li>
 
-
-                             </li>
-
-                              <li class="me-2">
+                        <li class="me-2">
                             <asp:Button runat="server" CssClass="btn btn-outline-light mb-1" OnClick="btnCerrarSesion_Click" Text="Cerrar sesión" />
                         </li>
 
-                    </ul>
-
-
-
-
-                    <ul class="navbar-nav mb-2 mb-lg-0">
                     </ul>
                 </div>
             </div>

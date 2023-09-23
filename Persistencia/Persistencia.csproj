@@ -58,6 +58,7 @@
     <Compile Include="pPesticida.cs" />
     <Compile Include="pProducto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="pViaje.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Clases\Clases.csproj">

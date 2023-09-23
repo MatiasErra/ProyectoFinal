@@ -13,8 +13,22 @@ namespace Web.Paginas.Clientes
 {
     public partial class RegCliente : System.Web.UI.Page
     {
+
+
+        protected void Page_PreInit(object sender, EventArgs e)
+        {
+            if (System.Web.HttpContext.Current.Session["AdminIniciado"] == null && System.Web.HttpContext.Current.Session["ClienteIniciado"] == null)
+            {
+                this.MasterPageFile = "~/Master/Default.Master";
+            }
+            else
+            {
+                Response.Redirect("/Paginas/Nav/frmInicio");
+            }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
+
         }
 
         #region Utilidad
@@ -23,7 +37,7 @@ namespace Web.Paginas.Clientes
         private void limpiar()
         {
 
-         
+
             txtNombre.Text = "";
             txtApell.Text = "";
             txtEmail.Text = "";
@@ -55,7 +69,7 @@ namespace Web.Paginas.Clientes
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             List<string> users = Web.userRepetidoCli();
-           
+
             List<string> admins = Web.userRepetidoAdm();
             int pep = 0;
             string user = txtUser.Text;
@@ -106,7 +120,7 @@ namespace Web.Paginas.Clientes
 
         }
 
-  
+
 
 
 
@@ -186,7 +200,7 @@ namespace Web.Paginas.Clientes
                         }
                         else
                         {
-                            lblMensajes.Text =  "Ya existe un Cliente con estos datos. Estos son los posibles datos repetidos (Email / Teléfono / Usuario).";
+                            lblMensajes.Text = "Ya existe un Cliente con estos datos. Estos son los posibles datos repetidos (Email / Teléfono / Usuario).";
 
                         }
 

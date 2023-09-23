@@ -64,7 +64,7 @@ tipo varchar(30) not null,
 tipoVenta varchar(15) not null,
 imagen varchar(MAX) not null,
 cantTotal varchar(40),
-cantRes varchar(40),
+cantRes varchar(40)
 );
 
 
@@ -102,7 +102,6 @@ idPesticida int references Pesticidas(idPesti),
 idGranja int,
 idProducto int,
 fchProduccion date,
-fchCaducidad date,
 cantidad varchar(30) not null,
 primary key(idPesticida, idGranja, idProducto, fchProduccion),
 foreign key(idGranja, idProducto, fchProduccion) references Lotes(idGranja, idProducto, fchProduccion)
@@ -149,9 +148,17 @@ idPedido int references Pedidos(idPedido),
 idGranja int ,
 idProducto int ,
 fchProduccion date ,
-
 cantidad varchar(40) not null,
 FOREIGN key  (idGranja, idProducto, fchProduccion)  references Lotes (idGranja, idProducto, fchProduccion),
 primary key (idPedido,idGranja, idProducto, fchProduccion)
 );
  
+
+create table Viajes(
+idViaje int primary key,
+costo numeric(8,0) not null,
+fecha date not null check(fecha >= CONVERT(date,getdate(),(103))),
+idCamion int references Camiones(idCamion),
+idCamionero int references Camioneros(idCamionero),
+estado varchar(20) check(estado = 'Pendiente' or estado = 'En viaje' or estado = 'Finalizado')
+);

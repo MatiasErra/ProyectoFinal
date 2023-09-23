@@ -18,7 +18,29 @@ namespace Web.Paginas.Granjass
 
         protected void Page_PreInit(object sender, EventArgs e)
         {
-            this.MasterPageFile = "~/Master/AGlobal.Master";
+            if (System.Web.HttpContext.Current.Session["AdminIniciado"] != null)
+            {
+                int id = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                Admin admin = Web.buscarAdm(id);
+
+                if (admin.TipoDeAdmin == "Administrador global")
+                {
+                    this.MasterPageFile = "~/Master/AGlobal.Master";
+                }
+                else if (admin.TipoDeAdmin == "Administrador de productos")
+                {
+                    this.MasterPageFile = "~/Master/AProductos.Master";
+                }
+                else if (admin.TipoDeAdmin == "Administrador de pedidos")
+                {
+                    this.MasterPageFile = "~/Master/APedidos.Master";
+                }
+            }
+            else
+            {
+                Response.Redirect("/Paginas/Nav/frmInicio");
+            }
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -66,11 +88,11 @@ namespace Web.Paginas.Granjass
                 // Listas
                 lstDueñoBuscar.SelectedValue = System.Web.HttpContext.Current.Session["duenoGranjaBuscar"] != null ? System.Web.HttpContext.Current.Session["duenoGranjaBuscar"].ToString() : "Seleccionar tipo de impacto";
                 System.Web.HttpContext.Current.Session["duenoGranjaBuscar"] = null;
-                listBuscarPor.SelectedValue = System.Web.HttpContext.Current.Session["BuscarLstGran"] != null ? System.Web.HttpContext.Current.Session["BuscarLstGran"].ToString() : "Buscar por";
-                System.Web.HttpContext.Current.Session["BuscarLstGran"] = null;
+                listBuscarPor.SelectedValue = System.Web.HttpContext.Current.Session["BuscarLstGranja"] != null ? System.Web.HttpContext.Current.Session["BuscarLstGranja"].ToString() : "Buscar por";
+                System.Web.HttpContext.Current.Session["BuscarLstGranja"] = null;
                 comprobarBuscar();
-                listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"] != null ? System.Web.HttpContext.Current.Session["OrdenarPor"].ToString() : "Ordernar por";
-                System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
+                listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPorGranja"] != null ? System.Web.HttpContext.Current.Session["OrdenarPorGranja"].ToString() : "Ordernar por";
+                System.Web.HttpContext.Current.Session["OrdenarPorGranja"] = null;
          
                 listarPagina();
 
@@ -196,11 +218,11 @@ namespace Web.Paginas.Granjass
 
         private void guardarBuscar()
         {
-            System.Web.HttpContext.Current.Session["BuscarLstGran"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : "";
+            System.Web.HttpContext.Current.Session["BuscarLstGranja"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : "";
             System.Web.HttpContext.Current.Session["nombreGranjaBuscar"] = txtNombreBuscar.Text != "" ? txtNombreBuscar.Text : "" ;
             System.Web.HttpContext.Current.Session["ubicacionGranjaBuscar"] = txtUbicacionBuscar.Text != "" ? txtUbicacionBuscar.Text : ""; ;
             System.Web.HttpContext.Current.Session["duenoGranjaBuscar"] = lstDueñoBuscar.SelectedValue != "Seleccione un Dueño" ? lstDueñoBuscar.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["OrdenarPorGranja"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
         }
 
         #region Paginas

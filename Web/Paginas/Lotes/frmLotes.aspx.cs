@@ -20,7 +20,29 @@ namespace Web.Paginas.Lotes
 
         protected void Page_PreInit(object sender, EventArgs e)
         {
-            this.MasterPageFile = "~/Master/AGlobal.Master";
+            if (System.Web.HttpContext.Current.Session["AdminIniciado"] != null)
+            {
+                int id = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                Admin admin = Web.buscarAdm(id);
+
+                if (admin.TipoDeAdmin == "Administrador global")
+                {
+                    this.MasterPageFile = "~/Master/AGlobal.Master";
+                }
+                else if (admin.TipoDeAdmin == "Administrador de productos")
+                {
+                    this.MasterPageFile = "~/Master/AProductos.Master";
+                }
+                else if (admin.TipoDeAdmin == "Administrador de pedidos")
+                {
+                    this.MasterPageFile = "~/Master/APedidos.Master";
+                }
+            }
+            else
+            {
+                Response.Redirect("/Paginas/Nav/frmInicio");
+            }
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -85,10 +107,10 @@ namespace Web.Paginas.Lotes
                 System.Web.HttpContext.Current.Session["productoLoteBuscar"] = null;
                 lstDepositoBuscar.SelectedValue = System.Web.HttpContext.Current.Session["depositoLoteBuscar"] != null ? System.Web.HttpContext.Current.Session["depositoLoteBuscar"].ToString() : "Seleccione un Deposito";
                 System.Web.HttpContext.Current.Session["depositoLoteBuscar"] = null;
-                listBuscarPor.SelectedValue = System.Web.HttpContext.Current.Session["BuscarLst"] != null ? System.Web.HttpContext.Current.Session["BuscarLst"].ToString() : "Buscar por";
-                System.Web.HttpContext.Current.Session["BuscarLst"] = null;
-                listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"] != null ? System.Web.HttpContext.Current.Session["OrdenarPor"].ToString() : "Ordernar por";
-                System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
+                listBuscarPor.SelectedValue = System.Web.HttpContext.Current.Session["BuscarLstLote"] != null ? System.Web.HttpContext.Current.Session["BuscarLstLote"].ToString() : "Buscar por";
+                System.Web.HttpContext.Current.Session["BuscarLstLote"] = null;
+                listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPorLote"] != null ? System.Web.HttpContext.Current.Session["OrdenarPorLote"].ToString() : "Ordernar por";
+                System.Web.HttpContext.Current.Session["OrdenarPorLote"] = null;
 
 
                 comprobarBuscar();
@@ -185,6 +207,37 @@ namespace Web.Paginas.Lotes
             comprobarBuscar();
             lblPaginaAct.Text = "1";
             listarPagina();
+        }
+
+        private void guardarBuscar()
+        {
+            System.Web.HttpContext.Current.Session["fchProdLoteMenorBuscar"] = txtFchProdMenor.Text != "" ? txtFchProdMenor.Text : null;
+            System.Web.HttpContext.Current.Session["fchProdLoteMayorBuscar"] = txtFchProdMayor.Text != "" ? txtFchProdMayor.Text : null;
+            System.Web.HttpContext.Current.Session["fchCadLoteMenorBuscar"] = txtFchCadMenor.Text != "" ? txtFchCadMenor.Text : null;
+            System.Web.HttpContext.Current.Session["fchCadLoteMayorBuscar"] = txtFchCadMayor.Text != "" ? txtFchCadMayor.Text : null;
+
+            System.Web.HttpContext.Current.Session["precioLoteMenorBuscar"] = txtPrecioMenor.Text != "" ? txtPrecioMenor.Text : null;
+            System.Web.HttpContext.Current.Session["precioLoteMayorBuscar"] = txtPrecioMayor.Text != "" ? txtPrecioMayor.Text : null;
+            System.Web.HttpContext.Current.Session["cantLoteMenorBuscar"] = txtCantMenor.Text != "" ? txtCantMenor.Text : null;
+            System.Web.HttpContext.Current.Session["cantLoteMayorBuscar"] = txtCantMayor.Text != "" ? txtCantMayor.Text : null;
+
+            System.Web.HttpContext.Current.Session["granjaLoteBuscar"] = lstGranjaBuscar.SelectedValue != "Seleccione una Granja" ? lstGranjaBuscar.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["productoLoteBuscar"] = lstProductoBuscar.SelectedValue != "Seleccione un Producto" ? lstProductoBuscar.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["depositoLoteBuscar"] = lstDepositoBuscar.SelectedValue != "Seleccione un Deposito" ? lstDepositoBuscar.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["BuscarLstLote"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["OrdenarPorLote"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+        }
+
+        private void comprobarBuscar()
+        {
+            lstGranjaBuscar.Visible = listBuscarPor.SelectedValue == "Granja" ? true : false;
+            lstProductoBuscar.Visible = listBuscarPor.SelectedValue == "Producto" ? true : false;
+            lstDepositoBuscar.Visible = listBuscarPor.SelectedValue == "Deposito" ? true : false;
+            lblFchProd.Visible = listBuscarPor.SelectedValue == "Fecha de producción" ? true : false;
+            lblFchCad.Visible = listBuscarPor.SelectedValue == "Fecha de caducidad" ? true : false;
+            lblCant.Visible = listBuscarPor.SelectedValue == "Cantidad" ? true : false;
+            lblPrecio.Visible = listBuscarPor.SelectedValue == "Precio" ? true : false;
+
         }
 
         #region Paginas
@@ -608,37 +661,6 @@ namespace Web.Paginas.Lotes
         protected void listBuscarPor_SelectedIndexChanged(object sender, EventArgs e)
         {
             comprobarBuscar();
-        }
-
-        private void guardarBuscar()
-        {
-            System.Web.HttpContext.Current.Session["fchProdLoteMenorBuscar"] = txtFchProdMenor.Text != "" ? txtFchProdMenor.Text : null;
-            System.Web.HttpContext.Current.Session["fchProdLoteMayorBuscar"] = txtFchProdMayor.Text != "" ? txtFchProdMayor.Text : null;
-            System.Web.HttpContext.Current.Session["fchCadLoteMenorBuscar"] = txtFchCadMenor.Text != "" ? txtFchCadMenor.Text : null;
-            System.Web.HttpContext.Current.Session["fchCadLoteMayorBuscar"] = txtFchCadMayor.Text != "" ? txtFchCadMayor.Text : null;
-
-            System.Web.HttpContext.Current.Session["precioLoteMenorBuscar"] = txtPrecioMenor.Text != "" ? txtPrecioMenor.Text : null;
-            System.Web.HttpContext.Current.Session["precioLoteMayorBuscar"] = txtPrecioMayor.Text != "" ? txtPrecioMayor.Text : null;
-            System.Web.HttpContext.Current.Session["cantLoteMenorBuscar"] = txtCantMenor.Text != "" ? txtCantMenor.Text : null;
-            System.Web.HttpContext.Current.Session["cantLoteMayorBuscar"] = txtCantMayor.Text != "" ? txtCantMayor.Text : null;
-
-            System.Web.HttpContext.Current.Session["granjaLoteBuscar"] = lstGranjaBuscar.SelectedValue != "Seleccione una Granja" ? lstGranjaBuscar.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["productoLoteBuscar"] = lstProductoBuscar.SelectedValue != "Seleccione un Producto" ? lstProductoBuscar.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["depositoLoteBuscar"] = lstDepositoBuscar.SelectedValue != "Seleccione un Deposito" ? lstDepositoBuscar.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["BuscarLst"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
-        }
-
-        private void comprobarBuscar()
-        {
-            lstGranjaBuscar.Visible = listBuscarPor.SelectedValue == "Granja" ? true : false;
-            lstProductoBuscar.Visible = listBuscarPor.SelectedValue == "Producto" ? true : false;
-            lstDepositoBuscar.Visible = listBuscarPor.SelectedValue == "Deposito" ? true : false;
-            lblFchProd.Visible = listBuscarPor.SelectedValue == "Fecha de producción" ? true : false;
-            lblFchCad.Visible = listBuscarPor.SelectedValue == "Fecha de caducidad" ? true : false;
-            lblCant.Visible = listBuscarPor.SelectedValue == "Cantidad" ? true : false;
-            lblPrecio.Visible = listBuscarPor.SelectedValue == "Precio" ? true : false;
-
         }
 
         protected void lblPaginaAnt_Click(object sender, EventArgs e)

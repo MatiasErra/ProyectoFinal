@@ -1000,7 +1000,64 @@ namespace Web.Paginas
         #endregion
 
 
+        #region Viajes
 
+        public List<Viaje> buscarViajeFiltro(Viaje pViaje, int costoMenor, int costoMayor, string fechaMenor, string fechaMayor, string ordenar)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            List<Viaje> lst = inst.buscarViajeFiltro(pViaje, costoMenor, costoMayor, fechaMenor, fechaMayor, ordenar);
+            return lst;
+        }
+
+        public Viaje buscarViaje(int id)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+            Viaje viaje = inst.buscarViaje(id);
+            return viaje;
+
+        }
+
+        public bool altaViaje(Viaje viaje)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+            if (inst.altaViaje(viaje))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool bajaViaje(int id)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+
+            if (inst.bajaViaje(id))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool modViaje(Viaje viaje)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            if (inst.modViaje(viaje))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+        #endregion
 
     }
 }
