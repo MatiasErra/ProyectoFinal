@@ -15,39 +15,42 @@ namespace Web.Paginas.Pedidos
 
         protected void Page_PreInit(object sender, EventArgs e)
         {
-
-            if (System.Web.HttpContext.Current.Session["ClienteIniciado"] == null)
+            if (System.Web.HttpContext.Current.Session["PedidoCompraSel"] == null)
             {
-                if (System.Web.HttpContext.Current.Session["AdminIniciado"] != null)
+                Response.Redirect("/Paginas/PedidosCli/VerPedidosCli");
+            }
+            else
+            {
+                if (System.Web.HttpContext.Current.Session["ClienteIniciado"] == null)
                 {
-                    int id = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
-                    ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                    Admin admin = Web.buscarAdm(id);
+                    if (System.Web.HttpContext.Current.Session["AdminIniciado"] != null)
+                    {
+                        int id = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                        ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                        Admin admin = Web.buscarAdm(id);
 
-                    if (admin.TipoDeAdmin == "Administrador global")
-                    {
-                        this.MasterPageFile = "~/Master/AGlobal.Master";
+                        if (admin.TipoDeAdmin == "Administrador global")
+                        {
+                            this.MasterPageFile = "~/Master/AGlobal.Master";
+                        }
+                        else if (admin.TipoDeAdmin == "Administrador de productos")
+                        {
+                            this.MasterPageFile = "~/Master/AProductos.Master";
+                        }
+                        else if (admin.TipoDeAdmin == "Administrador de pedidos")
+                        {
+                            this.MasterPageFile = "~/Master/APedidos.Master";
+                        }
                     }
-                    else if (admin.TipoDeAdmin == "Administrador de productos")
+                    else
                     {
-                        this.MasterPageFile = "~/Master/AProductos.Master";
-                    }
-                    else if (admin.TipoDeAdmin == "Administrador de pedidos")
-                    {
-                        this.MasterPageFile = "~/Master/APedidos.Master";
+                        Response.Redirect("/Paginas/Nav/frmInicio");
                     }
                 }
                 else
                 {
-                    Response.Redirect("/Paginas/Nav/frmInicio");
-                }
-            }
-            else
-            {
-                this.MasterPageFile = "~/Master/MCliente.Master";
-                if (System.Web.HttpContext.Current.Session["PedidoCompraSel"] == null)
-                {
-                    Response.Redirect("/Paginas/PedidosCli/VerPedidosCli");
+                    this.MasterPageFile = "~/Master/MCliente.Master";
+                 
                 }
             }
         }

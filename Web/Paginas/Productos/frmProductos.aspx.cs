@@ -32,10 +32,7 @@ namespace Web.Paginas.Productos
                 {
                     this.MasterPageFile = "~/Master/AProductos.Master";
                 }
-                else if (admin.TipoDeAdmin == "Administrador de pedidos")
-                {
-                    this.MasterPageFile = "~/Master/APedidos.Master";
-                }
+
             }
             else
             {

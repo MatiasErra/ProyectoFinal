@@ -80,6 +80,9 @@
                                 <optgroup label="Camiones">
                                     <option value="/Paginas/Camiones/frmCamiones">Gestion de Camiones</option>
                                 </optgroup>
+                                 <optgroup label="Viajes">
+                                    <option value="/Paginas/Viajes/frmViajes">Gestion de Viajes</option>
+                                </optgroup>
                             </select>
                         </li>
                         <li class="me-2">

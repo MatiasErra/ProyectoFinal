@@ -27,13 +27,14 @@ namespace Web.Paginas.Viajes
                 {
                     this.MasterPageFile = "~/Master/AGlobal.Master";
                 }
-                else if (admin.TipoDeAdmin == "Administrador de productos")
-                {
-                    this.MasterPageFile = "~/Master/AProductos.Master";
-                }
+
                 else if (admin.TipoDeAdmin == "Administrador de pedidos")
                 {
                     this.MasterPageFile = "~/Master/APedidos.Master";
+                }
+                else
+                {
+                    Response.Redirect("/Paginas/Nav/frmInicio");
                 }
             }
             else
@@ -258,7 +259,7 @@ namespace Web.Paginas.Viajes
 
             if (viajesPagina.Count == 0)
             {
-                lblPags.Visible = false;
+                lblPaginas.Visible = false;
                 lblMensajes.Text = "No se encontro ningún Viaje.";
 
                 lblPaginaAnt.Visible = false;
@@ -271,7 +272,7 @@ namespace Web.Paginas.Viajes
             {
                 if (System.Web.HttpContext.Current.Session["pedidoDatos"] != null)
                 {
-                    lblPags.Visible = true;
+                    lblPaginas.Visible = true;
                     lstViajeSelect.Visible = true;
                     modificarPagina();
                     lstViajeSelect.DataSource = null;
@@ -281,7 +282,7 @@ namespace Web.Paginas.Viajes
 
                 else
                 {
-                    lblPags.Visible = true;
+                    lblPaginas.Visible = true;
                     lblMensajes.Text = "";
                     modificarPagina();
                     lstViaje.Visible = true;
@@ -312,6 +313,12 @@ namespace Web.Paginas.Viajes
             if (pagAct == "1")
             {
                 lblPaginaAnt.Visible = false;
+            }
+            if (pagAct == cantPags.ToString() && pagAct == "1")
+            {
+                txtPaginas.Visible = false;
+                lblPaginaAct.Visible = false;
+
             }
             lblPaginaAnt.Text = (int.Parse(pagAct) - 1).ToString();
             lblPaginaAct.Text = pagAct.ToString();

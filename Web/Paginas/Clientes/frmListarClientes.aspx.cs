@@ -32,9 +32,9 @@ namespace Web.Paginas.Clientes
                 {
                     this.MasterPageFile = "~/Master/AProductos.Master";
                 }
-                else if (admin.TipoDeAdmin == "Administrador de pedidos")
+                else
                 {
-                    this.MasterPageFile = "~/Master/APedidos.Master";
+                    Response.Redirect("/Paginas/Nav/frmInicio");
                 }
             }
             else
@@ -56,13 +56,26 @@ namespace Web.Paginas.Clientes
                     lblPaginaAct.Text = System.Web.HttpContext.Current.Session["PagAct"].ToString();
                     System.Web.HttpContext.Current.Session["PagAct"] = null;
                 }
+                int id = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                Admin admin = Web.buscarAdm(id);
+                if (admin.TipoDeAdmin == "Administrador de productos")
+                {
+                    lstCliProdSel.Visible = true;
+                    lstClienteSelect.Visible = false;
 
+                }
+                else
+                {
+                    lstCliProdSel.Visible = false;
+                    lstClienteSelect.Visible = true;
+                }
 
                 if (System.Web.HttpContext.Current.Session["GranjaDatosFrm"] != null || System.Web.HttpContext.Current.Session["GranjaDatosMod"] != null)
                 {
                     btnVolverFrm.Visible = true;
 
-                    lstClienteSelect.Visible = true;
+                   
                     lstCliente.Visible = false;
                 }
 
@@ -225,17 +238,34 @@ namespace Web.Paginas.Clientes
                 lblPaginaSig.Visible = false;
                 lstCliente.Visible = false;
                 lstClienteSelect.Visible = false;
+                lstCliProdSel.Visible = false;
             }
             else
             {
                 if (System.Web.HttpContext.Current.Session["GranjaDatosFrm"] != null || System.Web.HttpContext.Current.Session["GranjaDatosMod"] != null)
                 {
-                    lblPaginas.Visible = true;
-                    lstClienteSelect.Visible = true;
-                    modificarPagina();
-                    lstClienteSelect.DataSource = null;
-                    lstClienteSelect.DataSource = ClientePagina;
-                    lstClienteSelect.DataBind();
+                    int id = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                    ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                    Admin admin = Web.buscarAdm(id);
+                    if (admin.TipoDeAdmin == "Administrador de productos")
+                    {
+                        lstCliProdSel.Visible = true;
+                        lblPaginas.Visible = true;
+                        lstCliProdSel.DataSource = null;
+                        lstCliProdSel.DataSource = ClientePagina;
+                        lstCliProdSel.DataBind();
+                    }
+                    else
+                    {
+
+                        lstCliProdSel.Visible = false;
+                        lblPaginas.Visible = true;
+                        lstClienteSelect.Visible = true;
+                        modificarPagina();
+                        lstClienteSelect.DataSource = null;
+                        lstClienteSelect.DataSource = ClientePagina;
+                        lstClienteSelect.DataBind();
+                    }
                 }
                 else
                 {

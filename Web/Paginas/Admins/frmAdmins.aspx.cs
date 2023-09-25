@@ -30,14 +30,11 @@ namespace Web.Paginas.Admins
                 {
                     this.MasterPageFile = "~/Master/AGlobal.Master";
                 }
-                else if (admin.TipoDeAdmin == "Administrador de productos")
+                else
                 {
-                    this.MasterPageFile = "~/Master/AProductos.Master";
+                    Response.Redirect("/Paginas/Nav/frmInicio");
                 }
-                else if (admin.TipoDeAdmin == "Administrador de pedidos")
-                {
-                    this.MasterPageFile = "~/Master/APedidos.Master";
-                }
+
             }
             else
             {

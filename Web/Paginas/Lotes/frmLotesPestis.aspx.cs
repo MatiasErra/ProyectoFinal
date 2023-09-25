@@ -32,9 +32,9 @@ namespace Web.Paginas.Lotes
                 {
                     this.MasterPageFile = "~/Master/AProductos.Master";
                 }
-                else if (admin.TipoDeAdmin == "Administrador de pedidos")
+                else
                 {
-                    this.MasterPageFile = "~/Master/APedidos.Master";
+                    Response.Redirect("/Paginas/Nav/frmInicio");
                 }
             }
             else

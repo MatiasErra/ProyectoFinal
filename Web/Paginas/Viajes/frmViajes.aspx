@@ -265,15 +265,9 @@
 
                                         </Columns>
                                     </asp:GridView>
-                                    <div class="text-center">
-                                        <asp:Label runat="server" ID="lblPags">
-                                            <asp:LinkButton ID="lblPaginaAnt" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
-                                            <asp:Label runat="server" Text="  "></asp:Label>
-                                            <asp:Label ID="lblPaginaAct" runat="server" Text=" "></asp:Label>
-                                            <asp:Label runat="server" Text="  "></asp:Label>
-                                            <asp:LinkButton ID="lblPaginaSig" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
-                                        </asp:Label>
-                                    </div>
+                              
+                   
+                                
 
 
 
@@ -281,6 +275,18 @@
                             </div>
                         </div>
                     </div>
+                                     
+                        <asp:Label runat="server" ID="lblPaginas" CssClass="text pagStyle">
+                            <div class="text-center">
+
+                                <asp:Label runat="server" ID="txtPaginas" CssClass="text pagStyle" Text="Paginas" />
+                                <div class="text-center">
+                                    <asp:LinkButton ID="lblPaginaAnt" CssClass="text pagTextAct" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
+                                    <asp:Label ID="lblPaginaAct" CssClass="text pagText" runat="server" Text=""></asp:Label>
+                                    <asp:LinkButton ID="lblPaginaSig" CssClass="text pagTextAct" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
+                                </div>
+                            </div>
+                        </asp:Label>
                 </div>
             </div>
         </div>

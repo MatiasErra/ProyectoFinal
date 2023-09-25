@@ -177,6 +177,15 @@ namespace Web.Paginas.Clientes
         protected global::System.Web.UI.WebControls.GridView lstClienteSelect;
 
         /// <summary>
+        /// Control lstCliProdSel.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView lstCliProdSel;
+
+        /// <summary>
         /// Control lblPaginas.
         /// </summary>
         /// <remarks>

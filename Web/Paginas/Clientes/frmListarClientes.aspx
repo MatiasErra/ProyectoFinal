@@ -191,6 +191,61 @@
 
                                         </Columns>
                                     </asp:GridView>
+
+                                       <asp:GridView ID="lstCliProdSel" Width="100%" SelectedIndex="1" AutoGenerateColumns="false" Visible="false"
+                                        CssClass="table table-bordered table-condensed table-responsive table-hover"
+                                        runat="server">
+                                        <AlternatingRowStyle BackColor="White" />
+                                        <HeaderStyle BackColor="#6B696B" Font-Bold="true" Font-Size="Medium" ForeColor="White" />
+                                        <RowStyle BackColor="#f5f5f5" />
+                                        <Columns>
+
+                                            <asp:BoundField DataField="IdPersona"
+                                                HeaderText="Id de Cliente"
+                                                ItemStyle-CssClass="GridStl" />
+
+                                            <asp:BoundField DataField="Nombre"
+                                                HeaderText="Nombre"
+                                                ItemStyle-CssClass="GridStl" />
+
+                                            <asp:BoundField DataField="Apellido"
+                                                HeaderText="Apellido" ItemStyle-CssClass="GridStl" />
+
+                                            <asp:BoundField DataField="Email"
+                                                HeaderText="E-Mail" ItemStyle-CssClass="GridStl" />
+
+                                            <asp:BoundField DataField="Telefono"
+                                                HeaderText="Telefono" ItemStyle-CssClass="GridStl" />
+
+                                            <asp:BoundField DataField="FchNacimiento"
+                                                HeaderText="Fecha de Nacimiento" ItemStyle-CssClass="GridStl" />
+
+                                            <asp:BoundField DataField="User"
+                                                HeaderText="Usuario" ItemStyle-CssClass="GridStl" />
+
+                                            <asp:BoundField DataField="Direccion"
+                                                HeaderText="Dirección" ItemStyle-CssClass="GridStl" />
+
+
+                                            <asp:TemplateField HeaderText="Opciones del administrador"
+                                                ItemStyle-CssClass="GridStl">
+                                                <ItemTemplate>
+
+
+
+                                                    <asp:Button ID="btnSelect" CssClass="btnE btn--radius btn--blue" runat="server" Text="Seleccionar" OnClick="btnSelected_Click" />
+                                                 
+
+
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+
+
+
+                                        </Columns>
+                                    </asp:GridView>
+
+
                                 </div>
                             </div>
                         </div>
