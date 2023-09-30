@@ -60,13 +60,65 @@
                                             </Columns>
                                         </asp:GridView>
 
+
+
+                                          <asp:GridView ID="lstProductoLote" Width="100%" SelectedIndex="1" AutoGenerateColumns="false"
+                                            CssClass="table table-bordered table-condensed table-responsive table-hover"
+                                            runat="server">
+                                            <AlternatingRowStyle BackColor="White" />
+                                            <HeaderStyle BackColor="#6B696B" Font-Bold="true" Font-Size="Medium" ForeColor="White" />
+                                            <RowStyle BackColor="#f5f5f5" />
+                                            <Columns>
+
+
+                                                
+                                                <asp:BoundField DataField="NombreGranja"
+                                                    HeaderText="Granja"
+                                                    ItemStyle-CssClass="GridStl" />
+
+                                                <asp:BoundField DataField="NombreProducto"
+                                                    HeaderText="Producto"
+                                                    ItemStyle-CssClass="GridStl" />
+
+                                                <asp:BoundField DataField="FchProduccion"
+                                                    HeaderText="Fecha de producción"
+                                                    ItemStyle-CssClass="GridStl" />
+
+
+                                                <asp:BoundField DataField="Tipo"
+                                                    HeaderText="Tipo"
+                                                    ItemStyle-CssClass="GridStl" />
+
+                                                         <asp:BoundField DataField="Imagen"
+                                                    HeaderText="Imagen"
+                                                    HtmlEncode="false" />
+
+
+                                                <asp:BoundField DataField="Precio"
+                                                    HeaderText="Precio"
+                                                    ItemStyle-CssClass="GridStl" />
+
+                                       
+
+
+                                                <asp:BoundField DataField="Cantidad"
+                                                    HeaderText="Cantidad Solicitada"
+                                                    ItemStyle-CssClass="GridStl" />
+
+                                                <asp:BoundField DataField="PecioTotal"
+                                                    HeaderText="Precio total del producto"
+                                                    ItemStyle-CssClass="GridStl" />
+
+                                            </Columns>
+                                        </asp:GridView>
                                     </div>
                                 </div>
                             </div>
                         </div>
                      
 
-                        <asp:Label runat="server" ID="lblPaginas" CssClass="text pagStyle">
+               
+
                             <div class="text-center">
 
                                 <asp:Label runat="server" ID="txtPaginas" CssClass="text pagStyle" Text="Paginas" />
@@ -76,7 +128,7 @@
                                     <asp:LinkButton ID="lblPaginaSig" CssClass="text pagTextAct" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
                                 </div>
                             </div>
-                        </asp:Label>
+         
                     </div>
 
                     <div>
@@ -86,8 +138,11 @@
                     </div>
 
 
+                     <div class="col-12">
+                      <asp:Button ID="btnModPedido" CssClass="btnE btn--radius btn--yellow my-2" runat="server" Text="Modificar Pedido a Sin confirmar" OnClick="btnModPedido_Click" />
 
-
+                               <asp:Button ID="btnVerViaje" CssClass="btnE btn--radius btn--green my-2" runat="server" Text="Ver Viajes del pedido" OnClick="btnVerViaje_Click" />
+                         </div>
 
 
 

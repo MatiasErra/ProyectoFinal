@@ -69,6 +69,15 @@ namespace Web.Paginas.PedidosADM
         protected global::System.Web.UI.WebControls.DropDownList lstEstados;
 
         /// <summary>
+        /// Control lstViaje.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList lstViaje;
+
+        /// <summary>
         /// Control lblCostoMenorBuscar.
         /// </summary>
         /// <remarks>

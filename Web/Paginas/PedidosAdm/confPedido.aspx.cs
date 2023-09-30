@@ -50,6 +50,7 @@ namespace Web.Paginas.PedidosAdm
                 Response.Redirect("/Paginas/PedidosAdm/frmPedido");
             }
 
+            System.Web.HttpContext.Current.Session["lstPedidosProd"] = null;
         }
 
 
@@ -696,7 +697,7 @@ namespace Web.Paginas.PedidosAdm
             string p = lblPaginaActLotPed.Text.ToString();
             int pagina = int.Parse(p);
             System.Web.HttpContext.Current.Session["PagActLotPed"] = (pagina - 1).ToString();
-
+            GuardarDatos();
             Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
 
@@ -705,7 +706,7 @@ namespace Web.Paginas.PedidosAdm
             string p = lblPaginaActLotPed.Text.ToString();
             int pagina = int.Parse(p);
             System.Web.HttpContext.Current.Session["PagActLotPed"] = (pagina + 1).ToString();
-
+            GuardarDatos();
             Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
         #endregion
@@ -718,7 +719,7 @@ namespace Web.Paginas.PedidosAdm
             lblPaginaActLotPed.Text = "1";
             GuardarDatos();
             System.Web.HttpContext.Current.Session["ProductoSelecId"] = lstPedidosProd.SelectedValue != "Seleccione un pedido del cliente" ? lstPedidosProd.SelectedValue : null;
-
+            System.Web.HttpContext.Current.Session["lstPedidosProd"] = lstPedidosProd.SelectedValue != "Seleccione un pedido del cliente" ? lstPedidosProd.SelectedValue : null;
             listBuscarLote();
 
         }
@@ -735,7 +736,7 @@ namespace Web.Paginas.PedidosAdm
                 
                 lblMensajes.Text = "Pedido confirmado";
 
-                System.Web.HttpContext.Current.Session["pedidoConf"] = "si";
+                System.Web.HttpContext.Current.Session["pedidoMensaje"] = "Pedido confirmado";
                 Response.Redirect("/Paginas/PedidosAdm/frmPedido");
               
             }
@@ -974,7 +975,7 @@ namespace Web.Paginas.PedidosAdm
                         string CantLote = CantTotal.ToString() + " " + unloteCantarry[1].ToString();
 
 
-
+                        
 
                         if (Web.altaPedido_Lote(lote_Pedido, CantLote, CantDisp, CantRess))
                         {

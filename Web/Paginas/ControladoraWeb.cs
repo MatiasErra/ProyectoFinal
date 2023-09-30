@@ -35,10 +35,10 @@ namespace Web.Paginas
 
 
         #region Pedido
-        public List<Pedido> BuscarPedidoFiltro(string NombreCli, string Estado, double CostoMin, double CostoMax, string Ordenar)
+        public List<Pedido> BuscarPedidoFiltro(string NombreCli, string Estado, string Viaje, double CostoMin, double CostoMax, string Ordenar)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Pedido> lst = inst.BuscarPedidoFiltro(NombreCli, Estado, CostoMin, CostoMax, Ordenar);
+            List<Pedido> lst = inst.BuscarPedidoFiltro(NombreCli, Estado, Viaje, CostoMin, CostoMax, Ordenar);
             return lst;
 
         }
@@ -205,6 +205,17 @@ namespace Web.Paginas
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
             if (inst.cambiarEstadoPed(idPedido, estado))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool modPedViajeEst(int idPedido, string estado)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            if (inst.modPedViajeEst(idPedido, estado))
             {
                 return true;
             }
@@ -1009,11 +1020,11 @@ namespace Web.Paginas
             return lst;
         }
 
-        public Viaje buscarViaje(int id)
+        public Viaje buscarViaje(int idViaje)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            Viaje viaje = inst.buscarViaje(id);
+            Viaje viaje = inst.buscarViaje(idViaje);
             return viaje;
 
         }
@@ -1056,6 +1067,35 @@ namespace Web.Paginas
             }
         }
 
+        public List<Viaje_Lot_Ped> buscarViajePedLote(int idPedido, int idViaje)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            List<Viaje_Lot_Ped> lst = inst.buscarViajePedLote(idPedido, idViaje);
+            return lst;
+        }
+        public bool altaViajePedido_Lote(Viaje_Lot_Ped viaje_Lot_Ped, string CantViajeAct)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+            if (inst.altaViajePedido_Lote(viaje_Lot_Ped, CantViajeAct))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool bajaViajePedido_Lote(Viaje_Lot_Ped viaje_Lot_Ped, string CantTotal)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+
+            if (inst.bajaViajePedido_Lote(viaje_Lot_Ped, CantTotal))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
 
         #endregion
 

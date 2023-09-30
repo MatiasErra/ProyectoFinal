@@ -2,9 +2,9 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <div class="container row m-2 text-center">
+    <div class="container row m-2  text-center">
         <div class="row justify-content-center">
-            <div class="col-12 m-3 p-2 text-center backforContent">
+            <div  class="col-12 m-3 p-2  text-center backforContent">
                 <div class="row">
                     <div class="col-12">
                         <h2 class="title">Administrar Pedidos </h2>
@@ -29,6 +29,10 @@
                            
                                 <asp:DropDownList Visible="false" ID="lstEstados" CssClass="input--style-lst-search" runat="server">
                                 </asp:DropDownList>
+
+                                <asp:DropDownList Visible="false" ID="lstViaje" CssClass="input--style-lst-search" runat="server">
+                                </asp:DropDownList>
+
 
 
                                    <div class="row justify-content-center">
@@ -103,26 +107,26 @@
                                                     HeaderText="Estado"
                                                     ItemStyle-CssClass="GridStl" />
 
+                                                
+                                                <asp:BoundField DataField="Viaje"
+                                                    HeaderText="Viaje"
+                                                    ItemStyle-CssClass="GridStl" />
+
                                                 <asp:BoundField DataField="Costo"
                                                     HeaderText="Precio Total"
                                                     ItemStyle-CssClass="GridStl" />
 
                                                 <asp:BoundField DataField="fchPedido"
-                                                    HeaderText="Fecha de pedido"
+                                                    HeaderText="Fecha del pedido"
                                                     ItemStyle-CssClass="GridStl" />
 
                                                 
                                                 <asp:BoundField DataField="InfoEnv"
-                                                    HeaderText="Dirección de envió"
-                                                    ItemStyle-CssClass="GridStl" />
-
-
-                                                <asp:BoundField DataField="fchEspe"
-                                                    HeaderText="Fecha de entrega esperada"
+                                                    HeaderText="Dirección del envió"
                                                     ItemStyle-CssClass="GridStl" />
 
                                                 <asp:BoundField DataField="fchEntre"
-                                                    HeaderText="Fecha de entrega"
+                                                    HeaderText="Fecha entregada"
                                                     ItemStyle-CssClass="GridStl" />
 
 
@@ -137,6 +141,12 @@
 
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
+
+                                                
+
+
+                              
+
                                                      <asp:TemplateField 
                                                     ItemStyle-CssClass="GridStl">
                                                     <ItemTemplate>
@@ -146,11 +156,12 @@
                                                 </asp:TemplateField>
 
 
+
                                                 <asp:TemplateField 
                                                     ItemStyle-CssClass="GridStl">
                                                     <ItemTemplate>
 
-                                                        <asp:Button ID="btnEliminar" CssClass="btnE btn--radius btn--red" runat="server" Text="Eliminar Pedido" OnClick="btnEliminar_Click" />
+                                                        <asp:Button ID="btnEliminar" CssClass="btnE btn--radius btn--red" runat="server" Text="Eliminar Pedido" OnClientClick="return confirm('¿Desea eliminar este Pedido?')"  OnClick="btnEliminar_Click" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>

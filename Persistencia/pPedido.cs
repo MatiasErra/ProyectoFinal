@@ -14,7 +14,7 @@ namespace Persistencia
     class pPedido
     {
 
-        public List<Pedido> BuscarPedidoFiltro(string NombreCli, string Estado, double CostoMin, double CostoMax, string Ordenar)
+        public List<Pedido> BuscarPedidoFiltro(string NombreCli, string Estado, string Viaje , double CostoMin, double CostoMax, string Ordenar)
         {
             List<Pedido> resultado = new List<Pedido>();
             try
@@ -31,6 +31,7 @@ namespace Persistencia
 
                 cmd.Parameters.Add(new SqlParameter("@NombreCli", NombreCli));
                 cmd.Parameters.Add(new SqlParameter("@Estado", Estado));
+                cmd.Parameters.Add(new SqlParameter("@Viaje", Viaje));
                 cmd.Parameters.Add(new SqlParameter("@CostoMin", CostoMin));
                 cmd.Parameters.Add(new SqlParameter("@CostoMax", CostoMax));
                 cmd.Parameters.Add(new SqlParameter("@ordenar", Ordenar));
@@ -47,9 +48,9 @@ namespace Persistencia
                         pedido.IdCliente = int.Parse(reader["idCliente"].ToString());
                         pedido.NombreCli = reader["NombreCli"].ToString();
                         pedido.Estado = reader["estado"].ToString();
+                        pedido.Viaje = reader["viaje"].ToString();
                         pedido.Costo = double.Parse(reader["costo"].ToString());
                         pedido.FechaPedido = reader["fchPedido"].ToString();
-                        pedido.FechaEspe = reader["fechaEspe"].ToString();
                         pedido.FechaEntre = reader["fechaEntre"].ToString();
      
                         pedido.InformacionEnvio = reader["informacionEntrega"].ToString();
@@ -518,7 +519,7 @@ namespace Persistencia
                     {
                         while (reader.Read())
                         {
-                            producto = new string[12];
+                            producto = new string[13];
 
                             producto[0] = reader["idPedido"].ToString();
                             producto[1] = reader["idProducto"].ToString();
@@ -530,9 +531,11 @@ namespace Persistencia
                             producto[6] = reader["tipo"].ToString();
                             producto[7] = reader["precio"].ToString();
                             producto[8] = reader["imagen"].ToString();
-                            producto[9] = reader["cantidad"].ToString();
+                             producto[9] = reader["cantidad"].ToString();
                             producto[10] = reader["cantTotal"].ToString();
                             producto[11] = reader["cantRes"].ToString();
+                            producto[12] = reader["cantidadViaje"].ToString();
+                         
                             resultado.Add(producto);
                         }
                     }
@@ -769,6 +772,45 @@ namespace Persistencia
 
             return resultado;
 
+        }
+
+        public bool modPedViajeEst(int idPedido, string estado)
+        {
+            bool resultado = false;
+
+            try
+            {
+                SqlConnection connect = Conexion.Conectar();
+                SqlCommand cmd = new SqlCommand("ModPedViajeEst", connect);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(new SqlParameter("@idPedido", idPedido));
+                cmd.Parameters.Add(new SqlParameter("@estado", estado));
+         
+
+
+
+                int resBD = cmd.ExecuteNonQuery();
+
+                if (resBD > 0)
+                {
+                    resultado = true;
+                }
+                if (connect.State == ConnectionState.Open)
+                {
+                    connect.Close();
+                    resultado = true;
+
+                }
+
+            }
+            catch (Exception)
+            {
+                resultado = false;
+                return resultado;
+            }
+
+            return resultado;
         }
 
 

@@ -70,7 +70,6 @@
 
 
                         <div class="col-12">
-                            <asp:Button ID="btnVolver" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Visible="false" Text="Volver" OnClick="btnVolver_Click" />
                             <asp:Button ID="btnLimpiar" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" />
                             <button type="button" class="btnE btn--radius btn--blue align-self-center btn--lst" data-bs-toggle="modal" data-bs-target="#altaModal">
                                 Añadir Viaje
@@ -190,84 +189,50 @@
                                                 ItemStyle-CssClass="GridStl" />
 
                                             <asp:TemplateField
-                                                HeaderText="Opciones del administrador"
                                                 ItemStyle-CssClass="GridStl">
                                                 <ItemTemplate>
-
-
-
-
-                                                    <asp:Button ID="btnBaja" CssClass="btnE btn--radius btn--red" runat="server" Text="Baja" OnClientClick="return confirm('¿Desea eliminar este Viaje?')" OnClick="btnBaja_Click" />
-                                                    <asp:Button ID="btnModificar" CssClass="btnE btn--radius btn--yellow" runat="server" Text="Modificar" OnClick="btnModificar_Click" />
+                                                    <asp:Button ID="btnAsignarPaqu" CssClass="btnE btn--radius btn--green" runat="server" Text="Asignar Lotes" OnClick="btnAsignarPaqu_Click" />
 
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-
-
-
-                                        </Columns>
-                                    </asp:GridView>
-
-
-
-
-                                    <asp:GridView ID="lstViajeSelect" Width="100%" SelectedIndex="1" AutoGenerateColumns="false" Visible="false"
-                                        CssClass="table table-bordered table-condensed table-responsive table-hover"
-                                        runat="server">
-                                        <AlternatingRowStyle BackColor="White" />
-                                        <HeaderStyle BackColor="#6B696B" Font-Bold="true" Font-Size="Medium" ForeColor="White" />
-                                        <RowStyle BackColor="#f5f5f5" />
-                                        <Columns>
-
-                                            <asp:BoundField DataField="IdViaje"
-                                                HeaderText="Identificador del Viaje"
-                                                ItemStyle-CssClass="GridStl" />
-
-                                            <asp:BoundField DataField="Costo"
-                                                HeaderText="Costo"
-                                                ItemStyle-CssClass="GridStl" />
-
-                                            <asp:BoundField DataField="Fecha"
-                                                HeaderText="Fecha"
-                                                ItemStyle-CssClass="GridStl" />
-
-                                            <asp:BoundField DataField="MarcaCamion"
-                                                HeaderText="Marca del Camión"
-                                                ItemStyle-CssClass="GridStl" />
-
-                                            <asp:BoundField DataField="ModeloCamion"
-                                                HeaderText="Modelo del Camión"
-                                                ItemStyle-CssClass="GridStl" />
-
-                                            <asp:BoundField DataField="NombreCamionero"
-                                                HeaderText="Nombre del Camionero"
-                                                ItemStyle-CssClass="GridStl" />
-
-                                            <asp:BoundField DataField="Estado"
-                                                HeaderText="Estado del Viaje"
-                                                ItemStyle-CssClass="GridStl" />
 
                                             <asp:TemplateField
-                                                HeaderText="Opciones del administrador"
                                                 ItemStyle-CssClass="GridStl">
                                                 <ItemTemplate>
 
 
 
-                                                    <asp:Button ID="btnSelect" CssClass="btnE btn--radius btn--blue" runat="server" Text="Seleccionar" OnClick="btnSelected_Click" />
                                                     <asp:Button ID="btnBaja" CssClass="btnE btn--radius btn--red" runat="server" Text="Baja" OnClientClick="return confirm('¿Desea eliminar este Viaje?')" OnClick="btnBaja_Click" />
+
+
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+
+                                            <asp:TemplateField
+                                                ItemStyle-CssClass="GridStl">
+                                                <ItemTemplate>
+
+
                                                     <asp:Button ID="btnModificar" CssClass="btnE btn--radius btn--yellow" runat="server" Text="Modificar" OnClick="btnModificar_Click" />
 
                                                 </ItemTemplate>
                                             </asp:TemplateField>
 
 
+                                            <asp:TemplateField
+                                                ItemStyle-CssClass="GridStl">
+                                                <ItemTemplate>
+                                                    <asp:Button ID="btnVerLote" CssClass="btnE btn--radius btn--blue" runat="server" Text="Ver Lotes Asignados" OnClick="btnVerLotes_Click" />
+
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
 
                                         </Columns>
                                     </asp:GridView>
-                              
-                   
-                                
+
+
+
+
 
 
 
@@ -275,18 +240,18 @@
                             </div>
                         </div>
                     </div>
-                                     
-                        <asp:Label runat="server" ID="lblPaginas" CssClass="text pagStyle">
-                            <div class="text-center">
 
-                                <asp:Label runat="server" ID="txtPaginas" CssClass="text pagStyle" Text="Paginas" />
-                                <div class="text-center">
-                                    <asp:LinkButton ID="lblPaginaAnt" CssClass="text pagTextAct" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
-                                    <asp:Label ID="lblPaginaAct" CssClass="text pagText" runat="server" Text=""></asp:Label>
-                                    <asp:LinkButton ID="lblPaginaSig" CssClass="text pagTextAct" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
-                                </div>
+                    <asp:Label runat="server" ID="lblPaginas" CssClass="text pagStyle">
+                        <div class="text-center">
+
+                            <asp:Label runat="server" ID="txtPaginas" CssClass="text pagStyle" Text="Paginas" />
+                            <div class="text-center">
+                                <asp:LinkButton ID="lblPaginaAnt" CssClass="text pagTextAct" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
+                                <asp:Label ID="lblPaginaAct" CssClass="text pagText" runat="server" Text=""></asp:Label>
+                                <asp:LinkButton ID="lblPaginaSig" CssClass="text pagTextAct" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
                             </div>
-                        </asp:Label>
+                        </div>
+                    </asp:Label>
                 </div>
             </div>
         </div>

@@ -7,102 +7,84 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace Web.Paginas.Catalogo
+namespace Web.Paginas.Viajes
 {
 
 
-    public partial class VerPedidoCli
+    public partial class asgPedAViaje
     {
 
         /// <summary>
-        /// Control listBuscarPor.
+        /// Control lstPedidosCon.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList listBuscarPor;
+        protected global::System.Web.UI.WebControls.DropDownList lstPedidosCon;
 
         /// <summary>
-        /// Control listOrdenarPor.
+        /// Control lblH5LotePed.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList listOrdenarPor;
+        protected global::System.Web.UI.WebControls.Label lblH5LotePed;
 
         /// <summary>
-        /// Control btnBuscar.
+        /// Control lstPedidoLote.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBuscar;
+        protected global::System.Web.UI.WebControls.GridView lstPedidoLote;
 
         /// <summary>
-        /// Control lstViaje.
+        /// Control txtPaginaLotPed.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList lstViaje;
+        protected global::System.Web.UI.WebControls.Label txtPaginaLotPed;
 
         /// <summary>
-        /// Control lstEstados.
+        /// Control lblPaginaAntLotPed.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList lstEstados;
+        protected global::System.Web.UI.WebControls.LinkButton lblPaginaAntLotPed;
 
         /// <summary>
-        /// Control lblCostoMenorBuscar.
+        /// Control lblPaginaActLotPed.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCostoMenorBuscar;
+        protected global::System.Web.UI.WebControls.Label lblPaginaActLotPed;
 
         /// <summary>
-        /// Control txtCostoMenorBuscar.
+        /// Control lblPaginaSigLotPed.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCostoMenorBuscar;
+        protected global::System.Web.UI.WebControls.LinkButton lblPaginaSigLotPed;
 
         /// <summary>
-        /// Control lblCostoMayorBuscar.
+        /// Control h5ConfViaje.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCostoMayorBuscar;
-
-        /// <summary>
-        /// Control txtCostoMayorBuscar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCostoMayorBuscar;
-
-        /// <summary>
-        /// Control btnLimpiar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLimpiar;
+        protected global::System.Web.UI.WebControls.Label h5ConfViaje;
 
         /// <summary>
         /// Control lblMensajes.
@@ -114,48 +96,57 @@ namespace Web.Paginas.Catalogo
         protected global::System.Web.UI.WebControls.Label lblMensajes;
 
         /// <summary>
-        /// Control lstPedido.
+        /// Control lstViajePed.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView lstPedido;
+        protected global::System.Web.UI.WebControls.GridView lstViajePed;
 
         /// <summary>
-        /// Control txtPaginas.
+        /// Control txtPaginaViaPed.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label txtPaginas;
+        protected global::System.Web.UI.WebControls.Label txtPaginaViaPed;
 
         /// <summary>
-        /// Control lblPaginaAnt.
+        /// Control lblPaginaAntViaPed.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lblPaginaAnt;
+        protected global::System.Web.UI.WebControls.LinkButton lblPaginaAntViaPed;
 
         /// <summary>
-        /// Control lblPaginaAct.
+        /// Control lblPaginaActViaPed.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPaginaAct;
+        protected global::System.Web.UI.WebControls.Label lblPaginaActViaPed;
 
         /// <summary>
-        /// Control lblPaginaSig.
+        /// Control lblPaginaSigViaPed.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lblPaginaSig;
+        protected global::System.Web.UI.WebControls.LinkButton lblPaginaSigViaPed;
+
+        /// <summary>
+        /// Control btnConfirmarViaje.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnConfirmarViaje;
     }
 }

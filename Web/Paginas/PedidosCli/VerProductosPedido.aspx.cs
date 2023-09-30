@@ -50,7 +50,7 @@ namespace Web.Paginas.Pedidos
                 else
                 {
                     this.MasterPageFile = "~/Master/MCliente.Master";
-                 
+
                 }
             }
         }
@@ -63,6 +63,7 @@ namespace Web.Paginas.Pedidos
             {
                 System.Web.HttpContext.Current.Session["Estado"] = null;
                 int idPedido = int.Parse(System.Web.HttpContext.Current.Session["PedidoCompraSel"].ToString());
+                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
 
 
 
@@ -75,7 +76,28 @@ namespace Web.Paginas.Pedidos
                     lblPaginaAct.Text = System.Web.HttpContext.Current.Session["PagAct"].ToString();
                     System.Web.HttpContext.Current.Session["PagAct"] = null;
                 }
+
+
+
                 listarProductos(idPedido);
+
+                if (System.Web.HttpContext.Current.Session["Estado"].ToString() == "Confirmado" && System.Web.HttpContext.Current.Session["AdminIniciado"] != null)
+                {
+                    btnModPedido.Visible = true;
+                }
+                else
+                {
+                    btnModPedido.Visible = false;
+                }
+                string est = System.Web.HttpContext.Current.Session["EstadoViajeSel"].ToString();
+                if (System.Web.HttpContext.Current.Session["EstadoViajeSel"].ToString() == "Asignado")
+                {
+                    btnVerViaje.Visible = true;
+                }
+                else
+                {
+                    btnVerViaje.Visible = false;
+                }
 
             }
         }
@@ -96,12 +118,13 @@ namespace Web.Paginas.Pedidos
 
             string NomCli = "";
             string Estado = "";
+            string viaje = "";
             int CostoMin = 0;
             int CostoMayor = 99999999;
             string ordenar = "";
             List<string[]> productos = new List<string[]>();
 
-            List<Pedido> lstPedido = Web.BuscarPedidoFiltro(NomCli, Estado, CostoMin, CostoMayor, ordenar);
+            List<Pedido> lstPedido = Web.BuscarPedidoFiltro(NomCli, Estado, viaje, CostoMin, CostoMayor, ordenar);
             if (lstPedido.Count > 0)
             {
                 foreach (Pedido unPed in lstPedido)
@@ -130,7 +153,9 @@ namespace Web.Paginas.Pedidos
 
         private void listarProductos(int idPedido)
         {
+        
             List<string[]> productos = obtenerProductos(idPedido);
+            string Estado = System.Web.HttpContext.Current.Session["Estado"].ToString();
             List<string[]> productosPagina = new List<string[]>();
             string p = lblPaginaAct.Text.ToString();
             int pagina = int.Parse(p);
@@ -155,21 +180,35 @@ namespace Web.Paginas.Pedidos
                 lblMensajes.Text = "No se encontro ningún producto en este pedido.";
 
 
-                lblPaginas.Visible = false;
+                txtPaginas.Text = "";
                 lstProducto.Visible = false;
 
             }
             else
             {
+                if (Estado.ToString() == "Sin confirmar" || Estado.ToString() == "Sin finalizar")
+                {
+                    lblMensajes.Text = "";
+                    modificarPagina(idPedido);
+                    txtPaginas.Text = "Paginas";
+                    lstProductoLote.Visible = false;
+                    lstProducto.Visible = true;
+                    lstProducto.DataSource = null; 
+                    lstProducto.DataSource = ObtenerProductos(productosPagina);
+                    lstProducto.DataBind();
+                }
+                else
+                {
 
-                lblMensajes.Text = "";
-                modificarPagina(idPedido);
-                lblPaginas.Visible = true;
-                lstProducto.Visible = true;
-                lstProducto.DataSource = null;
-                lstProducto.DataSource = ObtenerProductos(productosPagina);
-                lstProducto.DataBind();
-
+                    lblMensajes.Text = "";
+                    modificarPagina(idPedido);
+                    txtPaginas.Text = "Paginas";
+                    lstProducto.Visible = false;
+                    lstProductoLote.Visible = true;
+                    lstProductoLote.DataSource = null;
+                    lstProductoLote.DataSource = ObtenerProductosLote(productosPagina);
+                    lstProductoLote.DataBind();
+                }
             }
 
 
@@ -243,58 +282,28 @@ namespace Web.Paginas.Pedidos
                 DataRow dr = dt.NewRow();
 
 
-                if (System.Web.HttpContext.Current.Session["Estado"].ToString() == "Sin finalizar" ||
-                    System.Web.HttpContext.Current.Session["Estado"].ToString() == "Sin confirmar"
-                    )
-                {
-                    dr["Nombre"] = ped[2].ToString();
-                    dr["Tipo"] = ped[3].ToString();
-                    dr["Precio"] = ped[4].ToString() + " $";
-                    string Imagen = "data:image/jpeg;base64,";
-                    Imagen += ped[5].ToString();
-                    Imagen = $"<img style=\"max-width:100px\" src=\"{Imagen}\">";
-                    dr["Imagen"] = Imagen;
+                dr["Nombre"] = ped[2].ToString();
+                dr["Tipo"] = ped[3].ToString();
+                dr["Precio"] = ped[4].ToString() + " $";
+                string Imagen = "data:image/jpeg;base64,";
+                Imagen += ped[5].ToString();
+                Imagen = $"<img style=\"max-width:100px\" src=\"{Imagen}\">";
+                dr["Imagen"] = Imagen;
 
 
 
-                    dr["Cantidad"] = ped[6].ToString();
+                dr["Cantidad"] = ped[6].ToString();
 
 
-                    string[] arrayCant = ped[6].ToString().Split(' ');
+                string[] arrayCant = ped[6].ToString().Split(' ');
 
-                    double PrecioSubTotal = double.Parse(ped[4].ToString()) * double.Parse(arrayCant[0].ToString());
+                double PrecioSubTotal = double.Parse(ped[4].ToString()) * double.Parse(arrayCant[0].ToString());
 
-                    dr["PecioTotal"] = PrecioSubTotal.ToString() + " $";
-                    dt.Rows.Add(dr);
-
-
-                }
-
-                else
-                {
-
-                    dr["Nombre"] = ped[2].ToString();
-                    dr["Tipo"] = ped[6].ToString();
-                    dr["Precio"] = ped[7].ToString() + " $";
-                    string Imagen = "data:image/jpeg;base64,";
-                    Imagen += ped[8].ToString();
-                    Imagen = $"<img style=\"max-width:100px\" src=\"{Imagen}\">";
-                    dr["Imagen"] = Imagen;
+                dr["PecioTotal"] = PrecioSubTotal.ToString() + " $";
+                dt.Rows.Add(dr);
 
 
 
-                    dr["Cantidad"] = ped[9].ToString();
-
-
-                    string[] arrayCant = ped[9].ToString().Split(' ');
-
-                    double PrecioSubTotal = double.Parse(ped[7].ToString()) * double.Parse(arrayCant[0].ToString());
-
-                    dr["PecioTotal"] = PrecioSubTotal.ToString() + " $";
-
-                    dt.Rows.Add(dr);
-
-                }
 
 
             }
@@ -302,6 +311,64 @@ namespace Web.Paginas.Pedidos
 
 
         }
+
+
+
+
+        public DataTable ObtenerProductosLote(List<string[]> pedidos)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.AddRange(new DataColumn[8] {
+
+
+
+                 new DataColumn("NombreGranja", typeof(string)),
+                new DataColumn("NombreProducto", typeof(string)),
+                new DataColumn("FchProduccion", typeof(string)),
+                new DataColumn("Tipo", typeof(string)),
+                new DataColumn("Imagen", typeof(string)),
+                new DataColumn("Precio", typeof(string)),
+                new DataColumn("Cantidad", typeof(string)),
+            new DataColumn("PecioTotal", typeof(string))
+            });
+
+
+
+            foreach (string[] ped in pedidos)
+            {
+                DataRow dr = dt.NewRow();
+
+                dr["NombreGranja"] = ped[4].ToString();
+                dr["NombreProducto"] = ped[2].ToString();
+                dr["FchProduccion"] = ped[5].ToString();
+
+                dr["Tipo"] = ped[6].ToString();
+                dr["Precio"] = ped[7].ToString() + " $";
+                string Imagen = "data:image/jpeg;base64,";
+                Imagen += ped[8].ToString();
+                Imagen = $"<img style=\"max-width:100px\" src=\"{Imagen}\">";
+                dr["Imagen"] = Imagen;
+
+
+
+                dr["Cantidad"] = ped[9].ToString();
+
+
+                string[] arrayCant = ped[9].ToString().Split(' ');
+
+                double PrecioSubTotal = double.Parse(ped[7].ToString()) * double.Parse(arrayCant[0].ToString());
+
+                dr["PecioTotal"] = PrecioSubTotal.ToString() + " $";
+
+                dt.Rows.Add(dr);
+
+            }
+            return dt;
+
+
+        }
+
+
 
         #region botones 
 
@@ -324,7 +391,44 @@ namespace Web.Paginas.Pedidos
             Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
 
+        protected void btnVerViaje_Click(object sender, EventArgs e)
+        {
 
+            Response.Redirect("/Paginas/Viajes/verLoteDelViaje");
+
+        }
+
+        protected void btnModPedido_Click(object sender, EventArgs e)
+        {
+            int idPedido = int.Parse(System.Web.HttpContext.Current.Session["PedidoCompraSel"].ToString());
+
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+
+            string estado = System.Web.HttpContext.Current.Session["Estado"].ToString();
+
+            if (estado == "Confirmado")
+            {
+                if (Web.cambiarEstadoPed(idPedido, "Sin confirmar"))
+                {
+                    lblMensajes.Text = "Estado modificado a Sin finalizar";
+                    System.Web.HttpContext.Current.Session["pedidoMensaje"] = "Estado modificado a Sin finalizar";
+
+                    Response.Redirect("/Paginas/PedidosAdm/frmPedido");
+                }
+                else
+                {
+                    lblMensajes.Text = "No se pudo modificar el estado";
+                }
+            }
+            else
+            {
+                lblMensajes.Text = "El pedido debe estar sin confirmar para poder confirmarlo";
+            }
+
+
+
+
+        }
 
 
 

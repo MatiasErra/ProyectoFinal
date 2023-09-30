@@ -38,10 +38,10 @@ namespace Controladoras
 
         }
 
-        public List<Pedido> BuscarPedidoFiltro(string NombreCli, string Estado, double CostoMin, double CostoMax, string Ordenar)
+        public List<Pedido> BuscarPedidoFiltro(string NombreCli, string Estado, string Viaje,double CostoMin, double CostoMax, string Ordenar)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Pedido> lst = inst.BuscarPedidoFiltro(NombreCli, Estado, CostoMin, CostoMax, Ordenar);
+            List<Pedido> lst = inst.BuscarPedidoFiltro(NombreCli, Estado, Viaje, CostoMin, CostoMax, Ordenar);
             return lst;
 
         }
@@ -196,6 +196,18 @@ namespace Controladoras
             ControladoraI inst = ControladoraI.obtenerInstancia();
 
             if (inst.cambiarEstadoPed(idPedido, estado))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+
+        public bool modPedViajeEst(int idPedido, string estado)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            if (inst.modPedViajeEst(idPedido, estado))
             {
                 return true;
             }
@@ -762,11 +774,11 @@ namespace Controladoras
             return lst;
         }
 
-        public Viaje buscarViaje(int id)
+        public Viaje buscarViaje(int idViaje)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
 
-            Viaje viaje = inst.buscarViaje(id);
+            Viaje viaje = inst.buscarViaje(idViaje);
             return viaje;
 
         }
@@ -776,6 +788,35 @@ namespace Controladoras
             ControladoraI inst = ControladoraI.obtenerInstancia();
 
             if (inst.altaViaje(viaje))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+        public List<Viaje_Lot_Ped> buscarViajePedLote(int idPedido, int idViaje)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            List<Viaje_Lot_Ped> lst = inst.buscarViajePedLote( idPedido, idViaje);
+            return lst;
+        }
+        public bool altaViajePedido_Lote(Viaje_Lot_Ped viaje_Lot_Ped, string CantViajeAct)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            if (inst.altaViajePedido_Lote(viaje_Lot_Ped, CantViajeAct))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool bajaViajePedido_Lote(Viaje_Lot_Ped viaje_Lot_Ped, string CantTotal)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+
+            if (inst.bajaViajePedido_Lote(viaje_Lot_Ped, CantTotal))
             {
                 return true;
             }

@@ -132,10 +132,10 @@ create table Pedidos(
 idPedido int primary key,
 idCliente int references Clientes(idCliente) not null,
 estado varchar(40)  check(estado in ( 'Sin finalizar','Sin confirmar','Confirmado','En viaje', 'Finalizado')) not null,
+viaje varchar(40) check(viaje in('Sin asignar', Asignado')) ,
 costo numeric(10,2) not null,
 fchPedido date not null check(fchPedido = (CONVERT(date,getdate(),(103)))),
 fechaEntre date  check(fechaEntre >= (CONVERT(date,getdate(),(103)))),
-fechaEspe date  check(fechaEspe >= (CONVERT(date,getdate(),(103)))),
 
 informacionEntrega varchar(80) ,
 idCamion int references Camioneros(idCamionero), 
@@ -149,6 +149,7 @@ idGranja int ,
 idProducto int ,
 fchProduccion date ,
 cantidad varchar(40) not null,
+cantidadViaje varchar(40),
 FOREIGN key  (idGranja, idProducto, fchProduccion)  references Lotes (idGranja, idProducto, fchProduccion),
 primary key (idPedido,idGranja, idProducto, fchProduccion)
 );
@@ -160,5 +161,17 @@ costo numeric(8,0) not null,
 fecha date not null check(fecha >= CONVERT(date,getdate(),(103))),
 idCamion int references Camiones(idCamion),
 idCamionero int references Camioneros(idCamionero),
-estado varchar(20) check(estado = 'Pendiente' or estado = 'En viaje' or estado = 'Finalizado')
+estado varchar(20) CHECK (estado IN ('Pendiente', 'Confirmado', 'En viaje', 'Finalizado'))
+);
+
+
+create table Viajes_Lots_Ped( 
+idViaje int references Viajes(idViaje),
+idGranja int ,
+idProducto int ,
+fchProduccion date ,
+idPedido int,
+cantidad varchar(40) not null,
+FOREIGN key  (idPedido, idGranja, idProducto, fchProduccion)  references Lotes_Pedidos ( idPedido,idGranja, idProducto, fchProduccion),
+Primary Key( idViaje, idGranja, idProducto, fchProduccion, idPedido)
 );

@@ -56,12 +56,6 @@ namespace Web.Paginas.Viajes
                 CargarListBuscar();
                 CargarListOrdenarPor();
 
-                if (System.Web.HttpContext.Current.Session["pedidoDatos"] != null)
-                {
-                    btnVolver.Visible = true;
-                    lstViaje.Visible = false;
-                    lstViajeSelect.Visible = true;
-                }
 
                 if (System.Web.HttpContext.Current.Session["ViajeDatosFrm"] != null)
                 {
@@ -104,11 +98,8 @@ namespace Web.Paginas.Viajes
                 listarPagina();
 
 
-                if (System.Web.HttpContext.Current.Session["ViajeMod"] != null)
-                {
-                    lblMensajes.Text = "Viaje modificado.";
-                    System.Web.HttpContext.Current.Session["ViajeMod"] = null;
-                }
+                lblMensajes.Text = System.Web.HttpContext.Current.Session["pedidoMensaje"] != null ? System.Web.HttpContext.Current.Session["pedidoMensaje"].ToString() : "";
+                System.Web.HttpContext.Current.Session["pedidoMensaje"] = null;
             }
         }
 
@@ -266,22 +257,11 @@ namespace Web.Paginas.Viajes
                 lblPaginaAct.Visible = false;
                 lblPaginaSig.Visible = false;
                 lstViaje.Visible = false;
-                lstViajeSelect.Visible = false;
+
             }
             else
             {
-                if (System.Web.HttpContext.Current.Session["pedidoDatos"] != null)
-                {
-                    lblPaginas.Visible = true;
-                    lstViajeSelect.Visible = true;
-                    modificarPagina();
-                    lstViajeSelect.DataSource = null;
-                    lstViajeSelect.DataSource = viajesPagina;
-                    lstViajeSelect.DataBind();
-                }
 
-                else
-                {
                     lblPaginas.Visible = true;
                     lblMensajes.Text = "";
                     modificarPagina();
@@ -289,7 +269,7 @@ namespace Web.Paginas.Viajes
                     lstViaje.DataSource = null;
                     lstViaje.DataSource = viajesPagina;
                     lstViaje.DataBind();
-                }
+                
             }
         }
 
@@ -762,12 +742,6 @@ namespace Web.Paginas.Viajes
             Response.Redirect("/Paginas/Camioneros/frmCamioneros");
         }
 
-        protected void btnVolver_Click(object sender, EventArgs e)
-        {
-            // Finalizar pedido
-            // Response.Redirect("/Paginas/Lotes/frmAltaLotes");
-        }
-
         protected void btnAlta_Click(object sender, EventArgs e)
         {
             if (!faltanDatos())
@@ -810,20 +784,38 @@ namespace Web.Paginas.Viajes
             else lblMensajes.Text = "Faltan datos.";
         }
 
-
-        protected void btnSelected_Click(object sender, EventArgs e)
+        protected void btnVerLotes_Click(object sender , EventArgs e)
         {
-
             Button btnConstultar = (Button)sender;
             GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
-            string id = (HttpUtility.HtmlEncode(selectedrow.Cells[0].Text));
+            int id = int.Parse(HttpUtility.HtmlEncode(selectedrow.Cells[0].Text));
+            System.Web.HttpContext.Current.Session["ViajesSelected"] = id;
+            //string estadoVia = HttpUtility.HtmlEncode(selectedrow.Cells[6].Text);
+            //System.Web.HttpContext.Current.Session["estadoVia"] = estadoVia;
 
-            System.Web.HttpContext.Current.Session["idViajeSel"] = id;
-            // Finalizar pedido
-            //Response.Redirect("/Paginas/Lotes/frmAltaLotes");
 
+            Response.Redirect("/Paginas/Viajes/verLoteDelViaje");
         }
 
+
+        protected void btnAsignarPaqu_Click(object sender, EventArgs e)
+        {
+            Button btnConstultar = (Button)sender;
+            GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
+            int id = int.Parse(HttpUtility.HtmlEncode(selectedrow.Cells[0].Text));
+            System.Web.HttpContext.Current.Session["ViajesSelected"] = id;
+            string estadoVia = HttpUtility.HtmlEncode(selectedrow.Cells[6].Text);
+
+            if (estadoVia == "Pendiente")
+            {
+                Response.Redirect("/Paginas/Viajes/asgPedAViaje");
+              
+            }
+            else
+            {
+                lblMensajes.Text = "El pedido tiene que estar en Pendiente para poder asignarle un Lote";
+            }
+        }
         protected void btnBaja_Click(object sender, EventArgs e)
         {
             Button btnConstultar = (Button)sender;

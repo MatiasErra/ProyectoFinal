@@ -27,6 +27,9 @@
     background-color: #f2f0f0;
 }
 
+.SizeforPedidos {
+    width: 1500px !important;
+}
 
 /*.backforContentColor {
     border-radius: 20px;

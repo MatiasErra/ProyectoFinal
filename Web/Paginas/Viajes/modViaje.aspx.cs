@@ -438,9 +438,8 @@ namespace Web.Paginas.Viajes
                                         Viaje unViaje = new Viaje(id, costo, fecha, idCamion, idCamionero, estado);
                                         if (Web.modViaje(unViaje))
                                         {
-                                            limpiar();
-                                            lblMensajes.Text = "Viaje modificado con exito.";
-                                            System.Web.HttpContext.Current.Session["ViajeMod"] = "si";
+                                            System.Web.HttpContext.Current.Session["pedidoMensaje"] = "Viaje modificado con exito.";
+      
                                             limpiarIdSession();
                                             Response.Redirect("/Paginas/Viajes/frmViajes");
                                         }
@@ -456,8 +455,8 @@ namespace Web.Paginas.Viajes
                                     if (Web.modViaje(unViaje))
                                     {
                                         limpiar();
-                                        lblMensajes.Text = "Viaje modificado con exito.";
-                                        System.Web.HttpContext.Current.Session["ViajeMod"] = "si";
+                                      System.Web.HttpContext.Current.Session["pedidoMensaje"] = "Viaje modificado con exito.";
+                         
                                         limpiarIdSession();
                                         Response.Redirect("/Paginas/Viajes/frmViajes");
                                     }

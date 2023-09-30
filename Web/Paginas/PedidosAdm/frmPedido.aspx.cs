@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -62,6 +63,7 @@ namespace Web.Paginas.PedidosADM
                 CargarUsuarioBuscar();
                 CargarListOrdenar();
                 CargarEstadoBuscar();
+                CargarViajeBuscar();
 
 
                 listBuscarPor.SelectedValue = System.Web.HttpContext.Current.Session["BuscarLst"] != null ? System.Web.HttpContext.Current.Session["BuscarLst"].ToString() : "Buscar por";
@@ -76,6 +78,9 @@ namespace Web.Paginas.PedidosADM
 
                 lstEstados.SelectedValue = System.Web.HttpContext.Current.Session["EstadoPed"] != null ? System.Web.HttpContext.Current.Session["EstadoPed"].ToString() : "";
                 System.Web.HttpContext.Current.Session["EstadoPed"] = null;
+
+                lstViaje.SelectedValue = System.Web.HttpContext.Current.Session["EstadoViaje"] != null ? System.Web.HttpContext.Current.Session["EstadoViaje"].ToString() : "";
+                System.Web.HttpContext.Current.Session["EstadoViaje"] = null;
 
                 txtCostoMenorBuscar.Text = System.Web.HttpContext.Current.Session["CostoMin"] != null ? System.Web.HttpContext.Current.Session["CostoMin"].ToString() : "";
                 System.Web.HttpContext.Current.Session["CostoMin"] = null;
@@ -105,8 +110,8 @@ namespace Web.Paginas.PedidosADM
 
 
 
-                lblMensajes.Text = System.Web.HttpContext.Current.Session["pedidoConf"] != null ? "Pedido confirmado" : "";
-                System.Web.HttpContext.Current.Session["pedidoConf"] = null;
+                lblMensajes.Text = System.Web.HttpContext.Current.Session["pedidoMensaje"] != null ? System.Web.HttpContext.Current.Session["pedidoMensaje"].ToString() : "";
+                System.Web.HttpContext.Current.Session["pedidoMensaje"] = null;
 
             }
 
@@ -160,7 +165,7 @@ namespace Web.Paginas.PedidosADM
         {
             foreach (Cliente unCliente in clientes)
             {
-                dt.Rows.Add(createRow(unCliente.IdPersona + " " + unCliente.Nombre + " " + unCliente.Apellido, unCliente.Nombre.ToString(), dt));
+                dt.Rows.Add(createRow(unCliente.IdPersona + " " + unCliente.Nombre + " " + unCliente.Apellido + " " + unCliente.User, unCliente.User.ToString(), dt));
             }
         }
 
@@ -186,6 +191,7 @@ namespace Web.Paginas.PedidosADM
             dt.Rows.Add(createRow("Buscar por", "Buscar por", dt));
             dt.Rows.Add(createRow("Cliente", "Cliente", dt));
             dt.Rows.Add(createRow("Estado", "Estado", dt));
+            dt.Rows.Add(createRow("Viaje", "Viaje", dt));
             dt.Rows.Add(createRow("Costo", "Costo", dt));
 
 
@@ -223,6 +229,32 @@ namespace Web.Paginas.PedidosADM
             return dv;
         }
 
+
+        public void CargarViajeBuscar()
+        {
+            lstViaje.DataSource = null;
+            lstViaje.DataSource = createDataSourceViaje();
+            lstViaje.DataTextField = "nombre";
+            lstViaje.DataValueField = "id";
+            lstViaje.DataBind();
+        }
+
+        ICollection createDataSourceViaje()
+        {
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+            dt.Columns.Add(new DataColumn("id", typeof(String)));
+
+
+            dt.Rows.Add(createRow("Seleccionar estado del viaje", "Seleccionar estado del viaje", dt));
+            dt.Rows.Add(createRow("Sin asignar", "Sin asignar", dt));
+            dt.Rows.Add(createRow("Asignado", "Asignado", dt));
+      
+
+            DataView dv = new DataView(dt);
+            return dv;
+        }
 
 
 
@@ -262,8 +294,9 @@ namespace Web.Paginas.PedidosADM
             dt.Rows.Add(createRow("Ordenar por", "Ordenar por", dt));
             dt.Rows.Add(createRow("Cliente", "Cliente", dt));
             dt.Rows.Add(createRow("Estado", "Estado", dt));
+            dt.Rows.Add(createRow("Viaje", "Viaje", dt));
             dt.Rows.Add(createRow("Costo", "Costo", dt));
-
+            dt.Rows.Add(createRow("Fecha del pedido", "Fecha del pedido", dt));
 
             DataView dv = new DataView(dt);
             return dv;
@@ -286,6 +319,7 @@ namespace Web.Paginas.PedidosADM
             lstEstados.SelectedValue = "Seleccionar estado";
             listOrdenarPor.SelectedValue = "Ordenar por";
             listBuscarPor.SelectedValue = "Buscar por";
+            lstViaje.SelectedValue = "Seleccionar estado del viaje";
 
 
 
@@ -398,12 +432,13 @@ namespace Web.Paginas.PedidosADM
 
             string NomCli = lstCliente.SelectedValue != "Seleccionar cliente" ? lstCliente.SelectedValue : "";
             string Estado = lstEstados.SelectedValue != "Seleccionar estado" ? lstEstados.SelectedValue : "";
+            string Viaje = lstViaje.SelectedValue != "Seleccionar estado del viaje" ? lstViaje.SelectedValue : "";
             int CostoMin = txtCostoMenorBuscar.Text == "" ? 0 : int.Parse(txtCostoMenorBuscar.Text);
             int CostoMayor = txtCostoMayorBuscar.Text == "" ? 99999999 : int.Parse(txtCostoMayorBuscar.Text);
             string ordenar = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : "";
 
 
-            List<Pedido> lstPedido = web.BuscarPedidoFiltro(NomCli, Estado, CostoMin, CostoMayor, ordenar);
+            List<Pedido> lstPedido = web.BuscarPedidoFiltro(NomCli, Estado, Viaje, CostoMin, CostoMayor, ordenar);
 
             return lstPedido;
         }
@@ -422,9 +457,10 @@ namespace Web.Paginas.PedidosADM
                 new DataColumn("idCliente", typeof(int)),
                 new DataColumn("Nombre", typeof(string)),
                 new DataColumn("Estado", typeof(string)),
+                   new DataColumn("Viaje", typeof(string)),
                 new DataColumn("Costo", typeof(double)),
                 new DataColumn("fchPedido", typeof(string)),
-                new DataColumn("fchEspe", typeof(string)),
+  
                 new DataColumn("fchEntre", typeof(string)),
 
                 new DataColumn("InfoEnv", typeof(string)),
@@ -438,12 +474,13 @@ namespace Web.Paginas.PedidosADM
                 dr["idCliente"] = unPed.IdCliente.ToString();
                 dr["Nombre"] = unPed.NombreCli.ToString();
                 dr["Estado"] = unPed.Estado.ToString();
+                dr["Viaje"] = unPed.Viaje.ToString();
                 dr["Costo"] = unPed.Costo.ToString();
 
                 string[] FechPedido = unPed.FechaPedido.ToString().Split(' ');
                 dr["fchPedido"] = FechPedido[0];
 
-                dr["fchEspe"] = unPed.FechaEspe != "" ? unPed.FechaEspe.ToString() : "Sin asignar";
+              
 
                 dr["fchEntre"] = unPed.FechaEntre != "" ? unPed.FechaEntre.ToString() : "Sin asignar";
 
@@ -466,6 +503,9 @@ namespace Web.Paginas.PedidosADM
             System.Web.HttpContext.Current.Session["BuscarLst"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : "";
             System.Web.HttpContext.Current.Session["CliSelected"] = lstCliente.SelectedValue != "Seleccionar cliente" ? lstCliente.SelectedValue : "";
             System.Web.HttpContext.Current.Session["EstadoPed"] = lstEstados.SelectedValue != "Seleccionar estado" ? lstEstados.SelectedValue : "";
+            System.Web.HttpContext.Current.Session["EstadoViaje"] = lstViaje.SelectedValue != "Seleccionar estado del viaje" ? lstViaje.SelectedValue : "";
+            
+
             System.Web.HttpContext.Current.Session["CostoMin"] = txtCostoMenorBuscar.Text.ToString();
             System.Web.HttpContext.Current.Session["CostoMax"] = txtCostoMayorBuscar.Text.ToString();
             System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
@@ -620,7 +660,7 @@ namespace Web.Paginas.PedidosADM
                 }
                 return true;
             }
-            return false;
+        
 
         }
 
@@ -637,6 +677,7 @@ namespace Web.Paginas.PedidosADM
         {
             lstCliente.Visible = listBuscarPor.SelectedValue == "Cliente" ? true : false;
             lstEstados.Visible = listBuscarPor.SelectedValue == "Estado" ? true : false;
+            lstViaje.Visible = listBuscarPor.SelectedValue == "Viaje" ? true : false;
             lblCostoMenorBuscar.Visible = listBuscarPor.SelectedValue == "Costo" ? true : false;
             txtCostoMenorBuscar.Visible = listBuscarPor.SelectedValue == "Costo" ? true : false;
             lblCostoMayorBuscar.Visible = listBuscarPor.SelectedValue == "Costo" ? true : false;
@@ -671,6 +712,26 @@ namespace Web.Paginas.PedidosADM
         }
 
 
+        //protected void btnAsignarPaqu_Click(object sender, EventArgs e)
+        //{
+        //    Button btnConstultar = (Button)sender;
+        //    GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
+        //    int id = int.Parse(HttpUtility.HtmlEncode(selectedrow.Cells[0].Text));
+        //    System.Web.HttpContext.Current.Session["PedidoCompraSel"] = id;
+        //    string estadoVia = HttpUtility.HtmlEncode(selectedrow.Cells[6].Text);
+
+        //    if (estadoVia == "Pendiente")
+        //    {
+        //        Response.Redirect("/Paginas/Viajes/verLoteDelViaje");
+        //    }
+        //    else
+        //    {
+        //        lblMensajes.Text = "El pedido tiene que estar en Pendiente para poder asignarle un Lote";
+        //    }
+        //}
+
+
+ 
 
         protected void btnConfirmarPedido_Click(object sender, EventArgs e)
         {
@@ -696,6 +757,7 @@ namespace Web.Paginas.PedidosADM
 
         }
 
+    
 
         protected void btnVerPedido_Click(object sender, EventArgs e)
         {
@@ -703,8 +765,9 @@ namespace Web.Paginas.PedidosADM
             Button btnConstultar = (Button)sender;
             GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
             idPedido = int.Parse(selectedrow.Cells[0].Text);
-
+            string EstadoViaje = selectedrow.Cells[4].Text;
             System.Web.HttpContext.Current.Session["PedidoCompraSel"] = idPedido;
+            System.Web.HttpContext.Current.Session["EstadoViajeSel"] = EstadoViaje;
             GuardarDatos();
 
             Response.Redirect("/Paginas/PedidosCli/VerProductosPedido");

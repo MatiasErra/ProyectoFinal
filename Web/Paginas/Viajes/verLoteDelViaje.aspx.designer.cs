@@ -7,30 +7,30 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace Web.Paginas.Pedidos
+namespace Web.Paginas.Viajes
 {
 
 
-    public partial class WebForm1
+    public partial class verLoteDelPedio
     {
 
         /// <summary>
-        /// Control lstProducto.
+        /// Control lstViajePed.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView lstProducto;
+        protected global::System.Web.UI.WebControls.GridView lstViajePed;
 
         /// <summary>
-        /// Control lstProductoLote.
+        /// Control lstViaje.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView lstProductoLote;
+        protected global::System.Web.UI.WebControls.GridView lstViaje;
 
         /// <summary>
         /// Control txtPaginas.
@@ -76,23 +76,5 @@ namespace Web.Paginas.Pedidos
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMensajes;
-
-        /// <summary>
-        /// Control btnModPedido.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnModPedido;
-
-        /// <summary>
-        /// Control btnVerViaje.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnVerViaje;
     }
 }

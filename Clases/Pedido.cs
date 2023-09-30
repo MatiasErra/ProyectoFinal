@@ -11,6 +11,7 @@ namespace Clases
         private int _idPedido;
         private int _idCliente;
         private string _estado;
+        private string _viaje;
 
         private string _fechaPedido;
         private string _fechaEntre;
@@ -48,5 +49,6 @@ namespace Clases
         public string InformacionEnvio { get => _informacionEnvio; set => _informacionEnvio = value; }
         public string FechaPedido { get => _fechaPedido; set => _fechaPedido = value; }
         public string NombreCli { get => _nombreCli; set => _nombreCli = value; }
+        public string Viaje { get => _viaje; set => _viaje = value; }
     }
 }

@@ -272,41 +272,63 @@ namespace Web.Paginas
 
             if (System.Web.HttpContext.Current.Session["ClienteIniciado"] != null)
             {
+
                 int idClinete = int.Parse(System.Web.HttpContext.Current.Session["ClienteIniciado"].ToString());
                 List<Pedido> lstPedido = Web.listPedidoCli(idClinete);
                 int i = 0;
 
-                foreach (Producto ped in productos)
+                foreach (Producto prod in productos)
                 {
                     i = 0;
-                    int idProducto = ped.IdProducto;
+                    int idProducto = prod.IdProducto;
 
 
                     List<Pedido_Prod> lstPedidoProd = Web.listPedidoCli_Prod(idProducto);
 
                     foreach (Pedido pedido in lstPedido)
                     {
-                        foreach (Pedido_Prod pedido_Prod in lstPedidoProd)
+                        List<string[]> lstPedidLote = Web.buscarPedidoLote(pedido.IdPedido);
+                        if (lstPedidLote.Count > 0)
                         {
+                            foreach (string[] unPedidoLote in lstPedidLote)
+                            { if (unPedidoLote[0].ToString().Equals (pedido.IdPedido.ToString()) 
+                                 &&   unPedidoLote[1].ToString().Equals(idProducto.ToString())
+                                && pedido.Estado.ToString().Equals("Sin confirmar") ||
+                                    pedido.Estado.ToString().Equals("Sin finalizar")
+                                    )
 
-                            if (pedido_Prod.IdProducto == idProducto
-                                && pedido_Prod.IdPedido == pedido.IdPedido)
+                                {
+                                    i++;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            foreach (Pedido_Prod pedido_Prod in lstPedidoProd)
                             {
-                                i++;
+
+                                if (pedido_Prod.IdProducto == idProducto
+                                    && pedido_Prod.IdPedido == pedido.IdPedido
+                                    && (pedido.Estado.ToString().Equals("Sin confirmar") ||
+                                    pedido.Estado.ToString().Equals("Sin finalizar"))
+                                    )
+                                {
+                                    i++;
+                                }
                             }
                         }
                     }
 
                     if (i == 0)
                     {
-                        Producto pedido = new Producto();
-                        pedido.IdProducto = ped.IdProducto;
-                        pedido.Nombre = ped.Nombre;
-                        pedido.Tipo = ped.Tipo;
-                        pedido.TipoVenta = ped.TipoVenta;
-                        pedido.Imagen = ped.Imagen;
-                        pedido.Precio = ped.Precio;
-                        lstProductos.Add(pedido);
+                        Producto producto = new Producto();
+                        producto.IdProducto = prod.IdProducto;
+                        producto.Nombre = prod.Nombre;
+                        producto.Tipo = prod.Tipo;
+                        producto.TipoVenta = prod.TipoVenta;
+                        producto.Imagen = prod.Imagen;
+                        producto.Precio = prod.Precio;
+                        lstProductos.Add(producto);
                     }
 
 
@@ -337,7 +359,7 @@ namespace Web.Paginas
                 new DataColumn("TipoVenta", typeof(string)),
                 new DataColumn("Precio", typeof(string)),
                 new DataColumn("Imagen", typeof(string))
-       
+
            });
 
             foreach (Producto unProducto in Productos)
@@ -519,7 +541,19 @@ namespace Web.Paginas
                     if (pedSinFin == 0)
                     {
 
-                        if (pedido_Prodbus.IdPedido != 0)
+                        foreach (Pedido pedido in ped)
+                        {
+                            if (pedido.Estado.Equals("Sin finalizar") &&
+                                 pedido.Estado.Equals("Sin confirmar") &&
+                                 pedido_Prodbus.IdPedido.ToString().Equals(pedido.IdPedido.ToString())
+                                )
+                            {
+                                idPedidoReg++;
+                            }
+
+                        }
+
+                        if (idPedidoReg != 0)
                         {
                             idPedidoReg = 0;
 

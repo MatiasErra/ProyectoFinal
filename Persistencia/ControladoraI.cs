@@ -26,9 +26,9 @@ namespace Persistencia
 
         #region Pedidos
 
-        public List<Pedido> BuscarPedidoFiltro(string NombreCli, string Estado, double CostoMin, double CostoMax, string Ordenar)
+        public List<Pedido> BuscarPedidoFiltro(string NombreCli, string Estado, string Viaje, double CostoMin, double CostoMax, string Ordenar)
         {
-            return new pPedido().BuscarPedidoFiltro(NombreCli, Estado, CostoMin, CostoMax, Ordenar);
+            return new pPedido().BuscarPedidoFiltro(NombreCli, Estado, Viaje, CostoMin, CostoMax, Ordenar);
         }
 
         public List<Pedido_Prod> listPedidoCli_Prod(int idProducto)
@@ -66,6 +66,10 @@ namespace Persistencia
         public bool altaPedido_Prod(Pedido_Prod pedido, string CantRes, double precio)
         {
             return new pPedido().altaPedido_Prod(pedido, CantRes, precio);
+        }
+        public bool modPedViajeEst(int idPedido, string estado)
+        {
+            return new pPedido().modPedViajeEst(idPedido, estado);
         }
 
        public bool altaPedido_Lote(Lote_Pedido lote_Pedido,  string CantLote, string CantDisp, string CantRess)
@@ -399,16 +403,28 @@ namespace Persistencia
             return new pViaje().buscarViajeFiltro(pViaje, costoMenor, costoMayor, fechaMenor, fechaMayor, ordenar);
         }
 
-        public Viaje buscarViaje(int id)
+        public Viaje buscarViaje(int idViaje)
         {
-            return new pViaje().buscarViaje(id);
+            return new pViaje().buscarViaje(idViaje);
         }
 
         public bool altaViaje(Viaje viaje)
         {
             return new pViaje().altaViaje(viaje);
         }
+        public bool altaViajePedido_Lote(Viaje_Lot_Ped viaje_Lot_Ped, string CantViajeAct)
+        {
+            return new pViaje().altaViajePedido_Lote(viaje_Lot_Ped, CantViajeAct) ;
+        }
 
+        public bool bajaViajePedido_Lote(Viaje_Lot_Ped viaje_Lot_Ped, string CantTotal)
+        {
+            return new pViaje().bajaViajePedido_Lote(viaje_Lot_Ped, CantTotal);
+        }
+        public List<Viaje_Lot_Ped> buscarViajePedLote(int idPedido, int idViaje)
+        {
+            return new pViaje().buscarViajePedLote(idPedido, idViaje);
+        }
         public bool bajaViaje(int id)
         {
             return new pViaje().bajaViaje(id);
