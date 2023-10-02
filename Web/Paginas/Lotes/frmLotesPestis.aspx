@@ -85,19 +85,7 @@
                 </div>
 
                 <div class="rowLine">
-                </div>
-
-
-                <div class="col-12">
-                    <asp:TextBox CssClass="d-inline form-control  w-50 m-2 border-0" ID="txtBuscar" runat="server" placeholder="Buscar" MaxLength="100" onkeydown="return(event.keyCode<91 || event.keyCode==189);"></asp:TextBox>
-                    <asp:Button CssClass="btnE btn--radius btn--green align-self-center btn--srch" ID="btnBuscar" runat="server" Text="Buscar" OnClick="btnBuscar_Click" />
-
-                </div>
-
-                <div class="col-12">
-                    <asp:DropDownList ID="listOrdenarPor" CssClass="lstOrd btn--radius  align-self-center btn--srch " Width="200" AutoPostBack="true" OnSelectedIndexChanged="listOrdenarPor_SelectedIndexChanged" runat="server"></asp:DropDownList>
-                    <asp:Button ID="btnLimpiar" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" />
-                </div>
+                </div>  
 
 
 
@@ -105,12 +93,6 @@
                 <div class="col-12 my-2">
                     <asp:Label CssClass="text centerText " ID="lblMensajes" runat="server"></asp:Label>
 
-             
-
-                    <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
-                        ControlToValidate="txtBuscar"
-                        ValidationExpression="^[a-zA-Z0-9 ]+$"
-                        ErrorMessage="No es un carácter válido" />
 
 
                 </div>

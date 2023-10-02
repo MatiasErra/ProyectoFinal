@@ -90,20 +90,20 @@ namespace Web.Paginas.Lotes
                 CargarListPesticida(lote.IdGranja, lote.IdProducto, fchProduccion);
 
 
-                CargarListOrdenarPor();
+                //CargarListOrdenarPor();
 
-                if (System.Web.HttpContext.Current.Session["Buscar"] != null)
-                {
-                    txtBuscar.Text = System.Web.HttpContext.Current.Session["Buscar"].ToString();
-                    System.Web.HttpContext.Current.Session["Buscar"] = null;
-                }
+                //if (System.Web.HttpContext.Current.Session["Buscar"] != null)
+                //{
+                //    txtBuscar.Text = System.Web.HttpContext.Current.Session["Buscar"].ToString();
+                //    System.Web.HttpContext.Current.Session["Buscar"] = null;
+                //}
 
 
-                if (System.Web.HttpContext.Current.Session["OrdenarPor"] != null)
-                {
-                    listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"].ToString();
-                    System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
-                }
+                //if (System.Web.HttpContext.Current.Session["OrdenarPor"] != null)
+                //{
+                //    listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"].ToString();
+                //    System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
+                //}
 
 
                 listarPagina(lote.IdGranja, lote.IdProducto, fchProduccion);
@@ -144,8 +144,8 @@ namespace Web.Paginas.Lotes
         private void limpiar()
         {
             lblMensajes.Text = "";
-            txtBuscar.Text = "";
-            listOrdenarPor.SelectedValue = "Ordenar por";
+            //txtBuscar.Text = "";
+            //listOrdenarPor.SelectedValue = "Ordenar por";
             lblPaginaAct.Text = "1";
         }
 
@@ -186,11 +186,11 @@ namespace Web.Paginas.Lotes
         private List<Lote_Pesti> obtenerLote_Pesti(int idGranja, int idProducto, string fchProduccion)
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            string buscar = txtBuscar.Text;
+            //string buscar = txtBuscar.Text;
 
-            string ordenar = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : "";
+            //string ordenar = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : "";
 
-            List<Lote_Pesti> Lote_Pesti = Web.PestisEnLote(idGranja, idProducto, fchProduccion, buscar, ordenar);
+            List<Lote_Pesti> Lote_Pesti = Web.PestisEnLote(idGranja, idProducto, fchProduccion, "", "");
 
             return Lote_Pesti;
         }
@@ -229,20 +229,20 @@ namespace Web.Paginas.Lotes
                 lstLotPestiSel.Visible = false;
 
 
-                txtBuscar.Visible = false;
-                btnBuscar.Visible = false;
-                listOrdenarPor.Visible = false;
-                btnLimpiar.Visible = false;
+                //txtBuscar.Visible = false;
+                //btnBuscar.Visible = false;
+                //listOrdenarPor.Visible = false;
+                //btnLimpiar.Visible = false;
 
             }
             else
             {
                 lblPaginas.Visible = true;
                 lblMensajes.Text = "";
-                txtBuscar.Visible = true;
-                btnBuscar.Visible = true;
-                listOrdenarPor.Visible = true;
-                btnLimpiar.Visible = true;
+                //txtBuscar.Visible = true;
+                //btnBuscar.Visible = true;
+                //listOrdenarPor.Visible = true;
+                //btnLimpiar.Visible = true;
 
 
                 modificarPagina(idGranja, idProducto, fchProduccion);
@@ -418,36 +418,36 @@ namespace Web.Paginas.Lotes
 
         #endregion
 
-        #region Ordenar
+        //#region Ordenar
 
-        public void CargarListOrdenarPor()
-        {
-            listOrdenarPor.DataSource = null;
-            listOrdenarPor.DataSource = createDataSourceOrdenarPor();
-            listOrdenarPor.DataTextField = "nombre";
-            listOrdenarPor.DataValueField = "id";
-            listOrdenarPor.DataBind();
-        }
+        //public void CargarListOrdenarPor()
+        //{
+        //    listOrdenarPor.DataSource = null;
+        //    listOrdenarPor.DataSource = createDataSourceOrdenarPor();
+        //    listOrdenarPor.DataTextField = "nombre";
+        //    listOrdenarPor.DataValueField = "id";
+        //    listOrdenarPor.DataBind();
+        //}
 
-        ICollection createDataSourceOrdenarPor()
-        {
+        //ICollection createDataSourceOrdenarPor()
+        //{
 
-            DataTable dt = new DataTable();
+        //    DataTable dt = new DataTable();
 
-            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
-            dt.Columns.Add(new DataColumn("id", typeof(String)));
+        //    dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+        //    dt.Columns.Add(new DataColumn("id", typeof(String)));
 
-            dt.Rows.Add(createRow("Ordenar por", "Ordenar por", dt));
-            dt.Rows.Add(createRow("Nombre", "Nombre", dt));
-            dt.Rows.Add(createRow("Tipo", "Tipo", dt));
-            dt.Rows.Add(createRow("pH", "pH", dt));
-            dt.Rows.Add(createRow("Cantidad", "Cantidad", dt));
+        //    dt.Rows.Add(createRow("Ordenar por", "Ordenar por", dt));
+        //    dt.Rows.Add(createRow("Nombre", "Nombre", dt));
+        //    dt.Rows.Add(createRow("Tipo", "Tipo", dt));
+        //    dt.Rows.Add(createRow("pH", "pH", dt));
+        //    dt.Rows.Add(createRow("Cantidad", "Cantidad", dt));
 
 
-            DataView dv = new DataView(dt);
-            return dv;
-        }
-        #endregion
+        //    DataView dv = new DataView(dt);
+        //    return dv;
+        //}
+        //#endregion
 
         DataRow createRow(String Text, String Value, DataTable dt)
         {
@@ -567,10 +567,10 @@ namespace Web.Paginas.Lotes
             txtCantidadPesti.Text = loteP.Cantidad;
 
 
-            txtBuscar.Visible = false;
-            btnBuscar.Visible = false;
-            listOrdenarPor.Visible = false;
-            btnLimpiar.Visible = false;
+            //txtBuscar.Visible = false;
+            //btnBuscar.Visible = false;
+            //listOrdenarPor.Visible = false;
+            //btnLimpiar.Visible = false;
             lstLotPestiSel.Visible = false;
             lblPaginaAct.Text = "1";
             lblPaginaAct.Visible = false;
@@ -634,10 +634,10 @@ namespace Web.Paginas.Lotes
 
 
 
-            txtBuscar.Visible = true;
-            btnBuscar.Visible = true;
-            listOrdenarPor.Visible = true;
-            btnLimpiar.Visible = true;
+            //txtBuscar.Visible = true;
+            //btnBuscar.Visible = true;
+            //listOrdenarPor.Visible = true;
+            //btnLimpiar.Visible = true;
             lstLotPestiSel.Visible = true;
             lblPaginaAct.Text = "1";
             lblPaginaAct.Visible = true;
@@ -705,10 +705,10 @@ namespace Web.Paginas.Lotes
             string p = lblPaginaAct.Text.ToString();
             int pagina = int.Parse(p);
             System.Web.HttpContext.Current.Session["PagAct"] = (pagina - 1).ToString();
-            System.Web.HttpContext.Current.Session["Buscar"] = txtBuscar.Text;
+            //System.Web.HttpContext.Current.Session["Buscar"] = txtBuscar.Text;
 
 
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue;
+            //System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue;
             Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
 
@@ -717,10 +717,10 @@ namespace Web.Paginas.Lotes
             string p = lblPaginaAct.Text.ToString();
             int pagina = int.Parse(p);
             System.Web.HttpContext.Current.Session["PagAct"] = (pagina + 1).ToString();
-            System.Web.HttpContext.Current.Session["Buscar"] = txtBuscar.Text;
+            //System.Web.HttpContext.Current.Session["Buscar"] = txtBuscar.Text;
 
 
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue;
+            //System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue;
             Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
 

@@ -48,13 +48,9 @@ namespace Web.Paginas
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                listarPagina();
-            }
         }
 
-        private List<Producto> obtenerProductos()
+        /*private List<Producto> obtenerProductos()
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
 
@@ -206,7 +202,7 @@ namespace Web.Paginas
                 dt.Rows.Add(dr);
             }
             return dt;
-        }
+        }*/
 
         protected void btnVerCat_Click(object sender, EventArgs e)
         {
