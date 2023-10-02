@@ -127,9 +127,8 @@ viaje varchar(40) check(viaje in('Sin asignar', 'Asignado')) ,
 costo numeric(10,2) not null,
 fchPedido date not null check(fchPedido = (CONVERT(date,getdate(),(103)))),
 fechaEntre date  check(fechaEntre >= (CONVERT(date,getdate(),(103)))),
-informacionEntrega varchar(80) ,
-idCamion int references Camioneros(idCamionero), 
-idCamionero int references Camiones(idCamion) 
+informacionEntrega varchar(80) 
+
 );
 
 
