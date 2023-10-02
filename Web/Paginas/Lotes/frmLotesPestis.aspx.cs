@@ -480,8 +480,11 @@ namespace Web.Paginas.Lotes
                     string fchProduccion = lote.FchProduccion;
 
                     string cantidad = HttpUtility.HtmlEncode(txtCantidadPesti.Text);
+
+                    int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+
                     Lote_Pesti loteP = new Lote_Pesti(idPesticida, idGranja, idProducto, fchProduccion, cantidad);
-                    if (Web.altaLotePesti(loteP))
+                    if (Web.altaLotePesti(loteP, idAdmin))
                     {
                         CargarListPesticida(idGranja, idProducto, fchProduccion);
                         listarPagina(idGranja, idProducto, fchProduccion);
@@ -517,7 +520,9 @@ namespace Web.Paginas.Lotes
             int idProducto = lote.IdProducto;
             string fchProduccion = lote.FchProduccion;
 
-            if (Web.bajaLotePesti(idPesticida, idGranja, idProducto, fchProduccion))
+            int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+
+            if (Web.bajaLotePesti(idPesticida, idGranja, idProducto, fchProduccion, idAdmin))
             {
                 limpiar();
                 listarPagina(idGranja, idProducto, fchProduccion);
@@ -604,8 +609,10 @@ namespace Web.Paginas.Lotes
                 string fchProduccion = lote.FchProduccion;
                 string cantidad = HttpUtility.HtmlEncode(txtCantidadPesti.Text);
 
+                int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+
                 Lote_Pesti loteP = new Lote_Pesti(idPesticida, idGranja, idProducto, fchProduccion, cantidad);
-                if (Web.modLotePesti(loteP))
+                if (Web.modLotePesti(loteP, idAdmin))
                 {
                     cancelar();
                     lblMensajes.Text = "Se modifico la cantidad con éxito.";

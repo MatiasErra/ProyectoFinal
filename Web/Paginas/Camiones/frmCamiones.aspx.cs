@@ -482,9 +482,11 @@ namespace Web.Paginas.Camiones
                     double carga = double.Parse(HttpUtility.HtmlEncode(txtCarga.Text));
                     string disponible = HttpUtility.HtmlEncode(lstDisponible.SelectedValue.ToString());
 
+                    int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+
                     ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
                     Camion camion = new Camion(id, marca, modelo, carga, disponible);
-                    if (Web.altaCam(camion))
+                    if (Web.altaCam(camion, idAdmin))
                     {
                         if (System.Web.HttpContext.Current.Session["ViajeDatosMod"] != null)
                         {
@@ -564,7 +566,8 @@ namespace Web.Paginas.Camiones
             Camion camion = Web.buscarCam(id);
             if (camion != null)
             {
-                if (Web.bajaCam(id))
+                int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                if (Web.bajaCam(id, idAdmin))
                 {
                     limpiar();
                     lblMensajes.Text = "Se ha borrado el Camión.";

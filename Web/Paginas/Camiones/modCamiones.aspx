@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="modCamiones.aspx.cs" Inherits="Web.Paginas.Camiones.modCamiones" %>
+﻿<%@ Page Title="Modificar camion" Language="C#" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="modCamiones.aspx.cs" Inherits="Web.Paginas.Camiones.modCamiones" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
     

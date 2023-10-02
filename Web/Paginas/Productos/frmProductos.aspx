@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Title="Gestion de productos" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="frmProductos.aspx.cs" Inherits="Web.Paginas.Productos.frmProductos" %>
+﻿<%@ Page Language="C#" Title="Gestión de productos" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="frmProductos.aspx.cs" Inherits="Web.Paginas.Productos.frmProductos" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -9,7 +9,7 @@
                 <div class="row">
 
                     <div class="col-12 p-3">
-                        <h2 class="title">Gestion de Productos </h2>
+                        <h2 class="title">Gestión de Productos </h2>
 
 
                         <div class="row text-center">

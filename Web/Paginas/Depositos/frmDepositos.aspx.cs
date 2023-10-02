@@ -483,9 +483,11 @@ namespace Web.Paginas.Depositos
                 short temperatura = short.Parse(HttpUtility.HtmlEncode(txtTemperatura.Text));
                 string condiciones = HttpUtility.HtmlEncode(txtCondiciones.Text);
 
+                int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+
                 ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
                 Deposito unDeposito = new Deposito(id, capacidad, ubicacion, temperatura, condiciones);
-                if (Web.altaDeps(unDeposito))
+                if (Web.altaDeps(unDeposito, idAdmin))
                 {
                     if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
                     {
@@ -539,7 +541,8 @@ namespace Web.Paginas.Depositos
             Deposito unDeposito = Web.buscarDeps(id);
             if (unDeposito != null)
             {
-                if (Web.bajaDeps(id))
+                int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                if (Web.bajaDeps(id, idAdmin))
                 {
                     limpiar();
                     lblMensajes.Text = "Se ha eliminado el Depósito.";

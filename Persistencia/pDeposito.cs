@@ -96,7 +96,7 @@ namespace Persistencia
             return deposito;
         }
 
-        public bool altaDeps(Deposito deposito)
+        public bool altaDeps(Deposito deposito, int idAdmin)
         {
             bool resultado = false;
 
@@ -111,6 +111,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@ubicacion", deposito.Ubicacion));
                 cmd.Parameters.Add(new SqlParameter("@temperatura", deposito.Temperatura));
                 cmd.Parameters.Add(new SqlParameter("@condiciones", deposito.Condiciones));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
 
                 int resBD = cmd.ExecuteNonQuery();
@@ -133,7 +134,7 @@ namespace Persistencia
             return resultado;
         }
 
-        public bool bajaDeps(int id)
+        public bool bajaDeps(int id, int idAdmin)
         {
             bool resultado = false;
 
@@ -144,6 +145,7 @@ namespace Persistencia
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.Add(new SqlParameter("@id", id));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 
@@ -169,7 +171,7 @@ namespace Persistencia
 
         }
 
-        public bool modDeps(Deposito deposito)
+        public bool modDeps(Deposito deposito, int idAdmin)
         {
             bool resultado = false;
 
@@ -184,6 +186,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@ubicacion", deposito.Ubicacion));
                 cmd.Parameters.Add(new SqlParameter("@temperatura", deposito.Temperatura));
                 cmd.Parameters.Add(new SqlParameter("@condiciones", deposito.Condiciones));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 

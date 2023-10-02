@@ -483,7 +483,6 @@ namespace Web.Paginas.Pedidos
 
             double Preciototal = costoActualElim(idPedido, idProducto);
 
-
             if (web.bajaPedidoProd(idPedido, idProducto, cantRess, Preciototal))
             {
                 lblPaginaAct.Text = "1";
@@ -606,7 +605,6 @@ namespace Web.Paginas.Pedidos
                     double precio = double.Parse(txtCant.Text) * double.Parse(prod.Precio.ToString());
 
                     double PrecioTotal = costoActual(idPedido, idProducto, precio);
-
 
 
 

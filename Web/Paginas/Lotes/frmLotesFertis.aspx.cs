@@ -517,8 +517,11 @@ namespace Web.Paginas.Lotes
                     string fchProduccion = lote.FchProduccion;
 
                     string cantidad = HttpUtility.HtmlEncode(txtCantidadFerti.Text);
+
+                    int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+
                     Lote_Ferti loteF = new Lote_Ferti(idFertilizante, idGranja, idProducto, fchProduccion, cantidad);
-                    if (Web.altaLoteFerti(loteF))
+                    if (Web.altaLoteFerti(loteF, idAdmin))
                     {
                         CargarListFertilizante(idGranja, idProducto, fchProduccion);
                         listarPagina(idGranja, idProducto, fchProduccion);
@@ -555,7 +558,9 @@ namespace Web.Paginas.Lotes
             int idProducto = lote.IdProducto;
             string fchProduccion = lote.FchProduccion;
 
-            if (Web.bajaLoteFerti(idFertilizante, idGranja, idProducto, fchProduccion))
+            int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+
+            if (Web.bajaLoteFerti(idFertilizante, idGranja, idProducto, fchProduccion, idAdmin))
             {
                 limpiar();
                 listarPagina(idGranja, idProducto, fchProduccion);
@@ -651,8 +656,10 @@ namespace Web.Paginas.Lotes
                 string fchProduccion = lote.FchProduccion;
                 string cantidad = HttpUtility.HtmlEncode(txtCantidadFerti.Text);
 
+                int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+
                 Lote_Ferti loteF = new Lote_Ferti(idFertilizante, idGranja, idProducto, fchProduccion, cantidad);
-                if (Web.modLoteFerti(loteF))
+                if (Web.modLoteFerti(loteF, idAdmin))
                 {
                     cancelar();
                     limpiar();

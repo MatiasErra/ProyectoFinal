@@ -1,11 +1,11 @@
-﻿<%@ Page Title="Gestion de lotes" MasterPageFile="~/Master/AGlobal.Master" Language="C#" AutoEventWireup="true" CodeBehind="frmLotes.aspx.cs" Inherits="Web.Paginas.Lotes.frmLotes" %>
+﻿<%@ Page Title="Gestión de lotes" MasterPageFile="~/Master/AGlobal.Master" Language="C#" AutoEventWireup="true" CodeBehind="frmLotes.aspx.cs" Inherits="Web.Paginas.Lotes.frmLotes" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container row m-2 text-center">
         <div class="row justify-content-center">
             <div class="col-12 m-3 p-2 text-center backforContent">
                 <div class="col-12">
-                    <h2 class="title">Gestion de Lotes</h2>
+                    <h2 class="title">Gestión de Lotes</h2>
 
                     <div class="row text-center">
                         <div class=" col-sm-12">

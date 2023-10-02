@@ -26,9 +26,9 @@ namespace Persistencia
 
         #region Pedidos
 
-        public List<Pedido> BuscarPedidoFiltro(string NombreCli, string Estado, string Viaje, double CostoMin, double CostoMax, string Ordenar)
+        public List<Pedido> BuscarPedidoFiltro(string NombreCli, string Estado, string Viaje, double CostoMin, double CostoMax, string fchPedidoMenor, string fchPedidoMayor, string fchEntregaMenor, string fchEntregaMayor, string Ordenar)
         {
-            return new pPedido().BuscarPedidoFiltro(NombreCli, Estado, Viaje, CostoMin, CostoMax, Ordenar);
+            return new pPedido().BuscarPedidoFiltro(NombreCli, Estado, Viaje, CostoMin, CostoMax, fchPedidoMenor, fchPedidoMayor, fchEntregaMenor, fchEntregaMayor, Ordenar);
         }
 
         public List<Pedido_Prod> listPedidoCli_Prod(int idProducto)
@@ -67,14 +67,14 @@ namespace Persistencia
         {
             return new pPedido().altaPedido_Prod(pedido, CantRes, precio);
         }
-        public bool modPedViajeEst(int idPedido, string estado)
+        public bool modPedViajeEst(int idPedido, string estado, int idAdmin)
         {
-            return new pPedido().modPedViajeEst(idPedido, estado);
+            return new pPedido().modPedViajeEst(idPedido, estado, idAdmin);
         }
 
-       public bool altaPedido_Lote(Lote_Pedido lote_Pedido,  string CantLote, string CantDisp, string CantRess)
+       public bool altaPedido_Lote(Lote_Pedido lote_Pedido,  string CantLote, string CantDisp, string CantRess, int idAdmin)
         {
-            return new pPedido().altaPedido_Lote(lote_Pedido, CantLote, CantDisp, CantRess);
+            return new pPedido().altaPedido_Lote(lote_Pedido, CantLote, CantDisp, CantRess, idAdmin);
         }
        public bool cambiarEstadoPed(int idPedido, string estado)
         {
@@ -100,9 +100,9 @@ namespace Persistencia
         {
             return new pPedido().modCantPedidoCli(idPedido, idProducto, cantidad, cantRess, precio);
         }
-        public bool modCantPedidoLote(Lote_Pedido lote_Pedido, string CantLote, string CantDisp, string CantRess)
+        public bool modCantPedidoLote(Lote_Pedido lote_Pedido, string CantLote, string CantDisp, string CantRess, int idAdmin)
         {
-            return new pPedido().modCantPedidoLote(lote_Pedido, CantLote, CantDisp, CantRess);
+            return new pPedido().modCantPedidoLote(lote_Pedido, CantLote, CantDisp, CantRess, idAdmin);
         }
 
 
@@ -111,9 +111,9 @@ namespace Persistencia
             return new pPedido().bajaPedidoProd(idPedido, idProducto, cantRess, precio);
         }
 
-        public bool bajaLotesPedido(int idPedido, int idGranja, int idProducto, string fchProduccion, string cantLote, string CantDisp, string CantRess)
+        public bool bajaLotesPedido(int idPedido, int idGranja, int idProducto, string fchProduccion, string cantLote, string CantDisp, string CantRess, int idAdmin)
         {
-            return new pPedido().bajaLotesPedido(idPedido, idGranja, idProducto, fchProduccion, cantLote, CantDisp, CantRess);
+            return new pPedido().bajaLotesPedido(idPedido, idGranja, idProducto, fchProduccion, cantLote, CantDisp, CantRess, idAdmin);
         }
 
 
@@ -132,19 +132,19 @@ namespace Persistencia
             return new pDeposito().buscarDeps(id);
         }
 
-        public bool altaDeps(Deposito deposito)
+        public bool altaDeps(Deposito deposito, int idAdmin)
         {
-            return new pDeposito().altaDeps(deposito);
+            return new pDeposito().altaDeps(deposito, idAdmin);
         }
 
-        public bool bajaDeps(int id)
+        public bool bajaDeps(int id, int idAdmin)
         {
-            return new pDeposito().bajaDeps(id);
+            return new pDeposito().bajaDeps(id, idAdmin);
         }
 
-        public bool modDeps(Deposito deposito)
+        public bool modDeps(Deposito deposito, int idAdmin)
         {
-            return new pDeposito().modDeps(deposito);
+            return new pDeposito().modDeps(deposito, idAdmin);
         }
 
         #endregion
@@ -163,19 +163,19 @@ namespace Persistencia
             return new pGranja().buscarGranja(id);
         }
 
-        public bool altaGranja(Granja granja)
+        public bool altaGranja(Granja granja, int idAdmin)
         {
-            return new pGranja().altaGranja(granja);
+            return new pGranja().altaGranja(granja, idAdmin);
         }
 
-        public bool bajaGranja(int id)
+        public bool bajaGranja(int id, int idAdmin)
         {
-            return new pGranja().bajaGranja(id);
+            return new pGranja().bajaGranja(id, idAdmin);
         }
 
-        public bool modGranja(Granja granja)
+        public bool modGranja(Granja granja, int idAdmin)
         {
-            return new pGranja().modGranja(granja);
+            return new pGranja().modGranja(granja, idAdmin);
         }
 
         #endregion
@@ -195,19 +195,19 @@ namespace Persistencia
             return new pCamion().buscarCam(id);
         }
 
-        public bool altaCam(Camion camion)
+        public bool altaCam(Camion camion, int idAdmin)
         {
-            return new pCamion().altaCam(camion);
+            return new pCamion().altaCam(camion, idAdmin);
         }
 
-        public bool bajaCam(int id)
+        public bool bajaCam(int id, int idAdmin)
         {
-            return new pCamion().bajaCam(id);
+            return new pCamion().bajaCam(id, idAdmin);
         }
 
-        public bool modCam(Camion camion)
+        public bool modCam(Camion camion, int idAdmin)
         {
-            return new pCamion().modCam(camion);
+            return new pCamion().modCam(camion, idAdmin);
         }
 
         #endregion
@@ -233,19 +233,19 @@ namespace Persistencia
             return new pProducto().buscarProducto(id);
         }
 
-        public bool altaProducto(Producto producto)
+        public bool altaProducto(Producto producto, int idAdmin)
         {
-            return new pProducto().altaProducto(producto);
+            return new pProducto().altaProducto(producto, idAdmin);
         }
 
-        public bool bajaProducto(int id)
+        public bool bajaProducto(int id, int idAdmin)
         {
-            return new pProducto().bajaProducto(id);
+            return new pProducto().bajaProducto(id, idAdmin);
         }
 
-        public bool modProducto(Producto producto)
+        public bool modProducto(Producto producto, int idAdmin)
         {
-            return new pProducto().modProducto(producto);
+            return new pProducto().modProducto(producto, idAdmin);
         }
 
         #endregion
@@ -263,19 +263,19 @@ namespace Persistencia
             return new pPesticida().buscarPesti(id);
         }
 
-        public bool altaPesti(Pesticida pesticida)
+        public bool altaPesti(Pesticida pesticida, int idAdmin)
         {
-            return new pPesticida().altaPesti(pesticida);
+            return new pPesticida().altaPesti(pesticida, idAdmin);
         }
 
-        public bool bajaPesti(int id)
+        public bool bajaPesti(int id, int idAdmin)
         {
-            return new pPesticida().bajaPesti(id);
+            return new pPesticida().bajaPesti(id, idAdmin);
         }
 
-        public bool modPesti(Pesticida pesticida)
+        public bool modPesti(Pesticida pesticida, int idAdmin)
         {
-            return new pPesticida().modPesti(pesticida);
+            return new pPesticida().modPesti(pesticida, idAdmin);
         }
 
         #endregion
@@ -293,19 +293,19 @@ namespace Persistencia
             return new pFertilizante().buscarFerti(id);
         }
 
-        public bool altaFerti(Fertilizante fertilizante)
+        public bool altaFerti(Fertilizante fertilizante, int idAdmin)
         {
-            return new pFertilizante().altaFerti(fertilizante);
+            return new pFertilizante().altaFerti(fertilizante, idAdmin);
         }
 
-        public bool bajaFerti(int id)
+        public bool bajaFerti(int id, int idAdmin)
         {
-            return new pFertilizante().bajaFerti(id);
+            return new pFertilizante().bajaFerti(id, idAdmin);
         }
 
-        public bool modFerti(Fertilizante fertilizante)
+        public bool modFerti(Fertilizante fertilizante, int idAdmin)
         {
-            return new pFertilizante().modFerti(fertilizante);
+            return new pFertilizante().modFerti(fertilizante, idAdmin);
         }
 
         #endregion
@@ -323,19 +323,19 @@ namespace Persistencia
             return new pLote().buscarLote(nombreGranja, nombreProducto, fchProduccion);
         }
 
-        public bool altaLote(Lote lote, string cantTotal)
+        public bool altaLote(Lote lote, string cantTotal, int idAdmin)
         {
-            return new pLote().altaLote(lote, cantTotal );
+            return new pLote().altaLote(lote, cantTotal, idAdmin);
         }
 
-        public bool bajaLote(string nombreGranja, string nombreProducto, string fchProduccion, string cantTotal)
+        public bool bajaLote(string nombreGranja, string nombreProducto, string fchProduccion, string cantTotal, int idAdmin)
         {
-            return new pLote().bajaLote(nombreGranja, nombreProducto, fchProduccion, cantTotal);
+            return new pLote().bajaLote(nombreGranja, nombreProducto, fchProduccion, cantTotal, idAdmin);
         }
 
-        public bool modLote(Lote lote, string cantTotal)
+        public bool modLote(Lote lote, string cantTotal, int idAdmin)
         {
-            return new pLote().modLote(lote, cantTotal);
+            return new pLote().modLote(lote, cantTotal, idAdmin);
         }
 
         #endregion
@@ -351,19 +351,19 @@ namespace Persistencia
         {
             return new pLote_Ferti().buscarLoteFerti(idFertilizante, idGranja, idProducto, fchProduccion);
         }
-        public bool altaLoteFerti(Lote_Ferti loteF)
+        public bool altaLoteFerti(Lote_Ferti loteF, int idAdmin)
         {
-            return new pLote_Ferti().altaLoteFerti(loteF);
+            return new pLote_Ferti().altaLoteFerti(loteF, idAdmin);
         }
 
-        public bool bajaLoteFerti(int idFertilizante, int idGranja, int idProducto, string fchProduccion)
+        public bool bajaLoteFerti(int idFertilizante, int idGranja, int idProducto, string fchProduccion, int idAdmin)
         {
-            return new pLote_Ferti().bajaLoteFerti(idFertilizante, idGranja, idProducto, fchProduccion);
+            return new pLote_Ferti().bajaLoteFerti(idFertilizante, idGranja, idProducto, fchProduccion, idAdmin);
         }
 
-        public bool modLoteFerti(Lote_Ferti loteF)
+        public bool modLoteFerti(Lote_Ferti loteF, int idAdmin)
         {
-            return new pLote_Ferti().modLoteFerti(loteF);
+            return new pLote_Ferti().modLoteFerti(loteF, idAdmin);
         }
 
         #endregion
@@ -379,19 +379,19 @@ namespace Persistencia
         {
             return new pLote_Pesti().buscarLotePesti(idFertilizante, idGranja, idProducto, fchProduccion);
         }
-        public bool altaLotePesti(Lote_Pesti loteF)
+        public bool altaLotePesti(Lote_Pesti loteF, int idAdmin)
         {
-            return new pLote_Pesti().altaLotePesti(loteF);
+            return new pLote_Pesti().altaLotePesti(loteF, idAdmin);
         }
 
-        public bool bajaLotePesti(int idFertilizante, int idGranja, int idProducto, string fchProduccion)
+        public bool bajaLotePesti(int idFertilizante, int idGranja, int idProducto, string fchProduccion, int idAdmin)
         {
-            return new pLote_Pesti().bajaLotePesti(idFertilizante, idGranja, idProducto, fchProduccion);
+            return new pLote_Pesti().bajaLotePesti(idFertilizante, idGranja, idProducto, fchProduccion, idAdmin);
         }
 
-        public bool modLotePesti(Lote_Pesti loteP)
+        public bool modLotePesti(Lote_Pesti loteP, int idAdmin)
         {
-            return new pLote_Pesti().modLotePesti(loteP);
+            return new pLote_Pesti().modLotePesti(loteP, idAdmin);
         }
 
         #endregion
@@ -408,31 +408,40 @@ namespace Persistencia
             return new pViaje().buscarViaje(idViaje);
         }
 
-        public bool altaViaje(Viaje viaje)
+        public bool altaViaje(Viaje viaje, int idAdmin)
         {
-            return new pViaje().altaViaje(viaje);
+            return new pViaje().altaViaje(viaje, idAdmin);
         }
-        public bool altaViajePedido_Lote(Viaje_Lot_Ped viaje_Lot_Ped, string CantViajeAct)
+        public bool altaViajePedido_Lote(Viaje_Lot_Ped viaje_Lot_Ped, string CantViajeAct, int idAdmin)
         {
-            return new pViaje().altaViajePedido_Lote(viaje_Lot_Ped, CantViajeAct) ;
+            return new pViaje().altaViajePedido_Lote(viaje_Lot_Ped, CantViajeAct, idAdmin) ;
         }
 
-        public bool bajaViajePedido_Lote(Viaje_Lot_Ped viaje_Lot_Ped, string CantTotal)
+        public bool bajaViajePedido_Lote(Viaje_Lot_Ped viaje_Lot_Ped, string CantTotal, int idAdmin)
         {
-            return new pViaje().bajaViajePedido_Lote(viaje_Lot_Ped, CantTotal);
+            return new pViaje().bajaViajePedido_Lote(viaje_Lot_Ped, CantTotal, idAdmin);
         }
         public List<Viaje_Lot_Ped> buscarViajePedLote(int idPedido, int idViaje)
         {
             return new pViaje().buscarViajePedLote(idPedido, idViaje);
         }
-        public bool bajaViaje(int id)
+        public bool bajaViaje(int id, int idAdmin)
         {
-            return new pViaje().bajaViaje(id);
+            return new pViaje().bajaViaje(id, idAdmin);
         }
 
-        public bool modViaje(Viaje viaje)
+        public bool modViaje(Viaje viaje, int idAdmin)
         {
-            return new pViaje().modViaje(viaje);
+            return new pViaje().modViaje(viaje, idAdmin);
+        }
+
+        #endregion
+
+        #region Estadisitcas
+
+        public List<Auditoria> buscarAuditoriaFiltro(Auditoria auditoria, string fchMenor, string fchMayor, string ordenar)
+        {
+            return new pEstadistica().buscarAuditoriaFiltro(auditoria, fchMenor, fchMayor, ordenar);
         }
 
         #endregion

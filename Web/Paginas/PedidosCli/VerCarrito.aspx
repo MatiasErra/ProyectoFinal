@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/MCliente.Master" AutoEventWireup="true" CodeBehind="VerCarrito.aspx.cs" Inherits="Web.Paginas.Pedidos.VerCarrito" %>
+﻿<%@ Page Title="Ver carrito" Language="C#" MasterPageFile="~/Master/MCliente.Master" AutoEventWireup="true" CodeBehind="VerCarrito.aspx.cs" Inherits="Web.Paginas.Pedidos.VerCarrito" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container row m-2 text-center">

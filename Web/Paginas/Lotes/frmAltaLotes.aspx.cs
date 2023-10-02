@@ -481,10 +481,11 @@ namespace Web.Paginas.Lotes
                                 int idDeposito = int.Parse(HttpUtility.HtmlEncode(listDeposito.SelectedValue));
                                 string CantTotal = CantTotalProd(idProducto, txtCantidad.Text);
 
+                                int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
 
                                 Lote unLote = new Lote(idGranja, idProducto, fchProduccion, fchCaducidad, cantidad, precio, idDeposito);
 
-                                if (Web.altaLote(unLote, CantTotal))
+                                if (Web.altaLote(unLote, CantTotal, idAdmin))
                                 {
                                     limpiar();
                                     listProductoUpdate();

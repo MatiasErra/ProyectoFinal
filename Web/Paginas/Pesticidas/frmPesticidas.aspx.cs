@@ -544,11 +544,11 @@ namespace Web.Paginas.Pesticidas
 
 
 
-
+                        int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
 
                         ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
                         Pesticida pesticida = new Pesticida(id, nombre, tipo, pH, impacto);
-                        if (Web.altaPesti(pesticida))
+                        if (Web.altaPesti(pesticida, idAdmin))
                         {
                             if (System.Web.HttpContext.Current.Session["lotePestiDatos"] != null)
                             {
@@ -584,7 +584,8 @@ namespace Web.Paginas.Pesticidas
             Pesticida pesticida = Web.buscarPesti(id);
             if (pesticida != null)
             {
-                if (Web.bajaPesti(id))
+                int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                if (Web.bajaPesti(id, idAdmin))
                 {
                     limpiar();
                     lblMensajes.Text = "Se ha eliminado el Pesticida.";

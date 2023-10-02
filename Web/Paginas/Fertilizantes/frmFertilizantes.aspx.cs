@@ -553,9 +553,11 @@ namespace Web.Paginas.Fertilizantes
                         double pH = double.Parse(HttpUtility.HtmlEncode(txtPH.Text));
                         string impacto = HttpUtility.HtmlEncode(lstImpacto.SelectedValue.ToString());
 
+                        int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+
                         ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
                         Fertilizante fertilizante = new Fertilizante(id, nombre, tipo, pH, impacto);
-                        if (Web.altaFerti(fertilizante))
+                        if (Web.altaFerti(fertilizante, idAdmin))
                         {
                             if (System.Web.HttpContext.Current.Session["loteFertiDatos"] != null)
                             {
@@ -592,7 +594,8 @@ namespace Web.Paginas.Fertilizantes
             Fertilizante fertilizante = Web.buscarFerti(id);
             if (fertilizante != null)
             {
-                if (Web.bajaFerti(id))
+                int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                if (Web.bajaFerti(id, idAdmin))
                 {
                     limpiar();
                     lblMensajes.Text = "Se ha eliminado el Fertilizante.";

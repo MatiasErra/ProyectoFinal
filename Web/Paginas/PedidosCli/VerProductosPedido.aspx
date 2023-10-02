@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/MCliente.Master" AutoEventWireup="true" CodeBehind="VerProductosPedido.aspx.cs" Inherits="Web.Paginas.Pedidos.WebForm1" %>
+﻿<%@ Page Title="Ver productos del pedido" Language="C#" MasterPageFile="~/Master/MCliente.Master" AutoEventWireup="true" CodeBehind="VerProductosPedido.aspx.cs" Inherits="Web.Paginas.Pedidos.WebForm1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -37,7 +37,7 @@
                                                     HeaderText="Tipo"
                                                     ItemStyle-CssClass="GridStl" />
 
-                                                         <asp:BoundField DataField="Imagen"
+                                                <asp:BoundField DataField="Imagen"
                                                     HeaderText="Imagen"
                                                     HtmlEncode="false" />
 
@@ -46,7 +46,7 @@
                                                     HeaderText="Precio"
                                                     ItemStyle-CssClass="GridStl" />
 
-                                       
+
 
 
                                                 <asp:BoundField DataField="Cantidad"
@@ -62,7 +62,7 @@
 
 
 
-                                          <asp:GridView ID="lstProductoLote" Width="100%" SelectedIndex="1" AutoGenerateColumns="false"
+                                        <asp:GridView ID="lstProductoLote" Width="100%" SelectedIndex="1" AutoGenerateColumns="false"
                                             CssClass="table table-bordered table-condensed table-responsive table-hover"
                                             runat="server">
                                             <AlternatingRowStyle BackColor="White" />
@@ -71,7 +71,7 @@
                                             <Columns>
 
 
-                                                
+
                                                 <asp:BoundField DataField="NombreGranja"
                                                     HeaderText="Granja"
                                                     ItemStyle-CssClass="GridStl" />
@@ -89,7 +89,7 @@
                                                     HeaderText="Tipo"
                                                     ItemStyle-CssClass="GridStl" />
 
-                                                         <asp:BoundField DataField="Imagen"
+                                                <asp:BoundField DataField="Imagen"
                                                     HeaderText="Imagen"
                                                     HtmlEncode="false" />
 
@@ -98,7 +98,7 @@
                                                     HeaderText="Precio"
                                                     ItemStyle-CssClass="GridStl" />
 
-                                       
+
 
 
                                                 <asp:BoundField DataField="Cantidad"
@@ -115,20 +115,20 @@
                                 </div>
                             </div>
                         </div>
-                     
 
-               
 
+
+
+                        <div class="text-center">
+
+                            <asp:Label runat="server" ID="txtPaginas" CssClass="text pagStyle" Text="Paginas" />
                             <div class="text-center">
-
-                                <asp:Label runat="server" ID="txtPaginas" CssClass="text pagStyle" Text="Paginas" />
-                                <div class="text-center">
-                                    <asp:LinkButton ID="lblPaginaAnt" CssClass="text pagTextAct" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
-                                    <asp:Label ID="lblPaginaAct" CssClass="text pagText" runat="server" Text=""></asp:Label>
-                                    <asp:LinkButton ID="lblPaginaSig" CssClass="text pagTextAct" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
-                                </div>
+                                <asp:LinkButton ID="lblPaginaAnt" CssClass="text pagTextAct" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
+                                <asp:Label ID="lblPaginaAct" CssClass="text pagText" runat="server" Text=""></asp:Label>
+                                <asp:LinkButton ID="lblPaginaSig" CssClass="text pagTextAct" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
                             </div>
-         
+                        </div>
+
                     </div>
 
                     <div>
@@ -138,11 +138,13 @@
                     </div>
 
 
-                     <div class="col-12">
-                      <asp:Button ID="btnModPedido" CssClass="btnE btn--radius btn--yellow my-2" runat="server" Text="Modificar Pedido a Sin confirmar" OnClick="btnModPedido_Click" />
+                    <div class="col-12">
+                        <asp:Button ID="btnModPedido" CssClass="btnE btn--radius btn--yellow my-2" runat="server" Text="Modificar Pedido a Sin confirmar" OnClick="btnModPedido_Click" />
 
-                               <asp:Button ID="btnVerViaje" CssClass="btnE btn--radius btn--green my-2" runat="server" Text="Ver Viajes del pedido" OnClick="btnVerViaje_Click" />
-                         </div>
+                        <asp:Button ID="btnVerViaje" CssClass="btnE btn--radius btn--green my-2" runat="server" Text="Ver Viajes del pedido" OnClick="btnVerViaje_Click" />
+
+                        <asp:Button ID="btnFinalizarPedido" CssClass="btnE btn--radius btn--blue my-2" runat="server" Text="Finalizar pedido" OnClick="btnFinalizarPedido_Click" />
+                    </div>
 
 
 

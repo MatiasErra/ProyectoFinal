@@ -119,27 +119,25 @@ foreign key(idGranja, idProducto, fchProduccion) references Lotes(idGranja, idPr
 
 
 
+create table Pedidos(
+idPedido int primary key,
+idCliente int references Clientes(idCliente) not null,
+estado varchar(40)  check(estado in ( 'Sin finalizar','Sin confirmar','Confirmado','En viaje', 'Finalizado')) not null,
+viaje varchar(40) check(viaje in('Sin asignar', 'Asignado')) ,
+costo numeric(10,2) not null,
+fchPedido date not null check(fchPedido = (CONVERT(date,getdate(),(103)))),
+fechaEntre date  check(fechaEntre >= (CONVERT(date,getdate(),(103)))),
+informacionEntrega varchar(80) ,
+idCamion int references Camioneros(idCamionero), 
+idCamionero int references Camiones(idCamion) 
+);
+
 
 create table Pedidos_Prod(
 idPedido int references Pedidos(idPedido),
 idProducto int references Productos(idProducto),
 cantidad varchar(40) not null,
 primary key (idPedido, idProducto)
-);
-
-
-create table Pedidos(
-idPedido int primary key,
-idCliente int references Clientes(idCliente) not null,
-estado varchar(40)  check(estado in ( 'Sin finalizar','Sin confirmar','Confirmado','En viaje', 'Finalizado')) not null,
-viaje varchar(40) check(viaje in('Sin asignar', Asignado')) ,
-costo numeric(10,2) not null,
-fchPedido date not null check(fchPedido = (CONVERT(date,getdate(),(103)))),
-fechaEntre date  check(fechaEntre >= (CONVERT(date,getdate(),(103)))),
-
-informacionEntrega varchar(80) ,
-idCamion int references Camioneros(idCamionero), 
-idCamionero int references Camiones(idCamion) 
 );
 
 
@@ -174,4 +172,12 @@ idPedido int,
 cantidad varchar(40) not null,
 FOREIGN key  (idPedido, idGranja, idProducto, fchProduccion)  references Lotes_Pedidos ( idPedido,idGranja, idProducto, fchProduccion),
 Primary Key( idViaje, idGranja, idProducto, fchProduccion, idPedido)
+);
+
+create table Auditoria(
+idAuditoria int identity(1,1) primary key,
+idAdmin int references Admins(idAdmin),
+fecha date,
+tabla varchar(20),
+tipo varchar(10) check(tipo = 'Alta' or tipo = 'Baja' or tipo = 'Modificar')
 );

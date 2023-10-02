@@ -701,8 +701,9 @@ namespace Web.Paginas.Lotes
             Lote unLote = Web.buscarLote(nombreGranja, nombreProducto, fchProduccion);
             if (unLote != null)
             {
+                int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
 
-                if (Web.bajaLote(nombreGranja, nombreProducto, fchProduccion, CantTotal))
+                if (Web.bajaLote(nombreGranja, nombreProducto, fchProduccion, CantTotal, idAdmin))
                 {
                     limpiar();
                     lblPaginaAct.Text = "1";

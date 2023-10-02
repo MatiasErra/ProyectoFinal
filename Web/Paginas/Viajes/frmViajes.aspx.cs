@@ -45,6 +45,8 @@ namespace Web.Paginas.Viajes
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Web.HttpContext.Current.Session["ViajesSelected"] = null;
+            System.Web.HttpContext.Current.Session["PedidoCompraSel"] = null;
             System.Web.HttpContext.Current.Session["idViajeSelMod"] = null;
             if (!IsPostBack)
             {
@@ -756,10 +758,12 @@ namespace Web.Paginas.Viajes
                         int idCamion = int.Parse(HttpUtility.HtmlEncode(listCamion.SelectedValue));
                         int idCamionero = int.Parse(HttpUtility.HtmlEncode(listCamionero.SelectedValue));
 
+                        int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+
                         ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
 
                         Viaje unViaje = new Viaje(id, costo, fecha, idCamion, idCamionero, "Pendiente");
-                        if (Web.altaViaje(unViaje))
+                        if (Web.altaViaje(unViaje, idAdmin))
                         {
                             if (System.Web.HttpContext.Current.Session["pedidoDatos"] != null)
                             {
@@ -828,7 +832,8 @@ namespace Web.Paginas.Viajes
             {
                 if (!comprobarPedidos(id))
                 {
-                    if (Web.bajaViaje(id))
+                    int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                    if (Web.bajaViaje(id, idAdmin))
                     {
                         if(unViaje.Estado == "En viaje")
                         {
@@ -836,9 +841,9 @@ namespace Web.Paginas.Viajes
                             unCamion.Disponible = "Disponible";
                             Camionero unCamionero = Web.buscarCamionero(unViaje.IdCamionero);
                             unCamionero.Disponible = "Disponible";
-                            if (Web.modCam(unCamion))
+                            if (Web.modCam(unCamion, idAdmin))
                             {
-                                if (Web.modCamionero(unCamionero))
+                                if (Web.modCamionero(unCamionero, idAdmin))
                                 {
                                     limpiar();
                                     lblPaginaAct.Text = "1";

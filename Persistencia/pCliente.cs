@@ -188,7 +188,7 @@ namespace Persistencia
         }
 
 
-        public bool bajaCli(int id)
+        public bool bajaCli(int id, int idAdmin)
         {
             bool resultado = false;
             try
@@ -199,14 +199,8 @@ namespace Persistencia
 
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(new SqlParameter("@id", id));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                    while (reader.Read())
-                    {
-
-                        cmd.Parameters.Add(new SqlParameter("@id", id));
-
-                    }
 
                 int resBD = cmd.ExecuteNonQuery();
 

@@ -152,7 +152,7 @@ namespace Persistencia
 
 
 
-        public bool altaProducto(Producto producto)
+        public bool altaProducto(Producto producto, int idAdmin)
         {
             bool resultado = false;
 
@@ -168,6 +168,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@tipoVenta", producto.TipoVenta));
                 cmd.Parameters.Add(new SqlParameter("@precio", producto.Precio));
                 cmd.Parameters.Add(new SqlParameter("@imagen", producto.Imagen));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
 
                 int resBD = cmd.ExecuteNonQuery();
@@ -190,7 +191,7 @@ namespace Persistencia
             return resultado;
         }
 
-        public bool bajaProducto(int id)
+        public bool bajaProducto(int id, int idAdmin)
         {
             bool resultado = false;
 
@@ -201,6 +202,7 @@ namespace Persistencia
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.Add(new SqlParameter("@id", id));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 
@@ -226,7 +228,7 @@ namespace Persistencia
 
         }
 
-        public bool modProducto(Producto producto)
+        public bool modProducto(Producto producto, int idAdmin)
         {
             bool resultado = false;
 
@@ -242,6 +244,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@tipoVenta", producto.TipoVenta));
                 cmd.Parameters.Add(new SqlParameter("@precio", producto.Precio));
                 cmd.Parameters.Add(new SqlParameter("@imagen", producto.Imagen));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 

@@ -788,9 +788,9 @@ namespace Web.Paginas.PedidosAdm
 
 
 
+            int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
 
-
-            if (Web.bajaLotesPedido(idPedido, unLote.IdGranja, unLote.IdProducto, fchProduccion, cantLote, CantDisp, CantRess))
+            if (Web.bajaLotesPedido(idPedido, unLote.IdGranja, unLote.IdProducto, fchProduccion, cantLote, CantDisp, CantRess, idAdmin))
             {
                 lblPaginaActLot.Text = "1";
                 lblPaginaActLotPed.Text = "1";
@@ -881,7 +881,8 @@ namespace Web.Paginas.PedidosAdm
 
                         int CantTotal = unLoteCantintAct - txtCantint;
                         string CantLote = CantTotal.ToString() + " " + unloteCantarry[1].ToString();
-                        if (Web.modCantPedidoLote(lote_Pedido, CantLote, CantDisp, CantRess))
+                        int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                        if (Web.modCantPedidoLote(lote_Pedido, CantLote, CantDisp, CantRess, idAdmin))
                         {
                             listBuscarLote();
                             lblMensajes.Text = "Cantidad modificada del pedido con exito";
@@ -975,9 +976,9 @@ namespace Web.Paginas.PedidosAdm
                         string CantLote = CantTotal.ToString() + " " + unloteCantarry[1].ToString();
 
 
-                        
+                        int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
 
-                        if (Web.altaPedido_Lote(lote_Pedido, CantLote, CantDisp, CantRess))
+                        if (Web.altaPedido_Lote(lote_Pedido, CantLote, CantDisp, CantRess, idAdmin))
                         {
                             listBuscarLote();
                             lblMensajes.Text = "Lote ingresado a pedido con exito";

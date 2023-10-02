@@ -24,46 +24,47 @@ namespace Web.Paginas.Viajes
                     Response.Redirect("/Paginas/PedidosCli/VerPedidosCli");
                 }
 
-            }
-    
-
-            if (System.Web.HttpContext.Current.Session["AdminIniciado"] != null)
-            {
-                int id = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
-                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                Admin admin = Web.buscarAdm(id);
-
-                if (admin.TipoDeAdmin == "Administrador global")
-                {
-                    this.MasterPageFile = "~/Master/AGlobal.Master";
-                }
-
-                else if (admin.TipoDeAdmin == "Administrador de pedidos")
-                {
-                    this.MasterPageFile = "~/Master/APedidos.Master";
-                }
-                else
-                {
-                    Response.Redirect("/Paginas/Nav/frmInicio");
-                }
-
-  
-                if (System.Web.HttpContext.Current.Session["PedidoCompraSel"] == null 
-                    &&
-                    System.Web.HttpContext.Current.Session["ViajesSelected"] == null
-                    )
-                {
-                    Response.Redirect("/Paginas/PedidosAdm/frmPedido");
-                }
 
             }
             else
             {
+                if (System.Web.HttpContext.Current.Session["AdminIniciado"] != null)
+                {
+                    int id = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                    ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                    Admin admin = Web.buscarAdm(id);
 
-                Response.Redirect("/Paginas/Nav/frmInicio");
+                    if (admin.TipoDeAdmin == "Administrador global")
+                    {
+                        this.MasterPageFile = "~/Master/AGlobal.Master";
+                    }
+
+                    else if (admin.TipoDeAdmin == "Administrador de pedidos")
+                    {
+                        this.MasterPageFile = "~/Master/APedidos.Master";
+                    }
+                    else
+                    {
+                        Response.Redirect("/Paginas/Nav/frmInicio");
+                    }
+
+
+                    if (System.Web.HttpContext.Current.Session["PedidoCompraSel"] == null
+                        &&
+                        System.Web.HttpContext.Current.Session["ViajesSelected"] == null
+                        )
+                    {
+                        Response.Redirect("/Paginas/PedidosAdm/frmPedido");
+                    }
+
+                }
+                else
+                {
+
+                    Response.Redirect("/Paginas/Nav/frmInicio");
+                }
+
             }
-    
-
 
         }
 
@@ -85,18 +86,18 @@ namespace Web.Paginas.Viajes
                     System.Web.HttpContext.Current.Session["PagAct"] = null;
                 }
 
-               
+
                 if (System.Web.HttpContext.Current.Session["ViajesSelected"] != null)
                 {
                     int idViaje = int.Parse(System.Web.HttpContext.Current.Session["ViajesSelected"].ToString());
                     listarLotes(idViaje);
                 }
-                if(System.Web.HttpContext.Current.Session["PedidoCompraSel"] != null)
+                if (System.Web.HttpContext.Current.Session["PedidoCompraSel"] != null)
                 {
                     int idPedido = int.Parse(System.Web.HttpContext.Current.Session["PedidoCompraSel"].ToString());
                     listarViajes(idPedido);
                 }
-                
+
 
 
 
@@ -259,18 +260,18 @@ namespace Web.Paginas.Viajes
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
 
             Viaje viaje = new Viaje();
-            int costoMenor = 0 ;
-            int costoMayor =  99999999;
+            int costoMenor = 0;
+            int costoMayor = 99999999;
             string fchMenor = "1000-01-01";
             string fchMayor = "3000-12-30";
-            viaje.IdCamion =  0;
-            viaje.IdCamionero =  0;
-            viaje.Estado =  "";
+            viaje.IdCamion = 0;
+            viaje.IdCamionero = 0;
+            viaje.Estado = "";
             string ordenar = "";
 
             List<Viaje> viajes = Web.buscarViajeFiltro(viaje, costoMenor, costoMayor, fchMenor, fchMayor, ordenar);
 
-            List<Viaje> lstViajeRes = new List<Viaje> ();
+            List<Viaje> lstViajeRes = new List<Viaje>();
             int idViaje = 0;
 
             List<Viaje_Lot_Ped> viajeLotPed = Web.buscarViajePedLote(idPedido, idViaje);
@@ -282,12 +283,12 @@ namespace Web.Paginas.Viajes
                 foreach (Viaje_Lot_Ped viaje_Lot_Ped in viajeLotPed)
                 {
                     if (viaje_Lot_Ped.IdViaje.ToString().Equals(unViaje.IdViaje.ToString()))
-                        {
+                    {
                         i++;
                     }
                 }
 
-                if(i >0)
+                if (i > 0)
                 {
                     lstViajeRes.Add(unViaje);
                 }
@@ -405,7 +406,7 @@ namespace Web.Paginas.Viajes
                 dr["idViaje"] = unViaje.IdViaje.ToString();
                 dr["fchViaje"] = unViaje.Fecha.ToString();
                 dr["Estado"] = unViaje.Estado.ToString();
-         
+
 
 
                 dt.Rows.Add(dr);
@@ -417,6 +418,7 @@ namespace Web.Paginas.Viajes
         }
 
         #endregion
+
         #region botones
 
         protected void lblPaginaAnt_Click(object sender, EventArgs e)

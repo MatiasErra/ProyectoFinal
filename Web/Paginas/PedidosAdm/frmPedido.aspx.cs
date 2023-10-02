@@ -28,7 +28,7 @@ namespace Web.Paginas.PedidosADM
                 {
                     this.MasterPageFile = "~/Master/AGlobal.Master";
                 }
-              
+
                 else if (admin.TipoDeAdmin == "Administrador de pedidos")
                 {
                     this.MasterPageFile = "~/Master/APedidos.Master";
@@ -46,9 +46,11 @@ namespace Web.Paginas.PedidosADM
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            System.Web.HttpContext.Current.Session["ViajesSelected"] = null;
+            System.Web.HttpContext.Current.Session["PedidoCompraSel"] = null;
             if (!IsPostBack)
             {
+
                 System.Web.HttpContext.Current.Session["PedidoCompraSel"] = null;
                 if (System.Web.HttpContext.Current.Session["PagAct"] == null)
                 {
@@ -88,20 +90,17 @@ namespace Web.Paginas.PedidosADM
                 txtCostoMayorBuscar.Text = System.Web.HttpContext.Current.Session["CostoMax"] != null ? System.Web.HttpContext.Current.Session["CostoMax"].ToString() : "";
                 System.Web.HttpContext.Current.Session["CostoMax"] = null;
 
+                txtFchPedidoMenor.Text = System.Web.HttpContext.Current.Session["fchPedidoMenorAdmBuscar"] != null ? DateTime.Parse(System.Web.HttpContext.Current.Session["fchPedidoMenorAdmBuscar"].ToString()).ToString("yyyy-MM-dd") : "";
+                System.Web.HttpContext.Current.Session["fchPedidoMenorAdmBuscar"] = null;
+                txtFchPedidoMayor.Text = System.Web.HttpContext.Current.Session["fchPedidoMayorAdmBuscar"] != null ? DateTime.Parse(System.Web.HttpContext.Current.Session["fchPedidoMayorAdmBuscar"].ToString()).ToString("yyyy-MM-dd") : "";
+                System.Web.HttpContext.Current.Session["fchPedidoMayorAdmBuscar"] = null;
+                txtFchEntregaMenor.Text = System.Web.HttpContext.Current.Session["fchEntregaMenorAdmBuscar"] != null ? DateTime.Parse(System.Web.HttpContext.Current.Session["fchEntregaMenorAdmBuscar"].ToString()).ToString("yyyy-MM-dd") : "";
+                System.Web.HttpContext.Current.Session["fchEntregaMenorAdmBuscar"] = null;
+                txtFchEntregaMayor.Text = System.Web.HttpContext.Current.Session["fchEntregaMayorAdmBuscar"] != null ? DateTime.Parse(System.Web.HttpContext.Current.Session["fchEntregaMayorAdmBuscar"].ToString()).ToString("yyyy-MM-dd") : "";
+                System.Web.HttpContext.Current.Session["fchEntregaMayorAdmBuscar"] = null;
+
 
                 System.Web.HttpContext.Current.Session["PedidoCompraSel"] = null;
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -193,6 +192,8 @@ namespace Web.Paginas.PedidosADM
             dt.Rows.Add(createRow("Estado", "Estado", dt));
             dt.Rows.Add(createRow("Viaje", "Viaje", dt));
             dt.Rows.Add(createRow("Costo", "Costo", dt));
+            dt.Rows.Add(createRow("Fecha pedido", "Fecha pedido", dt));
+            dt.Rows.Add(createRow("Fecha entrega", "Fecha entrega", dt));
 
 
             DataView dv = new DataView(dt);
@@ -250,7 +251,7 @@ namespace Web.Paginas.PedidosADM
             dt.Rows.Add(createRow("Seleccionar estado del viaje", "Seleccionar estado del viaje", dt));
             dt.Rows.Add(createRow("Sin asignar", "Sin asignar", dt));
             dt.Rows.Add(createRow("Asignado", "Asignado", dt));
-      
+
 
             DataView dv = new DataView(dt);
             return dv;
@@ -320,7 +321,10 @@ namespace Web.Paginas.PedidosADM
             listOrdenarPor.SelectedValue = "Ordenar por";
             listBuscarPor.SelectedValue = "Buscar por";
             lstViaje.SelectedValue = "Seleccionar estado del viaje";
-
+            txtFchEntregaMenor.Text = "";
+            txtFchPedidoMayor.Text = "";
+            txtFchEntregaMenor.Text = "";
+            txtFchEntregaMayor.Text = "";
 
 
             txtCostoMenorBuscar.Text = "";
@@ -435,10 +439,14 @@ namespace Web.Paginas.PedidosADM
             string Viaje = lstViaje.SelectedValue != "Seleccionar estado del viaje" ? lstViaje.SelectedValue : "";
             int CostoMin = txtCostoMenorBuscar.Text == "" ? 0 : int.Parse(txtCostoMenorBuscar.Text);
             int CostoMayor = txtCostoMayorBuscar.Text == "" ? 99999999 : int.Parse(txtCostoMayorBuscar.Text);
+            string fchPedidoMenor = txtFchPedidoMenor.Text == "" ? "1000-01-01" : txtFchPedidoMenor.Text;
+            string fchPedidoMayor = txtFchPedidoMayor.Text == "" ? "3000-12-30" : txtFchPedidoMayor.Text;
+            string fchEntregaMenor = txtFchEntregaMenor.Text == "" ? "1000-01-01" : txtFchEntregaMenor.Text;
+            string fchEntregaMayor = txtFchEntregaMayor.Text == "" ? "3000-12-30" : txtFchEntregaMayor.Text;
             string ordenar = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : "";
 
 
-            List<Pedido> lstPedido = web.BuscarPedidoFiltro(NomCli, Estado, Viaje, CostoMin, CostoMayor, ordenar);
+            List<Pedido> lstPedido = web.BuscarPedidoFiltro(NomCli, Estado, Viaje, CostoMin, CostoMayor, fchPedidoMenor, fchPedidoMayor, fchEntregaMenor, fchEntregaMayor, ordenar);
 
             return lstPedido;
         }
@@ -460,7 +468,7 @@ namespace Web.Paginas.PedidosADM
                    new DataColumn("Viaje", typeof(string)),
                 new DataColumn("Costo", typeof(double)),
                 new DataColumn("fchPedido", typeof(string)),
-  
+
                 new DataColumn("fchEntre", typeof(string)),
 
                 new DataColumn("InfoEnv", typeof(string)),
@@ -480,9 +488,9 @@ namespace Web.Paginas.PedidosADM
                 string[] FechPedido = unPed.FechaPedido.ToString().Split(' ');
                 dr["fchPedido"] = FechPedido[0];
 
-              
 
-                dr["fchEntre"] = unPed.FechaEntre != "" ? unPed.FechaEntre.ToString() : "Sin asignar";
+
+                dr["fchEntre"] = unPed.FechaEntre != "" ? unPed.FechaEntre.ToString().Split(' ')[0] : "Sin asignar";
 
 
 
@@ -504,7 +512,11 @@ namespace Web.Paginas.PedidosADM
             System.Web.HttpContext.Current.Session["CliSelected"] = lstCliente.SelectedValue != "Seleccionar cliente" ? lstCliente.SelectedValue : "";
             System.Web.HttpContext.Current.Session["EstadoPed"] = lstEstados.SelectedValue != "Seleccionar estado" ? lstEstados.SelectedValue : "";
             System.Web.HttpContext.Current.Session["EstadoViaje"] = lstViaje.SelectedValue != "Seleccionar estado del viaje" ? lstViaje.SelectedValue : "";
-            
+
+            System.Web.HttpContext.Current.Session["fchPedidoMenorAdmBuscar"] = txtFchPedidoMenor.Text != "" ? txtFchPedidoMenor.Text : null;
+            System.Web.HttpContext.Current.Session["fchPedidoMayorAdmBuscar"] = txtFchPedidoMayor.Text != "" ? txtFchPedidoMayor.Text : null;
+            System.Web.HttpContext.Current.Session["fchEntregaMenorAdmBuscar"] = txtFchEntregaMenor.Text != "" ? txtFchEntregaMenor.Text : null;
+            System.Web.HttpContext.Current.Session["fchEntregaMayorAdmBuscar"] = txtFchEntregaMayor.Text != "" ? txtFchEntregaMayor.Text : null;
 
             System.Web.HttpContext.Current.Session["CostoMin"] = txtCostoMenorBuscar.Text.ToString();
             System.Web.HttpContext.Current.Session["CostoMax"] = txtCostoMayorBuscar.Text.ToString();
@@ -559,7 +571,6 @@ namespace Web.Paginas.PedidosADM
                         int resultado = int.Parse(cantRessProd[0].ToString()) - cant;
 
                         cantRess = resultado.ToString() + " " + unProd.TipoVenta.ToString();
-
 
                         web.bajaPedidoProd(idPedido, idProducto, cantRess, 0);
 
@@ -643,10 +654,10 @@ namespace Web.Paginas.PedidosADM
                             int resultadoLote = int.Parse(cantLotearr[0].ToString()) + cant;
 
                             cantLote = resultadoLote.ToString() + " " + unProd.TipoVenta.ToString();
-
+                            int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
                             web.bajaPedidoProd(idPedido, idProducto, cantRess, 0);
 
-                            web.bajaLotesPedido(idPedido, idGranja, idProducto, FchProduccion, cantLote, cantDisp, cantRess);
+                            web.bajaLotesPedido(idPedido, idGranja, idProducto, FchProduccion, cantLote, cantDisp, cantRess, idAdmin);
 
                         }
 
@@ -660,7 +671,7 @@ namespace Web.Paginas.PedidosADM
                 }
                 return true;
             }
-        
+
 
         }
 
@@ -678,6 +689,8 @@ namespace Web.Paginas.PedidosADM
             lstCliente.Visible = listBuscarPor.SelectedValue == "Cliente" ? true : false;
             lstEstados.Visible = listBuscarPor.SelectedValue == "Estado" ? true : false;
             lstViaje.Visible = listBuscarPor.SelectedValue == "Viaje" ? true : false;
+            lblFchPedido.Visible = listBuscarPor.SelectedValue == "Fecha pedido" ? true : false;
+            lblFchEntrega.Visible = listBuscarPor.SelectedValue == "Fecha entrega" ? true : false;
             lblCostoMenorBuscar.Visible = listBuscarPor.SelectedValue == "Costo" ? true : false;
             txtCostoMenorBuscar.Visible = listBuscarPor.SelectedValue == "Costo" ? true : false;
             lblCostoMayorBuscar.Visible = listBuscarPor.SelectedValue == "Costo" ? true : false;
@@ -731,7 +744,7 @@ namespace Web.Paginas.PedidosADM
         //}
 
 
- 
+
 
         protected void btnConfirmarPedido_Click(object sender, EventArgs e)
         {
@@ -757,7 +770,7 @@ namespace Web.Paginas.PedidosADM
 
         }
 
-    
+
 
         protected void btnVerPedido_Click(object sender, EventArgs e)
         {

@@ -97,7 +97,7 @@ namespace Persistencia
             return loteF;
         }
 
-        public bool altaLoteFerti(Lote_Ferti loteF)
+        public bool altaLoteFerti(Lote_Ferti loteF, int idAdmin)
         {
             bool resultado = false;
 
@@ -135,7 +135,7 @@ namespace Persistencia
         }
 
 
-        public bool bajaLoteFerti(int idFertilizante, int idGranja, int idProducto, string fchProduccion)
+        public bool bajaLoteFerti(int idFertilizante, int idGranja, int idProducto, string fchProduccion, int idAdmin)
         {
             bool resultado = false;
 
@@ -149,6 +149,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@idGranja", idGranja));
                 cmd.Parameters.Add(new SqlParameter("@idProducto", idProducto));
                 cmd.Parameters.Add(new SqlParameter("@fchProduccion", fchProduccion));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 
@@ -174,7 +175,7 @@ namespace Persistencia
 
         }
 
-        public bool modLoteFerti(Lote_Ferti loteF)
+        public bool modLoteFerti(Lote_Ferti loteF, int idAdmin)
         {
             bool resultado = false;
 
@@ -189,6 +190,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@idProducto", loteF.IdProducto));
                 cmd.Parameters.Add(new SqlParameter("@fchProduccion", loteF.FchProduccion));
                 cmd.Parameters.Add(new SqlParameter("@cantidad", loteF.Cantidad));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 

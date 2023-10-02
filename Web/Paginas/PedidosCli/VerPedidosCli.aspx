@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/MCliente.Master" AutoEventWireup="true" CodeBehind="VerPedidosCli.aspx.cs" Inherits="Web.Paginas.Catalogo.VerPedidoCli" %>
+﻿<%@ Page Title="Ver pedidos" Language="C#" MasterPageFile="~/Master/MCliente.Master" AutoEventWireup="true" CodeBehind="VerPedidosCli.aspx.cs" Inherits="Web.Paginas.Catalogo.VerPedidoCli" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container row m-2 text-center">
@@ -9,8 +9,8 @@
                         <h2 class="title">Ver Pedidos </h2>
                     </div>
 
-                    
-                    
+
+
                     <div class="row text-center">
                         <div class=" col-sm-12">
                             <asp:DropDownList ID="listBuscarPor" CssClass="lstOrd btn--radius  align-self-center btn--srch" Width="200" AutoPostBack="true" OnSelectedIndexChanged="listBuscarPor_SelectedIndexChanged" runat="server"></asp:DropDownList>
@@ -19,53 +19,79 @@
                         </div>
                     </div>
 
-                        <div class="row text-center">
-                            <div class="col-sm-12">
-                     
-                                      <asp:DropDownList Visible="false" ID="lstViaje" CssClass="input--style-lst-search" runat="server">
-                                </asp:DropDownList>
+                    <div class="row text-center">
+                        <div class="col-sm-12">
 
-                                <asp:DropDownList Visible="false" ID="lstEstados" CssClass="input--style-lst-search" runat="server">
-                                </asp:DropDownList>
+                            <asp:DropDownList Visible="false" ID="lstViaje" CssClass="input--style-lst-search" runat="server">
+                            </asp:DropDownList>
+
+                            <asp:DropDownList Visible="false" ID="lstEstados" CssClass="input--style-lst-search" runat="server">
+                            </asp:DropDownList>
 
 
-                                   <div class="row justify-content-center">
-                                    <div class="col-lg-6">
-                                        <asp:Label Visible="false" ID="lblCostoMenorBuscar" class="text initText" Text="Desde:" runat="server" />
-                                        <asp:TextBox Visible="false" ID="txtCostoMenorBuscar" CssClass="input--style-text-search" runat="server" placeholder="Carga" MaxLength="10" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
-                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
-                                            ControlToValidate="txtCostoMenorBuscar"
-                                            ValidationExpression="^[0-9]*$"
-                                            ErrorMessage="No es un numero valido" />
+                            <div class="row justify-content-center">
+                                <div class="col-lg-6">
+                                    <asp:Label Visible="false" ID="lblCostoMenorBuscar" class="text initText" Text="Desde:" runat="server" />
+                                    <asp:TextBox Visible="false" ID="txtCostoMenorBuscar" CssClass="input--style-text-search" runat="server" placeholder="Carga" MaxLength="10" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
+                                    <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
+                                        ControlToValidate="txtCostoMenorBuscar"
+                                        ValidationExpression="^[0-9]*$"
+                                        ErrorMessage="No es un numero valido" />
 
-                                        <asp:Label Visible="false" ID="lblCostoMayorBuscar" class="text initText" Text="Desde:" runat="server" />
-                                        <asp:TextBox Visible="false" ID="txtCostoMayorBuscar" CssClass="input--style-text-search" runat="server" placeholder="Carga" MaxLength="10" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
-                                        <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
-                                            ControlToValidate="txtCostoMayorBuscar"
-                                            ValidationExpression="^[0-9]*$"
-                                            ErrorMessage="No es un numero valido" />
-                                    </div>
+                                    <asp:Label Visible="false" ID="lblCostoMayorBuscar" class="text initText" Text="Desde:" runat="server" />
+                                    <asp:TextBox Visible="false" ID="txtCostoMayorBuscar" CssClass="input--style-text-search" runat="server" placeholder="Carga" MaxLength="10" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
+                                    <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
+                                        ControlToValidate="txtCostoMayorBuscar"
+                                        ValidationExpression="^[0-9]*$"
+                                        ErrorMessage="No es un numero valido" />
                                 </div>
+                            </div>
+
+                            <div class="row justify-content-center">
+                                <div class="col-lg-6">
+                                    <asp:Label Visible="false" runat="server" ID="lblFchPedido">
+                                        <asp:Label class="text initText" Text="Desde:" runat="server" />
+                                        <asp:TextBox ID="txtFchPedidoMenor" runat="server" CssClass=" input--style-text-search js-datepicker" placeholder="Fecha" TextMode="Date"></asp:TextBox>
 
 
+                                        <asp:Label class="text initText" Text="Hasta:" runat="server" />
+                                        <asp:TextBox ID="txtFchPedidoMayor" runat="server" CssClass=" input--style-text-search js-datepicker" placeholder="Fecha" TextMode="Date"></asp:TextBox>
+                                    </asp:Label>
                                 </div>
-                             </div>
+                            </div>
+
+                            <div class="row justify-content-center">
+                                <div class="col-lg-6">
+                                    <asp:Label Visible="false" runat="server" ID="lblFchEntrega">
+                                        <asp:Label class="text initText" Text="Desde:" runat="server" />
+                                        <asp:TextBox ID="txtFchEntregaMenor" runat="server" CssClass=" input--style-text-search js-datepicker" placeholder="Fecha" TextMode="Date"></asp:TextBox>
 
 
+                                        <asp:Label class="text initText" Text="Hasta:" runat="server" />
+                                        <asp:TextBox ID="txtFchEntregaMayor" runat="server" CssClass=" input--style-text-search js-datepicker" placeholder="Fecha" TextMode="Date"></asp:TextBox>
+                                    </asp:Label>
+                                </div>
+                            </div>
 
 
-                         <div class="col-12">
-                               <asp:Button ID="btnLimpiar" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" />
-                            
                         </div>
+                    </div>
 
 
-                      <div class="col-12 my-2">
+
+
+                    <div class="col-12">
+                        <asp:Button ID="btnLimpiar" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" />
+
+                    </div>
+
+
+                    <div class="col-12 my-2">
                         <asp:Label CssClass="text centerText " ID="lblMensajes" runat="server"></asp:Label>
                     </div>
 
 
-                 <div class="col-md-12 align-self-center text-center">
+                    <div class="col-md-12 align-self-center text-center">
                         <div class="col-12">
                         </div>
                         <div class="row align-self-center">
@@ -104,7 +130,7 @@
                                                     HeaderText="Estado"
                                                     ItemStyle-CssClass="GridStl" />
 
-                                                         <asp:BoundField DataField="Viaje"
+                                                <asp:BoundField DataField="Viaje"
                                                     HeaderText="Viaje"
                                                     ItemStyle-CssClass="GridStl" />
 
@@ -116,13 +142,13 @@
                                                     HeaderText="Fecha del pedido"
                                                     ItemStyle-CssClass="GridStl" />
 
-                                                
+
                                                 <asp:BoundField DataField="InfoEnv"
                                                     HeaderText="Dirección del envió"
                                                     ItemStyle-CssClass="GridStl" />
 
 
-                                     
+
 
                                                 <asp:BoundField DataField="fchEntre"
                                                     HeaderText="Fecha de entrega"
@@ -140,7 +166,15 @@
 
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                      </Columns>
+                                                <asp:TemplateField
+                                                    ItemStyle-CssClass="GridStl">
+                                                    <ItemTemplate>
+
+                                                        <asp:Button ID="btnModificar" CssClass="btnE btn--radius btn--yellow" runat="server" Text="Cambiar a sin finalizar" OnClick="btnModificar_Click" />
+
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
                                         </asp:GridView>
 
                                     </div>
@@ -150,16 +184,16 @@
 
 
 
-                            <div class="text-center">
+                        <div class="text-center">
 
-                                <asp:Label runat="server" ID="txtPaginas" CssClass="text pagStyle" Text="Paginas" />
-                                <div class="text-center">
-                                    <asp:LinkButton ID="lblPaginaAnt" CssClass="text pagTextAct" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
-                                    <asp:Label ID="lblPaginaAct" CssClass="text pagText" runat="server" Text=""></asp:Label>
-                                    <asp:LinkButton ID="lblPaginaSig" CssClass="text pagTextAct" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
-                                </div>
+                            <asp:Label runat="server" ID="txtPaginas" CssClass="text pagStyle" Text="Paginas" />
+                            <div class="text-center">
+                                <asp:LinkButton ID="lblPaginaAnt" CssClass="text pagTextAct" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
+                                <asp:Label ID="lblPaginaAct" CssClass="text pagText" runat="server" Text=""></asp:Label>
+                                <asp:LinkButton ID="lblPaginaSig" CssClass="text pagTextAct" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
                             </div>
-                     
+                        </div>
+
                     </div>
 
 

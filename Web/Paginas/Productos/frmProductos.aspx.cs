@@ -569,9 +569,11 @@ namespace Web.Paginas.Productos
                         string imagen = Convert.ToBase64String(fileBytes);
                         int precio = int.Parse(HttpUtility.HtmlEncode(txtPrecio.Text));
 
+                        int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+
                         ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
                         Producto unProducto = new Producto(id, nombre, tipo, tipoVenta, imagen, precio);
-                        if (Web.altaProducto(unProducto))
+                        if (Web.altaProducto(unProducto, idAdmin))
                         {
                             if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
                             {
@@ -606,7 +608,8 @@ namespace Web.Paginas.Productos
             {
                 if (!loteExistente(unProducto.IdProducto))
                 {
-                    if (Web.bajaProducto(unProducto.IdProducto))
+                    int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                    if (Web.bajaProducto(unProducto.IdProducto, idAdmin))
                     {
                         limpiar();
                         lblPaginaAct.Text = "1";

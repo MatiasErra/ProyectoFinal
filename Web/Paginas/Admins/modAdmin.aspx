@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="modAdmin.aspx.cs" Inherits="Web.Paginas.Admins.modAdmin" %>
+﻿<%@ Page Title="Modificar admin" Language="C#" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="modAdmin.aspx.cs" Inherits="Web.Paginas.Admins.modAdmin" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 

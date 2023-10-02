@@ -76,12 +76,12 @@ namespace Controladoras
 
         }
 
-        public bool altaAdmin(Admin Admin)
+        public bool altaAdmin(Admin Admin, int idAdmin)
         {
             ControladoraP inst = ControladoraP.obtenerInstancia();
 
 
-            if (inst.altaAdmin(Admin))
+            if (inst.altaAdmin(Admin, idAdmin))
             {
                 return true;
             }
@@ -90,12 +90,12 @@ namespace Controladoras
         }
 
 
-        public bool bajaAdmin(int id)
+        public bool bajaAdmin(int id, int idAdmin)
         {
             ControladoraP inst = ControladoraP.obtenerInstancia();
 
 
-            if (inst.bajaAdmin(id))
+            if (inst.bajaAdmin(id, idAdmin))
             {
                 return true;
             }
@@ -103,10 +103,10 @@ namespace Controladoras
                 return false;
         }
 
-        public bool modificarAdm(Admin admin)
+        public bool modificarAdm(Admin admin, int idAdmin)
         {
             ControladoraP inst = ControladoraP.obtenerInstancia();
-            if (inst.modificarAdm(admin))
+            if (inst.modificarAdm(admin, idAdmin))
             {
                 return true;
             }
@@ -175,12 +175,12 @@ namespace Controladoras
         }
 
 
-        public bool bajaCli(int id)
+        public bool bajaCli(int id, int idAdmin)
         {
             ControladoraP inst = ControladoraP.obtenerInstancia();
 
 
-            if (inst.bajaCli(id))
+            if (inst.bajaCli(id, idAdmin))
             {
                 return true;
             }
@@ -219,10 +219,10 @@ namespace Controladoras
             return inst.buscarCamionero(id);
         }
 
-        public bool altaCamionero(Camionero Camionero)
+        public bool altaCamionero(Camionero Camionero, int idAdmin)
         {
             ControladoraP inst = ControladoraP.obtenerInstancia();
-            if (inst.altaCamionero(Camionero))
+            if (inst.altaCamionero(Camionero, idAdmin))
             {
                 return true;
             }
@@ -232,10 +232,10 @@ namespace Controladoras
             }
         }
 
-        public bool bajaCamionero(int id)
+        public bool bajaCamionero(int id, int idAdmin)
         {
             ControladoraP inst = ControladoraP.obtenerInstancia();
-            if (inst.bajaCamionero(id))
+            if (inst.bajaCamionero(id, idAdmin))
             {
                 return true;
             }
@@ -245,10 +245,10 @@ namespace Controladoras
             }
         }
 
-        public bool modCamionero(Camionero Camionero)
+        public bool modCamionero(Camionero Camionero, int idAdmin)
         {
             ControladoraP inst = ControladoraP.obtenerInstancia();
-            if (inst.modCamionero(Camionero))
+            if (inst.modCamionero(Camionero, idAdmin))
             {
                 return true;
             }

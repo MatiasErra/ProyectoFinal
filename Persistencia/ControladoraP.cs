@@ -53,19 +53,19 @@ namespace Persistencia
             return new pAdmin().buscarAdm(id);
         }
 
-        public bool altaAdmin(Admin admin)
+        public bool altaAdmin(Admin admin, int idAdmin)
         {
-            return new pAdmin().altaAdmin(admin);
+            return new pAdmin().altaAdmin(admin, idAdmin);
         }
 
-        public bool bajaAdmin(int id)
+        public bool bajaAdmin(int id, int idAdmin)
         {
-            return new pAdmin().bajaAdmin(id);
+            return new pAdmin().bajaAdmin(id, idAdmin);
         }
 
-        public bool modificarAdm(Admin admin)
+        public bool modificarAdm(Admin admin, int idAdmin)
         {
-            return new pAdmin().modificarAdm(admin);
+            return new pAdmin().modificarAdm(admin, idAdmin);
         }
 
         #endregion
@@ -105,9 +105,9 @@ namespace Persistencia
             return new pCliente().altaCli(cli);
         }
 
-        public bool bajaCli(int id)
+        public bool bajaCli(int id, int idAdmin)
         {
-            return new pCliente().bajaCli(id);
+            return new pCliente().bajaCli(id, idAdmin);
         }
 
         public bool modificarCli(Cliente cli)
@@ -134,19 +134,19 @@ namespace Persistencia
         }
 
 
-        public bool altaCamionero(Camionero camionero)
+        public bool altaCamionero(Camionero camionero, int idAdmin)
         {
-            return new pCamionero().altaCamionero(camionero);
+            return new pCamionero().altaCamionero(camionero, idAdmin);
         }
 
-        public bool bajaCamionero(int id)
+        public bool bajaCamionero(int id, int idAdmin)
         {
-            return new pCamionero().bajaCamionero(id);
+            return new pCamionero().bajaCamionero(id, idAdmin);
         }
 
-        public bool modCamionero(Camionero camionero)
+        public bool modCamionero(Camionero camionero, int idAdmin)
         {
-            return new pCamionero().modCamionero(camionero);
+            return new pCamionero().modCamionero(camionero, idAdmin);
         }
 
         #endregion

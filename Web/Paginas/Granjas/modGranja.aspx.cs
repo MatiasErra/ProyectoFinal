@@ -223,9 +223,11 @@ namespace Web.Paginas.Granjas
                         string ubicacion = HttpUtility.HtmlEncode(txtUbicacion.Text);
                         int idCliente = int.Parse(HttpUtility.HtmlEncode(listDueño.SelectedValue));
 
+                        int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+
                         ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
                         Granja unaGraja = new Granja(id, nombre, ubicacion, idCliente);
-                        if (Web.modGranja(unaGraja))
+                        if (Web.modGranja(unaGraja, idAdmin))
                         {
                             limpiar();
                             lblMensajes.Text = "Granja modificada con exito.";

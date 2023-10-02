@@ -123,9 +123,11 @@ namespace Web.Paginas.Depositos
                         short temperatura = short.Parse(HttpUtility.HtmlEncode(txtTemperatura.Text));
                         string condiciones = HttpUtility.HtmlEncode(txtCondiciones.Text);
 
+                        int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+
                         ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
                         Deposito unDeposito = new Deposito(id, capacidad, ubicacion, temperatura, condiciones);
-                        if (Web.modDeps(unDeposito))
+                        if (Web.modDeps(unDeposito, idAdmin))
                         {
                             limpiar();
                             lblMensajes.Text = "Depósito modificado con éxito.";

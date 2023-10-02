@@ -362,9 +362,11 @@ namespace Web.Paginas.Lotes
                             int idDeposito = int.Parse(HttpUtility.HtmlEncode(listDeposito.SelectedValue));
                             string CantTotal = CantTotalProd(idGranja, idProducto, fchProduccion, txtCantidad.Text);
 
+                            int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+
                             Lote unLote = new Lote(idGranja, idProducto, fchProduccion, fchCaducidad, cantidad, precio, idDeposito);
 
-                            if (Web.modLote(unLote, CantTotal))
+                            if (Web.modLote(unLote, CantTotal, idAdmin))
                             {
                                 limpiar();
                                 lblMensajes.Text = "Lote modificado con éxito.";

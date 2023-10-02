@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="asgPedAViaje.aspx.cs" Inherits="Web.Paginas.Viajes.asgPedAViaje" %>
+﻿<%@ Page Title="Asignar viaje a pedido" Language="C#" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="asgPedAViaje.aspx.cs" Inherits="Web.Paginas.Viajes.asgPedAViaje" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 

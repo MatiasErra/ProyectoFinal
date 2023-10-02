@@ -180,12 +180,12 @@ namespace Web.Paginas.Fertilizantes
                             string impacto = HttpUtility.HtmlEncode(lstImpacto.SelectedValue.ToString());
 
 
-
+                            int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
 
 
                             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
                             Fertilizante fertilizante = new Fertilizante(id, nombre, tipo, pH, impacto);
-                            if (Web.modFerti(fertilizante))
+                            if (Web.modFerti(fertilizante, idAdmin))
                             {
                                 limpiar();
                                 lblMensajes.Text = "Fertilizante modificado con éxito.";

@@ -152,15 +152,7 @@ namespace Web.Paginas.Viajes
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             List<Pedido> lstPedidoRes = new List<Pedido>();
 
-            string NomCli = "";
-            string Estado = "Confirmado";
-            string viaje = "";
-            int CostoMin = 0;
-            int CostoMayor = 99999999;
-            string ordenar = "Fecha del pedido";
-
-
-            List<Pedido> lstPedido = Web.BuscarPedidoFiltro(NomCli, Estado, viaje, CostoMin, CostoMayor, ordenar);
+            List<Pedido> lstPedido = Web.BuscarPedidoFiltro("", "Confirmado", "", 0, 99999999, "1000-01-01", "3000-12-30", "1000-01-01", "3000-12-30", "Fecha del pedido");
 
 
             int idViaje = 0;
@@ -625,13 +617,14 @@ namespace Web.Paginas.Viajes
             int fallo = 0;
             if (viajeLotPed.Count > 0)
             {
-                if (Web.modViaje(unViaje))
+                int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                if (Web.modViaje(unViaje, idAdmin))
                 {
                     List<Viaje_Lot_Ped> lstViajePed = Web.buscarViajePedLote(0, idViaje );
                     foreach (Viaje_Lot_Ped unPeiajePed in lstViajePed)
                     {
 
-                        if (Web.modPedViajeEst(unPeiajePed.IdPedido, estado))
+                        if (Web.modPedViajeEst(unPeiajePed.IdPedido, estado, idAdmin))
                         {
                         
                         }
@@ -710,8 +703,8 @@ namespace Web.Paginas.Viajes
             int CantTotal = CantAct - intCantAsg;
 
             string strCantTotal = CantTotal.ToString() + " " + unProd.TipoVenta.ToString();
-
-            if (Web.bajaViajePedido_Lote(viaje_Lot_Ped, strCantTotal))
+            int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+            if (Web.bajaViajePedido_Lote(viaje_Lot_Ped, strCantTotal, idAdmin))
             {
                 listBuscarPedLote();
                 lblMensajes.Text = "Lote eliminado del viaje";
@@ -769,7 +762,8 @@ namespace Web.Paginas.Viajes
                 {
                     CantViajeAct = CantViajeAct + cantAdd;
                     string stCantViajeAct = CantViajeAct.ToString() + " " + unProd.TipoVenta;
-                    if (Web.altaViajePedido_Lote(viaje_Lot_Ped, stCantViajeAct))
+                    int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                    if (Web.altaViajePedido_Lote(viaje_Lot_Ped, stCantViajeAct, idAdmin))
                     {
                         listBuscarPedLote();
                         lblMensajes.Text = "Se ingreso el pedido lote al viaje";

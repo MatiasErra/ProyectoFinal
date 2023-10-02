@@ -46,3 +46,9 @@ D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Respaldo\Proyecto\Proyecto\Clas
 D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Respaldo\Proyecto\Proyecto\Clases\obj\Debug\Clases.csproj.CoreCompileInputs.cache
 D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Respaldo\Proyecto\Proyecto\Clases\obj\Debug\Clases.dll
 D:\Clases\Proyecto Final\Proyecto DESACTUALIZADO\Respaldo\Proyecto\Proyecto\Clases\obj\Debug\Clases.pdb
+C:\Users\Mrgat\OneDrive\Escritorio\ProyectoCommit\Proyecto\Clases\bin\Debug\Clases.dll
+C:\Users\Mrgat\OneDrive\Escritorio\ProyectoCommit\Proyecto\Clases\bin\Debug\Clases.pdb
+C:\Users\Mrgat\OneDrive\Escritorio\ProyectoCommit\Proyecto\Clases\obj\Debug\Clases.csproj.AssemblyReference.cache
+C:\Users\Mrgat\OneDrive\Escritorio\ProyectoCommit\Proyecto\Clases\obj\Debug\Clases.csproj.CoreCompileInputs.cache
+C:\Users\Mrgat\OneDrive\Escritorio\ProyectoCommit\Proyecto\Clases\obj\Debug\Clases.dll
+C:\Users\Mrgat\OneDrive\Escritorio\ProyectoCommit\Proyecto\Clases\obj\Debug\Clases.pdb

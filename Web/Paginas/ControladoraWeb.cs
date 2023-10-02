@@ -33,12 +33,11 @@ namespace Web.Paginas
 
         #endregion
 
-
         #region Pedido
-        public List<Pedido> BuscarPedidoFiltro(string NombreCli, string Estado, string Viaje, double CostoMin, double CostoMax, string Ordenar)
+        public List<Pedido> BuscarPedidoFiltro(string NombreCli, string Estado, string Viaje, double CostoMin, double CostoMax, string fchPedidoMenor, string fchPedidoMayor, string fchEntregaMenor, string fchEntregaMayor, string Ordenar)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Pedido> lst = inst.BuscarPedidoFiltro(NombreCli, Estado, Viaje, CostoMin, CostoMax, Ordenar);
+            List<Pedido> lst = inst.BuscarPedidoFiltro(NombreCli, Estado, Viaje, CostoMin, CostoMax, fchPedidoMenor, fchPedidoMayor, fchEntregaMenor, fchEntregaMayor, Ordenar);
             return lst;
 
         }
@@ -57,7 +56,7 @@ namespace Web.Paginas
             List<Pedido> lst = inst.listPedido();
             return lst;
         }
-     
+
 
         public List<Pedido_Prod> listPedidoCli_Prod(int idProducto)
         {
@@ -108,11 +107,11 @@ namespace Web.Paginas
         }
 
 
-        public bool modCantPedidoLote(Lote_Pedido lote_Pedido, string CantLote, string CantDisp, string CantRess)
+        public bool modCantPedidoLote(Lote_Pedido lote_Pedido, string CantLote, string CantDisp, string CantRess, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            if (inst.modCantPedidoLote(lote_Pedido, CantLote, CantDisp, CantRess))
+            if (inst.modCantPedidoLote(lote_Pedido, CantLote, CantDisp, CantRess, idAdmin))
             {
                 return true;
             }
@@ -123,11 +122,11 @@ namespace Web.Paginas
 
         }
 
-        public bool bajaLotesPedido(int idPedido, int idGranja, int idProducto, string fchProduccion, string cantLote, string CantDisp, string CantRess)
+        public bool bajaLotesPedido(int idPedido, int idGranja, int idProducto, string fchProduccion, string cantLote, string CantDisp, string CantRess, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            if (inst.bajaLotesPedido(idPedido, idGranja, idProducto, fchProduccion, cantLote, CantDisp, CantRess))
+            if (inst.bajaLotesPedido(idPedido, idGranja, idProducto, fchProduccion, cantLote, CantDisp, CantRess, idAdmin))
             {
                 return true;
             }
@@ -162,12 +161,12 @@ namespace Web.Paginas
                 return false;
         }
 
-        public bool altaPedido_Lote(Lote_Pedido lote_Pedido,string CantLote, string CantDisp, string CantRess) 
+        public bool altaPedido_Lote(Lote_Pedido lote_Pedido, string CantLote, string CantDisp, string CantRess, int idAdmin)
         {
             {
                 ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-                if (inst.altaPedido_Lote(lote_Pedido, CantLote, CantDisp, CantRess))
+                if (inst.altaPedido_Lote(lote_Pedido, CantLote, CantDisp, CantRess, idAdmin))
                 {
                     return true;
                 }
@@ -212,10 +211,10 @@ namespace Web.Paginas
                 return false;
         }
 
-        public bool modPedViajeEst(int idPedido, string estado)
+        public bool modPedViajeEst(int idPedido, string estado, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            if (inst.modPedViajeEst(idPedido, estado))
+            if (inst.modPedViajeEst(idPedido, estado, idAdmin))
             {
                 return true;
             }
@@ -232,7 +231,6 @@ namespace Web.Paginas
         }
 
         #endregion
-
 
         #region Personas
 
@@ -261,7 +259,7 @@ namespace Web.Paginas
             int id = ins.iniciarSesionAdm(user, pass);
             return id;
         }
-   
+
 
         public List<Admin> buscarAdminFiltro(Admin adminBuscar, string fchDesde, string fchHasta, string ordenar)
         {
@@ -281,11 +279,11 @@ namespace Web.Paginas
 
         }
 
-        public bool altaAdmin(Admin admin)
+        public bool altaAdmin(Admin admin, int idAdmin)
         {
             ControladoraPersona inst = ControladoraPersona.obtenerInstancia();
 
-            if (inst.altaAdmin(admin))
+            if (inst.altaAdmin(admin, idAdmin))
             {
                 return true;
             }
@@ -293,11 +291,11 @@ namespace Web.Paginas
                 return false;
         }
 
-        public bool bajaAdmin(int id)
+        public bool bajaAdmin(int id, int idAdmin)
         {
             ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
 
-            if (ins.bajaAdmin(id))
+            if (ins.bajaAdmin(id, idAdmin))
             {
                 return true;
             }
@@ -305,10 +303,10 @@ namespace Web.Paginas
                 return false;
         }
 
-        public bool modificarAdm(Admin admin)
+        public bool modificarAdm(Admin admin, int idAdmin)
         {
             ControladoraPersona inst = ControladoraPersona.obtenerInstancia();
-            if (inst.modificarAdm(admin))
+            if (inst.modificarAdm(admin, idAdmin))
             {
                 return true;
             }
@@ -317,6 +315,7 @@ namespace Web.Paginas
                 return false;
             }
         }
+
 
         #endregion
 
@@ -340,7 +339,7 @@ namespace Web.Paginas
             int id = ins.iniciarSesionCli(user, pass);
             return id;
         }
-       
+
         public List<Cliente> buscarCliFiltro(Cliente cliente, string fchDesde, string fchHasta, string ordenar)
         {
             ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
@@ -372,12 +371,12 @@ namespace Web.Paginas
         }
 
 
-        public bool bajaCli(int id)
+        public bool bajaCli(int id, int idAdmin)
         {
             ControladoraPersona ins = ControladoraPersona.obtenerInstancia();
 
 
-            if (ins.bajaCli(id))
+            if (ins.bajaCli(id, idAdmin))
             {
                 return true;
             }
@@ -419,10 +418,10 @@ namespace Web.Paginas
         }
 
 
-        public bool altaCamionero(Camionero camionero)
+        public bool altaCamionero(Camionero camionero, int idAdmin)
         {
             ControladoraPersona inst = ControladoraPersona.obtenerInstancia();
-            if (inst.altaCamionero(camionero))
+            if (inst.altaCamionero(camionero, idAdmin))
             {
                 return true;
             }
@@ -432,10 +431,10 @@ namespace Web.Paginas
             }
         }
 
-        public bool bajaCamionero(int id)
+        public bool bajaCamionero(int id, int idAdmin)
         {
             ControladoraPersona inst = ControladoraPersona.obtenerInstancia();
-            if (inst.bajaCamionero(id))
+            if (inst.bajaCamionero(id, idAdmin))
             {
                 return true;
             }
@@ -445,10 +444,10 @@ namespace Web.Paginas
             }
         }
 
-        public bool modCamionero(Camionero camionero)
+        public bool modCamionero(Camionero camionero, int idAdmin)
         {
             ControladoraPersona inst = ControladoraPersona.obtenerInstancia();
-            if (inst.modCamionero(camionero))
+            if (inst.modCamionero(camionero, idAdmin))
             {
                 return true;
             }
@@ -482,11 +481,11 @@ namespace Web.Paginas
 
         }
 
-        public bool altaDeps(Deposito deposito)
+        public bool altaDeps(Deposito deposito, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            if (inst.altaDeps(deposito))
+            if (inst.altaDeps(deposito, idAdmin))
             {
                 return true;
             }
@@ -494,11 +493,11 @@ namespace Web.Paginas
                 return false;
         }
 
-        public bool bajaDeps(int id)
+        public bool bajaDeps(int id, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            if (inst.bajaDeps(id))
+            if (inst.bajaDeps(id, idAdmin))
             {
                 return true;
             }
@@ -506,10 +505,10 @@ namespace Web.Paginas
                 return false;
         }
 
-        public bool modDeps(Deposito deposito)
+        public bool modDeps(Deposito deposito, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            if (inst.modDeps(deposito))
+            if (inst.modDeps(deposito, idAdmin))
             {
                 return true;
             }
@@ -526,7 +525,7 @@ namespace Web.Paginas
         #region Granjas
 
 
- 
+
 
         public List<Granja> buscarGranjaFiltro(Granja pGranja, string ordenar)
         {
@@ -544,11 +543,11 @@ namespace Web.Paginas
 
         }
 
-        public bool altaGranja(Granja granja)
+        public bool altaGranja(Granja granja, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            if (inst.altaGranja(granja))
+            if (inst.altaGranja(granja, idAdmin))
             {
                 return true;
             }
@@ -556,11 +555,11 @@ namespace Web.Paginas
                 return false;
         }
 
-        public bool bajaGranja(int id)
+        public bool bajaGranja(int id, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            if (inst.bajaGranja(id))
+            if (inst.bajaGranja(id, idAdmin))
             {
                 return true;
             }
@@ -568,10 +567,10 @@ namespace Web.Paginas
                 return false;
         }
 
-        public bool modGranja(Granja granja)
+        public bool modGranja(Granja granja, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            if (inst.modGranja(granja))
+            if (inst.modGranja(granja, idAdmin))
             {
                 return true;
             }
@@ -610,11 +609,11 @@ namespace Web.Paginas
 
         }
 
-        public bool altaProducto(Producto producto)
+        public bool altaProducto(Producto producto, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            if (inst.altaProducto(producto))
+            if (inst.altaProducto(producto, idAdmin))
             {
                 return true;
             }
@@ -622,11 +621,11 @@ namespace Web.Paginas
                 return false;
         }
 
-        public bool bajaProducto(int id)
+        public bool bajaProducto(int id, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            if (inst.bajaProducto(id))
+            if (inst.bajaProducto(id, idAdmin))
             {
                 return true;
             }
@@ -634,10 +633,10 @@ namespace Web.Paginas
                 return false;
         }
 
-        public bool modProducto(Producto producto)
+        public bool modProducto(Producto producto, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            if (inst.modProducto(producto))
+            if (inst.modProducto(producto, idAdmin))
             {
                 return true;
             }
@@ -668,11 +667,11 @@ namespace Web.Paginas
 
         }
 
-        public bool altaPesti(Pesticida pesticida)
+        public bool altaPesti(Pesticida pesticida, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            if (inst.altaPesti(pesticida))
+            if (inst.altaPesti(pesticida, idAdmin))
             {
                 return true;
             }
@@ -680,12 +679,12 @@ namespace Web.Paginas
                 return false;
         }
 
-        public bool bajaPesti(int id)
+        public bool bajaPesti(int id, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
 
-            if (inst.bajaPesti(id))
+            if (inst.bajaPesti(id, idAdmin))
             {
                 return true;
             }
@@ -693,10 +692,10 @@ namespace Web.Paginas
                 return false;
         }
 
-        public bool modPesti(Pesticida pesticida)
+        public bool modPesti(Pesticida pesticida, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            if (inst.modPesti(pesticida))
+            if (inst.modPesti(pesticida, idAdmin))
             {
                 return true;
             }
@@ -714,7 +713,7 @@ namespace Web.Paginas
         #region Fertilizantes
 
 
-    
+
 
         public List<Fertilizante> buscarFertilizanteFiltro(Fertilizante pFertilizante, double phMenor, double phMayor, string ordenar, int idGranja, int idProducto, string fchProduccion)
         {
@@ -732,11 +731,11 @@ namespace Web.Paginas
 
         }
 
-        public bool altaFerti(Fertilizante fertilizante)
+        public bool altaFerti(Fertilizante fertilizante, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            if (inst.altaFerti(fertilizante))
+            if (inst.altaFerti(fertilizante, idAdmin))
             {
                 return true;
             }
@@ -744,12 +743,12 @@ namespace Web.Paginas
                 return false;
         }
 
-        public bool bajaFerti(int id)
+        public bool bajaFerti(int id, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
 
-            if (inst.bajaFerti(id))
+            if (inst.bajaFerti(id, idAdmin))
             {
                 return true;
             }
@@ -757,10 +756,10 @@ namespace Web.Paginas
                 return false;
         }
 
-        public bool modFerti(Fertilizante fertilizante)
+        public bool modFerti(Fertilizante fertilizante, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            if (inst.modFerti(fertilizante))
+            if (inst.modFerti(fertilizante, idAdmin))
             {
                 return true;
             }
@@ -777,7 +776,7 @@ namespace Web.Paginas
 
         #region Lotes
 
-      
+
         public List<Lote> buscarFiltrarLotes(Lote lote, double precioMenor, double precioMayor, string fchProduccionMenor, string fchProduccionMayor, string fchCaducidadMenor, string fchCaducidadMayor, string ordenar)
         {
             ControladoraItem ins = ControladoraItem.obtenerInstancia();
@@ -794,11 +793,11 @@ namespace Web.Paginas
 
         }
 
-        public bool altaLote(Lote lote, string cantTotal)
+        public bool altaLote(Lote lote, string cantTotal, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            if (inst.altaLote(lote, cantTotal))
+            if (inst.altaLote(lote, cantTotal, idAdmin))
             {
                 return true;
             }
@@ -806,11 +805,11 @@ namespace Web.Paginas
                 return false;
         }
 
-        public bool bajaLote(string nombreGranja, string nombreProducto, string fchProduccion, string cantTotal)
+        public bool bajaLote(string nombreGranja, string nombreProducto, string fchProduccion, string cantTotal, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            if (inst.bajaLote(nombreGranja, nombreProducto, fchProduccion, cantTotal))
+            if (inst.bajaLote(nombreGranja, nombreProducto, fchProduccion, cantTotal, idAdmin))
             {
                 return true;
             }
@@ -818,10 +817,10 @@ namespace Web.Paginas
                 return false;
         }
 
-        public bool modLote(Lote lote, string cantTotal)
+        public bool modLote(Lote lote, string cantTotal, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            if (inst.modLote(lote, cantTotal))
+            if (inst.modLote(lote, cantTotal, idAdmin))
             {
                 return true;
             }
@@ -851,10 +850,10 @@ namespace Web.Paginas
 
         }
 
-        public bool altaLoteFerti(Lote_Ferti loteF)
+        public bool altaLoteFerti(Lote_Ferti loteF, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            if (inst.altaLoteFerti(loteF))
+            if (inst.altaLoteFerti(loteF, idAdmin))
             {
                 return true;
             }
@@ -864,10 +863,10 @@ namespace Web.Paginas
             }
         }
 
-        public bool bajaLoteFerti(int idFertilizante, int idGranja, int idProducto, string fchProduccion)
+        public bool bajaLoteFerti(int idFertilizante, int idGranja, int idProducto, string fchProduccion, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            if (inst.bajaLoteFerti(idFertilizante, idGranja, idProducto, fchProduccion))
+            if (inst.bajaLoteFerti(idFertilizante, idGranja, idProducto, fchProduccion, idAdmin))
             {
                 return true;
             }
@@ -877,10 +876,10 @@ namespace Web.Paginas
             }
         }
 
-        public bool modLoteFerti(Lote_Ferti loteF)
+        public bool modLoteFerti(Lote_Ferti loteF, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            if (inst.modLoteFerti(loteF))
+            if (inst.modLoteFerti(loteF, idAdmin))
             {
                 return true;
             }
@@ -894,7 +893,7 @@ namespace Web.Paginas
 
         #region Lotes_Pestis
 
-        public List<Lote_Pesti> PestisEnLote (int idGranja, int idProducto, string fchProduccion, string buscar, string ord)
+        public List<Lote_Pesti> PestisEnLote(int idGranja, int idProducto, string fchProduccion, string buscar, string ord)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
             List<Lote_Pesti> lst = inst.PestisEnLote(idGranja, idProducto, fchProduccion, buscar, ord);
@@ -910,10 +909,10 @@ namespace Web.Paginas
 
         }
 
-        public bool altaLotePesti(Lote_Pesti loteP)
+        public bool altaLotePesti(Lote_Pesti loteP, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            if (inst.altaLotePesti(loteP))
+            if (inst.altaLotePesti(loteP, idAdmin))
             {
                 return true;
             }
@@ -923,10 +922,10 @@ namespace Web.Paginas
             }
         }
 
-        public bool bajaLotePesti(int idPesticida, int idGranja, int idProducto, string fchProduccion)
+        public bool bajaLotePesti(int idPesticida, int idGranja, int idProducto, string fchProduccion, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            if (inst.bajaLotePesti(idPesticida, idGranja, idProducto, fchProduccion))
+            if (inst.bajaLotePesti(idPesticida, idGranja, idProducto, fchProduccion, idAdmin))
             {
                 return true;
             }
@@ -936,10 +935,10 @@ namespace Web.Paginas
             }
         }
 
-        public bool modLotePesti(Lote_Pesti loteP)
+        public bool modLotePesti(Lote_Pesti loteP, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            if (inst.modLotePesti(loteP))
+            if (inst.modLotePesti(loteP, idAdmin))
             {
                 return true;
             }
@@ -952,8 +951,8 @@ namespace Web.Paginas
         #endregion
 
         #region Camiones
- 
- 
+
+
 
         public List<Camion> buscarFiltroCam(Camion pCamion, double cargaMenor, double cargaMayor, string ordenar)
         {
@@ -971,11 +970,11 @@ namespace Web.Paginas
 
         }
 
-        public bool altaCam(Camion camion)
+        public bool altaCam(Camion camion, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            if (inst.altaCam(camion))
+            if (inst.altaCam(camion, idAdmin))
             {
                 return true;
             }
@@ -983,12 +982,12 @@ namespace Web.Paginas
                 return false;
         }
 
-        public bool bajaCam(int id)
+        public bool bajaCam(int id, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
 
-            if (inst.bajaCam(id))
+            if (inst.bajaCam(id, idAdmin))
             {
                 return true;
             }
@@ -996,10 +995,10 @@ namespace Web.Paginas
                 return false;
         }
 
-        public bool modCam(Camion camion)
+        public bool modCam(Camion camion, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            if (inst.modCam(camion))
+            if (inst.modCam(camion, idAdmin))
             {
                 return true;
             }
@@ -1009,7 +1008,6 @@ namespace Web.Paginas
             }
         }
         #endregion
-
 
         #region Viajes
 
@@ -1029,11 +1027,11 @@ namespace Web.Paginas
 
         }
 
-        public bool altaViaje(Viaje viaje)
+        public bool altaViaje(Viaje viaje, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            if (inst.altaViaje(viaje))
+            if (inst.altaViaje(viaje, idAdmin))
             {
                 return true;
             }
@@ -1041,12 +1039,12 @@ namespace Web.Paginas
                 return false;
         }
 
-        public bool bajaViaje(int id)
+        public bool bajaViaje(int id, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
 
-            if (inst.bajaViaje(id))
+            if (inst.bajaViaje(id, idAdmin))
             {
                 return true;
             }
@@ -1054,10 +1052,10 @@ namespace Web.Paginas
                 return false;
         }
 
-        public bool modViaje(Viaje viaje)
+        public bool modViaje(Viaje viaje, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            if (inst.modViaje(viaje))
+            if (inst.modViaje(viaje, idAdmin))
             {
                 return true;
             }
@@ -1073,11 +1071,11 @@ namespace Web.Paginas
             List<Viaje_Lot_Ped> lst = inst.buscarViajePedLote(idPedido, idViaje);
             return lst;
         }
-        public bool altaViajePedido_Lote(Viaje_Lot_Ped viaje_Lot_Ped, string CantViajeAct)
+        public bool altaViajePedido_Lote(Viaje_Lot_Ped viaje_Lot_Ped, string CantViajeAct, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            if (inst.altaViajePedido_Lote(viaje_Lot_Ped, CantViajeAct))
+            if (inst.altaViajePedido_Lote(viaje_Lot_Ped, CantViajeAct, idAdmin))
             {
                 return true;
             }
@@ -1085,16 +1083,27 @@ namespace Web.Paginas
                 return false;
         }
 
-        public bool bajaViajePedido_Lote(Viaje_Lot_Ped viaje_Lot_Ped, string CantTotal)
+        public bool bajaViajePedido_Lote(Viaje_Lot_Ped viaje_Lot_Ped, string CantTotal, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            if (inst.bajaViajePedido_Lote(viaje_Lot_Ped, CantTotal))
+            if (inst.bajaViajePedido_Lote(viaje_Lot_Ped, CantTotal, idAdmin))
             {
                 return true;
             }
             else
                 return false;
+        }
+
+        #endregion
+
+        #region Estadisticas
+
+        public List<Auditoria> buscarFiltrarAuditoria(Auditoria auditoria, string fchMenor, string fchMayor, string ordenar)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            List<Auditoria> lst = inst.buscarAuditoriaFiltro(auditoria, fchMenor, fchMayor, ordenar);
+            return lst;
         }
 
         #endregion

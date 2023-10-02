@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="modPest.aspx.cs" Inherits="Web.Paginas.Pesticidas.modPest" %>
+﻿<%@ Page Title="Modificar pesticida" Language="C#" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="modPest.aspx.cs" Inherits="Web.Paginas.Pesticidas.modPest" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -29,24 +29,24 @@
                 <div class="input-group">
 
                     <asp:TextBox ID="txtTipo" CssClass="input--style-tex" runat="server" placeholder="Tipo" MaxLength="40" onkeydown="return(!(event.keyCode>=91) || event.keyCode==32 || event.keyCode==8 );"></asp:TextBox>
-                <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
-                    ControlToValidate="txtTipo"
-                    ValidationExpression="^[a-zA-Z ]*$"
-                    ErrorMessage="No es una letra valida" />
-                    
+                    <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
+                        ControlToValidate="txtTipo"
+                        ValidationExpression="^[a-zA-Z ]*$"
+                        ErrorMessage="No es una letra valida" />
+
                 </div>
-            
+
 
 
 
                 <div class="input-group">
 
-                     <asp:TextBox ID="txtPH" CssClass="input--style-tex" MaxLength="4" runat="server" placeholder="PH" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==188 || event.keyCode==8);"></asp:TextBox>
-                     <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
-                                            ControlToValidate="txtPH"
-                                            ValidationExpression="([0-9])[0-9]*[,]?[0-9]*"
-                                            ErrorMessage="Solo numeros">
-                                        </asp:RegularExpressionValidator>
+                    <asp:TextBox ID="txtPH" CssClass="input--style-tex" MaxLength="4" runat="server" placeholder="PH" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==188 || event.keyCode==8);"></asp:TextBox>
+                    <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
+                        ControlToValidate="txtPH"
+                        ValidationExpression="([0-9])[0-9]*[,]?[0-9]*"
+                        ErrorMessage="Solo numeros">
+                    </asp:RegularExpressionValidator>
 
 
 
@@ -70,4 +70,5 @@
 
             </div>
         </div>
+    </div>
 </asp:Content>

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="frmPesticidas.aspx.cs" Inherits="Web.Paginas.Pesticidas.frmPesticida" %>
+﻿<%@ Page Title="Gestión de pesticidas" Language="C#" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="frmPesticidas.aspx.cs" Inherits="Web.Paginas.Pesticidas.frmPesticida" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -10,7 +10,7 @@
             <div class="col-12 m-3 p-2 text-center backforContent">
                 <div class="row">
                     <div class="col-12 p-3">
-                        <h2 class="title">Gestion de Pesticidas </h2>
+                        <h2 class="title">Gestión de Pesticidas </h2>
 
 
                         <div class="row text-center">

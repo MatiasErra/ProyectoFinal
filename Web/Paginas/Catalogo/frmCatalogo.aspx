@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Title="Catalogo" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="frmCatalogo.aspx.cs" Inherits="Web.Paginas.frmCatalogo" %>
+﻿<%@ Page Language="C#" Title="Catálogo" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="frmCatalogo.aspx.cs" Inherits="Web.Paginas.frmCatalogo" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div>

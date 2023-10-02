@@ -97,7 +97,7 @@ namespace Persistencia
             return fertilizante;
         }
 
-        public bool altaFerti(Fertilizante fertilizante)
+        public bool altaFerti(Fertilizante fertilizante, int idAdmin)
         {
             bool resultado = false;
 
@@ -112,6 +112,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@tipo", fertilizante.Tipo));
                 cmd.Parameters.Add(new SqlParameter("@pH", fertilizante.PH));
                 cmd.Parameters.Add(new SqlParameter("@impacto", fertilizante.Impacto));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
 
                 int resBD = cmd.ExecuteNonQuery();
@@ -134,7 +135,7 @@ namespace Persistencia
             return resultado;
         }
 
-        public bool bajaFerti(int id)
+        public bool bajaFerti(int id, int idAdmin)
         {
             bool resultado = false;
 
@@ -145,6 +146,7 @@ namespace Persistencia
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.Add(new SqlParameter("@id", id));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 
@@ -170,7 +172,7 @@ namespace Persistencia
 
         }
 
-        public bool modFerti(Fertilizante fertilizante)
+        public bool modFerti(Fertilizante fertilizante, int idAdmin)
         {
             bool resultado = false;
 
@@ -185,6 +187,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@tipo", fertilizante.Tipo));
                 cmd.Parameters.Add(new SqlParameter("@pH", fertilizante.PH));
                 cmd.Parameters.Add(new SqlParameter("@impacto", fertilizante.Impacto));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 

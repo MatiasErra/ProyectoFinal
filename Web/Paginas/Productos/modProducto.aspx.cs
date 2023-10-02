@@ -239,10 +239,10 @@ namespace Web.Paginas.Productos
                             }
                             int precio = int.Parse(HttpUtility.HtmlEncode(txtPrecio.Text));
 
-
+                            int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
 
                             Producto unProducto = new Producto(idProducto, nombre, tipo, tipoVenta, imagen, precio);
-                            if (Web.modProducto(unProducto))
+                            if (Web.modProducto(unProducto, idAdmin))
                             {
                                 limpiar();
                                 lblMensajes.Text = "Producto modificado con éxito.";

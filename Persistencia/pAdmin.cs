@@ -176,7 +176,7 @@ namespace Persistencia
 
 
 
-        public bool altaAdmin(Admin admin)
+        public bool altaAdmin(Admin admin, int idAdmin)
         {
             bool resultado = false;
 
@@ -196,6 +196,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@pass", admin.Contrasena));
                 cmd.Parameters.Add(new SqlParameter("@TipoAdm", admin.TipoDeAdmin));
                 cmd.Parameters.Add(new SqlParameter("@estado", admin.Estado));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 
@@ -205,7 +206,7 @@ namespace Persistencia
                     resultado = true;
                 }
                 if (conect.State == ConnectionState.Open)
-                {   
+                {
                     conect.Close();
                     resultado = true;
                 }
@@ -222,7 +223,7 @@ namespace Persistencia
         }
 
 
-        public bool bajaAdmin(int id)
+        public bool bajaAdmin(int id, int idAdmin)
         {
             bool resultado = false;
             try
@@ -233,14 +234,7 @@ namespace Persistencia
 
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(new SqlParameter("@id", id));
-
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                    while (reader.Read())
-                    {
-
-                        cmd.Parameters.Add(new SqlParameter("@id", id));
-
-                    }
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 
@@ -264,7 +258,7 @@ namespace Persistencia
             return resultado;
         }
 
-        public bool modificarAdm(Admin admin)
+        public bool modificarAdm(Admin admin, int idAdmin)
         {
             bool resultado = true;
 
@@ -277,11 +271,12 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@id", admin.IdPersona));
                 cmd.Parameters.Add(new SqlParameter("@nombre", admin.Nombre));
                 cmd.Parameters.Add(new SqlParameter("@apellido", admin.Apellido));
-    
+
                 cmd.Parameters.Add(new SqlParameter("@fchNac", admin.FchNacimiento));
-   
+
                 cmd.Parameters.Add(new SqlParameter("@TipoAdm", admin.TipoDeAdmin));
                 cmd.Parameters.Add(new SqlParameter("@estado", admin.Estado));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
 
 

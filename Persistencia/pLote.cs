@@ -114,7 +114,7 @@ namespace Persistencia
             }
             return lote;
         }
-        public bool altaLote(Lote lote, string cantTotal)
+        public bool altaLote(Lote lote, string cantTotal, int idAdmin)
         {
             bool resultado = false;
 
@@ -132,6 +132,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@precio", lote.Precio));
                 cmd.Parameters.Add(new SqlParameter("@idDeposito", lote.IdDeposito));
                 cmd.Parameters.Add(new SqlParameter("@cantTotal", cantTotal));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
 
                 int resBD = cmd.ExecuteNonQuery();
@@ -155,7 +156,7 @@ namespace Persistencia
         }
 
 
-        public bool bajaLote(string nombreGranja, string nombreProducto, string fchProduccion, string cantTotal)
+        public bool bajaLote(string nombreGranja, string nombreProducto, string fchProduccion, string cantTotal, int idAdmin)
         {
             bool resultado = false;
 
@@ -169,6 +170,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@nombreProducto", nombreProducto));
                 cmd.Parameters.Add(new SqlParameter("@fchProduccion", fchProduccion));
                 cmd.Parameters.Add(new SqlParameter("@cantTotal", cantTotal));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 
@@ -194,7 +196,7 @@ namespace Persistencia
 
         }
 
-        public bool modLote(Lote lote, string cantTotal)
+        public bool modLote(Lote lote, string cantTotal, int idAdmin)
         {
             bool resultado = false;
 
@@ -212,6 +214,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@precio", lote.Precio));
                 cmd.Parameters.Add(new SqlParameter("@idDeposito", lote.IdDeposito));
                 cmd.Parameters.Add(new SqlParameter("@cantTotal", cantTotal));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 

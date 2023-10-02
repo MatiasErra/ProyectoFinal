@@ -46,6 +46,13 @@ namespace Web.Paginas.Admins
         {
             if (!IsPostBack)
             {
+                if (System.Web.HttpContext.Current.Session["AuditoriaDatosFrm"] != null)
+                {
+                    btnVolver.Visible = true;
+                    lstAdmin.Visible = false;
+                    lstAdminSel.Visible = true;
+                }
+
 
                 if (System.Web.HttpContext.Current.Session["PagAct"] == null)
                 {
@@ -285,14 +292,22 @@ namespace Web.Paginas.Admins
             else
             {
                 lblPaginas.Visible = true;
-                lblMensajes.Text = "";
                 modificarPagina();
-                lstAdmin.Visible = true;
-                lstAdmin.DataSource = null;
-                lstAdmin.DataSource = adminPagina;
-                lstAdmin.DataBind();
+                if (System.Web.HttpContext.Current.Session["AuditoriaDatosFrm"] != null)
+                {
+                    lstAdminSel.Visible = true;
+                    lstAdminSel.DataSource = null;
+                    lstAdminSel.DataSource = adminPagina;
+                    lstAdminSel.DataBind();
+                }
+                else
+                {
+                    lstAdmin.Visible = true;
+                    lstAdmin.DataSource = null;
+                    lstAdmin.DataSource = adminPagina;
+                    lstAdmin.DataBind();
+                }
             }
-
         }
 
         private void modificarPagina()
@@ -550,6 +565,11 @@ namespace Web.Paginas.Admins
             Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
 
+        protected void btnVolver_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("/Paginas/Estadisticas/frmAuditoria");
+        }
+
         protected void btnAlta_Click(object sender, EventArgs e)
         {
             if (!faltanDatos())
@@ -577,14 +597,22 @@ namespace Web.Paginas.Admins
 
                                     string hashedPassword = FormsAuthentication.HashPasswordForStoringInConfigFile(pass, "SHA1");
 
-
+                                    int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
 
                                     ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
                                     Admin unAdmin = new Admin(id, nombre, apellido, email, tele, txtFc, user, hashedPassword, tipoAdm, estado);
-                                    if (Web.altaAdmin(unAdmin))
+                                    if (Web.altaAdmin(unAdmin, idAdmin))
                                     {
-                                        lblMensajes.Text = "Administrador dado de alta con éxito.";
-                                        listarPagina();
+                                        if (System.Web.HttpContext.Current.Session["AuditoriaDatosFrm"] != null)
+                                        {
+                                            System.Web.HttpContext.Current.Session["adminAuditoriaBuscar"] = unAdmin.IdPersona.ToString();
+                                            Response.Redirect("/Paginas/Estadisticas/frmAuditoria");
+                                        }
+                                        else
+                                        {
+                                            lblMensajes.Text = "Administrador dado de alta con éxito.";
+                                            listarPagina();
+                                        }
                                     }
                                     else lblMensajes.Text = "Ya existe un Administrador con estos datos. Estos son los posibles datos repetidos (Email / Teléfono / Usuario).";
                                 }
@@ -601,6 +629,21 @@ namespace Web.Paginas.Admins
             else lblMensajes.Text = "Faltan Datos.";
         }
 
+        protected void btnSelected_Click(object sender, EventArgs e)
+        {
+            int id;
+            Button btnConstultar = (Button)sender;
+            GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
+            id = int.Parse(selectedrow.Cells[0].Text);
+
+            System.Web.HttpContext.Current.Session["adminAuditoriaBuscar"] = id;
+
+            if (System.Web.HttpContext.Current.Session["AuditoriaDatosFrm"] != null)
+            {
+                Response.Redirect("/Paginas/Estadisticas/frmAuditoria");
+            }
+        }
+
         protected void btnBaja_Click(object sender, EventArgs e)
         {
             int id;
@@ -612,14 +655,22 @@ namespace Web.Paginas.Admins
             Admin unAdmin = Web.buscarAdm(id);
             if (unAdmin != null)
             {
-                if (Web.bajaAdmin(id))
+                int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+
+                if (idAdmin != id)
                 {
-                    limpiar();
-                    lblMensajes.Text = "Se ha eliminado el Administrador.";
-                    lblPaginaAct.Text = "1";
-                    listarPagina();
+                    if (Web.bajaAdmin(id, idAdmin))
+                    {
+                        limpiar();
+                        lblMensajes.Text = "Se ha eliminado el Administrador.";
+                        lblPaginaAct.Text = "1";
+                        listarPagina();
+                    }
+                    else lblMensajes.Text = "No se ha podido eliminar el Administrador.";
                 }
-                else lblMensajes.Text = "No se ha podido eliminar el Administrador.";
+                else lblMensajes.Text = "No puedes eliminarte a ti mismo.";
+
+                
             }
             else lblMensajes.Text = "El Administrador no existe.";
         }

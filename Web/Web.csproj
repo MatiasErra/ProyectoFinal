@@ -132,6 +132,8 @@
     <Content Include="Paginas\Catalogo\frmCatalogo.aspx" />
     <Content Include="Paginas\Clientes\frmListarClientes.aspx" />
     <Content Include="Paginas\Depositos\frmDepositos.aspx" />
+    <Content Include="Paginas\Estadisticas\frmAuditoria.aspx" />
+    <Content Include="Paginas\Estadisticas\frmEstadisticas.aspx" />
     <Content Include="Paginas\Fertilizantes\frmFertilizantes.aspx" />
     <Content Include="Paginas\Granjas\frmGranjas.aspx" />
     <Content Include="Paginas\PedidosAdm\confPedido.aspx" />
@@ -328,6 +330,20 @@
     </Compile>
     <Compile Include="Paginas\Depositos\frmDepositos.aspx.designer.cs">
       <DependentUpon>frmDepositos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Estadisticas\frmAuditoria.aspx.cs">
+      <DependentUpon>frmAuditoria.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Estadisticas\frmAuditoria.aspx.designer.cs">
+      <DependentUpon>frmAuditoria.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Estadisticas\frmEstadisticas.aspx.cs">
+      <DependentUpon>frmEstadisticas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Estadisticas\frmEstadisticas.aspx.designer.cs">
+      <DependentUpon>frmEstadisticas.aspx</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Fertilizantes\frmFertilizantes.aspx.cs">
       <DependentUpon>frmFertilizantes.aspx</DependentUpon>

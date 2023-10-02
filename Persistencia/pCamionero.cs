@@ -10,7 +10,7 @@ using persistenciaDB;
 
 namespace Persistencia
 {
-     class pCamionero
+    class pCamionero
     {
 
 
@@ -112,7 +112,7 @@ namespace Persistencia
             return camionero;
         }
 
-        public bool altaCamionero(Camionero camionero)
+        public bool altaCamionero(Camionero camionero, int idAdmin)
         {
             bool resultado = false;
 
@@ -131,7 +131,8 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@cedula", camionero.Cedula));
                 cmd.Parameters.Add(new SqlParameter("@disp", camionero.Disponible));
                 cmd.Parameters.Add(new SqlParameter("@manejo", camionero.FchManejo));
-           
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
+
 
                 int resBD = cmd.ExecuteNonQuery();
 
@@ -145,14 +146,14 @@ namespace Persistencia
                     resultado = true;
                 }
             }
-            catch (Exception )
+            catch (Exception)
             {
                 resultado = false;
             }
             return resultado;
         }
 
-        public bool bajaCamionero(int id)
+        public bool bajaCamionero(int id, int idAdmin)
         {
             bool resultado = false;
 
@@ -163,6 +164,7 @@ namespace Persistencia
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.Add(new SqlParameter("@id", id));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 
@@ -187,7 +189,7 @@ namespace Persistencia
 
         }
 
-        public bool modCamionero(Camionero camionero)
+        public bool modCamionero(Camionero camionero, int idAdmin)
         {
             bool resultado = false;
 
@@ -206,6 +208,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@cedula", camionero.Cedula));
                 cmd.Parameters.Add(new SqlParameter("@disp", camionero.Disponible));
                 cmd.Parameters.Add(new SqlParameter("@manejo", camionero.FchManejo));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 
@@ -223,7 +226,7 @@ namespace Persistencia
             }
             catch (Exception)
             {
-                resultado=false;
+                resultado = false;
                 return resultado;
 
             }

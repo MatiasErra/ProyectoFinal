@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="iniciarSesion.aspx.cs" Inherits="Web.Paginas.Clientes.iniciarSesion" %>
+﻿<%@ Page Title="Iniciar sesion" Language="C#" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="iniciarSesion.aspx.cs" Inherits="Web.Paginas.Clientes.iniciarSesion" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 

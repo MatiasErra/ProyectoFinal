@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Title="Gestion de Fertilizantes en Lotes" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="frmLotesFertis.aspx.cs" Inherits="Web.Paginas.Lotes.frmLotesFertis" %>
+﻿<%@ Page Language="C#" Title="Gestión de fertilizantes en lotes" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="frmLotesFertis.aspx.cs" Inherits="Web.Paginas.Lotes.frmLotesFertis" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 

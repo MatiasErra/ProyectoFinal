@@ -482,7 +482,8 @@ namespace Web.Paginas.Clientes
             {
                 if (GranjaCli(unCliente))
                 {
-                    if (Web.bajaCli(id))
+                    int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                    if (Web.bajaCli(id, idAdmin))
                     {
                         limpiar();
                         lblMensajes.Text = "Se ha borrado el Cliente.";

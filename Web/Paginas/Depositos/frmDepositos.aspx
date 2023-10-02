@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Gestion de depositos" Language="C#" AutoEventWireup="true" MasterPageFile="~/Master/AGlobal.Master" CodeBehind="frmDepositos.aspx.cs" Inherits="Web.Paginas.Depositos.frmDepositos" %>
+﻿<%@ Page Title="Gestión de depósitos" Language="C#" AutoEventWireup="true" MasterPageFile="~/Master/AGlobal.Master" CodeBehind="frmDepositos.aspx.cs" Inherits="Web.Paginas.Depositos.frmDepositos" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container row m-2 text-center">
@@ -6,7 +6,7 @@
             <div class="col-12 m-3 p-2 text-center" style="border-radius: 20px; background-color: #f2f0f0">
                 <div class="row">
                     <div class="col-12 p-3">
-                        <h2 class="title">Gestion de Depósitos </h2>
+                        <h2 class="title">Gestión de Depósitos </h2>
                         <div class="row text-center">
                             <div class=" col-sm-12">
                                 <asp:DropDownList ID="listBuscarPor" CssClass="lstOrd btn--radius  align-self-center btn--srch" Width="200" AutoPostBack="true" OnSelectedIndexChanged="listBuscarPor_SelectedIndexChanged" runat="server"></asp:DropDownList>

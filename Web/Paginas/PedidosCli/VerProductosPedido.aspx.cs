@@ -61,7 +61,6 @@ namespace Web.Paginas.Pedidos
         {
             if (!IsPostBack)
             {
-                System.Web.HttpContext.Current.Session["Estado"] = null;
                 int idPedido = int.Parse(System.Web.HttpContext.Current.Session["PedidoCompraSel"].ToString());
                 ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
 
@@ -81,6 +80,7 @@ namespace Web.Paginas.Pedidos
 
                 listarProductos(idPedido);
 
+
                 if (System.Web.HttpContext.Current.Session["Estado"].ToString() == "Confirmado" && System.Web.HttpContext.Current.Session["AdminIniciado"] != null)
                 {
                     btnModPedido.Visible = true;
@@ -89,7 +89,7 @@ namespace Web.Paginas.Pedidos
                 {
                     btnModPedido.Visible = false;
                 }
-                string est = System.Web.HttpContext.Current.Session["EstadoViajeSel"].ToString();
+
                 if (System.Web.HttpContext.Current.Session["EstadoViajeSel"].ToString() == "Asignado")
                 {
                     btnVerViaje.Visible = true;
@@ -97,6 +97,15 @@ namespace Web.Paginas.Pedidos
                 else
                 {
                     btnVerViaje.Visible = false;
+                }
+
+                if (System.Web.HttpContext.Current.Session["Estado"].ToString() == "En viaje" && System.Web.HttpContext.Current.Session["AdminIniciado"] != null)
+                {
+                    btnFinalizarPedido.Visible = true;
+                }
+                else
+                {
+                    btnFinalizarPedido.Visible = false;
                 }
 
             }
@@ -114,19 +123,13 @@ namespace Web.Paginas.Pedidos
         private List<string[]> obtenerProductos(int idPedido)
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-
-
-            string NomCli = "";
-            string Estado = "";
-            string viaje = "";
-            int CostoMin = 0;
-            int CostoMayor = 99999999;
-            string ordenar = "";
+            
             List<string[]> productos = new List<string[]>();
 
-            List<Pedido> lstPedido = Web.BuscarPedidoFiltro(NomCli, Estado, viaje, CostoMin, CostoMayor, ordenar);
+            List<Pedido> lstPedido = Web.BuscarPedidoFiltro("", "", "", 0, 9999999, "1000-01-01", "3000-12-30", "1000-01-01", "3000-12-30", "");
             if (lstPedido.Count > 0)
             {
+                string Estado = "";
                 foreach (Pedido unPed in lstPedido)
                 {
                     if (unPed.IdPedido == idPedido)
@@ -153,7 +156,7 @@ namespace Web.Paginas.Pedidos
 
         private void listarProductos(int idPedido)
         {
-        
+
             List<string[]> productos = obtenerProductos(idPedido);
             string Estado = System.Web.HttpContext.Current.Session["Estado"].ToString();
             List<string[]> productosPagina = new List<string[]>();
@@ -193,7 +196,7 @@ namespace Web.Paginas.Pedidos
                     txtPaginas.Text = "Paginas";
                     lstProductoLote.Visible = false;
                     lstProducto.Visible = true;
-                    lstProducto.DataSource = null; 
+                    lstProducto.DataSource = null;
                     lstProducto.DataSource = ObtenerProductos(productosPagina);
                     lstProducto.DataBind();
                 }
@@ -431,10 +434,33 @@ namespace Web.Paginas.Pedidos
         }
 
 
+        protected void btnFinalizarPedido_Click(object sender, EventArgs e)
+        {
+            int idPedido = int.Parse(System.Web.HttpContext.Current.Session["PedidoCompraSel"].ToString());
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            string estado = System.Web.HttpContext.Current.Session["Estado"].ToString();
+
+            if (estado == "En viaje")
+            {
+                List<Viaje_Lot_Ped> viajesPed = Web.buscarViajePedLote(idPedido, 0);
+                int cont = 0;
+                foreach (Viaje_Lot_Ped unVLP in viajesPed)
+                {
+                    Viaje unViaje = Web.buscarViaje(unVLP.IdViaje);
+                    if (unViaje.Estado != "Finalizado") cont++;
+                }
+                if (cont == 0)
+                {
+                    if (Web.cambiarEstadoPed(idPedido, "Finalizado")) lblMensajes.Text = "El pedido ha sido finalizado.";
+                }
+                else lblMensajes.Text = "No todos los viajes de este pedido han finalizado.";
+            }
+            else lblMensajes.Text = "El pedido debe estar en viaje para poder finalizarlo.";
+        }
+
 
 
         #endregion
-
 
 
     }

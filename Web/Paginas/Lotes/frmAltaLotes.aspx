@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="frmAltaLotes.aspx.cs" Inherits="Web.Paginas.Lotes.frmAltaLotes" %>
+﻿<%@ Page Title="Ingresar lote" Language="C#" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="frmAltaLotes.aspx.cs" Inherits="Web.Paginas.Lotes.frmAltaLotes" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 

@@ -571,9 +571,11 @@ namespace Web.Paginas.Camioneros
                             string disponible = HttpUtility.HtmlEncode(lstDisponible.SelectedValue.ToString());
                             string txtFchVenc = HttpUtility.HtmlEncode(txtFchManejo.Text);
 
+                            int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+
                             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
                             Camionero unCamionero = new Camionero(id, nombre, apellido, email, tele, txtFc, cedula, disponible, txtFchVenc);
-                            if (Web.altaCamionero(unCamionero))
+                            if (Web.altaCamionero(unCamionero, idAdmin))
                             {
                                 if (System.Web.HttpContext.Current.Session["ViajeDatosMod"] != null)
                                 {
@@ -657,7 +659,8 @@ namespace Web.Paginas.Camioneros
             Camionero unCamionero = Web.buscarCamionero(id);
             if (unCamionero != null)
             {
-                if (Web.bajaCamionero(id))
+                int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                if (Web.bajaCamionero(id, idAdmin))
                 {
                     limpiar();
                     lblMensajes.Text = "Se ha borrado el camionero.";

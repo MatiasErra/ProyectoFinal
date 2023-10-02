@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin.cs" />
+    <Compile Include="Auditoria.cs" />
     <Compile Include="Camion.cs" />
     <Compile Include="Camionero.cs" />
     <Compile Include="Cliente.cs" />

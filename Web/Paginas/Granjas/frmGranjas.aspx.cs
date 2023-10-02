@@ -589,9 +589,11 @@ namespace Web.Paginas.Granjass
                 string ubicacion = HttpUtility.HtmlEncode(txtUbicacion.Text);
                 int idCliente = int.Parse(HttpUtility.HtmlEncode(listDueño.SelectedValue));
 
+                int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+
                 ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
                 Granja unaGranja = new Granja(id, nombre, ubicacion, idCliente);
-                if (Web.altaGranja(unaGranja))
+                if (Web.altaGranja(unaGranja, idAdmin))
                 {
                     if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
                     {
@@ -637,7 +639,8 @@ namespace Web.Paginas.Granjass
             {
                 if (!comprobarProducen(id))
                 {
-                    if (Web.bajaGranja(id))
+                    int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                    if (Web.bajaGranja(id, idAdmin))
                     {
                         limpiar();
                         lblPaginaAct.Text = "1";

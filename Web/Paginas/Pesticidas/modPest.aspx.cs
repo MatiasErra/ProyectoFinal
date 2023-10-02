@@ -179,12 +179,12 @@ namespace Web.Paginas.Pesticidas
                             string impacto = HttpUtility.HtmlEncode(lstImpacto.SelectedValue.ToString());
 
 
-
+                            int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
 
 
                             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
                             Pesticida pesticida = new Pesticida(id, nombre, tipo, pH, impacto);
-                            if (Web.modPesti(pesticida))
+                            if (Web.modPesti(pesticida, idAdmin))
                             {
                                 limpiar();
                                 lblMensajes.Text = "Pesticida modificado con éxito.";

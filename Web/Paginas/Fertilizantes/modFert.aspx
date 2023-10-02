@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="modFert.aspx.cs" Inherits="Web.Paginas.Fertilizantes.modFert" %>
+﻿<%@ Page Title="Modificar fertilizante" Language="C#" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="modFert.aspx.cs" Inherits="Web.Paginas.Fertilizantes.modFert" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 

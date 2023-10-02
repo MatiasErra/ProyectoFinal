@@ -307,22 +307,25 @@ namespace Web.Paginas.Viajes
 
             Viaje viaje = Web.buscarViaje(id);
 
+            dt.Rows.Add(createRow("Seleccione un Estado", "Seleccione un Estado", dt));
             if (viaje.Estado == "Pendiente")
             {
-                dt.Rows.Add(createRow("Seleccione un Estado", "Seleccione un Estado", dt));
+                listEstado.Enabled = false;
                 dt.Rows.Add(createRow("Pendiente", "Pendiente", dt));
+            }
+            else if (viaje.Estado == "Confirmado")
+            {
+                dt.Rows.Add(createRow("Confirmado", "Confirmado", dt));
                 dt.Rows.Add(createRow("En viaje", "En viaje", dt));
             }
             else if (viaje.Estado == "En viaje")
             {
-                dt.Rows.Add(createRow("Seleccione un Estado", "Seleccione un Estado", dt));
                 dt.Rows.Add(createRow("En viaje", "En viaje", dt));
                 dt.Rows.Add(createRow("Finalizado", "Finalizado", dt));
             }
             else
             {
                 listEstado.Enabled = false;
-                dt.Rows.Add(createRow("Seleccione un Estado", "Seleccione un Estado", dt));
                 dt.Rows.Add(createRow("Pendiente", "Pendiente", dt));
                 dt.Rows.Add(createRow("En viaje", "En viaje", dt));
                 dt.Rows.Add(createRow("Finalizado", "Finalizado", dt));
@@ -402,8 +405,9 @@ namespace Web.Paginas.Viajes
                                 ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
 
                                 Viaje viaje = Web.buscarViaje(id);
+                                int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
 
-                                if (viaje.Estado == "Pendiente" && estado == "En viaje")
+                                if (viaje.Estado == "Confirmado" && estado == "En viaje")
                                 {
                                     Viaje via = new Viaje(0, 0, "", 0, 0, "");
                                     List<Viaje> viajes = Web.buscarViajeFiltro(via, 0, 99999999, "1000-01-01", "3000-12-30", "");
@@ -436,10 +440,31 @@ namespace Web.Paginas.Viajes
                                     else
                                     {
                                         Viaje unViaje = new Viaje(id, costo, fecha, idCamion, idCamionero, estado);
-                                        if (Web.modViaje(unViaje))
+                                        if (Web.modViaje(unViaje, idAdmin))
                                         {
-                                            System.Web.HttpContext.Current.Session["pedidoMensaje"] = "Viaje modificado con exito.";
-      
+                                            if (unViaje.Estado == "En viaje")
+                                            {
+                                                List<Viaje_Lot_Ped> viajeLotPed = Web.buscarViajePedLote(0, unViaje.IdViaje);
+                                                List<Pedido> pedidos = Web.BuscarPedidoFiltro("", "", "", 0, 99999999, "1000-01-01", "3000-12-30", "1000-01-01", "3000-12-30", "");
+
+                                                foreach (Viaje_Lot_Ped viaLotPed in viajeLotPed)
+                                                {
+                                                    foreach (Pedido unPedido in pedidos)
+                                                    {
+                                                        if (viaLotPed.IdPedido.Equals(unPedido.IdPedido))
+                                                        {
+                                                            if (unPedido.Estado == "Confirmado")
+                                                            {
+                                                                if (Web.cambiarEstadoPed(unPedido.IdPedido, "En viaje"))
+                                                                {
+                                                                    System.Web.HttpContext.Current.Session["pedidoMensaje"] = "Viaje modificado con exito y pedido en viaje.";
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }else System.Web.HttpContext.Current.Session["pedidoMensaje"] = "Viaje modificado con exito.";
+
                                             limpiarIdSession();
                                             Response.Redirect("/Paginas/Viajes/frmViajes");
                                         }
@@ -452,11 +477,11 @@ namespace Web.Paginas.Viajes
                                 else
                                 {
                                     Viaje unViaje = new Viaje(id, costo, fecha, idCamion, idCamionero, estado);
-                                    if (Web.modViaje(unViaje))
+                                    if (Web.modViaje(unViaje, idAdmin))
                                     {
                                         limpiar();
-                                      System.Web.HttpContext.Current.Session["pedidoMensaje"] = "Viaje modificado con exito.";
-                         
+                                        System.Web.HttpContext.Current.Session["pedidoMensaje"] = "Viaje modificado con exito.";
+
                                         limpiarIdSession();
                                         Response.Redirect("/Paginas/Viajes/frmViajes");
                                     }

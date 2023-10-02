@@ -96,7 +96,7 @@ namespace Persistencia
             return pesticida;
         }
 
-        public bool altaPesti(Pesticida pesticida)
+        public bool altaPesti(Pesticida pesticida, int idAdmin)
         {
             bool resultado = false;
 
@@ -111,7 +111,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@tipo", pesticida.Tipo));
                 cmd.Parameters.Add(new SqlParameter("@pH", pesticida.PH));
                 cmd.Parameters.Add(new SqlParameter("@impacto", pesticida.Impacto));
-
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 
@@ -133,7 +133,7 @@ namespace Persistencia
             return resultado;
         }
 
-        public bool bajaPesti(int id)
+        public bool bajaPesti(int id, int idAdmin)
         {
             bool resultado = false;
 
@@ -144,6 +144,7 @@ namespace Persistencia
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.Add(new SqlParameter("@id", id));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 
@@ -169,7 +170,7 @@ namespace Persistencia
 
         }
 
-        public bool modPesti(Pesticida pesticida)
+        public bool modPesti(Pesticida pesticida, int idAdmin)
         {
             bool resultado = false;
 
@@ -184,6 +185,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@tipo", pesticida.Tipo));
                 cmd.Parameters.Add(new SqlParameter("@pH", pesticida.PH));
                 cmd.Parameters.Add(new SqlParameter("@impacto", pesticida.Impacto));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 

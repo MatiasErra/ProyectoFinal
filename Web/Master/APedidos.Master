@@ -73,15 +73,15 @@
                         </li>
                         <li class="nav-item dropdown">
                             <select name="Gestion" class="nav-link dropdown-toggle text-light bg-dark me-1" onchange="location = this.value;">
-                                <option style="display: none">Gestion</option>
+                                <option style="display: none">Gestión</option>
                                 <optgroup label="Camioneros">
-                                    <option value="/Paginas/Camioneros/frmCamioneros">Gestion de Camioneros</option>
+                                    <option value="/Paginas/Camioneros/frmCamioneros">Gestión de Camioneros</option>
                                 </optgroup>
                                 <optgroup label="Camiones">
-                                    <option value="/Paginas/Camiones/frmCamiones">Gestion de Camiones</option>
+                                    <option value="/Paginas/Camiones/frmCamiones">Gestión de Camiones</option>
                                 </optgroup>
                                  <optgroup label="Viajes">
-                                    <option value="/Paginas/Viajes/frmViajes">Gestion de Viajes</option>
+                                    <option value="/Paginas/Viajes/frmViajes">Gestión de Viajes</option>
                                 </optgroup>
                             </select>
                         </li>

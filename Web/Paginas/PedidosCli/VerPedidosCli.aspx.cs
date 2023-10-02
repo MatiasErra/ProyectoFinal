@@ -29,7 +29,7 @@ namespace Web.Paginas.Catalogo
         {
             if (!IsPostBack)
             {
-
+                System.Web.HttpContext.Current.Session["ViajesSelected"] = null;
                 System.Web.HttpContext.Current.Session["PedidoCompraSel"] = null;
                 if (System.Web.HttpContext.Current.Session["PagAct"] == null)
                 {
@@ -68,6 +68,15 @@ namespace Web.Paginas.Catalogo
 
                 txtCostoMayorBuscar.Text = System.Web.HttpContext.Current.Session["CostoMax"] != null ? System.Web.HttpContext.Current.Session["CostoMax"].ToString() : "";
                 System.Web.HttpContext.Current.Session["CostoMax"] = null;
+
+                txtFchPedidoMenor.Text = System.Web.HttpContext.Current.Session["fchPedidoMenorCliBuscar"] != null ? DateTime.Parse(System.Web.HttpContext.Current.Session["fchPedidoMenorCliBuscar"].ToString()).ToString("yyyy-MM-dd") : "";
+                System.Web.HttpContext.Current.Session["fchPedidoMenorCliBuscar"] = null;
+                txtFchPedidoMayor.Text = System.Web.HttpContext.Current.Session["fchPedidoMayorCliBuscar"] != null ? DateTime.Parse(System.Web.HttpContext.Current.Session["fchPedidoMayorCliBuscar"].ToString()).ToString("yyyy-MM-dd") : "";
+                System.Web.HttpContext.Current.Session["fchPedidoMayorCliBuscar"] = null;
+                txtFchEntregaMenor.Text = System.Web.HttpContext.Current.Session["fchEntregaMenorCliBuscar"] != null ? DateTime.Parse(System.Web.HttpContext.Current.Session["fchEntregaMenorCliBuscar"].ToString()).ToString("yyyy-MM-dd") : "";
+                System.Web.HttpContext.Current.Session["fchEntregaMenorCliBuscar"] = null;
+                txtFchEntregaMayor.Text = System.Web.HttpContext.Current.Session["fchEntregaMayorCliBuscar"] != null ? DateTime.Parse(System.Web.HttpContext.Current.Session["fchEntregaMayorCliBuscar"].ToString()).ToString("yyyy-MM-dd") : "";
+                System.Web.HttpContext.Current.Session["fchEntregaMayorCliBuscar"] = null;
 
 
                 System.Web.HttpContext.Current.Session["PedidoCompraSel"] = null;
@@ -109,6 +118,8 @@ namespace Web.Paginas.Catalogo
             dt.Rows.Add(createRow("Estado", "Estado", dt));
             dt.Rows.Add(createRow("Viaje", "Viaje", dt));
             dt.Rows.Add(createRow("Costo", "Costo", dt));
+            dt.Rows.Add(createRow("Fecha pedido", "Fecha pedido", dt));
+            dt.Rows.Add(createRow("Fecha entrega", "Fecha entrega", dt));
 
 
             DataView dv = new DataView(dt);
@@ -235,7 +246,10 @@ namespace Web.Paginas.Catalogo
             listOrdenarPor.SelectedValue = "Ordenar por";
             listBuscarPor.SelectedValue = "Buscar por";
             lstViaje.SelectedValue = "Seleccionar estado del viaje";
-
+            txtFchEntregaMenor.Text = "";
+            txtFchPedidoMayor.Text = "";
+            txtFchEntregaMenor.Text = "";
+            txtFchEntregaMayor.Text = "";
 
             txtCostoMenorBuscar.Text = "";
             txtCostoMayorBuscar.Text = "";
@@ -351,11 +365,15 @@ namespace Web.Paginas.Catalogo
             string Viaje = lstViaje.SelectedValue != "Seleccionar estado del viaje" ? lstViaje.SelectedValue : "";
             int CostoMin = txtCostoMenorBuscar.Text == "" ? 0 : int.Parse(txtCostoMenorBuscar.Text);
             int CostoMayor = txtCostoMayorBuscar.Text == "" ? 99999999 : int.Parse(txtCostoMayorBuscar.Text);
+            string fchPedidoMenor = txtFchPedidoMenor.Text == "" ? "1000-01-01" : txtFchPedidoMenor.Text;
+            string fchPedidoMayor = txtFchPedidoMayor.Text == "" ? "3000-12-30" : txtFchPedidoMayor.Text;
+            string fchEntregaMenor = txtFchEntregaMenor.Text == "" ? "1000-01-01" : txtFchEntregaMenor.Text;
+            string fchEntregaMayor = txtFchEntregaMayor.Text == "" ? "3000-12-30" : txtFchEntregaMayor.Text;
             string ordenar = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : "";
 
             
 
-            List<Pedido> lstPedido = web.BuscarPedidoFiltro(unCli.User, Estado, Viaje, CostoMin, CostoMayor, ordenar);
+            List<Pedido> lstPedido = web.BuscarPedidoFiltro(unCli.User, Estado, Viaje, CostoMin, CostoMayor, fchPedidoMenor, fchPedidoMayor, fchEntregaMenor, fchEntregaMayor, ordenar);
 
             return lstPedido;
         }
@@ -398,7 +416,7 @@ namespace Web.Paginas.Catalogo
                 dr["fchPedido"] = FechPedido[0];
 
 
-                dr["fchEntre"] = unPed.FechaEntre != "" ? unPed.FechaEntre.ToString() : "Sin asignar";
+                dr["fchEntre"] = unPed.FechaEntre != "" ? unPed.FechaEntre.ToString().Split(' ')[0] : "Sin asignar";
 
 
 
@@ -421,9 +439,16 @@ namespace Web.Paginas.Catalogo
             System.Web.HttpContext.Current.Session["EstadoPed"] = lstEstados.SelectedValue != "Seleccionar estado" ? lstEstados.SelectedValue : "";
             System.Web.HttpContext.Current.Session["EstadoViaje"] = lstViaje.SelectedValue != "Seleccionar estado del viaje" ? lstViaje.SelectedValue : "";
 
+            System.Web.HttpContext.Current.Session["fchPedidoMenorCliBuscar"] = txtFchPedidoMenor.Text != "" ? txtFchPedidoMenor.Text : null;
+            System.Web.HttpContext.Current.Session["fchPedidoMayorCliBuscar"] = txtFchPedidoMayor.Text != "" ? txtFchPedidoMayor.Text : null;
+            System.Web.HttpContext.Current.Session["fchEntregaMenorCliBuscar"] = txtFchEntregaMenor.Text != "" ? txtFchEntregaMenor.Text : null;
+            System.Web.HttpContext.Current.Session["fchEntregaMayorCliBuscar"] = txtFchEntregaMayor.Text != "" ? txtFchEntregaMayor.Text : null;
 
             System.Web.HttpContext.Current.Session["CostoMin"] = txtCostoMenorBuscar.Text.ToString();
             System.Web.HttpContext.Current.Session["CostoMax"] = txtCostoMayorBuscar.Text.ToString();
+
+
+
             System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
 
 
@@ -443,6 +468,8 @@ namespace Web.Paginas.Catalogo
 
             lstEstados.Visible = listBuscarPor.SelectedValue == "Estado" ? true : false;
             lstViaje.Visible = listBuscarPor.SelectedValue == "Viaje" ? true : false;
+            lblFchPedido.Visible = listBuscarPor.SelectedValue == "Fecha pedido" ? true : false;
+            lblFchEntrega.Visible = listBuscarPor.SelectedValue == "Fecha entrega" ? true : false;
             lblCostoMenorBuscar.Visible = listBuscarPor.SelectedValue == "Costo" ? true : false;
             txtCostoMenorBuscar.Visible = listBuscarPor.SelectedValue == "Costo" ? true : false;
             lblCostoMayorBuscar.Visible = listBuscarPor.SelectedValue == "Costo" ? true : false;
@@ -504,8 +531,9 @@ namespace Web.Paginas.Catalogo
             GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
             idPedido = int.Parse(selectedrow.Cells[0].Text);
 
-            System.Web.HttpContext.Current.Session["PedidoCompraSel"] = idPedido;
 
+            System.Web.HttpContext.Current.Session["PedidoCompraSel"] = idPedido;
+            System.Web.HttpContext.Current.Session["EstadoViajeSel"] = selectedrow.Cells[4].Text;
 
             Response.Redirect("/Paginas/PedidosCli/VerProductosPedido");
 
@@ -518,6 +546,7 @@ namespace Web.Paginas.Catalogo
             Button btnConstultar = (Button)sender;
             GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
             idPedido = int.Parse(selectedrow.Cells[0].Text);
+            string estadoPedido = selectedrow.Cells[3].Text;
             ControladoraWeb web = ControladoraWeb.obtenerInstancia();
 
 
@@ -526,33 +555,39 @@ namespace Web.Paginas.Catalogo
             int i = 0;
             string estado = "Sin finalizar";
 
-            foreach (Pedido pedido in lstPedio)
+            if (estadoPedido == "Sin confirmar")
             {
-                if (pedido.Estado.Equals("Sin finalizar"))
+                foreach (Pedido pedido in lstPedio)
                 {
-                    i++;
-                    break;
+                    if (pedido.Estado.Equals("Sin finalizar"))
+                    {
+                        i++;
+                        break;
+                    }
+                }
+
+                if (i == 0)
+                {
+
+
+                    if (web.cambiarEstadoPed(idPedido, estado))
+                    {
+                        System.Web.HttpContext.Current.Session["PedidoCompra"] = idPedido;
+                        lblMensajes.Text = "Pedido modificado a sin finalizar";
+                        lblPaginaAct.Text = "1";
+                        listarPagina();
+                        Response.Redirect("/Paginas/PedidosCli/VerCarrito");
+
+                    }
+                }
+                else
+                {
+                    lblMensajes.Text = "Ya existe un pedido sin finalizar";
                 }
             }
+            else lblMensajes.Text = "El pedido debe estar sin confirmar.";
 
-            if (i == 0)
-            {
-
-
-                if (web.cambiarEstadoPed(idPedido, estado))
-                {
-                    System.Web.HttpContext.Current.Session["PedidoCompra"] = idPedido;
-                    lblMensajes.Text = "Pedido modificado a sin finalizar";
-                    lblPaginaAct.Text = "1";
-                    listarPagina();
-                    Response.Redirect("/Paginas/PedidosCli/VerCarrito");
-
-                }
-            }
-            else
-            {
-                lblMensajes.Text = "Ya existe un pedido sin finalizar";
-            }
+            
 
 
         }

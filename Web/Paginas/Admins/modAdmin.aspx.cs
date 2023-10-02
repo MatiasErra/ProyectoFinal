@@ -243,7 +243,9 @@ namespace Web.Paginas.Admins
                                     unAdmin.TipoDeAdmin = tipoAdm;
                                     unAdmin.Estado = estado;
 
-                                    if (Web.modificarAdm(unAdmin))
+                                    int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+
+                                    if (Web.modificarAdm(unAdmin, idAdmin))
                                     {
                                         limpiar();
 

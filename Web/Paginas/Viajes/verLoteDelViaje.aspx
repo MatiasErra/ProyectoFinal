@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="verLoteDelViaje.aspx.cs" Inherits="Web.Paginas.Viajes.verLoteDelPedio" %>
+﻿<%@ Page Title="Ver lotes del viaje" Language="C#" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="verLoteDelViaje.aspx.cs" Inherits="Web.Paginas.Viajes.verLoteDelPedio" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
 

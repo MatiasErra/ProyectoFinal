@@ -155,7 +155,7 @@ namespace Persistencia
 
         }
 
-        public bool altaViaje(Viaje viaje)
+        public bool altaViaje(Viaje viaje, int idAdmin)
         {
             bool resultado = false;
 
@@ -171,7 +171,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@camion", viaje.IdCamion));
                 cmd.Parameters.Add(new SqlParameter("@camionero", viaje.IdCamionero));
                 cmd.Parameters.Add(new SqlParameter("@estado", viaje.Estado));
-
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 
@@ -195,7 +195,7 @@ namespace Persistencia
 
 
 
-        public bool altaViajePedido_Lote(Viaje_Lot_Ped viaje_Lot_Ped, string CantViajeAct)
+        public bool altaViajePedido_Lote(Viaje_Lot_Ped viaje_Lot_Ped, string CantViajeAct, int idAdmin)
         {
             bool resultado = false;
 
@@ -212,7 +212,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@fchProduccion", viaje_Lot_Ped.FchProduccion));
                 cmd.Parameters.Add(new SqlParameter("@Cantidad", viaje_Lot_Ped.Cant));
                 cmd.Parameters.Add(new SqlParameter("@CantViajeAct", CantViajeAct));
-
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 
@@ -233,7 +233,7 @@ namespace Persistencia
             }
             return resultado;
         }
-        public bool bajaViajePedido_Lote(Viaje_Lot_Ped viaje_Lot_Ped, string CantTotal)
+        public bool bajaViajePedido_Lote(Viaje_Lot_Ped viaje_Lot_Ped, string CantTotal, int idAdmin)
         {
             bool resultado = false;
 
@@ -249,7 +249,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@IdGranja", viaje_Lot_Ped.IdGranja));
                 cmd.Parameters.Add(new SqlParameter("@fchProduccion", viaje_Lot_Ped.FchProduccion));
                 cmd.Parameters.Add(new SqlParameter("@CantTotal", CantTotal));
-
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 
@@ -271,7 +271,7 @@ namespace Persistencia
             return resultado;
         }
 
-        public bool bajaViaje(int id)
+        public bool bajaViaje(int id, int idAdmin)
         {
             bool resultado = false;
 
@@ -282,6 +282,7 @@ namespace Persistencia
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.Add(new SqlParameter("@id", id));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 
@@ -307,7 +308,7 @@ namespace Persistencia
 
         }
 
-        public bool modViaje(Viaje viaje)
+        public bool modViaje(Viaje viaje, int idAdmin)
         {
             bool resultado = false;
 
@@ -323,6 +324,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@camion", viaje.IdCamion));
                 cmd.Parameters.Add(new SqlParameter("@camionero", viaje.IdCamionero));
                 cmd.Parameters.Add(new SqlParameter("@estado", viaje.Estado));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 

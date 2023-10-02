@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="modDep.aspx.cs" Inherits="Web.Paginas.Depositos.modDep" %>
+﻿<%@ Page Title="Modificar depósito" Language="C#" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="modDep.aspx.cs" Inherits="Web.Paginas.Depositos.modDep" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 

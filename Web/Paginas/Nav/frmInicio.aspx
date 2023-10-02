@@ -1,13 +1,12 @@
 ﻿<%@ Page Language="C#" Title="Inicio" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="frmInicio.aspx.cs" Inherits="Web.Paginas.frmInicio" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div>
         <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner rounded">
                 <div class="carousel-item active" data-bs-interval="5000">
                     <a href="Lotes/frmLotes.aspx">
-                         <asp:Image ImageUrl="~/Imagenes/ejemplo.png" CssClass="d-block w-100" runat="server" />
-                    </a>     
+                        <asp:Image ImageUrl="~/Imagenes/ejemplo.png" CssClass="d-block w-100" runat="server" />
+                    </a>
                 </div>
                 <div class="carousel-item" data-bs-interval="5000">
                     <asp:Image ImageUrl="~/Imagenes/ejemplo.png" CssClass="d-block w-100" runat="server" />
@@ -38,9 +37,11 @@
 
                         <div class="col-12 p-3">
                             <p class="fw-bold fs-2">¿Que ofrecemos?</p>
-                            <p class="lh-base">Frutas y Verduras Frescas S.A. permite a los comercios mayoristas, supermercados, restaurantes y hoteles la compra de frutas y verduras mediante un 
-                                <a href="#">Catalogo</a> 
-                                en el cual pueden seleccionar los productos que deseen para luego realizar el pedido.</p>
+                            <p class="lh-base">
+                                Frutas y Verduras Frescas S.A. permite a los comercios mayoristas, supermercados, restaurantes y hoteles la compra de frutas y verduras mediante un 
+                                <a href="/Paginas/Catalogo/frmCatalogo">Catalogo</a>
+                                en el cual pueden seleccionar los productos que deseen para luego realizar el pedido.
+                            </p>
                             <p class="lh-base">
                                 Al ser confirmado el pedido, este sera enviado a su ubicacion en un tiempo estimado el cual usted podra controlar en todo momento ademas de el estado de su paquete.
                             </p>
@@ -50,11 +51,55 @@
                         <div class="col-12 p-3">
                             <p class="fw-bold fs-2">Nuestro catalogo de frutas y verduras</p>
                             <p class="lh-base">
-                                Aqui puede ver los productos mas vendidos de nuestro catalogo.
+                                Aqui puede ver algunos productos de nuestro catalogo.
+                        </div>
+                        <div class="col-md-12 align-self-center text-center">
+                            <div class="row align-self-center">
+                                <div class="col-md-10 col-md-offset-1">
+                                    <div class="form-group">
+                                        <div class="table-responsive">
+                                            <asp:GridView ID="lstProducto" Width="100%" SelectedIndex="1" AutoGenerateColumns="false"
+                                                CssClass="table table-bordered table-condensed table-responsive table-hover  mb-2"
+                                                runat="server">
+                                                <AlternatingRowStyle BackColor="White" />
+                                                <HeaderStyle BackColor="#6B696B" Font-Bold="true" Font-Size="Medium" ForeColor="White" />
+                                                <RowStyle BackColor="#f5f5f5" />
+                                                <Columns>
+                                                    <asp:BoundField DataField="Nombre"
+                                                        HeaderText="Nombre del producto"
+                                                        ItemStyle-CssClass="GridStl" />
+
+                                                    <asp:BoundField DataField="Tipo"
+                                                        HeaderText="Tipo"
+                                                        ItemStyle-CssClass="GridStl" />
+
+                                                    <asp:BoundField DataField="TipoVenta"
+                                                        HeaderText="Tipo de venta"
+                                                        ItemStyle-CssClass="GridStl" />
+
+
+
+                                                    <asp:BoundField DataField="Precio"
+                                                        HeaderText="Precio"
+                                                        ItemStyle-CssClass="GridStl" />
+
+                                                    <asp:BoundField DataField="Imagen"
+                                                        HeaderText="Imagen"
+                                                        HtmlEncode="false" />
+
+                                                </Columns>
+                                            </asp:GridView>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 text-center">
+                            <asp:Button ID="btnVerCat" CssClass="btnE btn--radius btn--green my-2" runat="server" Text="Ver catalogo" OnClick="btnVerCat_Click" />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </asp:Content>

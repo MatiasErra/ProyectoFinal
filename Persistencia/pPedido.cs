@@ -14,7 +14,7 @@ namespace Persistencia
     class pPedido
     {
 
-        public List<Pedido> BuscarPedidoFiltro(string NombreCli, string Estado, string Viaje , double CostoMin, double CostoMax, string Ordenar)
+        public List<Pedido> BuscarPedidoFiltro(string NombreCli, string Estado, string Viaje , double CostoMin, double CostoMax, string fchPedidoMenor, string fchPedidoMayor, string fchEntregaMenor, string fchEntregaMayor, string Ordenar)
         {
             List<Pedido> resultado = new List<Pedido>();
             try
@@ -34,6 +34,10 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@Viaje", Viaje));
                 cmd.Parameters.Add(new SqlParameter("@CostoMin", CostoMin));
                 cmd.Parameters.Add(new SqlParameter("@CostoMax", CostoMax));
+                cmd.Parameters.Add(new SqlParameter("@fchPedidoMenor", fchPedidoMenor));
+                cmd.Parameters.Add(new SqlParameter("@fchPedidoMayor", fchPedidoMayor));
+                cmd.Parameters.Add(new SqlParameter("@fchEntregaMenor", fchEntregaMenor));
+                cmd.Parameters.Add(new SqlParameter("@fchEntregaMayor", fchEntregaMayor));
                 cmd.Parameters.Add(new SqlParameter("@ordenar", Ordenar));
 
 
@@ -285,7 +289,7 @@ namespace Persistencia
 
         }
 
-        public bool altaPedido_Lote(Lote_Pedido lote_Pedido, string CantLote, string CantDisp, string CantRess)
+        public bool altaPedido_Lote(Lote_Pedido lote_Pedido, string CantLote, string CantDisp, string CantRess, int idAdmin)
         {
             bool resultado = false;
 
@@ -303,6 +307,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@CantLote", CantLote));
                 cmd.Parameters.Add(new SqlParameter("@CantDisp", CantDisp));
                 cmd.Parameters.Add(new SqlParameter("@CantRess", CantRess));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 
@@ -531,7 +536,7 @@ namespace Persistencia
                             producto[6] = reader["tipo"].ToString();
                             producto[7] = reader["precio"].ToString();
                             producto[8] = reader["imagen"].ToString();
-                             producto[9] = reader["cantidad"].ToString();
+                            producto[9] = reader["cantidad"].ToString();
                             producto[10] = reader["cantTotal"].ToString();
                             producto[11] = reader["cantRes"].ToString();
                             producto[12] = reader["cantidadViaje"].ToString();
@@ -643,7 +648,7 @@ namespace Persistencia
 
         }
 
-        public bool modCantPedidoLote (Lote_Pedido lote_Pedido, string CantLote, string CantDisp, string CantRess)
+        public bool modCantPedidoLote (Lote_Pedido lote_Pedido, string CantLote, string CantDisp, string CantRess, int idAdmin)
         {
             bool resultado = false;
 
@@ -661,7 +666,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@CantLote", CantLote));
                 cmd.Parameters.Add(new SqlParameter("@CantDisp", CantDisp));
                 cmd.Parameters.Add(new SqlParameter("@CantRess", CantRess));
-
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
 
 
@@ -730,7 +735,7 @@ namespace Persistencia
         }
 
 
-        public bool bajaLotesPedido(int idPedido, int idGranja, int idProducto, string fchProduccion, string cantLote, string CantDisp, string CantRess) 
+        public bool bajaLotesPedido(int idPedido, int idGranja, int idProducto, string fchProduccion, string cantLote, string CantDisp, string CantRess, int idAdmin) 
         {
             bool resultado = false;
 
@@ -747,7 +752,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@cantLote", cantLote));
                 cmd.Parameters.Add(new SqlParameter("@CantDisp", CantDisp));
                 cmd.Parameters.Add(new SqlParameter("@CantRess", CantRess));
-
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
 
                 int resBD = cmd.ExecuteNonQuery();
@@ -774,7 +779,7 @@ namespace Persistencia
 
         }
 
-        public bool modPedViajeEst(int idPedido, string estado)
+        public bool modPedViajeEst(int idPedido, string estado, int idAdmin)
         {
             bool resultado = false;
 
@@ -786,7 +791,7 @@ namespace Persistencia
 
                 cmd.Parameters.Add(new SqlParameter("@idPedido", idPedido));
                 cmd.Parameters.Add(new SqlParameter("@estado", estado));
-         
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
 
 

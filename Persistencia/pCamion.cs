@@ -96,7 +96,7 @@ namespace Persistencia
             return camion;
         }
 
-        public bool altaCam(Camion camion)
+        public bool altaCam(Camion camion, int idAdmin)
         {
             bool resultado = false;
 
@@ -111,6 +111,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@modelo", camion.Modelo));
                 cmd.Parameters.Add(new SqlParameter("@carga", camion.Carga));
                 cmd.Parameters.Add(new SqlParameter("@disponible", camion.Disponible));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
 
                 int resBD = cmd.ExecuteNonQuery();
@@ -133,7 +134,7 @@ namespace Persistencia
             return resultado;
         }
 
-        public bool bajaCam(int id)
+        public bool bajaCam(int id, int idAdmin)
         {
             bool resultado = false;
 
@@ -144,6 +145,7 @@ namespace Persistencia
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.Add(new SqlParameter("@id", id));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 
@@ -169,7 +171,7 @@ namespace Persistencia
 
         }
 
-        public bool modCam(Camion camion)
+        public bool modCam(Camion camion, int idAdmin)
         {
             bool resultado = false;
 
@@ -184,6 +186,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@modelo", camion.Modelo));
                 cmd.Parameters.Add(new SqlParameter("@carga", camion.Carga));
                 cmd.Parameters.Add(new SqlParameter("@disponible", camion.Disponible));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 

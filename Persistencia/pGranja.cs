@@ -90,7 +90,7 @@ namespace Persistencia
             return granja;
         }
 
-        public bool altaGranja(Granja granja)
+        public bool altaGranja(Granja granja, int idAdmin)    
         {
             bool resultado = false;
 
@@ -104,6 +104,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@nombre", granja.Nombre));
                 cmd.Parameters.Add(new SqlParameter("@ubicacion", granja.Ubicacion));
                 cmd.Parameters.Add(new SqlParameter("@idCliente", granja.IdCliente));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
 
                 int resBD = cmd.ExecuteNonQuery();
@@ -126,7 +127,7 @@ namespace Persistencia
             return resultado;
         }
 
-        public bool bajaGranja(int id)
+        public bool bajaGranja(int id, int idAdmin)
         {
             bool resultado = false;
 
@@ -137,6 +138,7 @@ namespace Persistencia
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.Add(new SqlParameter("@id", id));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 
@@ -162,7 +164,7 @@ namespace Persistencia
 
         }
 
-        public bool modGranja(Granja granja)
+        public bool modGranja(Granja granja, int idAdmin)
         {
             bool resultado = false;
 
@@ -176,6 +178,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@nombre", granja.Nombre));
                 cmd.Parameters.Add(new SqlParameter("@ubicacion", granja.Ubicacion));
                 cmd.Parameters.Add(new SqlParameter("@idCliente", granja.IdCliente));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 

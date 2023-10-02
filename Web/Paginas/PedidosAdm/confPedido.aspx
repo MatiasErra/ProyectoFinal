@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="confPedido.aspx.cs" Inherits="Web.Paginas.PedidosAdm.confPedido" %>
+﻿<%@ Page Title="Confirmar pedido" Language="C#" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="confPedido.aspx.cs" Inherits="Web.Paginas.PedidosAdm.confPedido" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 

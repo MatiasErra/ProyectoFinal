@@ -95,7 +95,7 @@ namespace Persistencia
             return loteP;
         }
 
-        public bool altaLotePesti(Lote_Pesti loteP)
+        public bool altaLotePesti(Lote_Pesti loteP, int idAdmin)
         {
             bool resultado = false;
 
@@ -110,6 +110,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@idProducto", loteP.IdProducto));
                 cmd.Parameters.Add(new SqlParameter("@fchProduccion", loteP.FchProduccion));
                 cmd.Parameters.Add(new SqlParameter("@cantidad", loteP.Cantidad));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
 
                 int resBD = cmd.ExecuteNonQuery();
@@ -133,7 +134,7 @@ namespace Persistencia
         }
 
 
-        public bool bajaLotePesti(int idPesticida, int idGranja, int idProducto, string fchProduccion)
+        public bool bajaLotePesti(int idPesticida, int idGranja, int idProducto, string fchProduccion, int idAdmin)
         {
             bool resultado = false;
 
@@ -147,6 +148,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@idGranja", idGranja));
                 cmd.Parameters.Add(new SqlParameter("@idProducto", idProducto));
                 cmd.Parameters.Add(new SqlParameter("@fchProduccion", fchProduccion));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 
@@ -172,7 +174,7 @@ namespace Persistencia
 
         }
 
-        public bool modLotePesti(Lote_Pesti loteP)
+        public bool modLotePesti(Lote_Pesti loteP, int idAdmin)
         {
             bool resultado = false;
 
@@ -187,6 +189,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@idProducto", loteP.IdProducto));
                 cmd.Parameters.Add(new SqlParameter("@fchProduccion", loteP.FchProduccion));
                 cmd.Parameters.Add(new SqlParameter("@cantidad", loteP.Cantidad));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 

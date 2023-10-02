@@ -79,44 +79,55 @@
                             <a class="btn btn-outline-light" href="/Paginas/PedidosADM/frmPedido">Pedidos</a>
                         </li>
 
+                        <li class="nav-item dropdown">
+                            <select name="Estadisticas" class="nav-link dropdown-toggle text-light bg-dark me-1" onchange="location = this.value;">
+                                <option style="display: none">Estadisticas y Auditoria</option>
+                                <optgroup label="Estadisticas">
+                                    <option value="/Paginas/Estadisticas/frmEstadisticas">Reporte de ventas</option>
+                                </optgroup>
+                                <optgroup label="Auditoria">
+                                    <option value="/Paginas/Estadisticas/frmAuditoria">Auditoria</option>
+                                </optgroup>
+                            </select>
+                        </li>
 
                         <li class="nav-item dropdown">
                             <select name="Gestion" class="nav-link dropdown-toggle text-light bg-dark me-1" onchange="location = this.value;">
-                                <option style="display: none">Gestion</option>
+                                <option style="display: none">Gestión</option>
                                 <optgroup label="Clientes">
                                     <option value="/Paginas/Clientes/frmListarClientes">Listar/eliminar Clientes</option>
                                 </optgroup>
                                 <optgroup label="Admins">
-                                    <option value="/Paginas/Admins/frmAdmins">Gestion de Admins</option>
+                                    <option value="/Paginas/Admins/frmAdmins">Gestión de Admins</option>
                                 </optgroup>
                                 <optgroup label="Camioneros">
-                                    <option value="/Paginas/Camioneros/frmCamioneros">Gestion de Camioneros</option>
+                                    <option value="/Paginas/Camioneros/frmCamioneros">Gestión de Camioneros</option>
                                 </optgroup>
 
                                 <optgroup label="Camiones">
-                                    <option value="/Paginas/Camiones/frmCamiones">Gestion de Camiones</option>
+                                    <option value="/Paginas/Camiones/frmCamiones">Gestión de Camiones</option>
                                 </optgroup>
 
                                 <optgroup label="Depositos">
-                                    <option value="/Paginas/Depositos/frmDepositos">Gestion de Depositos</option>
+                                    <option value="/Paginas/Depositos/frmDepositos">Gestión de Depositós</option>
                                 </optgroup>
                                 <optgroup label="Granjas">
-                                    <option value="/Paginas/Granjas/frmGranjas">Gestion de Granjas</option>
+                                    <option value="/Paginas/Granjas/frmGranjas">Gestión de Granjas</option>
                                 </optgroup>
                                 <optgroup label="Productos">
-                                    <option value="/Paginas/Productos/frmProductos">Gestion de Productos</option>
+                                    <option value="/Paginas/Productos/frmProductos">Gestión de Productos</option>
                                 </optgroup>
                                 <optgroup label="Pesticidas">
-                                    <option value="/Paginas/Pesticidas/frmPesticidas">Gestion de Pesticidas</option>
+                                    <option value="/Paginas/Pesticidas/frmPesticidas">Gestión de Pesticidas</option>
                                 </optgroup>
                                 <optgroup label="Fertilizantes">
-                                    <option value="/Paginas/Fertilizantes/frmFertilizantes">Gestion de Fertilizantes</option>
+                                    <option value="/Paginas/Fertilizantes/frmFertilizantes">Gestión de Fertilizantes</option>
                                 </optgroup>
                                 <optgroup label="Lotes">
-                                    <option value="/Paginas/Lotes/frmLotes">Gestion de Lotes</option>
+                                    <option value="/Paginas/Lotes/frmLotes">Gestión de Lotes</option>
                                 </optgroup>
                                 <optgroup label="Viajes">
-                                    <option value="/Paginas/Viajes/frmViajes">Gestion de Viajes</option>
+                                    <option value="/Paginas/Viajes/frmViajes">Gestión de Viajes</option>
                                 </optgroup>
                             </select>
                         </li>

@@ -49,6 +49,7 @@
     <Compile Include="pCamionero.cs" />
     <Compile Include="pCliente.cs" />
     <Compile Include="pDeposito.cs" />
+    <Compile Include="pEstadistica.cs" />
     <Compile Include="pFertilizante.cs" />
     <Compile Include="pGranja.cs" />
     <Compile Include="pLote.cs" />

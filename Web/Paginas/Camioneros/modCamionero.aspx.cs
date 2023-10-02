@@ -199,9 +199,11 @@ namespace Web.Paginas.Camioneros
                                     string disponible = HttpUtility.HtmlEncode(lstDisponible.SelectedValue.ToString());
                                     string txtFchVenc = HttpUtility.HtmlEncode(txtFchManejo.Text);
 
+                                    int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+
                                     ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
                                     Camionero unCamionero = new Camionero(id, nombre, apellido, email, tele, txtFc, cedula, disponible, txtFchVenc);
-                                    if (Web.modCamionero(unCamionero))
+                                    if (Web.modCamionero(unCamionero, idAdmin))
                                     {
                                         limpiar();
                                         lblMensajes.Text = "Camionero modificado con éxito.";

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Title="Gestion de camioneros" AutoEventWireup="true" MasterPageFile="~/Master/AGlobal.Master" CodeBehind="frmCamioneros.aspx.cs" Inherits="Web.Paginas.Camioneros.frmCamioneros" %>
+﻿<%@ Page Language="C#" Title="Gestión de camioneros" AutoEventWireup="true" MasterPageFile="~/Master/AGlobal.Master" CodeBehind="frmCamioneros.aspx.cs" Inherits="Web.Paginas.Camioneros.frmCamioneros" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
@@ -7,7 +7,7 @@
             <div class="col-12 m-3 p-2 text-center  backforContent">
                 <div class="row">
                     <div class="col-12">
-                        <h2 class="title">Gestion de Camioneros</h2>
+                        <h2 class="title">Gestión de Camioneros</h2>
 
                         <div class="row text-center">
                             <div class=" col-sm-12">

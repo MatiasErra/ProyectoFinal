@@ -162,11 +162,11 @@ namespace Web.Paginas.Camiones
 
 
 
-
+                        int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
 
                         ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
                         Camion camion = new Camion(id, marca, modelo, carga, disponible);
-                        if (Web.modCam(camion))
+                        if (Web.modCam(camion, idAdmin))
                         {
                             limpiar();
                             lblMensajes.Text = "Camión modificado con éxito.";

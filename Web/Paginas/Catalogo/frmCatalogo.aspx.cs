@@ -616,7 +616,6 @@ namespace Web.Paginas
                             double Precio = pre.Precio * cantidadDouble;
 
 
-
                             if (Web.altaPedido_Prod(pedido_prod, CantRes, Precio))
                             {
                                 lblMensajes.Text = "Pedido realizado";

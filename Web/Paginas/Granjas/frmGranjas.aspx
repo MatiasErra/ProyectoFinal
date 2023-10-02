@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Title="Gestion de granjas" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="frmGranjas.aspx.cs" Inherits="Web.Paginas.Granjass.frmGranjas" %>
+﻿<%@ Page Language="C#" Title="Gestión de granjas" MasterPageFile="~/Master/AGlobal.Master" AutoEventWireup="true" CodeBehind="frmGranjas.aspx.cs" Inherits="Web.Paginas.Granjass.frmGranjas" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container row m-2 text-center">
@@ -6,7 +6,7 @@
             <div class="col-12 m-3 p-2 text-center backforContent">
                 <div class="row">
                     <div class="col-12 p-3">
-                        <h2 class="title">Gestion de Granjas </h2>
+                        <h2 class="title">Gestión de Granjas </h2>
 
 
                         <div class="row text-center">
