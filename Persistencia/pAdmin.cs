@@ -82,7 +82,7 @@ namespace Persistencia
 
         }
 
-        public List<Admin> buscarAdminFiltro(Admin adminBuscar, string fchDesde, string fchHasta, string ordenar)
+        public List<Admin> buscarAdminFiltro(Admin adminBuscar, string ordenar)
         {
             List<Admin> resultado = new List<Admin>();
             try
@@ -98,12 +98,9 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@nombre", adminBuscar.Nombre));
                 cmd.Parameters.Add(new SqlParameter("@apellido", adminBuscar.Apellido));
                 cmd.Parameters.Add(new SqlParameter("@email", adminBuscar.Email));
-                cmd.Parameters.Add(new SqlParameter("@telefono", adminBuscar.Telefono));
                 cmd.Parameters.Add(new SqlParameter("@usuario", adminBuscar.User));
                 cmd.Parameters.Add(new SqlParameter("@tipoAdmin", adminBuscar.TipoDeAdmin));
                 cmd.Parameters.Add(new SqlParameter("@estado", adminBuscar.Estado));
-                cmd.Parameters.Add(new SqlParameter("@fchDesde", fchDesde));
-                cmd.Parameters.Add(new SqlParameter("@fchHasta", fchHasta));
                 cmd.Parameters.Add(new SqlParameter("@ordenar", ordenar));
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {

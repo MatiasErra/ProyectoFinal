@@ -117,7 +117,7 @@
 
                 <div class="col-md-12 align-self-center">
                     <div class="row align-self-center">
-                        <div class="col-md-12 col-md-offset-1">
+         
                             <div class="form-group">
                                 <div class="table-responsive">
                                     <asp:GridView ID="lstLote" Width="100%" SelectedIndex="1" AutoGenerateColumns="false"
@@ -157,25 +157,47 @@
                                                 ItemStyle-CssClass="GridStl" />
 
                                             
-                                            <asp:TemplateField 
+                                              <asp:TemplateField 
                                                 ItemStyle-CssClass="GridStl">
                                                 <ItemTemplate>
                                                             <asp:Button ID="btnVerPestis" CssClass="btnE btn--radius btn--blue" runat="server" Text="Pesticidas" OnClick="btnVerPestis_Click" />
+                                                   
+                                                          </ItemTemplate>
+                                            </asp:TemplateField>
+                                     
+
+
+                                            <asp:TemplateField
+                                                ItemStyle-CssClass="GridStl">
+                                                <ItemTemplate>
+                                                      
                                                     <asp:Button ID="btnVerFertis" CssClass="btnE btn--radius btn--blue" runat="server" Text="Fertilizantes" OnClick="btnVerFertis_Click" />
                                                           </ItemTemplate>
                                             </asp:TemplateField>
+
+                                            <asp:TemplateField 
+                                                ItemStyle-CssClass="GridStl">
+                                                <ItemTemplate>
+                                            
+                                                  
+                                                    <asp:Button ID="btmModificar" CssClass="btnE btn--radius btn--yellow" runat="server" Text="Modificar" OnClick="btnModificar_Click" />
+
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+
+                                            
                                             <asp:TemplateField 
                                                 ItemStyle-CssClass="GridStl">
                                                 <ItemTemplate>
                                             
                                                     <asp:Button ID="btnBaja" CssClass="btnE btn--radius btn--red" runat="server" Text="Baja" OnClientClick="return confirm('¿Desea eliminar este Lote?')" OnClick="btnBaja_Click" />
-                                                    <asp:Button ID="btmModificar" CssClass="btnE btn--radius btn--yellow" runat="server" Text="Modificar" OnClick="btnModificar_Click" />
+                                           
 
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
                                     </asp:GridView>
-                                </div>
+                              
                             </div>
                         </div>
                     </div>

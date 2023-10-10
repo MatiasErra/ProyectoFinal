@@ -69,24 +69,6 @@ namespace Web.Paginas.Camioneros
         protected global::System.Web.UI.WebControls.TextBox txtEmailBuscar;
 
         /// <summary>
-        /// Control txtTelBuscar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTelBuscar;
-
-        /// <summary>
-        /// Control RegularExpressionValidator3.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator3;
-
-        /// <summary>
         /// Control txtCedulaBuscar.
         /// </summary>
         /// <remarks>
@@ -112,33 +94,6 @@ namespace Web.Paginas.Camioneros
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList lstDisponibleBuscar;
-
-        /// <summary>
-        /// Control lblFchNac.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFchNac;
-
-        /// <summary>
-        /// Control txtFchNacBuscarPasada.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFchNacBuscarPasada;
-
-        /// <summary>
-        /// Control txtFchNacBuscarFutura.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFchNacBuscarFutura;
 
         /// <summary>
         /// Control lblFchVenc.

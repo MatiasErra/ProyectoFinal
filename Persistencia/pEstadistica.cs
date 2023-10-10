@@ -41,7 +41,10 @@ namespace Persistencia
                         auditoria.IdAdmin = int.Parse(reader["idAdmin"].ToString());
                         auditoria.NombreAdmin = reader["nombreAdmin"].ToString();
                         auditoria.ApellidoAdmin = reader["apellidoAdmin"].ToString();
-                        auditoria.Fecha = reader["fecha"].ToString().Split(' ')[0];
+                     string [] fechaarry  = reader["fecha"].ToString().Split(':');
+                        auditoria.Fecha  = fechaarry[0] +":" + fechaarry[1] .ToString();
+
+
                         auditoria.Tabla = reader["tabla"].ToString();
                         auditoria.Tipo = reader["tipo"].ToString();
 

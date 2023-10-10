@@ -100,6 +100,38 @@ namespace Web.Paginas.Camiones
 
         #region Utilidad
 
+        private bool ViajeCamion(int idCamion)
+        {
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            Viaje viaje = new Viaje();
+            int costoMenor =0;
+            int costoMayor = 99999999;
+            string fchMenor = "1000-01-01";
+            string fchMayor = "3000-12-30";
+            viaje.IdCamion =  0;
+            viaje.IdCamionero =  0;
+            viaje.Estado =  "";
+            string ordenar =  "";
+
+            List<Viaje> viajes = Web.buscarViajeFiltro(viaje, costoMenor, costoMayor, fchMenor, fchMayor, ordenar);
+
+            int i = 0;
+            foreach (Viaje unViaje in viajes)
+            {
+                if(unViaje.IdCamion == idCamion)
+                {
+                    i++;
+                    break;
+                }
+            }
+            if (i == 0)
+            {
+                return true;
+            }
+            else return false;
+        }
+
+
         private bool faltanDatos()
         {
             if (txtModelo.Text == "" || txtMarca.Text == "" || txtCarga.Text == "")
@@ -173,8 +205,8 @@ namespace Web.Paginas.Camiones
             System.Web.HttpContext.Current.Session["cargaMenorCamionBuscar"] = txtCargaMenorBuscar.Text;
             System.Web.HttpContext.Current.Session["cargaMayorCamionBuscar"] = txtCargaMayorBuscar.Text;
             System.Web.HttpContext.Current.Session["disponibleCamionBuscar"] = lstDisponibleBuscar.SelectedValue != "Seleccionar disponibilidad" ? lstDisponibleBuscar.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["BuscarLst"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["BuscarLstCamion"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["OrdenarPorCamion"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
         }
 
         #region Paginas
@@ -208,7 +240,7 @@ namespace Web.Paginas.Camiones
             if (camiones.Count == 0)
             {
 
-                lblPaginas.Visible = false;
+                txtPaginas.Visible = false;
                 lblMensajes.Text = "No se encontro ningún Camión.";
 
                 lblPaginaAnt.Visible = false;
@@ -221,24 +253,24 @@ namespace Web.Paginas.Camiones
                 if (System.Web.HttpContext.Current.Session["ViajeDatosFrm"] != null || System.Web.HttpContext.Current.Session["ViajeDatosMod"] != null)
                 {
 
-                    lblPaginas.Visible = true;
+                    txtPaginas.Visible = true;
                     lblMensajes.Text = "";
                     modificarPagina();
                     lstCamiones.Visible = false;
                     lstCamionesSel.Visible = true;
                     lstCamionesSel.DataSource = null;
-                    lstCamionesSel.DataSource = camionesPagina;
+                    lstCamionesSel.DataSource = ObtenerDatos(camionesPagina);
                     lstCamionesSel.DataBind();
                 }
                 else
                 {
-                    lblPaginas.Visible = true;
+                    txtPaginas.Visible = true;
                     lblMensajes.Text = "";
                     modificarPagina();
                     lstCamionesSel.Visible = false;
                     lstCamiones.Visible = true;
                     lstCamiones.DataSource = null;
-                    lstCamiones.DataSource = camionesPagina;
+                    lstCamiones.DataSource = ObtenerDatos(camionesPagina);
                     lstCamiones.DataBind();
                 }
             }
@@ -281,6 +313,38 @@ namespace Web.Paginas.Camiones
             lblPaginaSig.Text = (int.Parse(pagAct) + 1).ToString();
         }
 
+
+        public DataTable ObtenerDatos(List<Camion> camiones)
+        {
+
+            DataTable dt = new DataTable();
+            dt.Columns.AddRange(new DataColumn[5] {
+                new DataColumn("IdCamion", typeof(int)),
+                new DataColumn("Marca", typeof(string)),
+                new DataColumn("Modelo", typeof(string)),
+                new DataColumn("Carga", typeof(string)),
+                   new DataColumn("Disponible", typeof(string)),
+    
+            });
+
+            foreach (Camion unCam in camiones)
+            {
+
+                DataRow dr = dt.NewRow();
+                dr["IdCamion"] = unCam.IdCamion.ToString();
+                dr["Marca"] = unCam.Marca.ToString();
+                dr["Modelo"] = unCam.Modelo.ToString();
+                dr["Carga"] = unCam.Carga.ToString() + " tn" ;
+                dr["Disponible"] = unCam.Disponible.ToString();
+
+                dt.Rows.Add(dr);
+
+
+
+            }
+
+            return dt;
+        }
 
         private List<Camion> obtenerCamiones()
         {
@@ -389,7 +453,7 @@ namespace Web.Paginas.Camiones
             dt.Columns.Add(new DataColumn("id", typeof(String)));
 
             dt.Rows.Add(createRow("Buscar por", "Buscar por", dt));
-            dt.Rows.Add(createRow("Marca", "Marca", dt));
+            dt.Rows.Add(createRow("Marca y modelo", "Marca", dt));
             dt.Rows.Add(createRow("Carga", "Carga", dt));
             dt.Rows.Add(createRow("Disponibilidad", "Disponibilidad", dt));
 
@@ -506,9 +570,10 @@ namespace Web.Paginas.Camiones
                         else
                         {
                             limpiar();
-                            lblMensajes.Text = "Camión dado de alta con éxito.";
+
                             lblPaginaAct.Text = "1";
                             listarPagina();
+                            lblMensajes.Text = "Camión dado de alta con éxito.";
                         }
                     }
                     else lblMensajes.Text = "No se pudo dar de alta el Camión.";
@@ -566,15 +631,22 @@ namespace Web.Paginas.Camiones
             Camion camion = Web.buscarCam(id);
             if (camion != null)
             {
-                int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
-                if (Web.bajaCam(id, idAdmin))
+                if (ViajeCamion(camion.IdCamion))
                 {
-                    limpiar();
-                    lblMensajes.Text = "Se ha borrado el Camión.";
-                    lblPaginaAct.Text = "1";
-                    listarPagina();
+
+                    int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                    if (Web.bajaCam(id, idAdmin))
+                    {
+                        limpiar();
+                        
+                        lblPaginaAct.Text = "1";
+                        listarPagina();
+                        lblMensajes.Text = "Se ha borrado el Camión.";
+                    }
+                    else lblMensajes.Text = "No se ha podido borrar el Camión.";
                 }
-                else lblMensajes.Text = "No se ha podido borrar el Camión.";
+                else lblMensajes.Text = "El camión no se puede eliminar porque tiene un viaje..";
+
             }
             else lblMensajes.Text = "El Camión no existe.";
         }

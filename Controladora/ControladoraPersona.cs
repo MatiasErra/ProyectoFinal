@@ -58,10 +58,10 @@ namespace Controladoras
 
    
 
-        public List<Admin> buscarAdminFiltro(Admin adminBuscar, string fchDesde, string fchHasta, string ordenar)
+        public List<Admin> buscarAdminFiltro(Admin adminBuscar,  string ordenar)
         {
             ControladoraP inst = ControladoraP.obtenerInstancia();
-            List<Admin> lst = inst.buscarAdminFiltro(adminBuscar, fchDesde, fchHasta, ordenar);
+            List<Admin> lst = inst.buscarAdminFiltro(adminBuscar, ordenar);
             return lst;
         }
 
@@ -143,10 +143,10 @@ namespace Controladoras
 
 
 
-        public List<Cliente> buscarCliFiltro(Cliente cliente, string fchDesde, string fchHasta, string ordenar)
+        public List<Cliente> buscarCliFiltro(Cliente cliente, string ordenar)
         {
             ControladoraP inst = ControladoraP.obtenerInstancia();
-            List<Cliente> lst = inst.buscarCliFiltro(cliente,fchDesde,fchHasta, ordenar);
+            List<Cliente> lst = inst.buscarCliFiltro(cliente, ordenar);
             return lst;
         }
 
@@ -206,10 +206,10 @@ namespace Controladoras
         #region Camioneros
 
        
-        public List<Camionero> buscarCamioneroFiltro(Camionero pCamionero, string fchNacDesde, string fchNacHasta, string fchVencDesde, string fchVencHasta, string ordenar)
+        public List<Camionero> buscarCamioneroFiltro(Camionero pCamionero, string fchVencDesde, string fchVencHasta, string ordenar)
         {
             ControladoraP inst = ControladoraP.obtenerInstancia();
-            List<Camionero> lst = inst.buscarCamioneroFiltro( pCamionero, fchNacDesde, fchNacHasta, fchVencDesde, fchVencHasta, ordenar);
+            List<Camionero> lst = inst.buscarCamioneroFiltro( pCamionero, fchVencDesde, fchVencHasta, ordenar);
             return lst;
         }
 

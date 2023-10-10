@@ -15,15 +15,6 @@ namespace Web.Paginas.Lotes
     {
 
         /// <summary>
-        /// Control txtIdGranja.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label txtIdGranja;
-
-        /// <summary>
         /// Control txtNomGranja.
         /// </summary>
         /// <remarks>
@@ -31,15 +22,6 @@ namespace Web.Paginas.Lotes
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label txtNomGranja;
-
-        /// <summary>
-        /// Control txtIdProducto.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label txtIdProducto;
 
         /// <summary>
         /// Control txtNomProd.

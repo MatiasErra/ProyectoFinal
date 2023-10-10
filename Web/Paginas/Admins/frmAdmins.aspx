@@ -35,9 +35,7 @@
 
                                 <asp:TextBox Visible="false" ID="txtEmailBuscar" CssClass="input--style-text-search" runat="server" placeholder="Email" onkeydown="return(event.keyCode!=32);"></asp:TextBox>
 
-                                <asp:TextBox Visible="false" ID="txtTelBuscar" CssClass="input--style-text-search" MaxLength="9" runat="server" placeholder="Telefono" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
-                                <asp:RegularExpressionValidator Display="Dynamic" ControlToValidate="txtTelBuscar" ID="RegularExpressionValidator1" class="text centerText"
-                                    ValidationExpression="^[0-9]" runat="server" ErrorMessage="El teléfono solo pueden ser numeros." />
+                            
 
                                 <asp:TextBox Visible="false" ID="txtUsuarioBuscar" runat="server" CssClass="input--style-text-search" placeholder="Nombre de Usuario" MaxLength="40" onkeydown="return(!(event.keyCode>=91) && event.keyCode!=32);"> </asp:TextBox>
                                 <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text centerText"
@@ -51,18 +49,7 @@
                                 <asp:DropDownList Visible="false" ID="lstEstadoBuscar" CssClass="input--style-lst-search" runat="server">
                                 </asp:DropDownList>
 
-                                <div class="row justify-content-center">
-                                    <div class="col-lg-6">
-                                        <asp:Label Visible="false" runat="server" ID="lblFchNac">
-                                            <asp:Label class="text initText" Text="Desde:" runat="server" />
-                                            <asp:TextBox ID="txtFchNacBuscarPasada" runat="server" CssClass=" input--style-text-search js-datepicker" placeholder="Fecha" TextMode="Date"></asp:TextBox>
-
-
-                                            <asp:Label class="text initText" Text="Hasta:" runat="server" />
-                                            <asp:TextBox ID="txtFchNacBuscarFutura" runat="server" CssClass=" input--style-text-search js-datepicker" placeholder="Fecha" TextMode="Date"></asp:TextBox>
-                                        </asp:Label>
-                                    </div>
-                                </div>
+                               
 
                             </div>
                         </div>
@@ -194,7 +181,7 @@
 
                 <div class="col-md-12 align-self-center">
                     <div class="row align-self-center">
-                        <div class="col-md-11 col-md-offset-1">
+                        <div class="col-md-12 col-md-offset-1">
                             <div class="form-group">
                                 <div class="table-responsive">
                                     <asp:GridView ID="lstAdmin" Width="100%" SelectedIndex="1" AutoGenerateColumns="false"

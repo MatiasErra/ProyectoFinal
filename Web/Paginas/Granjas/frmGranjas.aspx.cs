@@ -272,7 +272,7 @@ namespace Web.Paginas.Granjass
 
             if (granjasPagina.Count == 0)
             {
-                lblPaginas.Visible = false;
+                txtPaginas.Visible = false;
                 lblMensajes.Text = "No se encontro ningúna granja.";
 
                 lblPaginaAnt.Visible = false;
@@ -285,7 +285,7 @@ namespace Web.Paginas.Granjass
             {
                 if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
                 {
-                    lblPaginas.Visible = true;
+                    txtPaginas.Visible = true;
                     lstGranjaSelect.Visible = true;
                     modificarPagina();
                     lstGranjaSelect.DataSource = null;
@@ -295,7 +295,7 @@ namespace Web.Paginas.Granjass
 
                 else
                 {
-                    lblPaginas.Visible = true;
+                    txtPaginas.Visible = true;
                     lblMensajes.Text = "";
                     modificarPagina();
                     lstGranja.Visible = true;
@@ -483,7 +483,7 @@ namespace Web.Paginas.Granjass
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             Cliente cli = new Cliente(0, "", "", "", "", "", "", "", "");
-            List<Cliente> clientes = Web.buscarCliFiltro(cli, "1000-01-01", "3000-12-30", "");
+            List<Cliente> clientes = Web.buscarCliFiltro(cli, "");
 
 
             DataTable dt = new DataTable();
@@ -650,7 +650,7 @@ namespace Web.Paginas.Granjass
                     }
                     else lblMensajes.Text = "No se ha podido borrar la granja.";
                 }
-                else lblMensajes.Text = "Esta granja esta asociada a un lote.";
+                else lblMensajes.Text = "No se ha podido eliminar la granja porque está asociado a un lote.";
             }
             else lblMensajes.Text = "La granja no existe.";
         }

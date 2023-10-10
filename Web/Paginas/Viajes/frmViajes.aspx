@@ -149,7 +149,7 @@
                 </div>
                 <div class="col-md-12 align-self-center">
                     <div class="row align-self-center">
-                        <div class="col-md-11 col-md-offset-1">
+              
                             <div class="form-group">
                                 <div class="table-responsive">
                                     <asp:GridView ID="lstViaje" Width="100%" SelectedIndex="1" AutoGenerateColumns="false"
@@ -171,6 +171,10 @@
                                             <asp:BoundField DataField="Fecha"
                                                 HeaderText="Fecha"
                                                 ItemStyle-CssClass="GridStl" />
+                                            
+                                            <asp:BoundField DataField="idCamion"
+                                                HeaderText="Identificador del Camion"
+                                                ItemStyle-CssClass="GridStl" />
 
                                             <asp:BoundField DataField="MarcaCamion"
                                                 HeaderText="Marca del Camión"
@@ -178,6 +182,10 @@
 
                                             <asp:BoundField DataField="ModeloCamion"
                                                 HeaderText="Modelo del Camión"
+                                                ItemStyle-CssClass="GridStl" />
+
+                                                <asp:BoundField DataField="idCamionero"
+                                                HeaderText="Identificador del Camionero"
                                                 ItemStyle-CssClass="GridStl" />
 
                                             <asp:BoundField DataField="NombreCamionero"
@@ -222,7 +230,7 @@
                                             <asp:TemplateField
                                                 ItemStyle-CssClass="GridStl">
                                                 <ItemTemplate>
-                                                    <asp:Button ID="btnVerLote" CssClass="btnE btn--radius btn--blue" runat="server" Text="Ver Lotes Asignados" OnClick="btnVerLotes_Click" />
+                                                    <asp:Button ID="btnVerLote" CssClass="btnE btn--radius btn--blue" runat="server" Text="Ver Lotes" OnClick="btnVerLotes_Click" />
 
                                                 </ItemTemplate>
                                             </asp:TemplateField>
@@ -238,7 +246,7 @@
 
                                 </div>
                             </div>
-                        </div>
+                     
                     </div>
 
                     <asp:Label runat="server" ID="lblPaginas" CssClass="text pagStyle">

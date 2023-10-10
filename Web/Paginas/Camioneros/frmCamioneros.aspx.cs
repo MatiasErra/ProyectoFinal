@@ -82,14 +82,10 @@ namespace Web.Paginas.Camioneros
                 System.Web.HttpContext.Current.Session["apellidoCamioneroBuscar"] = null;
                 txtEmailBuscar.Text = System.Web.HttpContext.Current.Session["emailCamioneroBuscar"] != null ? System.Web.HttpContext.Current.Session["emailCamioneroBuscar"].ToString() : "";
                 System.Web.HttpContext.Current.Session["emailCamioneroBuscar"] = null;
-                txtTelBuscar.Text = System.Web.HttpContext.Current.Session["telCamioneroBuscar"] != null ? System.Web.HttpContext.Current.Session["telCamioneroBuscar"].ToString() : "";
-                System.Web.HttpContext.Current.Session["telCamioneroBuscar"] = null;
+             
                 txtCedulaBuscar.Text = System.Web.HttpContext.Current.Session["cedulaCamioneroBuscar"] != null ? System.Web.HttpContext.Current.Session["cedulaCamioneroBuscar"].ToString() : "";
                 System.Web.HttpContext.Current.Session["cedulaCamioneroBuscar"] = null;
-                txtFchNacBuscarPasada.Text = System.Web.HttpContext.Current.Session["fchPasadaCamioneroBuscar"] != null ? DateTime.Parse(System.Web.HttpContext.Current.Session["fchPasadaCamioneroBuscar"].ToString()).ToString("yyyy-MM-dd") : "";
-                System.Web.HttpContext.Current.Session["fchPasadaCamioneroBuscar"] = null;
-                txtFchNacBuscarFutura.Text = System.Web.HttpContext.Current.Session["fchFuturaCamioneroBuscar"] != null ? DateTime.Parse(System.Web.HttpContext.Current.Session["fchFuturaCamioneroBuscar"].ToString()).ToString("yyyy-MM-dd") : "";
-                System.Web.HttpContext.Current.Session["fchFuturaCamioneroBuscar"] = null;
+
                 txtFchVencBuscarPasada.Text = System.Web.HttpContext.Current.Session["fchVencPasadaCamioneroBuscar"] != null ? DateTime.Parse(System.Web.HttpContext.Current.Session["fchVencPasadaCamioneroBuscar"].ToString()).ToString("yyyy-MM-dd") : "";
                 System.Web.HttpContext.Current.Session["fchVencPasadaCamioneroBuscar"] = null;
                 txtFchVencBuscarFutura.Text = System.Web.HttpContext.Current.Session["fchVencFuturaCamioneroBuscar"] != null ? DateTime.Parse(System.Web.HttpContext.Current.Session["fchVencFuturaCamioneroBuscar"].ToString()).ToString("yyyy-MM-dd") : "";
@@ -99,9 +95,11 @@ namespace Web.Paginas.Camioneros
                 lstDisponibleBuscar.SelectedValue = System.Web.HttpContext.Current.Session["disponibleCamioneroBuscar"] != null ? System.Web.HttpContext.Current.Session["disponibleCamioneroBuscar"].ToString() : "Seleccionar disponibilidad";
                 System.Web.HttpContext.Current.Session["disponibleCamioneroBuscar"] = null;
                 listBuscarPor.SelectedValue = System.Web.HttpContext.Current.Session["BuscarLstCamionero"] != null ? System.Web.HttpContext.Current.Session["BuscarLstCamionero"].ToString() : "Buscar por";
-                System.Web.HttpContext.Current.Session["BuscarLst"] = null;
+                System.Web.HttpContext.Current.Session["BuscarLstCamionero"] = null;
                 listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPorCamionero"] != null ? System.Web.HttpContext.Current.Session["OrdenarPorCamionero"].ToString() : "Ordernar por";
                 System.Web.HttpContext.Current.Session["OrdenarPorCamionero"] = null;
+
+
                 comprobarBuscar();
                 listarPagina();
 
@@ -113,6 +111,39 @@ namespace Web.Paginas.Camioneros
         #endregion
 
         #region Utilidad
+
+        private bool ViajeCamionero(int idCamionero)
+        {
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            Viaje viaje = new Viaje();
+            int costoMenor = 0;
+            int costoMayor = 99999999;
+            string fchMenor = "1000-01-01";
+            string fchMayor = "3000-12-30";
+            viaje.IdCamion = 0;
+            viaje.IdCamionero = 0;
+            viaje.Estado = "";
+            string ordenar = "";
+
+            List<Viaje> viajes = Web.buscarViajeFiltro(viaje, costoMenor, costoMayor, fchMenor, fchMayor, ordenar);
+
+            int i = 0;
+            foreach (Viaje unViaje in viajes)
+            {
+                if (unViaje.IdCamionero == idCamionero)
+                {
+                    i++;
+                    break;
+                }
+            }
+            if (i == 0)
+            {
+                return true;
+            }
+            else return false;
+        }
+
+
 
         private bool faltanDatos()
         {
@@ -168,10 +199,9 @@ namespace Web.Paginas.Camioneros
             txtNombreBuscar.Text = "";
             txtApellidoBuscar.Text = "";
             txtEmailBuscar.Text = "";
-            txtTelBuscar.Text = "";
+
             txtCedulaBuscar.Text = "";
-            txtFchNacBuscarPasada.Text = "";
-            txtFchNacBuscarFutura.Text = "";
+
             txtFchVencBuscarPasada.Text = "";
             txtFchVencBuscarFutura.Text = "";
             lstDisponibleBuscar.SelectedValue = "Seleccionar disponibilidad";
@@ -215,11 +245,9 @@ namespace Web.Paginas.Camioneros
             txtNombreBuscar.Visible = listBuscarPor.SelectedValue == "Nombre y Apellido" ? true : false;
             txtApellidoBuscar.Visible = listBuscarPor.SelectedValue == "Nombre y Apellido" ? true : false;
             txtEmailBuscar.Visible = listBuscarPor.SelectedValue == "Email" ? true : false;
-            txtTelBuscar.Visible = listBuscarPor.SelectedValue == "Telefono" ? true : false;
-            lblFchNac.Visible = listBuscarPor.SelectedValue == "Fecha de nacimiento" ? true : false;
             lblFchVenc.Visible = listBuscarPor.SelectedValue == "Fecha de vencimiento" ? true : false;
             txtCedulaBuscar.Visible = listBuscarPor.SelectedValue == "Cedula" ? true : false;
-            lstDisponibleBuscar.Visible = listBuscarPor.SelectedValue == "Disponible" ? true : false;
+            lstDisponibleBuscar.Visible = listBuscarPor.SelectedValue == "Disponibilidad" ? true : false;
         }
 
         private void guardarBuscar()
@@ -227,10 +255,10 @@ namespace Web.Paginas.Camioneros
             System.Web.HttpContext.Current.Session["nombreCamioneroBuscar"] = txtNombreBuscar.Text;
             System.Web.HttpContext.Current.Session["apellidoCamioneroBuscar"] = txtApellidoBuscar.Text;
             System.Web.HttpContext.Current.Session["emailCamioneroBuscar"] = txtEmailBuscar.Text;
-            System.Web.HttpContext.Current.Session["telCamioneroBuscar"] = txtTelBuscar.Text;
+
             System.Web.HttpContext.Current.Session["cedulaCamioneroBuscar"] = txtCedula.Text;
-            System.Web.HttpContext.Current.Session["fchPasadaCamioneroBuscar"] = txtFchNacBuscarPasada.Text != "" ? txtFchNacBuscarPasada.Text : null;
-            System.Web.HttpContext.Current.Session["fchFuturaCamioneroBuscar"] = txtFchNacBuscarFutura.Text != "" ? txtFchNacBuscarFutura.Text : null;
+
+             System.Web.HttpContext.Current.Session["disponibleCamioneroBuscar"] = lstDisponibleBuscar.SelectedValue != "Seleccionar disponibilidad" ? listBuscarPor.SelectedValue : null;
             System.Web.HttpContext.Current.Session["fchVencPasadaCamioneroBuscar"] = txtFchVencBuscarPasada.Text != "" ? txtFchVencBuscarPasada.Text : null;
             System.Web.HttpContext.Current.Session["fchVencFuturaCamioneroBuscar"] = txtFchVencBuscarFutura.Text != "" ? txtFchVencBuscarFutura.Text : null;
             System.Web.HttpContext.Current.Session["BuscarLstCamionero"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : null;
@@ -241,7 +269,7 @@ namespace Web.Paginas.Camioneros
 
         private int PagMax()
         {
-            return 3;
+            return 2;
         }
 
 
@@ -269,7 +297,7 @@ namespace Web.Paginas.Camioneros
 
             if (camioneroPagina.Count == 0)
             {
-                lblPaginas.Visible = false;
+                txtPaginas.Visible = false;
                 lblMensajes.Text = "No se encontro ningún Camionero.";
 
                 lblPaginaAnt.Visible = false;
@@ -282,7 +310,7 @@ namespace Web.Paginas.Camioneros
                 if (System.Web.HttpContext.Current.Session["ViajeDatosFrm"] != null || System.Web.HttpContext.Current.Session["ViajeDatosMod"] != null)
                 {
 
-                    lblPaginas.Visible = true;
+                    txtPaginas.Visible = true;
                     lblMensajes.Text = "";
                     modificarPagina();
                     lstCamionero.Visible = false;
@@ -293,7 +321,7 @@ namespace Web.Paginas.Camioneros
                 }
                 else
                 {
-                    lblPaginas.Visible = true;
+                    txtPaginas.Visible = true;
                     lblMensajes.Text = "";
                     modificarPagina();
                     lstCamioneroSel.Visible = false;
@@ -345,20 +373,19 @@ namespace Web.Paginas.Camioneros
             camionero.Nombre = HttpUtility.HtmlEncode(txtNombreBuscar.Text);
             camionero.Apellido = HttpUtility.HtmlEncode(txtApellidoBuscar.Text);
             camionero.Email = HttpUtility.HtmlEncode(txtEmailBuscar.Text);
-            camionero.Telefono = HttpUtility.HtmlEncode(txtTelBuscar.Text);
+
             camionero.Cedula = HttpUtility.HtmlEncode(txtCedulaBuscar.Text);
             camionero.Disponible = lstDisponibleBuscar.SelectedValue != "Seleccionar disponibilidad" ? lstDisponibleBuscar.SelectedValue : "";
             if (System.Web.HttpContext.Current.Session["ViajeDatosFrm"] == "Abm" || System.Web.HttpContext.Current.Session["ViajeDatosMod"] != null)
             {
                 camionero.Disponible = "Disponible";
             }
-            string fchNacDesde = txtFchNacBuscarPasada.Text != "" ? txtFchNacBuscarPasada.Text : "1000-01-01";
-            string fchNacHasta = txtFchNacBuscarFutura.Text != "" ? txtFchNacBuscarFutura.Text : "3000-12-30";
+
             string fchVencDesde = txtFchVencBuscarPasada.Text != "" ? txtFchVencBuscarPasada.Text : "1000-01-01";
             string fchVencHasta = txtFchVencBuscarFutura.Text != "" ? txtFchVencBuscarFutura.Text : "3000-12-30";
             string ordenar = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : "";
 
-            List<Camionero> camioneros = Web.buscarCamioneroFiltro(camionero, fchNacDesde, fchNacHasta, fchVencDesde, fchVencHasta, ordenar);
+            List<Camionero> camioneros = Web.buscarCamioneroFiltro(camionero, fchVencDesde, fchVencHasta, ordenar);
 
             return camioneros;
         }
@@ -421,9 +448,10 @@ namespace Web.Paginas.Camioneros
             dt.Rows.Add(createRow("Ordenar por", "Ordenar por", dt));
             dt.Rows.Add(createRow("Nombre", "Nombre", dt));
             dt.Rows.Add(createRow("Apellido", "Apellido", dt));
-            dt.Rows.Add(createRow("Fecha de Nacimiento", "Fecha de Nacimiento", dt));
-            dt.Rows.Add(createRow("Vencimiento de libreta", "Vencimiento de libreta", dt));
-            dt.Rows.Add(createRow("Disponible", "Disponible", dt));
+            dt.Rows.Add(createRow("Email", "Email", dt));
+            dt.Rows.Add(createRow("Fecha de vencimiento", "Fecha de vencimiento", dt));
+            dt.Rows.Add(createRow("Cedula", "Cedula", dt));
+            dt.Rows.Add(createRow("Disponibilidad", "Disponibilidad", dt));
 
             DataView dv = new DataView(dt);
             return dv;
@@ -452,8 +480,6 @@ namespace Web.Paginas.Camioneros
             dt.Rows.Add(createRow("Buscar por", "Buscar por", dt));
             dt.Rows.Add(createRow("Nombre y Apellido", "Nombre y Apellido", dt));
             dt.Rows.Add(createRow("Email", "Email", dt));
-            dt.Rows.Add(createRow("Telefono", "Telefono", dt));
-            dt.Rows.Add(createRow("Fecha de nacimiento", "Fecha de nacimiento", dt));
             dt.Rows.Add(createRow("Fecha de vencimiento", "Fecha de vencimiento", dt));
             dt.Rows.Add(createRow("Cedula", "Cedula", dt));
             dt.Rows.Add(createRow("Disponibilidad", "Disponibilidad", dt));
@@ -483,17 +509,8 @@ namespace Web.Paginas.Camioneros
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
             int num = 0;
-            try
-            {
-                if (DateTime.Parse(txtFchNacBuscarPasada.Text) <= DateTime.Parse(txtFchNacBuscarFutura.Text)) num++;
-            }
-            catch
-            {
-                num++;
-            }
 
-            if (num == 1)
-            {
+
                 try
                 {
                     if (DateTime.Parse(txtFchVencBuscarPasada.Text) <= DateTime.Parse(txtFchVencBuscarFutura.Text)) num++;
@@ -503,7 +520,7 @@ namespace Web.Paginas.Camioneros
                     num++;
                 }
 
-                if (num == 2)
+                if (num == 1)
                 {
 
                     lblPaginaAct.Text = "1";
@@ -515,13 +532,7 @@ namespace Web.Paginas.Camioneros
                     listBuscarPor.SelectedValue = "Fecha de vencimiento";
                     comprobarBuscar();
                 }
-            }
-            else
-            {
-                lblMensajes.Text = "La fecha de nacimiento menor es mayor.";
-                listBuscarPor.SelectedValue = "Fecha de nacimiento";
-                comprobarBuscar();
-            }
+      
         }
 
         protected void listBuscarPor_SelectedIndexChanged(object sender, EventArgs e)
@@ -595,8 +606,9 @@ namespace Web.Paginas.Camioneros
                                 else
                                 {
                                     limpiar();
-                                    lblMensajes.Text = "Camionero dado de alta con éxito.";
+                                    lblPaginaAct.Text = "1";
                                     listarPagina();
+                                    lblMensajes.Text = "Camionero dado de alta con éxito.";
                                 }
                             }
                             else lblMensajes.Text = "Ya existe un Camionero con estos datos. Estos son los posibles datos repetidos (Email / Teléfono / Cedula).";
@@ -659,15 +671,20 @@ namespace Web.Paginas.Camioneros
             Camionero unCamionero = Web.buscarCamionero(id);
             if (unCamionero != null)
             {
-                int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
-                if (Web.bajaCamionero(id, idAdmin))
+                if (ViajeCamionero(unCamionero.IdPersona))
                 {
-                    limpiar();
-                    lblMensajes.Text = "Se ha borrado el camionero.";
-                    lblPaginaAct.Text = "1";
-                    listarPagina();
+                    int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                    if (Web.bajaCamionero(id, idAdmin))
+                    {
+                        limpiar();
+                        
+                        lblPaginaAct.Text = "1";
+                        listarPagina();
+                        lblMensajes.Text = "Se ha borrado el camionero.";
+                    }
+                    else lblMensajes.Text = "No se ha podido borrar el camionero.";
                 }
-                else lblMensajes.Text = "No se ha podido borrar el camionero.";
+                else lblMensajes.Text = "El camionero no se puede eliminar porque tiene un viaje.";
             }
             else lblMensajes.Text = "El camionero no existe.";
         }

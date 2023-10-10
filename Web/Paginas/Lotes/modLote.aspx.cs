@@ -139,8 +139,7 @@ namespace Web.Paginas.Lotes
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             Lote lote = Web.buscarLote(nombreGranja, nombreProducto, fchProduccion);
-            txtIdGranja.Text = lote.IdGranja.ToString();
-            txtIdProducto.Text = lote.IdProducto.ToString();
+
             txtFchProduccion.Text = DateTime.Parse(lote.FchProduccion).ToString("dd/MM/yyyy");
             txtFchCaducidad.Text = DateTime.Parse(lote.FchCaducidad).ToString("yyyy-MM-dd");
             string cantidad = lote.Cantidad.ToString();
@@ -167,8 +166,7 @@ namespace Web.Paginas.Lotes
         private void limpiar()
         {
             lblMensajes.Text = "";
-            txtIdGranja.Text = "";
-            txtIdProducto.Text = "";
+
  
 
 
@@ -254,8 +252,11 @@ namespace Web.Paginas.Lotes
                 System.Web.HttpContext.Current.Session["fchCaducidadSel"] = txtFchCaducidad.Text;
             }
 
+            System.Web.HttpContext.Current.Session["nombreGranjaSel"] = txtNomGranja.Text;
+            System.Web.HttpContext.Current.Session["nombreProductoSel"] = txtNomProd.Text;
             System.Web.HttpContext.Current.Session["cantidadSel"] = txtCantidad.Text;
             System.Web.HttpContext.Current.Session["precioSel"] = txtPrecio.Text;
+            System.Web.HttpContext.Current.Session["fchProduccionSel"] = txtFchProduccion.Text;
             System.Web.HttpContext.Current.Session["idDepositoSel"] = listDeposito.SelectedValue;
 
 
@@ -269,19 +270,19 @@ namespace Web.Paginas.Lotes
 
             if (System.Web.HttpContext.Current.Session["nombreGranjaSel"] != null)
             {
-                txtIdGranja.Text = System.Web.HttpContext.Current.Session["nombreGranjaSel"].ToString();
+                txtNomGranja.Text = System.Web.HttpContext.Current.Session["nombreGranjaSel"].ToString();
 
             }
 
             if (System.Web.HttpContext.Current.Session["nombreProductoSel"] != null)
             {
-                txtIdProducto.Text = System.Web.HttpContext.Current.Session["nombreProductoSel"].ToString();
+                txtNomProd.Text = System.Web.HttpContext.Current.Session["nombreProductoSel"].ToString();
 
             }
 
             if (System.Web.HttpContext.Current.Session["fchProduccionSel"] != null)
             {
-                txtFchProduccion.Text = DateTime.Parse(System.Web.HttpContext.Current.Session["fchProduccionSel"].ToString()).ToString("yyyy-MM-dd");
+                txtFchProduccion.Text = DateTime.Parse(System.Web.HttpContext.Current.Session["fchProduccionSel"].ToString()).ToString("dd/MM/yyyy");
 
             }
 
@@ -300,7 +301,7 @@ namespace Web.Paginas.Lotes
             if (System.Web.HttpContext.Current.Session["idDepositoSel"] == null)
             {
                 listDeposito.SelectedValue = "Seleccione un Deposito";
-                System.Web.HttpContext.Current.Session["idDepositoSel"] = null;
+              
             }
             else
             {
@@ -351,10 +352,12 @@ namespace Web.Paginas.Lotes
                         if (double.Parse(txtPrecio.Text) > 0)
                         {
                             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-
-                            int idGranja = int.Parse(HttpUtility.HtmlEncode(txtIdGranja.Text));
-                            int idProducto = int.Parse(HttpUtility.HtmlEncode(txtIdProducto.Text));
                             string fchProduccion = HttpUtility.HtmlEncode(txtFchProduccion.Text);
+                            Lote lote = Web.buscarLote(txtNomGranja.Text, txtNomProd.Text, fchProduccion);
+
+                            int idGranja = int.Parse(lote.IdGranja.ToString());
+                            int idProducto = int.Parse(lote.IdProducto.ToString());
+                         
                             Producto producto = Web.buscarProducto(idProducto);
                             string fchCaducidad = HttpUtility.HtmlEncode(txtFchCaducidad.Text);
                             string cantidad = HttpUtility.HtmlEncode(txtCantidad.Text) + " " + producto.TipoVenta.ToString();

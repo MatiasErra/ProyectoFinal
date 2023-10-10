@@ -18,7 +18,7 @@
                     <div class="col-xl-4  col-lg-12">
                         <asp:Label CssClass="text centerText " Text="Nombre de la Granja" runat="server"></asp:Label>
                         <div class=" col-lg-12">
-                            <asp:Label ID="txtIdGranja" Visible="false" CssClass="text centerText " runat="server"></asp:Label>
+                   
                             <asp:Label ID="txtNomGranja" CssClass="text centerText " runat="server"></asp:Label>
                         </div>
 
@@ -27,7 +27,7 @@
                     <div class="col-xl-4 col-lg-12">
                         <asp:Label CssClass="text centerText " Text="Nombre del Producto" runat="server"></asp:Label>
                         <div class=" col-lg-12">
-                            <asp:Label ID="txtIdProducto" Visible="false" CssClass="text centerText " runat="server"></asp:Label>
+              
                             <asp:Label ID="txtNomProd" CssClass="text centerText " runat="server"></asp:Label>
                         </div>
 
@@ -58,7 +58,7 @@
                 </div>
                 <div class="input-group">
                     <asp:Label ID="lblCantidad" class="text initText" Text="Cantidad" runat="server" />
-                    <asp:TextBox ID="txtCantidad" CssClass="input--style-tex" runat="server" placeholder="Cantidad" MaxLength="10" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==8);"></asp:TextBox>
+                    <asp:TextBox ID="txtCantidad" CssClass="input--style-tex" runat="server" placeholder="Cantidad" MaxLength="8" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==8);"></asp:TextBox>
                     <asp:RegularExpressionValidator Display="Dynamic" runat="server"
                         ControlToValidate="txtCantidad"
                         ValidationExpression="^[0-9]+$"
@@ -67,7 +67,7 @@
 
                 <div class="input-group">
                     <asp:Label class="text initText" Text="Precio" runat="server" />
-                    <asp:TextBox ID="txtPrecio" CssClass="input--style-tex" runat="server" placeholder="Stock" MaxLength="10" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==188 || event.keyCode==8);"></asp:TextBox>
+                    <asp:TextBox ID="txtPrecio" CssClass="input--style-tex" runat="server" placeholder="Stock" MaxLength="8" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==188 || event.keyCode==8);"></asp:TextBox>
                     <asp:RegularExpressionValidator Display="Dynamic" runat="server"
                         ControlToValidate="txtPrecio"
                         ValidationExpression="([0-9])[0-9]*[,]?[0-9]*"

@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="input-group">
-                    <asp:TextBox ID="txtCapacidad" CssClass="input--style-tex" runat="server" placeholder="Capacidad en toneladas" MaxLength="20" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
+                    <asp:TextBox ID="txtCapacidad" CssClass="input--style-tex" runat="server" placeholder="Capacidad en toneladas" MaxLength="5" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
                     <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                         ControlToValidate="txtCapacidad"
                         ValidationExpression="^[0-9]*$"

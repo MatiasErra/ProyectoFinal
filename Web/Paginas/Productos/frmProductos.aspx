@@ -110,7 +110,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <asp:Label ID="lblimg" class="text initText" Text="Cambiar Imagen" runat="server" />
+                                        <asp:Label ID="lblimg" class="text initText" Text="Agregar imagen" runat="server" />
                                         <asp:FileUpload ID="fileImagen" CssClass="m-1 input--style-lst initText" runat="server" />
                                     </div>
 

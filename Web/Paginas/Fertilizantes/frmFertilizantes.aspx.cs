@@ -207,7 +207,7 @@ namespace Web.Paginas.Fertilizantes
 
         private int PagMax()
         {
-            return 4;
+            return 2;
         }
 
         private List<Fertilizante> obtenerFertilizantes()
@@ -278,7 +278,7 @@ namespace Web.Paginas.Fertilizantes
             if (fertilizantesPagina.Count == 0)
             {
 
-                lblPaginas.Visible = false;
+                txtPaginas.Visible = false;
                 lblMensajes.Text = "No se encontro ningún fertilizante.";
 
                 lblPaginaAnt.Visible = false;
@@ -293,7 +293,7 @@ namespace Web.Paginas.Fertilizantes
                 if (System.Web.HttpContext.Current.Session["loteFertiDatos"] != null)
                 {
 
-                    lblPaginas.Visible = true;
+                    txtPaginas.Visible = true;
                     lblMensajes.Text = "";
                     modificarPagina(fertilizantes);
                     lstFertSel.Visible = true;
@@ -304,7 +304,7 @@ namespace Web.Paginas.Fertilizantes
                 }
                 else
                 {
-                    lblPaginas.Visible = true;
+                    txtPaginas.Visible = true;
                     lblMensajes.Text = "";
                     modificarPagina(fertilizantes);
                     lstFert.Visible = true;
@@ -567,9 +567,10 @@ namespace Web.Paginas.Fertilizantes
                             else
                             {
                                 limpiar();
-                                lblMensajes.Text = "Fertilizante dado de alta con éxito.";
+                             
                                 lblPaginaAct.Text = "1";
                                 listarPagina();
+                                lblMensajes.Text = "Fertilizante dado de alta con éxito.";
                             }
                         }
                         else lblMensajes.Text = "Ya existe un Fertilizante con estos datos. Estos son los posibles datos repetidos (Nombre).";
@@ -598,9 +599,10 @@ namespace Web.Paginas.Fertilizantes
                 if (Web.bajaFerti(id, idAdmin))
                 {
                     limpiar();
-                    lblMensajes.Text = "Se ha eliminado el Fertilizante.";
+                    
                     lblPaginaAct.Text = "1";
                     listarPagina();
+                    lblMensajes.Text = "Se ha eliminado el Fertilizante.";
                 }
                 else lblMensajes.Text = "No se ha podido eliminar el Fertilizante.";
             }

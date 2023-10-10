@@ -154,7 +154,7 @@ namespace Web.Paginas.Granjas
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             List<Cliente> clientes = new List<Cliente>();
             Cliente cli = new Cliente(0, "", "", "", "", "", "", "", "");
-            clientes = Web.buscarCliFiltro(cli, "1000-01-01", "3000-12-30", "");
+            clientes = Web.buscarCliFiltro(cli, "");
 
 
             DataTable dt = new DataTable();

@@ -237,7 +237,7 @@ namespace Web.Paginas.Viajes
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             Camionero cam = new Camionero(0, "", "", "", "", "", "", "", "");
-            List<Camionero> camioneros = Web.buscarCamioneroFiltro(cam, "1000-01-01", "3000-12-30", "1000-01-01", "3000-12-30", "");
+            List<Camionero> camioneros = Web.buscarCamioneroFiltro(cam, "1000-01-01", "3000-12-30", "");
             List<Camionero> cargar = new List<Camionero>();
 
             Viaje viaje = Web.buscarViaje(id);

@@ -56,7 +56,7 @@ namespace Persistencia
 
         }
 
-        public List<Cliente> buscarCliFiltro(Cliente cliente, string fchDesde, string fchHasta, string ordenar)
+        public List<Cliente> buscarCliFiltro(Cliente cliente, string ordenar)
         {
             List<Cliente> resultado = new List<Cliente>();
             try
@@ -72,11 +72,9 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@nombre", cliente.Nombre));
                 cmd.Parameters.Add(new SqlParameter("@apellido", cliente.Apellido));
                 cmd.Parameters.Add(new SqlParameter("@email", cliente.Email));
-                cmd.Parameters.Add(new SqlParameter("@telefono", cliente.Telefono));
                 cmd.Parameters.Add(new SqlParameter("@usuario", cliente.User));
                 cmd.Parameters.Add(new SqlParameter("@direccion", cliente.Direccion));
-                cmd.Parameters.Add(new SqlParameter("@fchDesde", fchDesde));
-                cmd.Parameters.Add(new SqlParameter("@fchHasta", fchHasta));
+
                 cmd.Parameters.Add(new SqlParameter("@ordenar", ordenar));
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {

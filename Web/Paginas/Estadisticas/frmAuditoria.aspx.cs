@@ -141,8 +141,8 @@ namespace Web.Paginas.Admins
             auditoria.IdAdmin = lstAdminBuscar.SelectedValue != "Seleccione un Admin" ? int.Parse(lstAdminBuscar.SelectedValue) : 0;
             auditoria.Tabla = lstTablaBuscar.SelectedValue != "Seleccione una Tabla" ? lstTablaBuscar.SelectedValue : "";
             auditoria.Tipo = lstTipoBuscar.SelectedValue != "Seleccione un Tipo" ? lstTipoBuscar.SelectedValue : "";
-            string fchMenor = txtFchMenor.Text == "" ? "1000-01-01" : txtFchMenor.Text;
-            string fchMayor = txtFchMayor.Text == "" ? "3000-12-30" : txtFchMayor.Text;
+            string fchMenor = txtFchMenor.Text == "" ? "1753-01-01" : txtFchMenor.Text;
+            string fchMayor = txtFchMayor.Text == "" ? "9999-12-31" : txtFchMayor.Text;
             string ordenar = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : "";
             List<Auditoria> auditorias = Web.buscarFiltrarAuditoria(auditoria, fchMenor, fchMayor, ordenar);
 
@@ -176,7 +176,7 @@ namespace Web.Paginas.Admins
                 lblPaginaAnt.Visible = false;
                 lblPaginaAct.Visible = false;
                 txtPaginas.Text = "";
-                lblMensajes.Text = "No se encontro ningúna Auditoria.";
+                lblMensajes.Text = "No se encontro nade en la Auditoria.";
                 lstAuditoria.Visible = false;
             }
             else
@@ -279,7 +279,7 @@ namespace Web.Paginas.Admins
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             Admin adm = new Admin(0, "", "", "", "", "", "", "", "", "");
-            List<Admin> admins = Web.buscarAdminFiltro(adm, "01-01-1000", "3000-12-30", "");
+            List<Admin> admins = Web.buscarAdminFiltro(adm,  "");
             DataTable dt = new DataTable();
 
 

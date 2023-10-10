@@ -55,7 +55,7 @@ namespace Web.Paginas.Productos
 
                 }
 
-                
+
 
                 System.Web.HttpContext.Current.Session["idProductoMod"] = null;
 
@@ -97,6 +97,7 @@ namespace Web.Paginas.Productos
                 if (System.Web.HttpContext.Current.Session["ProductoMod"] != null)
                 {
                     lblMensajes.Text = "Productos Modificado";
+                    System.Web.HttpContext.Current.Session["ProductoMod"] = null;
                 }
             }
         }
@@ -189,7 +190,7 @@ namespace Web.Paginas.Productos
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             Lote lote = new Lote(0, 0, "", "", "", 0, 0);
 
-            List<Lote> lotes = Web.buscarFiltrarLotes(lote, 0, 99999999,"1000-01-01", "3000-12-30", "1000-01-01", "3000-12-30", "");
+            List<Lote> lotes = Web.buscarFiltrarLotes(lote, 0, 99999999, "1000-01-01", "3000-12-30", "1000-01-01", "3000-12-30", "");
             foreach (Lote unLote in lotes)
             {
                 if (unLote.IdProducto == idProducto)
@@ -215,8 +216,8 @@ namespace Web.Paginas.Productos
             System.Web.HttpContext.Current.Session["tipoProductoBuscar"] = lstTipoBuscar.SelectedValue != "Seleccione un tipo de producto" ? lstTipoBuscar.SelectedValue : null;
             System.Web.HttpContext.Current.Session["precioMenorProductoBuscar"] = txtPrecioMenorBuscar.Text;
             System.Web.HttpContext.Current.Session["precioMayorProductoBuscar"] = txtPrecioMayorBuscar.Text;
-            System.Web.HttpContext.Current.Session["BuscarLst"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["BuscarLstProducto"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["OrdenarPorProducto"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
         }
 
         #region Paginas
@@ -247,10 +248,14 @@ namespace Web.Paginas.Productos
                 unProducto.Imagen = Imagen;
                 int cant = int.Parse(unProducto.CantTotal.Split(' ')[0]);
                 int cantRes = int.Parse(unProducto.CantRes.Split(' ')[0]);
-                unProducto.CantDisp = (cant - cantRes).ToString() + " Kg";
+                unProducto.CantDisp = (cant - cantRes).ToString();
             }
 
-            return productos;
+            List<Producto> listaOrdenadaXcantDisp = productos.OrderByDescending(Producto => Producto.CantDisp.Equals("0")).ThenBy(Producto => Producto.CantDisp).ToList();
+            listaOrdenadaXcantDisp.Reverse();
+            List<Producto> lstResult = listOrdenarPor.SelectedValue == "Cantidad disponible" ? listaOrdenadaXcantDisp : productos;
+
+            return lstResult;
         }
 
         private void listarPagina()
@@ -276,7 +281,7 @@ namespace Web.Paginas.Productos
 
             if (productosPagina.Count == 0)
             {
-                lblPaginas.Visible = false;
+                txtPaginas.Visible = false;
                 lblMensajes.Text = "No se encontro ningún producto.";
 
                 lblPaginaAnt.Visible = false;
@@ -290,22 +295,22 @@ namespace Web.Paginas.Productos
                 if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
 
                 {
-                    lblPaginas.Visible = true;
+                    txtPaginas.Visible = true;
                     lblMensajes.Text = "";
                     modificarPagina();
                     lstProductoSelect.Visible = true;
                     lstProductoSelect.DataSource = null;
-                    lstProductoSelect.DataSource = productosPagina;
+                    lstProductoSelect.DataSource = ObtenerDatos(productosPagina);
                     lstProductoSelect.DataBind();
                 }
                 else
                 {
-                    lblPaginas.Visible = true;
+                    txtPaginas.Visible = true;
                     lblMensajes.Text = "";
                     modificarPagina();
                     lstProducto.Visible = true;
                     lstProducto.DataSource = null;
-                    lstProducto.DataSource = productosPagina;
+                    lstProducto.DataSource = ObtenerDatos(productosPagina);
                     lstProducto.DataBind();
                 }
             }
@@ -322,7 +327,7 @@ namespace Web.Paginas.Productos
             double cantPags = Math.Ceiling(pags);
 
             string pagAct = lblPaginaAct.Text.ToString();
-
+            lblPaginaAct.Visible = true;
             lblPaginaSig.Visible = true;
             lblPaginaAnt.Visible = true;
             if (pagAct == cantPags.ToString())
@@ -344,6 +349,51 @@ namespace Web.Paginas.Productos
             lblPaginaAct.Text = pagAct.ToString();
             lblPaginaSig.Text = (int.Parse(pagAct) + 1).ToString();
         }
+
+
+
+        public DataTable ObtenerDatos(List<Producto> productos)
+        {
+
+            DataTable dt = new DataTable();
+            dt.Columns.AddRange(new DataColumn[9] {
+                new DataColumn("IdProducto", typeof(int)),
+                new DataColumn("Nombre", typeof(string)),
+                new DataColumn("Tipo", typeof(string)),
+                new DataColumn("TipoVenta", typeof(string)),
+                new DataColumn("Imagen", typeof(string)),
+                new DataColumn("Precio", typeof(string)),
+                new DataColumn("CantTotal", typeof(string)),
+                new DataColumn("CantRes", typeof(string)),
+                new DataColumn("CantDisp", typeof(string)),
+
+
+            });
+
+            foreach (Producto unProd in productos)
+            {
+
+                DataRow dr = dt.NewRow();
+                dr["IdProducto"] = unProd.IdProducto.ToString();
+                dr["Nombre"] = unProd.Nombre.ToString();
+                dr["Tipo"] = unProd.Tipo.ToString();
+                dr["TipoVenta"] = unProd.TipoVenta.ToString();
+                dr["Imagen"] = unProd.Imagen.ToString();
+                dr["Precio"] = unProd.Precio.ToString();
+                dr["CantTotal"] = unProd.CantTotal.ToString();
+                dr["CantRes"] = unProd.CantRes.ToString();
+                dr["CantDisp"] = unProd.CantDisp.ToString() + " " + unProd.TipoVenta.ToString();
+
+                dt.Rows.Add(dr);
+
+
+
+            }
+
+            return dt;
+        }
+
+
 
         #endregion
 
@@ -373,7 +423,7 @@ namespace Web.Paginas.Productos
             dt.Rows.Add(createRow("Tipo", "Tipo", dt));
             dt.Rows.Add(createRow("Tipo de venta", "Tipo de venta", dt));
             dt.Rows.Add(createRow("Precio", "Precio", dt));
-
+            dt.Rows.Add(createRow("Cantidad disponible", "Cantidad disponible", dt));
             DataView dv = new DataView(dt);
             return dv;
         }
@@ -484,8 +534,7 @@ namespace Web.Paginas.Productos
         {
             DataRow dr = dt.NewRow();
 
-            dr[0] = Text;
-            dr[1] = Value;
+            dr[0] = Text; dr[1] = Value;
 
             return dr;
         }
@@ -618,7 +667,7 @@ namespace Web.Paginas.Productos
                     }
                     else lblMensajes.Text = "No se ha podido borrar el producto.";
                 }
-                else lblMensajes.Text = "Hay un lote asociado a este producto.";
+                else lblMensajes.Text = "No se ha podido eliminar el producto porque está asociado a un lote";
             }
             else lblMensajes.Text = "El producto no existe.";
         }
@@ -660,4 +709,4 @@ namespace Web.Paginas.Productos
         #endregion
 
     }
-} 
+}

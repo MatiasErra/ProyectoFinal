@@ -41,6 +41,7 @@ namespace Persistencia
                         granja.IdGranja = int.Parse(reader["idGranja"].ToString());
                         granja.Nombre = reader["nombre"].ToString();
                         granja.Ubicacion = reader["ubicacion"].ToString();
+                        granja.IdCliente = int.Parse(reader["idCliente"].ToString());
                         granja.NombreCliente = reader["nombreCliente"].ToString();
 
                         resultado.Add(granja);

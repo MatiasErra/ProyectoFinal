@@ -106,6 +106,43 @@ namespace Web.Paginas.Depositos
 
         #region Utilidad
 
+
+        private bool DepoistoLote(int idDeposito)
+        {
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+
+            Lote lote = new Lote();
+            lote.IdGranja = 0;
+            lote.IdProducto =  0;
+            lote.IdDeposito = 0;
+            double precioMenor = 0;
+            double precioMayor = 99999999;
+
+            string fchProduccionMenor = "1000-01-01";
+            string fchProduccionMayor = "3000-12-30";
+            string fchCaducidadMenor = "1000-01-01";
+            string fchCaducidadMayor = "3000-12-30";
+            string ordenar = "";
+
+            List<Lote> lotes = Web.buscarFiltrarLotes(lote, precioMenor, precioMayor, fchProduccionMenor, fchProduccionMayor, fchCaducidadMenor, fchCaducidadMayor, ordenar);
+
+
+            int i = 0;
+            foreach (Lote unLote in lotes)
+            {
+                if (unLote.IdDeposito == idDeposito)
+                {
+                    i++;
+                    break;
+                }
+            }
+            if (i == 0)
+            {
+                return true;
+            }
+            else return false;
+        }
+
         private bool faltanDatos()
         {
             if (txtCapacidad.Text == "" || txtCondiciones.Text == "" || txtTemperatura.Text == "" || txtUbicacion.Text == "")
@@ -222,7 +259,7 @@ namespace Web.Paginas.Depositos
 
             if (depositoPagina.Count == 0)
             {
-                lblPaginas.Visible = false;
+                txtPaginas.Visible = false;
                 lblMensajes.Text = "No se encontro ningún Depósito.";
 
                 lblPaginaAnt.Visible = false;
@@ -236,26 +273,28 @@ namespace Web.Paginas.Depositos
 
                 if (System.Web.HttpContext.Current.Session["loteDatos"] != null || System.Web.HttpContext.Current.Session["LoteDatosMod"] != null)
                 {
-                    lblPaginas.Visible = true;
+                    txtPaginas.Visible = true;
                     lblMensajes.Text = "";
                     modificarPagina();
                     lstDepositoSelect.Visible = true;
                     lstDepositoSelect.DataSource = null;
-                    lstDepositoSelect.DataSource = depositoPagina;
+                    lstDepositoSelect.DataSource = ObtenerDatos(depositoPagina);
                     lstDepositoSelect.DataBind();
                 }
                 else
                 {
-                    lblPaginas.Visible = true;
+                    txtPaginas.Visible = true;
                     lblMensajes.Text = "";
                     modificarPagina();
                     lstDeposito.Visible = true;
                     lstDeposito.DataSource = null;
-                    lstDeposito.DataSource = depositoPagina;
+                    lstDeposito.DataSource = ObtenerDatos(depositoPagina);
                     lstDeposito.DataBind();
                 }
             }
         }
+
+
 
         private void modificarPagina()
         {
@@ -289,6 +328,40 @@ namespace Web.Paginas.Depositos
             lblPaginaAct.Text = pagAct.ToString();
             lblPaginaSig.Text = (int.Parse(pagAct) + 1).ToString();
         }
+
+        public DataTable ObtenerDatos(List<Deposito> depositos)
+        {
+
+            DataTable dt = new DataTable();
+            dt.Columns.AddRange(new DataColumn[5] {
+                new DataColumn("IdDeposito", typeof(int)),
+                new DataColumn("Capacidad", typeof(string)),
+                new DataColumn("Ubicacion", typeof(string)),
+                new DataColumn("Temperatura", typeof(string)),
+                   new DataColumn("Condiciones", typeof(string)),
+
+            });
+
+            foreach (Deposito unDep in depositos)
+            {
+
+                DataRow dr = dt.NewRow();
+                dr["IdDeposito"] = unDep.IdDeposito.ToString();
+                dr["Capacidad"] = unDep.Capacidad.ToString() + " m3";
+                dr["Ubicacion"] = unDep.Ubicacion.ToString();
+                dr["Temperatura"] = unDep.Temperatura.ToString() + " °C";
+                dr["Condiciones"] = unDep.Condiciones.ToString();
+
+                dt.Rows.Add(dr);
+
+
+
+            }
+
+            return dt;
+        }
+
+
 
         private List<Deposito> obtenerDepositos()
         {
@@ -427,7 +500,7 @@ namespace Web.Paginas.Depositos
             else
             {
                 lblMensajes.Text = "La capacidad menor es mayor.";
-                listBuscarPor.SelectedValue = "Fecha de nacimiento";
+                listBuscarPor.SelectedValue = "Capacidad";
                 comprobarBuscar();
             }
         }
@@ -497,10 +570,10 @@ namespace Web.Paginas.Depositos
                     else
                     {
                         limpiar();
-                        lblMensajes.Text = "Depósito dado de alta con éxito.";
+                       
                         lblPaginaAct.Text = "1";
                         listarPagina();
-
+                        lblMensajes.Text = "Depósito dado de alta con éxito.";
                     }
                 }
                 else lblMensajes.Text = "Ya existe un Depósito con estos datos. Estos son los posibles datos repetidos (Ubicación).";
@@ -541,21 +614,26 @@ namespace Web.Paginas.Depositos
             Deposito unDeposito = Web.buscarDeps(id);
             if (unDeposito != null)
             {
-                int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
-                if (Web.bajaDeps(id, idAdmin))
+                if (DepoistoLote(unDeposito.IdDeposito))
                 {
-                    limpiar();
-                    lblMensajes.Text = "Se ha eliminado el Depósito.";
-                    lblPaginaAct.Text = "1";
-                    listarPagina();
+                    int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                    if (Web.bajaDeps(id, idAdmin))
+                    {
+                        limpiar();
+
+                        lblPaginaAct.Text = "1";
+                        listarPagina();
+                        lblMensajes.Text = "Se ha eliminado el Depósito.";
+                    }
+                    else lblMensajes.Text = "No se ha podido eliminar el Depósito.";
                 }
-                else lblMensajes.Text = "No se ha podido eliminar el Depósito.";
+                else lblMensajes.Text = "No se ha podido eliminar el Depósito porque está asignado a un lote.";
             }
         }
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
-            System.Web.HttpContext.Current.Session["PagAct"] = "1";
+            System.Web.HttpContext.Current.Session["PagAct"] = "1"; 
             guardarBuscar();
 
             int id;

@@ -62,18 +62,7 @@ namespace Web.Paginas.Lotes
                 System.Web.HttpContext.Current.Session["idGranjaSel"] = null;
                 System.Web.HttpContext.Current.Session["idProductoSel"] = null;
                 System.Web.HttpContext.Current.Session["fchProduccionSel"] = null;
-                if (System.Web.HttpContext.Current.Session["LoteAlta"] != null)
-                {
-                    lblMensajes.Text = "Lote Añadido con éxito";
-                    System.Web.HttpContext.Current.Session["LoteAlta"] = null;
-                }
-
-                if (System.Web.HttpContext.Current.Session["LoteMod"] != null)
-                {
-                    lblMensajes.Text = "Lote Modificado";
-                    System.Web.HttpContext.Current.Session["LoteMod"] = null;
-                }
-
+       
 
                 CargarListGranja();
                 CargarListProducto();
@@ -116,6 +105,17 @@ namespace Web.Paginas.Lotes
                 comprobarBuscar();
                 listarPagina();
 
+                if (System.Web.HttpContext.Current.Session["LoteAlta"] != null)
+                {
+                    lblMensajes.Text = "Lote Añadido con éxito";
+                    System.Web.HttpContext.Current.Session["LoteAlta"] = null;
+                }
+
+                if (System.Web.HttpContext.Current.Session["LoteMod"] != null)
+                {
+                    lblMensajes.Text = "Lote Modificado";
+                    System.Web.HttpContext.Current.Session["LoteMod"] = null;
+                }
 
             }
         }
@@ -244,7 +244,7 @@ namespace Web.Paginas.Lotes
 
         private int PagMax()
         {
-            return 4;
+            return 3;
         }
 
 
@@ -304,7 +304,7 @@ namespace Web.Paginas.Lotes
 
             if (LotesPagina.Count == 0)
             {
-                lblPaginas.Visible = false;
+                txtPaginas.Visible = false;
                 lblMensajes.Text = "No se encontro ningún Lote.";
 
                 lblPaginaAnt.Visible = false;
@@ -314,7 +314,7 @@ namespace Web.Paginas.Lotes
             }
             else
             {
-                lblPaginas.Visible = true;
+                txtPaginas.Visible = true;
                 lblMensajes.Text = "";
                 modificarPagina();
                 lstLote.Visible = true;

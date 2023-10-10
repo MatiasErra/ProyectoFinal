@@ -14,7 +14,7 @@ namespace Persistencia
     {
 
 
-        public List<Camionero> buscarCamioneroFiltro(Camionero pCamionero, string fchNacDesde, string fchNacHasta, string fchVencDesde, string fchVencHasta, string ordenar)
+        public List<Camionero> buscarCamioneroFiltro(Camionero pCamionero, string fchVencDesde, string fchVencHasta, string ordenar)
         {
             List<Camionero> resultado = new List<Camionero>();
             try
@@ -30,11 +30,10 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@nombre", pCamionero.Nombre));
                 cmd.Parameters.Add(new SqlParameter("@apellido", pCamionero.Apellido));
                 cmd.Parameters.Add(new SqlParameter("@email", pCamionero.Email));
-                cmd.Parameters.Add(new SqlParameter("@telefono", pCamionero.Telefono));
+
                 cmd.Parameters.Add(new SqlParameter("@cedula", pCamionero.Cedula));
                 cmd.Parameters.Add(new SqlParameter("@disponible", pCamionero.Disponible));
-                cmd.Parameters.Add(new SqlParameter("@fchNacDesde", fchNacDesde));
-                cmd.Parameters.Add(new SqlParameter("@fchNacHasta", fchNacHasta));
+
                 cmd.Parameters.Add(new SqlParameter("@fchVencDesde", fchVencDesde));
                 cmd.Parameters.Add(new SqlParameter("@fchVencHasta", fchVencHasta));
                 cmd.Parameters.Add(new SqlParameter("@ordenar", ordenar));

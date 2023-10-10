@@ -207,7 +207,7 @@ namespace Web.Paginas.Pesticidas
         private int PagMax()
         {
 
-            return 2;
+            return 4;
         }
 
         private List<Pesticida> obtenerPesticidas()
@@ -276,7 +276,7 @@ namespace Web.Paginas.Pesticidas
 
             if (pesticidasPagina.Count == 0)
             {
-                lblPaginas.Visible = false;
+                txtPaginas.Visible = false;
                 lblMensajes.Text = "No se encontro ningún pesticida.";
 
                 lblPaginaAnt.Visible = false;
@@ -288,7 +288,7 @@ namespace Web.Paginas.Pesticidas
             {
                 if (System.Web.HttpContext.Current.Session["lotePestiDatos"] != null)
                 {
-                    lblPaginas.Visible = true;
+                    txtPaginas.Visible = true;
                     lblMensajes.Text = "";
                     modificarPagina();
                     lstPestSelct.Visible = true;
@@ -299,7 +299,7 @@ namespace Web.Paginas.Pesticidas
                 else
                 {
 
-                    lblPaginas.Visible = true;
+                    txtPaginas.Visible = true;
                     lblMensajes.Text = "";
                     modificarPagina();
                     lstPest.Visible = true;
@@ -558,9 +558,10 @@ namespace Web.Paginas.Pesticidas
                             else
                             {
                                 limpiar();
-                                lblMensajes.Text = "Pesticida dado de alta con éxito.";
+                                
                                 lblPaginaAct.Text = "1";
                                 listarPagina();
+                                lblMensajes.Text = "Pesticida dado de alta con éxito.";
                             }
 
                         }
@@ -588,9 +589,10 @@ namespace Web.Paginas.Pesticidas
                 if (Web.bajaPesti(id, idAdmin))
                 {
                     limpiar();
-                    lblMensajes.Text = "Se ha eliminado el Pesticida.";
+                   
                     lblPaginaAct.Text = "1";
                     listarPagina();
+                    lblMensajes.Text = "Se ha eliminado el Pesticida.";
                 }
                 else
                 {

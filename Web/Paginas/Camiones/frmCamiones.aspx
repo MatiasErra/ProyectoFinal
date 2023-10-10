@@ -109,7 +109,7 @@
 
                                     <div class="input-group">
 
-                                        <asp:TextBox ID="txtCarga" CssClass="input--style-tex" runat="server" placeholder="Carga" MaxLength="10" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
+                                        <asp:TextBox ID="txtCarga" CssClass="input--style-tex" runat="server" placeholder="Carga" MaxLength="5" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
                                         <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                                             ControlToValidate="txtCarga"
                                             ValidationExpression="^[0-9]*$"

@@ -52,14 +52,14 @@
                                     <div class="col-lg-6">
                                         <asp:Label Visible="false" runat="server" ID="lblCapacidad">
                                             <asp:Label class="text initText" Text="Desde:" runat="server" />
-                                            <asp:TextBox ID="txtCapacidadMenorBuscar" CssClass="input--style-text-search" runat="server" placeholder="Capacidad" MaxLength="10" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
+                                            <asp:TextBox ID="txtCapacidadMenorBuscar" CssClass="input--style-text-search" runat="server" placeholder="Capacidad" MaxLength="5" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
                                             <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                                                 ControlToValidate="txtCapacidadMenorBuscar"
                                                 ValidationExpression="^[0-9]*$"
                                                 ErrorMessage="No es un numero valido" />
 
                                             <asp:Label class="text initText" Text="Desde:" runat="server" />
-                                            <asp:TextBox ID="txtCapacidadMayorBuscar" CssClass="input--style-text-search" runat="server" placeholder="Capacidad" MaxLength="10" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
+                                            <asp:TextBox ID="txtCapacidadMayorBuscar" CssClass="input--style-text-search" runat="server" placeholder="Capacidad" MaxLength="5" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
                                             <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                                                 ControlToValidate="txtCapacidadMayorBuscar"
                                                 ValidationExpression="^[0-9]*$"
@@ -103,7 +103,7 @@
                                 <div class="modal-body">
 
                                     <div class="input-group">
-                                        <asp:TextBox ID="txtCapacidad" CssClass="input--style-tex" runat="server" placeholder="Capacidad en toneladas" MaxLength="20" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
+                                        <asp:TextBox ID="txtCapacidad" CssClass="input--style-tex" runat="server" placeholder="Capacidad en toneladas" MaxLength="5" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
                                         <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                                             ControlToValidate="txtCapacidad"
                                             ValidationExpression="^[0-9]*$"

@@ -68,8 +68,8 @@ namespace Web.Paginas.PedidosADM
                 CargarViajeBuscar();
 
 
-                listBuscarPor.SelectedValue = System.Web.HttpContext.Current.Session["BuscarLst"] != null ? System.Web.HttpContext.Current.Session["BuscarLst"].ToString() : "Buscar por";
-                System.Web.HttpContext.Current.Session["BuscarLst"] = null;
+                listBuscarPor.SelectedValue = System.Web.HttpContext.Current.Session["BuscarLstPed"] != null ? System.Web.HttpContext.Current.Session["BuscarLstPed"].ToString() : "Buscar por";
+                System.Web.HttpContext.Current.Session["BuscarLstPed"] = null;
                 listBuscarVisibilidad();
 
                 listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"] != null ? System.Web.HttpContext.Current.Session["OrdenarPor"].ToString() : "Ordernar por";
@@ -138,11 +138,10 @@ namespace Web.Paginas.PedidosADM
             cliente.Telefono = "";
             cliente.User = "";
             cliente.Direccion = "";
-            string fchDesde = "1000-01-01";
-            string fchHasta = "3000-12-30";
+
             string ordenar = "";
 
-            List<Cliente> clientes = Web.buscarCliFiltro(cliente, fchDesde, fchHasta, ordenar);
+            List<Cliente> clientes = Web.buscarCliFiltro(cliente, ordenar);
 
 
 
@@ -508,7 +507,7 @@ namespace Web.Paginas.PedidosADM
 
         private void GuardarDatos()
         {
-            System.Web.HttpContext.Current.Session["BuscarLst"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : "";
+            System.Web.HttpContext.Current.Session["BuscarLstPed"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : "";
             System.Web.HttpContext.Current.Session["CliSelected"] = lstCliente.SelectedValue != "Seleccionar cliente" ? lstCliente.SelectedValue : "";
             System.Web.HttpContext.Current.Session["EstadoPed"] = lstEstados.SelectedValue != "Seleccionar estado" ? lstEstados.SelectedValue : "";
             System.Web.HttpContext.Current.Session["EstadoViaje"] = lstViaje.SelectedValue != "Seleccionar estado del viaje" ? lstViaje.SelectedValue : "";
