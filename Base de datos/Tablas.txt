@@ -97,6 +97,18 @@ idDeposito int references Depositos(idDeposito),
 primary key(idGranja, idProducto, fchProduccion)
 );
 
+create table Pedidos(
+idPedido int primary key,
+idCliente int references Clientes(idCliente) not null,
+estado varchar(40)  check(estado in ( 'Sin finalizar','Sin confirmar','Confirmado','En viaje', 'Finalizado')) not null,
+viaje varchar(40) check(viaje in('Sin asignar', 'Asignado')) ,
+costo numeric(10,2) not null,
+fchPedido date not null check(fchPedido = (CONVERT(date,getdate(),(103)))),
+fechaEntre date  check(fechaEntre >= (CONVERT(date,getdate(),(103)))),
+informacionEntrega varchar(80) 
+
+);
+
 create table Lotes_Pestis(
 idPesticida int references Pesticidas(idPesti),
 idGranja int,
@@ -119,17 +131,7 @@ foreign key(idGranja, idProducto, fchProduccion) references Lotes(idGranja, idPr
 
 
 
-create table Pedidos(
-idPedido int primary key,
-idCliente int references Clientes(idCliente) not null,
-estado varchar(40)  check(estado in ( 'Sin finalizar','Sin confirmar','Confirmado','En viaje', 'Finalizado')) not null,
-viaje varchar(40) check(viaje in('Sin asignar', 'Asignado')) ,
-costo numeric(10,2) not null,
-fchPedido date not null check(fchPedido = (CONVERT(date,getdate(),(103)))),
-fechaEntre date  check(fechaEntre >= (CONVERT(date,getdate(),(103)))),
-informacionEntrega varchar(80) 
 
-);
 
 
 create table Pedidos_Prod(

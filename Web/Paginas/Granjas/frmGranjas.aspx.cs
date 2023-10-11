@@ -49,7 +49,7 @@ namespace Web.Paginas.Granjass
             if (!IsPostBack)
             {
 
-                if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
+                if (System.Web.HttpContext.Current.Session["loteDatos"] != null || System.Web.HttpContext.Current.Session["loteDatosBuscar"] != null)
                 {
                     btnVolver.Visible = true;
                     lstGranja.Visible = false;
@@ -283,7 +283,7 @@ namespace Web.Paginas.Granjass
             }
             else
             {
-                if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
+                if (System.Web.HttpContext.Current.Session["loteDatos"] != null || System.Web.HttpContext.Current.Session["loteDatosBuscar"] != null)
                 {
                     txtPaginas.Visible = true;
                     lstGranjaSelect.Visible = true;
@@ -577,7 +577,15 @@ namespace Web.Paginas.Granjass
 
         protected void btnVolver_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/Paginas/Lotes/frmAltaLotes");
+            if(System.Web.HttpContext.Current.Session["loteDatos"] != null)
+            {
+                Response.Redirect("/Paginas/Lotes/frmAltaLotes");
+            }
+            else
+            {
+                Response.Redirect("/Paginas/Lotes/frmLotes");
+            }
+            
         }
 
         protected void btnAlta_Click(object sender, EventArgs e)
@@ -600,6 +608,11 @@ namespace Web.Paginas.Granjass
                         System.Web.HttpContext.Current.Session["idGranjaSel"] = unaGranja.IdGranja.ToString();
                         Response.Redirect("/Paginas/Lotes/frmAltaLotes");
                     }
+                    else if (System.Web.HttpContext.Current.Session["loteDatosBuscar"] != null)
+                    {
+                        System.Web.HttpContext.Current.Session["granjaLoteBuscar"] = unaGranja.IdGranja.ToString();
+                        Response.Redirect("/Paginas/Lotes/frmLotes");
+                    }
                     else
                     {
                         limpiar();
@@ -621,9 +634,18 @@ namespace Web.Paginas.Granjass
             GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
             string id = (HttpUtility.HtmlEncode(selectedrow.Cells[0].Text));
 
-            System.Web.HttpContext.Current.Session["idGranjaSel"] = id;
+            if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
+            {
+                System.Web.HttpContext.Current.Session["idGranjaSel"] = id;
+                Response.Redirect("/Paginas/Lotes/frmAltaLotes");
+            }
+            else if (System.Web.HttpContext.Current.Session["loteDatosBuscar"] != null)
+            {
+                System.Web.HttpContext.Current.Session["granjaLoteBuscar"] = id;
+                Response.Redirect("/Paginas/Lotes/frmLotes");
+            }
 
-            Response.Redirect("/Paginas/Lotes/frmAltaLotes");
+            
 
         }
 

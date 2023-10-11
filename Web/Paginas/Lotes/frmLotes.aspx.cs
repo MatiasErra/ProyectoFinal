@@ -47,6 +47,7 @@ namespace Web.Paginas.Lotes
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Web.HttpContext.Current.Session["loteDatosBuscar"] = null;
             if (!IsPostBack)
             {
                 if (System.Web.HttpContext.Current.Session["PagAct"] == null)
@@ -231,8 +232,11 @@ namespace Web.Paginas.Lotes
         private void comprobarBuscar()
         {
             lstGranjaBuscar.Visible = listBuscarPor.SelectedValue == "Granja" ? true : false;
+            btnBuscarGranjaBuscar.Visible = listBuscarPor.SelectedValue == "Granja" ? true : false;
             lstProductoBuscar.Visible = listBuscarPor.SelectedValue == "Producto" ? true : false;
+            btnBuscarProductoBuscar.Visible = listBuscarPor.SelectedValue == "Producto" ? true : false;
             lstDepositoBuscar.Visible = listBuscarPor.SelectedValue == "Deposito" ? true : false;
+            btnBuscarDepositoBuscar.Visible = listBuscarPor.SelectedValue == "Deposito" ? true : false;
             lblFchProd.Visible = listBuscarPor.SelectedValue == "Fecha de producción" ? true : false;
             lblFchCad.Visible = listBuscarPor.SelectedValue == "Fecha de caducidad" ? true : false;
             lblCant.Visible = listBuscarPor.SelectedValue == "Cantidad" ? true : false;
@@ -501,14 +505,13 @@ namespace Web.Paginas.Lotes
         ICollection createDataSourceDeposito()
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            List<Deposito> depositos = new List<Deposito>();
             DataTable dt = new DataTable();
 
             dt.Columns.Add(new DataColumn("nombre", typeof(String)));
             dt.Columns.Add(new DataColumn("id", typeof(String)));
 
             Deposito dep = new Deposito(0, "", "", 0, "");
-            depositos = Web.buscarDepositoFiltro(dep, 0, 0, -1, -1, "");
+            List<Deposito> depositos = Web.buscarDepositoFiltro(dep, 0, 999999, 0, 999, "");
             dt.Rows.Add(createRow("Seleccione un Deposito", "Seleccione un Deposito", dt));
 
 
@@ -663,6 +666,27 @@ namespace Web.Paginas.Lotes
             comprobarBuscar();
         }
 
+        protected void btnBuscarGranjaBuscar_Click(object sender, EventArgs e)
+        {
+            System.Web.HttpContext.Current.Session["loteDatosBuscar"] = "Si";
+            guardarBuscar();
+            Response.Redirect("/Paginas/Granjas/frmGranjas");
+        }
+
+        protected void btnBuscarProductoBuscar_Click(object sender, EventArgs e)
+        {
+            System.Web.HttpContext.Current.Session["loteDatosBuscar"] = "Si";
+            guardarBuscar();
+            Response.Redirect("/Paginas/Productos/frmProductos");
+        }
+
+        protected void btnBuscarDepositoBuscar_Click(object sender, EventArgs e)
+        {
+            System.Web.HttpContext.Current.Session["loteDatosBuscar"] = "Si";
+            guardarBuscar();
+            Response.Redirect("/Paginas/Depositos/frmDepositos");
+        }
+
         protected void lblPaginaAnt_Click(object sender, EventArgs e)
         {
             string p = lblPaginaAct.Text.ToString();
@@ -799,5 +823,6 @@ namespace Web.Paginas.Lotes
 
         #endregion
 
+        
     }
 }

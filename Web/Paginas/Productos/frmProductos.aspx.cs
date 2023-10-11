@@ -47,7 +47,7 @@ namespace Web.Paginas.Productos
 
                 CargarListTipo();
                 CargarListTipoVenta();
-                if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
+                if (System.Web.HttpContext.Current.Session["loteDatos"] != null || System.Web.HttpContext.Current.Session["loteDatosBuscar"] != null)
                 {
                     btnVolver.Visible = true;
                     lstProducto.Visible = false;
@@ -292,7 +292,7 @@ namespace Web.Paginas.Productos
             }
             else
             {
-                if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
+                if (System.Web.HttpContext.Current.Session["loteDatos"] != null || System.Web.HttpContext.Current.Session["loteDatosBuscar"] != null)
 
                 {
                     txtPaginas.Visible = true;
@@ -379,7 +379,7 @@ namespace Web.Paginas.Productos
                 dr["Tipo"] = unProd.Tipo.ToString();
                 dr["TipoVenta"] = unProd.TipoVenta.ToString();
                 dr["Imagen"] = unProd.Imagen.ToString();
-                dr["Precio"] = unProd.Precio.ToString();
+                dr["Precio"] = unProd.Precio.ToString() + "$";
                 dr["CantTotal"] = unProd.CantTotal.ToString();
                 dr["CantRes"] = unProd.CantRes.ToString();
                 dr["CantDisp"] = unProd.CantDisp.ToString() + " " + unProd.TipoVenta.ToString();
@@ -599,7 +599,14 @@ namespace Web.Paginas.Productos
 
         protected void btnVolver_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/Paginas/Lotes/frmAltaLotes");
+            if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
+            {
+                Response.Redirect("/Paginas/Lotes/frmAltaLotes");
+            }
+            else
+            {
+                Response.Redirect("/Paginas/Lotes/frmLotes");
+            }
         }
 
         protected void btnAlta_Click(object sender, EventArgs e)
@@ -628,6 +635,11 @@ namespace Web.Paginas.Productos
                             {
                                 System.Web.HttpContext.Current.Session["idProductoSel"] = unProducto.IdProducto.ToString();
                                 Response.Redirect("/Paginas/Lotes/frmAltaLotes");
+                            }
+                            else if (System.Web.HttpContext.Current.Session["loteDatosBuscar"] != null)
+                            {
+                                System.Web.HttpContext.Current.Session["productoLoteBuscar"] = unProducto.IdProducto.ToString();
+                                Response.Redirect("/Paginas/Lotes/frmLotes");
                             }
                             else
                             {
@@ -694,9 +706,16 @@ namespace Web.Paginas.Productos
             GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
             string id = (HttpUtility.HtmlEncode(selectedrow.Cells[0].Text));
 
-            System.Web.HttpContext.Current.Session["idProductoSel"] = id;
-
-            Response.Redirect("/Paginas/Lotes/frmAltaLotes");
+            if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
+            {
+                System.Web.HttpContext.Current.Session["idProductoSel"] = id;
+                Response.Redirect("/Paginas/Lotes/frmAltaLotes");
+            }
+            else if (System.Web.HttpContext.Current.Session["loteDatosBuscar"] != null)
+            {
+                System.Web.HttpContext.Current.Session["productoLoteBuscar"] = id;
+                Response.Redirect("/Paginas/Lotes/frmLotes");
+            }
 
         }
 

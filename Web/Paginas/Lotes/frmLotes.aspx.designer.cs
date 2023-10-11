@@ -51,6 +51,15 @@ namespace Web.Paginas.Lotes
         protected global::System.Web.UI.WebControls.DropDownList lstGranjaBuscar;
 
         /// <summary>
+        /// Control btnBuscarGranjaBuscar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnBuscarGranjaBuscar;
+
+        /// <summary>
         /// Control lstProductoBuscar.
         /// </summary>
         /// <remarks>
@@ -60,6 +69,15 @@ namespace Web.Paginas.Lotes
         protected global::System.Web.UI.WebControls.DropDownList lstProductoBuscar;
 
         /// <summary>
+        /// Control btnBuscarProductoBuscar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnBuscarProductoBuscar;
+
+        /// <summary>
         /// Control lstDepositoBuscar.
         /// </summary>
         /// <remarks>
@@ -67,6 +85,15 @@ namespace Web.Paginas.Lotes
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList lstDepositoBuscar;
+
+        /// <summary>
+        /// Control btnBuscarDepositoBuscar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnBuscarDepositoBuscar;
 
         /// <summary>
         /// Control lblFchProd.

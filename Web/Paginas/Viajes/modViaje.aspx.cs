@@ -95,7 +95,7 @@ namespace Web.Paginas.Viajes
             listCamion.SelectedValue = viaje.IdCamion.ToString();
             listCamionero.SelectedValue = viaje.IdCamionero.ToString();
             listEstado.SelectedValue = viaje.Estado;
-            if (viaje.Estado != "Pendiente")
+            if (viaje.Estado != "Pendiente" && viaje.Estado != "Confirmado")
             {
                 txtFch.Enabled = false;
             }
@@ -181,7 +181,7 @@ namespace Web.Paginas.Viajes
             cargar.Add(Web.buscarCam(viaje.IdCamion));
 
 
-            if (viaje.Estado == "Pendiente")
+            if (viaje.Estado == "Pendiente" || viaje.Estado == "Confirmado")
             {
                 foreach (Camion unCam in camiones)
                 {
@@ -195,6 +195,7 @@ namespace Web.Paginas.Viajes
             {
                 cargar = camiones;
                 btnBuscarCamion.Visible = false;
+                lblCamion.CssClass = "col-12";
                 listCamion.Enabled = false;
             }
 
@@ -244,7 +245,7 @@ namespace Web.Paginas.Viajes
 
             cargar.Add(Web.buscarCamionero(viaje.IdCamionero));
 
-            if (viaje.Estado == "Pendiente")
+            if (viaje.Estado == "Pendiente" || viaje.Estado == "Confirmado")
             {
                 foreach (Camionero unCam in camioneros)
                 {
@@ -258,6 +259,7 @@ namespace Web.Paginas.Viajes
             {
                 cargar = camioneros;
                 btnBuscarCamionero.Visible = false;
+                lblCamionero.CssClass = "col-12";
                 listCamionero.Enabled = false;
             }
 

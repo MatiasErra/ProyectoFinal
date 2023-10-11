@@ -42,6 +42,15 @@ namespace Web.Paginas.Viajes
         protected global::System.Web.UI.WebControls.TextBox txtFch;
 
         /// <summary>
+        /// Control lblCamion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCamion;
+
+        /// <summary>
         /// Control listCamion.
         /// </summary>
         /// <remarks>
@@ -58,6 +67,15 @@ namespace Web.Paginas.Viajes
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnBuscarCamion;
+
+        /// <summary>
+        /// Control lblCamionero.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCamionero;
 
         /// <summary>
         /// Control listCamionero.

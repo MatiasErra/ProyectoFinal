@@ -27,29 +27,29 @@
 
                 <div class="input-group">
                     <asp:Label class="text initText" Text=" Fecha del viaje" runat="server" />
-                    <asp:TextBox ID="txtFch" runat="server" CssClass=" input--style-tex js-datepicker " placeholder="Fecha" TextMode="Date"></asp:TextBox>
+                    <asp:TextBox ID="txtFch" runat="server" CssClass=" input--style-tex js-datepicker" placeholder="Fecha" TextMode="Date"></asp:TextBox>
                 </div>
 
 
 
                 <div class="row">
-                    <div class="col-xl-7 col-lg-12">
+                    <asp:Label runat="server" ID="lblCamion" CssClass="col-xl-9 col-lg-12">
                         <asp:DropDownList ID="listCamion" CssClass="input--style-lst" runat="server">
                         </asp:DropDownList>
 
-                    </div>
-                    <div class="col-xl-5 col-lg-12">
+                    </asp:Label>
+                    <div class="col-xl-3 col-lg-12">
                         <asp:Button CssClass="btnE btn--radius btn--green  align-self-center btn--srch" ID="btnBuscarCamion" runat="server" Text="Buscar Camion" OnClick="btnBuscarCamion_Click" />
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-xl-7 col-lg-12">
+                    <asp:Label runat="server" ID="lblCamionero" CssClass="col-xl-9 col-lg-12">
                         <asp:DropDownList ID="listCamionero" CssClass="input--style-lst" runat="server">
                         </asp:DropDownList>
 
-                    </div>
-                    <div class="col-xl-5 col-lg-12">
+                    </asp:Label>
+                    <div class="col-xl-3 col-lg-12">
                         <asp:Button CssClass="btnE btn--radius btn--green  align-self-center btn--srch" ID="btnBuscarCamionero" runat="server" Text="Buscar Camionero" OnClick="btnBuscarCamionero_Click" />
                     </div>
                 </div>

@@ -60,7 +60,7 @@ namespace Web.Paginas.Depositos
                     System.Web.HttpContext.Current.Session["PagAct"] = null;
                 }
 
-                if (System.Web.HttpContext.Current.Session["loteDatos"] != null || System.Web.HttpContext.Current.Session["LoteDatosMod"] != null)
+                if (System.Web.HttpContext.Current.Session["loteDatos"] != null || System.Web.HttpContext.Current.Session["LoteDatosMod"] != null || System.Web.HttpContext.Current.Session["loteDatosBuscar"] != null)
                 {
                     btnVolver.Visible = true;
                     lstDeposito.Visible = false;
@@ -271,7 +271,7 @@ namespace Web.Paginas.Depositos
             else
             {
 
-                if (System.Web.HttpContext.Current.Session["loteDatos"] != null || System.Web.HttpContext.Current.Session["LoteDatosMod"] != null)
+                if (System.Web.HttpContext.Current.Session["loteDatos"] != null || System.Web.HttpContext.Current.Session["LoteDatosMod"] != null || System.Web.HttpContext.Current.Session["loteDatosBuscar"] != null)
                 {
                     txtPaginas.Visible = true;
                     lblMensajes.Text = "";
@@ -535,13 +535,16 @@ namespace Web.Paginas.Depositos
 
         protected void btnVolver_Click(object sender, EventArgs e)
         {
-            if (System.Web.HttpContext.Current.Session["LoteDatosMod"] != null)
+            if (System.Web.HttpContext.Current.Session["loteDatosBuscar"] != null)
+            {
+                Response.Redirect("/Paginas/Lotes/frmLotes");
+            }
+            else if (System.Web.HttpContext.Current.Session["LoteDatosMod"] != null)
             {
                 Response.Redirect("/Paginas/Lotes/modLote");
             }
             else if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
             {
-
                 Response.Redirect("/Paginas/Lotes/frmAltaLotes");
             }
         }
@@ -567,6 +570,11 @@ namespace Web.Paginas.Depositos
                         System.Web.HttpContext.Current.Session["idDepositoSel"] = unDeposito.IdDeposito.ToString();
                         Response.Redirect("/Paginas/Lotes/frmLotes");
                     }
+                    else if (System.Web.HttpContext.Current.Session["loteDatosBuscar"] != null)
+                    {
+                        System.Web.HttpContext.Current.Session["depositoLoteBuscar"] = unDeposito.IdDeposito.ToString();
+                        Response.Redirect("/Paginas/Lotes/frmLotes");
+                    }
                     else
                     {
                         limpiar();
@@ -589,15 +597,21 @@ namespace Web.Paginas.Depositos
             GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
             id = int.Parse(selectedrow.Cells[0].Text);
 
-            System.Web.HttpContext.Current.Session["idDepositoSel"] = id;
+            
 
-            if (System.Web.HttpContext.Current.Session["LoteDatosMod"] != null)
+            if (System.Web.HttpContext.Current.Session["loteDatosBuscar"] != null)
             {
+                System.Web.HttpContext.Current.Session["depositoLoteBuscar"] = id;
+                Response.Redirect("/Paginas/Lotes/frmLotes");
+            }
+            else if (System.Web.HttpContext.Current.Session["LoteDatosMod"] != null)
+            {
+                System.Web.HttpContext.Current.Session["idDepositoSel"] = id;
                 Response.Redirect("/Paginas/Lotes/modLote");
             }
             else if (System.Web.HttpContext.Current.Session["loteDatos"] != null)
             {
-
+                System.Web.HttpContext.Current.Session["idDepositoSel"] = id;
                 Response.Redirect("/Paginas/Lotes/frmAltaLotes");
             }
         }

@@ -19,10 +19,13 @@
                         <div class="col-sm-12">
                             <asp:DropDownList Visible="false" ID="lstGranjaBuscar" CssClass="input--style-lst-search" runat="server">
                             </asp:DropDownList>
+                            <asp:Button Visible="false" CssClass="btnE btn--radius btn--green  align-self-center btn--srch" ID="btnBuscarGranjaBuscar" runat="server" Text="Buscar Granja" OnClick="btnBuscarGranjaBuscar_Click" />
                             <asp:DropDownList Visible="false" ID="lstProductoBuscar" CssClass="input--style-lst-search" runat="server">
                             </asp:DropDownList>
+                            <asp:Button Visible="false" CssClass="btnE btn--radius btn--green  align-self-center btn--srch" ID="btnBuscarProductoBuscar" runat="server" Text="Buscar Producto" OnClick="btnBuscarProductoBuscar_Click" />
                             <asp:DropDownList Visible="false" ID="lstDepositoBuscar" CssClass="input--style-lst-search" runat="server">
                             </asp:DropDownList>
+                            <asp:Button Visible="false" CssClass="btnE btn--radius btn--green  align-self-center btn--srch" ID="btnBuscarDepositoBuscar" runat="server" Text="Buscar Deposito" OnClick="btnBuscarDepositoBuscar_Click" />
 
                             <div class="row justify-content-center">
                                 <div class="col-lg-6">

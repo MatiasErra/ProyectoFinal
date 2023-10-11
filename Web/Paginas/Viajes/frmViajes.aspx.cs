@@ -808,7 +808,7 @@ namespace Web.Paginas.Viajes
             GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
             int id = int.Parse(HttpUtility.HtmlEncode(selectedrow.Cells[0].Text));
             System.Web.HttpContext.Current.Session["ViajesSelected"] = id;
-            string estadoVia = HttpUtility.HtmlEncode(selectedrow.Cells[6].Text);
+            string estadoVia = HttpUtility.HtmlEncode(selectedrow.Cells[8].Text);
 
             if (estadoVia == "Pendiente")
             {
