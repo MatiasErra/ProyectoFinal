@@ -363,6 +363,7 @@ namespace Web.Paginas.Viajes
 
 
 
+                txtPaginaLotPed.Visible = true;
                 modificarPaginaLotePed(idPedido);
                 lstPedidoLote.Visible = true;
                 lstPedidoLote.Visible = true;
@@ -385,7 +386,6 @@ namespace Web.Paginas.Viajes
 
             string pagAct = lblPaginaActLotPed.Text.ToString();
 
-            txtPaginaLotPed.Visible = true;
             lblPaginaActLotPed.Visible = true;
             lblPaginaSigLotPed.Visible = true;
             lblPaginaAntLotPed.Visible = true;
@@ -476,6 +476,7 @@ namespace Web.Paginas.Viajes
 
             if (viajeLotPedPag.Count == 0)
             {
+
                 h5ConfViaje.Visible = false;
                 txtPaginaViaPed.Visible = false;
                 lstViajePed.Visible = false;
@@ -491,7 +492,7 @@ namespace Web.Paginas.Viajes
                 h5ConfViaje.Visible = true;
                 btnConfirmarViaje.Visible = true;
 
-
+                txtPaginaViaPed.Visible = true;
                 modPaginaViajeLotePed(idPedido, idViaje);
                 lstViajePed.Visible = true;
                 lstViajePed.DataSource = null;
@@ -514,7 +515,6 @@ namespace Web.Paginas.Viajes
 
             string pagAct = lblPaginaActViaPed.Text.ToString();
 
-            txtPaginaViaPed.Visible = true;
             lblPaginaActViaPed.Visible = true;
             lblPaginaSigViaPed.Visible = true;
             lblPaginaAntViaPed.Visible = true;

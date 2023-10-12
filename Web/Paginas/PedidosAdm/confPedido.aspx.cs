@@ -50,7 +50,7 @@ namespace Web.Paginas.PedidosAdm
                 Response.Redirect("/Paginas/PedidosAdm/frmPedido");
             }
 
-            System.Web.HttpContext.Current.Session["lstPedidosProd"] = null;
+           
         }
 
 
@@ -366,8 +366,6 @@ namespace Web.Paginas.PedidosAdm
                 lblPaginaActLot.Visible = false;
                 lblPaginaSigLot.Visible = false;
                 txtPaginasLot.Visible = false;
-             
-                txtPaginasLot.Text = "";
                 lblH5Lote.Visible = false;
 
 
@@ -378,13 +376,13 @@ namespace Web.Paginas.PedidosAdm
             else
             {
                 lblH5Lote.Visible = true;
-                txtPaginasLot.Text = "Paginas";
-           
+
+                txtPaginasLot.Visible = true;
                 modificarPaginaLote();
                 lstLote.Visible = true;
                 lstLote.DataSource = null;
                 lstLote.DataSource = ObtenerDatos(LotesPagina);
-                txtPaginasLot.Visible = true;
+           
                 lstLote.DataBind();
             }
 
@@ -400,7 +398,7 @@ namespace Web.Paginas.PedidosAdm
             double cantPags = Math.Ceiling(pags);
 
             string pagAct = lblPaginaActLot.Text.ToString();
-            txtPaginasLot.Text = "Paginas";
+         
             lblPaginaSigLot.Visible = true;
             lblPaginaAntLot.Visible = true;
             lblPaginaActLot.Visible = true;
@@ -541,7 +539,7 @@ namespace Web.Paginas.PedidosAdm
                 h5ConfPedido.Visible = true;
                 btnConfPed.Visible = true;
                 btnConfPed.Visible = true;
-
+                txtPaginaLotPed.Visible = true;
 
                 modificarPaginaLotePed(idPedido, idProducto);
                 lstPedidoLote.Visible = true;
@@ -565,7 +563,7 @@ namespace Web.Paginas.PedidosAdm
 
             string pagAct = lblPaginaActLotPed.Text.ToString();
 
-            txtPaginaLotPed.Visible = true;
+           
             lblPaginaActLotPed.Visible = true;
             lblPaginaSigLotPed.Visible = true;
             lblPaginaAntLotPed.Visible = true;
@@ -795,7 +793,7 @@ namespace Web.Paginas.PedidosAdm
                 lblPaginaActLot.Text = "1";
                 lblPaginaActLotPed.Text = "1";
                 listBuscarLote();
-                lblMensajes.Text = "Lote dado de baja de pedido";
+                lblMensajes.Text = "Lote dado de baja del pedido";
 
             }
             else
@@ -981,7 +979,7 @@ namespace Web.Paginas.PedidosAdm
                         if (Web.altaPedido_Lote(lote_Pedido, CantLote, CantDisp, CantRess, idAdmin))
                         {
                             listBuscarLote();
-                            lblMensajes.Text = "Lote ingresado a pedido con exito";
+                            lblMensajes.Text = "Lote ingresado al pedido con exito";
 
 
 

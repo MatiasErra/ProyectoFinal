@@ -109,6 +109,26 @@ namespace Web.Paginas.Pesticidas
 
         #region Utilidad
 
+        private bool PestEnLote(int idPesticida)
+        {
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            int idGranja = 0;
+            int idProducto = 0;
+            string fchProduccion = "30/12/3000";
+            List<Lote_Pesti> Lote_Pestis = Web.PestisEnLote(idGranja, idProducto, fchProduccion);
+
+            int i = 0;
+            foreach (Lote_Pesti unLotePesti in Lote_Pestis)
+            {
+                if (unLotePesti.IdPesticida == idPesticida)
+                {
+                    return false;
+
+                }
+            }
+            return true;
+        }
+
         private void limpiar()
         {
             lblMensajes.Text = "";
@@ -228,7 +248,7 @@ namespace Web.Paginas.Pesticidas
                 string fchProduccion = System.Web.HttpContext.Current.Session["fchProduccionSel"].ToString();
                 Lote lote = Web.buscarLote(nombreGranja, nombreProducto, fchProduccion);
                 List<Pesticida> mostrar = new List<Pesticida>();
-                List<Lote_Pesti> pestisEnLote = Web.PestisEnLote(lote.IdGranja, lote.IdProducto, lote.FchProduccion, "", "");
+                List<Lote_Pesti> pestisEnLote = Web.PestisEnLote(lote.IdGranja, lote.IdProducto, lote.FchProduccion);
                 foreach (Pesticida pesti in pesticidas)
                 {
                     int cont = 0;
@@ -585,20 +605,24 @@ namespace Web.Paginas.Pesticidas
             Pesticida pesticida = Web.buscarPesti(id);
             if (pesticida != null)
             {
-                int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
-                if (Web.bajaPesti(id, idAdmin))
+                if (PestEnLote(id))
                 {
-                    limpiar();
-                   
-                    lblPaginaAct.Text = "1";
-                    listarPagina();
-                    lblMensajes.Text = "Se ha eliminado el Pesticida.";
+                    int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                    if (Web.bajaPesti(id, idAdmin))
+                    {
+                        limpiar();
+
+                        lblPaginaAct.Text = "1";
+                        listarPagina();
+                        lblMensajes.Text = "Se ha eliminado el Pesticida.";
+                    }
+                    else
+                    {
+                        limpiar();
+                        lblMensajes.Text = "No se ha podido eliminar el Pesticida.";
+                    }
                 }
-                else
-                {
-                    limpiar();
-                    lblMensajes.Text = "No se ha podido eliminar el Pesticida.";
-                }
+                else lblMensajes.Text = "No se ha podido eliminar el pesticida porque está asignado a un lote.";
             }
             else lblMensajes.Text = "El Pesticida no existe.";
         }

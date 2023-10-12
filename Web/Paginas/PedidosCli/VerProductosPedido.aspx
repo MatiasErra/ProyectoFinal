@@ -102,7 +102,7 @@
 
 
                                                 <asp:BoundField DataField="Cantidad"
-                                                    HeaderText="Cantidad Solicitada"
+                                                    HeaderText="Cantidad asignada"
                                                     ItemStyle-CssClass="GridStl" />
 
                                                 <asp:BoundField DataField="PecioTotal"

@@ -108,6 +108,31 @@ namespace Web.Paginas.Fertilizantes
 
         #region Utilidad
 
+
+
+
+
+        private bool FertEnLote(int idFertilizante)
+        {
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            int idGranja = 0;
+            int idProducto = 0;
+            string fchProduccion = "30/12/3000";
+            List<Lote_Ferti> Lote_Fert = Web.FertisEnLote(idGranja, idProducto, fchProduccion);
+
+            int i = 0;
+            foreach (Lote_Ferti unLoteFert in Lote_Fert)
+            {
+                if (unLoteFert.IdFertilizante == idFertilizante)
+                {
+                    return false;
+                    
+                }
+            }
+            return true;
+        }
+
+
         private void limpiar()
         {
             lblMensajes.Text = "";
@@ -229,7 +254,7 @@ namespace Web.Paginas.Fertilizantes
                 string fchProduccion = System.Web.HttpContext.Current.Session["fchProduccionSel"].ToString();
                 Lote lote = Web.buscarLote(nombreGranja, nombreProducto, fchProduccion);
                 List<Fertilizante> mostrar = new List<Fertilizante>();
-                List<Lote_Ferti> fertisEnLote = Web.FertisEnLote(lote.IdGranja, lote.IdProducto, lote.FchProduccion, "", "");
+                List<Lote_Ferti> fertisEnLote = Web.FertisEnLote(lote.IdGranja, lote.IdProducto, lote.FchProduccion);
                 foreach (Fertilizante ferti in fertilizantes)
                 {
                     int cont = 0;
@@ -595,16 +620,20 @@ namespace Web.Paginas.Fertilizantes
             Fertilizante fertilizante = Web.buscarFerti(id);
             if (fertilizante != null)
             {
-                int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
-                if (Web.bajaFerti(id, idAdmin))
+                if (FertEnLote(id))
                 {
-                    limpiar();
-                    
-                    lblPaginaAct.Text = "1";
-                    listarPagina();
-                    lblMensajes.Text = "Se ha eliminado el Fertilizante.";
+                    int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                    if (Web.bajaFerti(id, idAdmin))
+                    {
+                        limpiar();
+
+                        lblPaginaAct.Text = "1";
+                        listarPagina();
+                        lblMensajes.Text = "Se ha eliminado el Fertilizante.";
+                    }
+                    else lblMensajes.Text = "No se ha podido eliminar el Fertilizante.";
                 }
-                else lblMensajes.Text = "No se ha podido eliminar el Fertilizante.";
+                else lblMensajes.Text = "No se ha podido eliminar el fertilizante porque está asignado a un lote.";
             }
             else lblMensajes.Text = "El Fertilizante no existe.";
         }

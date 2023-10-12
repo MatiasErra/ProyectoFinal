@@ -190,7 +190,7 @@ namespace Web.Paginas.Lotes
 
             //string ordenar = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : "";
 
-            List<Lote_Pesti> Lote_Pesti = Web.PestisEnLote(idGranja, idProducto, fchProduccion, "", "");
+            List<Lote_Pesti> Lote_Pesti = Web.PestisEnLote(idGranja, idProducto, fchProduccion);
 
             return Lote_Pesti;
         }
@@ -220,7 +220,7 @@ namespace Web.Paginas.Lotes
 
             if (Lotes_pestPagina.Count == 0)
             {
-                lblPaginas.Visible = false;
+                txtPaginas.Visible = false;
                 lblMensajes.Text = "No se encontro ningún Pesticida en el lote.";
 
                 lblPaginaAnt.Visible = false;
@@ -237,7 +237,7 @@ namespace Web.Paginas.Lotes
             }
             else
             {
-                lblPaginas.Visible = true;
+                txtPaginas.Visible = true;
                 lblMensajes.Text = "";
                 //txtBuscar.Visible = true;
                 //btnBuscar.Visible = true;
@@ -310,7 +310,7 @@ namespace Web.Paginas.Lotes
                 dr["Nombre"] = str.NombrePesti;
                 dr["Tipo"] = str.TipoPesti;
                 dr["PH"] = str.PHPesti;
-                dr["Cantidad"] = str.Cantidad;
+                dr["Cantidad"] = str.Cantidad +  " Kg";
 
                 dt.Rows.Add(dr);
             }
@@ -352,7 +352,7 @@ namespace Web.Paginas.Lotes
             pesticidas = Web.buscarPesticidaFiltro(pest, 0, 15, "", idGranja, idProducto, fchProduccion);
 
             List<Pesticida> mostrar = new List<Pesticida>();
-            List<Lote_Pesti> pestisEnLote = Web.PestisEnLote(idGranja, idProducto, fchProduccion, "", "");
+            List<Lote_Pesti> pestisEnLote = Web.PestisEnLote(idGranja, idProducto, fchProduccion);
             foreach(Pesticida pesti in pesticidas)
             {
                 int cont = 0;
@@ -486,6 +486,8 @@ namespace Web.Paginas.Lotes
                     Lote_Pesti loteP = new Lote_Pesti(idPesticida, idGranja, idProducto, fchProduccion, cantidad);
                     if (Web.altaLotePesti(loteP, idAdmin))
                     {
+                        limpiar();
+                        lblPaginaAct.Text = "1";
                         CargarListPesticida(idGranja, idProducto, fchProduccion);
                         listarPagina(idGranja, idProducto, fchProduccion);
                         txtCantidadPesti.Text = "";
@@ -525,6 +527,7 @@ namespace Web.Paginas.Lotes
             if (Web.bajaLotePesti(idPesticida, idGranja, idProducto, fchProduccion, idAdmin))
             {
                 limpiar();
+                lblPaginaAct.Text = "1";
                 listarPagina(idGranja, idProducto, fchProduccion);
                 CargarListPesticida(idGranja, idProducto, fchProduccion);
                 lblMensajes.Text = "Se eliminó el Pesticida del Lote.";
@@ -536,16 +539,16 @@ namespace Web.Paginas.Lotes
 
         }
 
-        protected void btnModificarPesti_Click(object sender, EventArgs e)
-        {
-            Button btnConstultar = (Button)sender;
-            GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
-            int idPesticida = int.Parse(selectedrow.Cells[0].Text);
+        //protected void btnModificarPesti_Click(object sender, EventArgs e)
+        //{
+        //    Button btnConstultar = (Button)sender;
+        //    GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
+        //    int idPesticida = int.Parse(selectedrow.Cells[0].Text);
 
-            guardarDatos();
-            System.Web.HttpContext.Current.Session["idPest"] = idPesticida;
-            Response.Redirect("/Paginas/Pesticidas/modPest");
-        }
+        //    guardarDatos();
+        //    System.Web.HttpContext.Current.Session["idPest"] = idPesticida;
+        //    Response.Redirect("/Paginas/Pesticidas/modPest");
+        //}
 
         protected void btnModificarCantidad_Click(object sender, EventArgs e)
         {
@@ -574,6 +577,10 @@ namespace Web.Paginas.Lotes
             lstLotPestiSel.Visible = false;
             lblPaginaAct.Text = "1";
             lblPaginaAct.Visible = false;
+            txtPaginas.Visible = false;
+            lblPaginaSig.Visible = false;
+            lblPaginaAnt.Visible = false;
+
 
             listPesticida.Visible = false;
             listPesticida.Enabled = false;
@@ -641,7 +648,9 @@ namespace Web.Paginas.Lotes
             lstLotPestiSel.Visible = true;
             lblPaginaAct.Text = "1";
             lblPaginaAct.Visible = true;
-
+            txtPaginas.Visible = true;
+            lblPaginaSig.Visible = true;
+            lblPaginaAnt.Visible = true;
 
 
 

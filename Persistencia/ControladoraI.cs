@@ -342,9 +342,9 @@ namespace Persistencia
 
         #region Lotes_Fertis
 
-        public List<Lote_Ferti> FertisEnLote(int idGranja, int idProducto, string fchProduccion, string buscar, string ord)
+        public List<Lote_Ferti> FertisEnLote(int idGranja, int idProducto, string fchProduccion)
         {
-            return new pLote_Ferti().FertisEnLote(idGranja, idProducto, fchProduccion, buscar, ord);
+            return new pLote_Ferti().FertisEnLote(idGranja, idProducto, fchProduccion);
         }
 
         public Lote_Ferti buscarLoteFerti(int idFertilizante, int idGranja, int idProducto, string fchProduccion)
@@ -370,9 +370,9 @@ namespace Persistencia
 
         #region Lotes_Pestis
 
-        public List<Lote_Pesti> PestisEnLote(int idGranja, int idProducto, string fchProduccion, string buscar, string ord)
+        public List<Lote_Pesti> PestisEnLote(int idGranja, int idProducto, string fchProduccion)
         {
-            return new pLote_Pesti().PestisEnLote(idGranja, idProducto, fchProduccion, buscar, ord);
+            return new pLote_Pesti().PestisEnLote(idGranja, idProducto, fchProduccion);
         }
 
         public Lote_Pesti buscarLotePesti(int idFertilizante, int idGranja, int idProducto, string fchProduccion)

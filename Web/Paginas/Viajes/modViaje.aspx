@@ -8,7 +8,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-7 col-sm-11 m-3 p-3 text-center backforContent">
                 <div class="row rowLine">
-                    <h2 class="title">Modificar Granja </h2>
+                    <h2 class="title">Modificar Viaje</h2>
                 </div>
 
 
@@ -70,7 +70,7 @@
                 </div>
 
                 <div class="col-12">
-                    <asp:Button ID="btnModificar" CssClass="btnE btn--radius btn--yellow mt-1 mb-1" runat="server" Text="Modificar" OnClick="btnModificar_Click" OnClientClick="return confirm('¿Desea modificar esta Granja?')" />
+                    <asp:Button ID="btnModificar" CssClass="btnE btn--radius btn--yellow mt-1 mb-1" runat="server" Text="Modificar" OnClick="btnModificar_Click" OnClientClick="return confirm('¿Desea modificar este Viaje?')" />
                     <asp:Button ID="btnAtras" CssClass="btnE btn--radius btn--gray mt-1 mb-1" runat="server" Text="Volver" OnClick="btnAtras_Click" />
                 </div>
 

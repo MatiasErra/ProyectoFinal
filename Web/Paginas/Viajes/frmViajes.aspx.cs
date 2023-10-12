@@ -94,8 +94,8 @@ namespace Web.Paginas.Viajes
                 System.Web.HttpContext.Current.Session["estadoViajeBuscar"] = null;
                 listBuscarPor.SelectedValue = System.Web.HttpContext.Current.Session["BuscarLstViaje"] != null ? System.Web.HttpContext.Current.Session["BuscarLstViaje"].ToString() : "Buscar por";
                 System.Web.HttpContext.Current.Session["BuscarLstViaje"] = null;
-                listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPor"] != null ? System.Web.HttpContext.Current.Session["OrdenarPor"].ToString() : "Ordernar por";
-                System.Web.HttpContext.Current.Session["OrdenarPor"] = null;
+                listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPorViaje"] != null ? System.Web.HttpContext.Current.Session["OrdenarPorViaje"].ToString() : "Ordernar por";
+                System.Web.HttpContext.Current.Session["OrdenarPorViaje"] = null;
                 comprobarBuscar();
                 listarPagina();
 
@@ -198,7 +198,7 @@ namespace Web.Paginas.Viajes
             System.Web.HttpContext.Current.Session["camioneroViajeBuscar"] = lstCamioneroBuscar.SelectedValue != "Seleccione un Camionero" ? lstCamioneroBuscar.SelectedValue : null;
             System.Web.HttpContext.Current.Session["estadoViajeBuscar"] = lstEstadoBuscar.SelectedValue != "Seleccione un Estado" ? lstEstadoBuscar.SelectedValue : null;
             System.Web.HttpContext.Current.Session["BuscarLstViaje"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["OrdenarPor"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["OrdenarPorViaje"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
         }
 
         #region Paginas
@@ -252,7 +252,7 @@ namespace Web.Paginas.Viajes
 
             if (viajesPagina.Count == 0)
             {
-                lblPaginas.Visible = false;
+                txtPaginas.Visible = false;
                 lblMensajes.Text = "No se encontro ningún Viaje.";
 
                 lblPaginaAnt.Visible = false;
@@ -264,7 +264,7 @@ namespace Web.Paginas.Viajes
             else
             {
 
-                    lblPaginas.Visible = true;
+                txtPaginas.Visible = true;
                     lblMensajes.Text = "";
                     modificarPagina();
                     lstViaje.Visible = true;
@@ -305,6 +305,48 @@ namespace Web.Paginas.Viajes
             lblPaginaAnt.Text = (int.Parse(pagAct) - 1).ToString();
             lblPaginaAct.Text = pagAct.ToString();
             lblPaginaSig.Text = (int.Parse(pagAct) + 1).ToString();
+        }
+
+
+        public DataTable ObtenerDatos(List<Viaje> viajes)
+        {
+
+            DataTable dt = new DataTable();
+            dt.Columns.AddRange(new DataColumn[9] {
+                new DataColumn("IdViaje", typeof(int)),
+                new DataColumn("Costo", typeof(string)),
+                new DataColumn("Fecha", typeof(string)),
+                new DataColumn("idCamion", typeof(string)),
+                new DataColumn("MarcaCamion", typeof(string)),
+                new DataColumn("ModeloCamion", typeof(string)),
+                new DataColumn("idCamionero", typeof(string)),
+                new DataColumn("NombreCamionero", typeof(string)),
+                new DataColumn("Estado", typeof(string)),
+
+
+            });
+
+            foreach (Viaje unViaje in viajes)
+            {
+
+                DataRow dr = dt.NewRow();
+                dr["IdViaje"] = unViaje.IdViaje.ToString();
+                dr["Costo"] = unViaje.Costo.ToString() + " $";
+                dr["Fecha"] = unViaje.Fecha.ToString();
+                dr["idCamion"] = unViaje.IdCamion.ToString();
+                dr["MarcaCamion"] = unViaje.MarcaCamion.ToString();
+                dr["ModeloCamion"] = unViaje.ModeloCamion.ToString();
+                dr["idCamionero"] = unViaje.IdCamionero.ToString();
+                dr["NombreCamionero"] = unViaje.NombreCamionero.ToString();
+                dr["Estado"] = unViaje.Estado.ToString();
+
+                dt.Rows.Add(dr);
+
+
+
+            }
+
+            return dt;
         }
 
         #endregion
@@ -765,19 +807,14 @@ namespace Web.Paginas.Viajes
                         Viaje unViaje = new Viaje(id, costo, fecha, idCamion, idCamionero, "Pendiente");
                         if (Web.altaViaje(unViaje, idAdmin))
                         {
-                            if (System.Web.HttpContext.Current.Session["pedidoDatos"] != null)
-                            {
-                                System.Web.HttpContext.Current.Session["idViajeSel"] = unViaje.IdViaje.ToString();
-                                // Finalizar pedido
-                                //Response.Redirect("/Paginas/Lotes/frmAltaLotes");
-                            }
-                            else
-                            {
+                           
+                            
+                            
                                 limpiar();
                                 lblPaginaAct.Text = "1";
                                 listarPagina();
                                 lblMensajes.Text = "Viaje dado de alta con éxito.";
-                            }
+                            
                         }
                         else lblMensajes.Text = "Ocurrio un error al ingresar el Viaje.";
                     }
@@ -848,9 +885,10 @@ namespace Web.Paginas.Viajes
                                     limpiar();
                                     lblPaginaAct.Text = "1";
                                     listarPagina();
-                                    lblMensajes.Text = "Se ha borrado el viaje y el camión y camionero ahora estan disponibles.";
+                                   
                                     CargarListCamiones();
                                     CargarListCamionero();
+                                    lblMensajes.Text = "Se ha borrado el viaje y el camión y camionero ahora estan disponibles.";
                                 }
                             }
                         }

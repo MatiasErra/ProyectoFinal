@@ -459,7 +459,7 @@ namespace Web.Paginas.Viajes
                                                             {
                                                                 if (Web.cambiarEstadoPed(unPedido.IdPedido, "En viaje"))
                                                                 {
-                                                                    System.Web.HttpContext.Current.Session["pedidoMensaje"] = "Viaje modificado con exito y pedido en viaje.";
+                                                                    System.Web.HttpContext.Current.Session["pedidoMensaje"] = "Viaje modificado con exito y pedido puesto en viaje.";
                                                                 }
                                                             }
                                                         }

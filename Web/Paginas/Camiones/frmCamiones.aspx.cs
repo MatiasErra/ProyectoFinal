@@ -645,7 +645,7 @@ namespace Web.Paginas.Camiones
                     }
                     else lblMensajes.Text = "No se ha podido borrar el Camión.";
                 }
-                else lblMensajes.Text = "El camión no se puede eliminar porque tiene un viaje..";
+                else lblMensajes.Text = "El camión no se puede eliminar porque tiene un viaje.";
 
             }
             else lblMensajes.Text = "El Camión no existe.";

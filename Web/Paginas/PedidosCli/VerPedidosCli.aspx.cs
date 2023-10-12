@@ -296,14 +296,17 @@ namespace Web.Paginas.Catalogo
             if (pedidosPagina.Count == 0)
             {
 
-                txtPaginas.Text = "";
+                txtPaginas.Visible = false;
                 lstPedido.Visible = false;
-                lblMensajes.Text = "No se encontró un pedido con esas características";
+                lblPaginaSig.Visible = false;
+                lblPaginaAct.Visible = false;
+                lblPaginaAnt.Visible = false;
+                lblMensajes.Text = "No se encontró ningún pedido";
 
             }
             else
             {
-                txtPaginas.Text = "Paginas";
+                txtPaginas.Visible = true;
                 lblMensajes.Text = "";
 
                 modificarPagina();

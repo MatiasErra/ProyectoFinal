@@ -1,4 +1,5 @@
-﻿using Clases;
+﻿using Antlr.Runtime.Tree;
+using Clases;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -371,14 +372,17 @@ namespace Web.Paginas.PedidosADM
             if (pedidosPagina.Count == 0)
             {
 
-                lblPaginas.Visible = false;
+                txtPaginas.Visible = false;
                 lstPedido.Visible = false;
-                lblMensajes.Text = "No se encontró un pedido con esas características";
+                lblPaginaSig.Visible = false;
+                lblPaginaAct.Visible = false;
+                lblPaginaAnt.Visible = false;
+                lblMensajes.Text = "No se encontró ningún pedido";
 
             }
             else
             {
-                lblPaginas.Visible = true;
+                txtPaginas.Visible = true;
                 lblMensajes.Text = "";
 
                 modificarPagina();
@@ -588,7 +592,12 @@ namespace Web.Paginas.PedidosADM
 
 
             }
-            else
+
+            //if(Estado.ToString() == "Finalizado")
+            //{
+
+            //}
+            if (Estado.ToString() == "Confirmado")
             {
                 string cantDisp = "";
                 string cantLote = "";
@@ -612,7 +621,7 @@ namespace Web.Paginas.PedidosADM
                 foreach (Producto unProd in productos)
                 {
                     int cantTotal = 0;
-                    cantRess = unProd.CantRes.ToString();
+                
                     foreach (Lote unLote in lotes)
                     {
                         int idGranja = unLote.IdGranja;
@@ -647,6 +656,10 @@ namespace Web.Paginas.PedidosADM
                             string[] cantTotaLot = unProd.CantTotal.ToString().Split(' ');
                             int resultadoDisp = int.Parse(cantTotaLot[0].ToString()) + cantTotal;
 
+
+
+
+
                             cantDisp = resultadoDisp.ToString() + " " + unProd.TipoVenta.ToString();
 
                             string[] cantLotearr = unLote.Cantidad.ToString().Split(' ');
@@ -654,6 +667,9 @@ namespace Web.Paginas.PedidosADM
 
                             cantLote = resultadoLote.ToString() + " " + unProd.TipoVenta.ToString();
                             int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+
+
+
                             web.bajaPedidoProd(idPedido, idProducto, cantRess, 0);
 
                             web.bajaLotesPedido(idPedido, idGranja, idProducto, FchProduccion, cantLote, cantDisp, cantRess, idAdmin);
@@ -670,6 +686,8 @@ namespace Web.Paginas.PedidosADM
                 }
                 return true;
             }
+            else
+            { return false; }
 
 
         }
@@ -797,7 +815,7 @@ namespace Web.Paginas.PedidosADM
             string Estado = selectedrow.Cells[3].Text;
             ControladoraWeb web = ControladoraWeb.obtenerInstancia();
 
-
+            // si eesta en viaje noo se puede borrar 
 
             if (CantActualProd(idPedido, Estado))
             {

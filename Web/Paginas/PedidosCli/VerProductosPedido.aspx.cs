@@ -183,8 +183,11 @@ namespace Web.Paginas.Pedidos
                 lblMensajes.Text = "No se encontro ningún producto en este pedido.";
 
 
-                txtPaginas.Text = "";
+                txtPaginas.Visible = false;
                 lstProducto.Visible = false;
+                lblPaginaAct.Visible = false;
+                lblPaginaSig.Visible = false;
+                lblPaginaAnt.Visible = false;
 
             }
             else
@@ -192,8 +195,8 @@ namespace Web.Paginas.Pedidos
                 if (Estado.ToString() == "Sin confirmar" || Estado.ToString() == "Sin finalizar")
                 {
                     lblMensajes.Text = "";
+                    txtPaginas.Visible = true;
                     modificarPagina(idPedido);
-                    txtPaginas.Text = "Paginas";
                     lstProductoLote.Visible = false;
                     lstProducto.Visible = true;
                     lstProducto.DataSource = null;
@@ -204,8 +207,9 @@ namespace Web.Paginas.Pedidos
                 {
 
                     lblMensajes.Text = "";
+                    txtPaginas.Visible = true;
                     modificarPagina(idPedido);
-                    txtPaginas.Text = "Paginas";
+                    
                     lstProducto.Visible = false;
                     lstProductoLote.Visible = true;
                     lstProductoLote.DataSource = null;
@@ -229,7 +233,7 @@ namespace Web.Paginas.Pedidos
             lblPaginaAct.Visible = true;
             lblPaginaSig.Visible = true;
             lblPaginaAnt.Visible = true;
-            txtPaginas.Visible = true;
+ 
             if (pagAct == cantPags.ToString())
             {
 

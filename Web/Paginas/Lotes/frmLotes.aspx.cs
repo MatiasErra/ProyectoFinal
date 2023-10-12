@@ -530,7 +530,7 @@ namespace Web.Paginas.Lotes
         {
             foreach (Deposito unDeposito in depositos)
             {
-                dt.Rows.Add(createRow(unDeposito.Ubicacion + " " + unDeposito.Capacidad + " " + unDeposito.Temperatura + " C°", unDeposito.IdDeposito.ToString(), dt));
+                dt.Rows.Add(createRow(unDeposito.Ubicacion + " " + unDeposito.Capacidad + " m3 " + unDeposito.Temperatura + " C°", unDeposito.IdDeposito.ToString(), dt));
             }
         }
 

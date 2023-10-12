@@ -193,7 +193,10 @@ namespace Web.Paginas.Pedidos
             {
                 lblMensajes.Text = "No se encontro ningún producto a este pedido.";
 
+                txtPaginas.Visible = false;
                 lblPaginas.Visible = false;
+                lblPaginaSig.Visible = false;
+                lblPaginaAnt.Visible = false;
 
                 lstProducto.Visible = false;
 
@@ -202,9 +205,10 @@ namespace Web.Paginas.Pedidos
             {
 
                 lblMensajes.Text = "";
+                txtPaginas.Visible = true;
                 modificarPagina(idPedido);
 
-
+                
                 lstProducto.Visible = true;
                 lstProducto.DataSource = null;
                 lstProducto.DataSource = DtObtenerProductos(productosPagina);

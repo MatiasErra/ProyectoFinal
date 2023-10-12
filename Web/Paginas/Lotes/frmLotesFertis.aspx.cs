@@ -178,7 +178,7 @@ namespace Web.Paginas.Lotes
 
 
 
-            List<Lote_Ferti> Lote_Fert = Web.FertisEnLote(idGranja, idProducto, fchProduccion, "", "");
+            List<Lote_Ferti> Lote_Fert = Web.FertisEnLote(idGranja, idProducto, fchProduccion);
 
             return Lote_Fert;
         }
@@ -208,7 +208,7 @@ namespace Web.Paginas.Lotes
 
             if (Lotes_fertPagina.Count == 0)
             {
-                lblPaginas.Visible = false;
+                txtPaginas.Visible = false;
                 lblMensajes.Text = "No se encontro ningún Fertilizante en el lote.";
 
                 lblPaginaAnt.Visible = false;
@@ -224,7 +224,7 @@ namespace Web.Paginas.Lotes
             }
             else
             {
-                lblPaginas.Visible = true;
+                txtPaginas.Visible = true;
                 lblMensajes.Text = "";
                 //txtBuscar.Visible = true;
                 //btnBuscar.Visible = true;
@@ -297,7 +297,7 @@ namespace Web.Paginas.Lotes
                 dr["Nombre"] = str.NombreFert;
                 dr["Tipo"] = str.TipoFert;
                 dr["PH"] = str.PHFert;
-                dr["Cantidad"] = str.Cantidad;
+                dr["Cantidad"] = str.Cantidad + " Kg";
 
                 dt.Rows.Add(dr);
             }
@@ -403,7 +403,7 @@ namespace Web.Paginas.Lotes
             List<Fertilizante> fertilizantes = Web.buscarFertilizanteFiltro(fert, 0, 15, "", idGranja, idProducto, fchProduccion);
 
             List<Fertilizante> mostrar = new List<Fertilizante>();
-            List<Lote_Ferti> fertisEnLote = Web.FertisEnLote(idGranja, idProducto, fchProduccion, "", "");
+            List<Lote_Ferti> fertisEnLote = Web.FertisEnLote(idGranja, idProducto, fchProduccion);
             foreach (Fertilizante ferti in fertilizantes)
             {
                 int cont = 0;
@@ -523,6 +523,8 @@ namespace Web.Paginas.Lotes
                     Lote_Ferti loteF = new Lote_Ferti(idFertilizante, idGranja, idProducto, fchProduccion, cantidad);
                     if (Web.altaLoteFerti(loteF, idAdmin))
                     {
+                        limpiar();
+                        lblPaginaAct.Text = "1";
                         CargarListFertilizante(idGranja, idProducto, fchProduccion);
                         listarPagina(idGranja, idProducto, fchProduccion);
                         txtCantidadFerti.Text = "";
@@ -563,6 +565,7 @@ namespace Web.Paginas.Lotes
             if (Web.bajaLoteFerti(idFertilizante, idGranja, idProducto, fchProduccion, idAdmin))
             {
                 limpiar();
+                lblPaginaAct.Text = "1";
                 listarPagina(idGranja, idProducto, fchProduccion);
                 CargarListFertilizante(idGranja, idProducto, fchProduccion);
                 lblMensajes.Text = "Se eliminó el Fertilizante del Lote.";
@@ -574,16 +577,16 @@ namespace Web.Paginas.Lotes
 
         }
 
-        protected void btnModificarFerti_Click(object sender, EventArgs e)
-        {
-            Button btnConstultar = (Button)sender;
-            GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
-            int idFertilizante = int.Parse(selectedrow.Cells[0].Text);
+        //protected void btnModificarFerti_Click(object sender, EventArgs e)
+        //{
+        //    Button btnConstultar = (Button)sender;
+        //    GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
+        //    int idFertilizante = int.Parse(selectedrow.Cells[0].Text);
 
-            guardarDatos();
-            System.Web.HttpContext.Current.Session["idFert"] = idFertilizante;
-            Response.Redirect("/Paginas/Fertilizantes/modFert");
-        }
+        //    guardarDatos();
+        //    System.Web.HttpContext.Current.Session["idFert"] = idFertilizante;
+        //    Response.Redirect("/Paginas/Fertilizantes/modFert");
+        //}
 
         protected void btnModificarCantidad_Click(object sender, EventArgs e)
         {
@@ -625,7 +628,9 @@ namespace Web.Paginas.Lotes
             lstLotFertSel.Visible = false;
             lblPaginaAct.Text = "1";
             lblPaginaAct.Visible = false;
-
+            lblPaginaSig.Visible = false;
+            lblPaginaAnt.Visible = false;
+            txtPaginas.Visible = false;
 
 
 
@@ -679,7 +684,7 @@ namespace Web.Paginas.Lotes
             listFertilizante.Enabled = true;
             listFertilizante.Visible = true;
             listFertilizanteSel.Visible = false;
-
+       
 
 
             //txtBuscar.Visible = true;
@@ -688,9 +693,10 @@ namespace Web.Paginas.Lotes
             //btnLimpiar.Visible = true;
             lstLotFertSel.Visible = true;
             lblPaginaAct.Text = "1";
+            txtPaginas.Visible = true;
             lblPaginaAct.Visible = true;
-
-
+            lblPaginaSig.Visible = true;
+            lblPaginaAnt.Visible = true;
 
             btnSelect.Visible = true;
     

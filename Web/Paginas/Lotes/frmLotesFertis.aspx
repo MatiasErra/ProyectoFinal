@@ -68,12 +68,12 @@
 
                     <div class="col-xl-3 col-lg-12">
                         <asp:Button ID="btnModificarCantidadFertiLote" CssClass="btnE btn--radius btn--green  align-self-center btn--srch" Visible="false" runat="server" Text="Modificar cantidad" OnClick="btnModificarCantidadFertiLote_Click" />
-                        <asp:Button CssClass="btnE btn--radius btn--green align-self-center btn--srch" ID="btnBuscarFertilizante" runat="server" Text="Buscar" OnClick="btnBuscarFertilizante_Click" />
+                        <asp:Button CssClass="btnE btn--radius btn--green align-self-center btn--srch" ID="btnBuscarFertilizante" runat="server" Text="Buscar Fertilizante" OnClick="btnBuscarFertilizante_Click" />
                     </div>
                 </div>
                 <div class="row">
                     <div class=" col-xl-9 col-lg-12">
-                        <asp:TextBox ID="txtCantidadFerti" CssClass="input--style-tex" runat="server" placeholder="Cantidad de fertilizante" MaxLength="10" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
+                        <asp:TextBox ID="txtCantidadFerti" CssClass="input--style-tex" runat="server" placeholder="Cantidad de fertilizante" MaxLength="5" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
                     </div>
                     <div class="col-xl-3 col-lg-12">
                         <asp:Button ID="btnCancelar" CssClass="btnE btn--radius btn--red align-self-center btn--srch" Visible="false" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" />
@@ -131,7 +131,7 @@
                                                 <ItemTemplate>
                                                     <asp:Button ID="btnBajaFerti" CssClass="btnE btn--radius btn--red" runat="server" Text="Eliminar" OnClientClick="return confirm('¿Desea eliminar este Fertilizante del Lote?')" OnClick="btnBajaFerti_Click" />
                                                     <asp:Button ID="btnModificarCantidad" CssClass="btnE btn--radius btn--yellow" runat="server" Text="Modificar cantidad" OnClick="btnModificarCantidad_Click" />
-                                                    <asp:Button ID="btmModificarFerti" CssClass="btnE btn--radius btn--yellow" runat="server" Text="Modificar fertilizante" OnClick="btnModificarFerti_Click" />
+                                                  <%--  <asp:Button ID="btmModificarFerti" CssClass="btnE btn--radius btn--yellow" runat="server" Text="Modificar fertilizante" OnClick="btnModificarFerti_Click" />--%>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
 

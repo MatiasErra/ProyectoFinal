@@ -67,12 +67,12 @@
 
                     <div class="col-xl-3 col-lg-12">
                         <asp:Button ID="btnModificarCantidadPestiLote" CssClass="btnE btn--radius btn--green  align-self-center btn--srch" Visible="false" runat="server" Text="Modificar cantidad" OnClick="btnModificarCantidadPestiLote_Click" />
-                      <asp:Button CssClass="btnE btn--radius btn--green align-self-center btn--srch" ID="btnBuscarPesticida" runat="server" Text="Buscar" OnClick="btnBuscarPesticida_Click" />
+                      <asp:Button CssClass="btnE btn--radius btn--green align-self-center btn--srch" ID="btnBuscarPesticida" runat="server" Text="Buscar Pesticida" OnClick="btnBuscarPesticida_Click" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xl-9 col-lg-12">
-                        <asp:TextBox ID="txtCantidadPesti" CssClass="input--style-tex" runat="server" placeholder="Cantidad de pesticida" MaxLength="10" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
+                        <asp:TextBox ID="txtCantidadPesti" CssClass="input--style-tex" runat="server" placeholder="Cantidad de pesticida" MaxLength="5" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
                         <asp:RegularExpressionValidator Display="Dynamic" runat="server"
                             ControlToValidate="txtCantidadPesti"
                             ValidationExpression="^[0-9]+$"
@@ -138,7 +138,7 @@
                                                 <ItemTemplate>
                                                     <asp:Button ID="btnBajaPesti" CssClass="btnE btn--radius btn--red" runat="server" Text="Eliminar" OnClientClick="return confirm('¿Desea eliminar este Pesticida del Lote?')" OnClick="btnBajaPesti_Click" />
                                                     <asp:Button ID="btnModificarCantidad" CssClass="btnE btn--radius btn--yellow" runat="server" Text="Modificar cantidad" OnClick="btnModificarCantidad_Click" />
-                                                    <asp:Button ID="btnModificarPesti" CssClass="btnE btn--radius btn--yellow" runat="server" Text="Modificar pesticida" OnClick="btnModificarPesti_Click" />
+                                          
                                                 </ItemTemplate>
                                             </asp:TemplateField>
 

@@ -834,10 +834,10 @@ namespace Web.Paginas
         #region Lotes_Fertis
 
 
-        public List<Lote_Ferti> FertisEnLote(int idGranja, int idProducto, string fchProduccion, string buscar, string ord)
+        public List<Lote_Ferti> FertisEnLote(int idGranja, int idProducto, string fchProduccion)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Lote_Ferti> lst = inst.FertisEnLote(idGranja, idProducto, fchProduccion, buscar, ord);
+            List<Lote_Ferti> lst = inst.FertisEnLote(idGranja, idProducto, fchProduccion);
             return lst;
         }
 
@@ -893,10 +893,10 @@ namespace Web.Paginas
 
         #region Lotes_Pestis
 
-        public List<Lote_Pesti> PestisEnLote(int idGranja, int idProducto, string fchProduccion, string buscar, string ord)
+        public List<Lote_Pesti> PestisEnLote(int idGranja, int idProducto, string fchProduccion)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
-            List<Lote_Pesti> lst = inst.PestisEnLote(idGranja, idProducto, fchProduccion, buscar, ord);
+            List<Lote_Pesti> lst = inst.PestisEnLote(idGranja, idProducto, fchProduccion);
             return lst;
         }
 

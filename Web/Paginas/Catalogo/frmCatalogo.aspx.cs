@@ -213,12 +213,15 @@ namespace Web.Paginas
             {
                 lblMensajes.Text = "No se encontro ningún producto.";
 
-                lblPaginas.Visible = false;
+                txtPaginas.Visible = false;
+                lblPaginaSig.Visible = false;
+                lblPaginaAct.Visible = false;
+                lblPaginaAnt.Visible = false;
                 lstProducto.Visible = false;
             }
             else
             {
-                lblPaginas.Visible = true;
+                txtPaginas.Visible = true;
                 lblMensajes.Text = "";
                 modificarPagina();
                 lstProducto.Visible = true;
@@ -293,8 +296,8 @@ namespace Web.Paginas
                             foreach (string[] unPedidoLote in lstPedidLote)
                             { if (unPedidoLote[0].ToString().Equals (pedido.IdPedido.ToString()) 
                                  &&   unPedidoLote[1].ToString().Equals(idProducto.ToString())
-                                && pedido.Estado.ToString().Equals("Sin confirmar") ||
-                                    pedido.Estado.ToString().Equals("Sin finalizar")
+                                && (pedido.Estado.ToString().Equals("Sin confirmar") ||
+                                    pedido.Estado.ToString().Equals("Sin finalizar"))
                                     )
 
                                 {
@@ -302,8 +305,7 @@ namespace Web.Paginas
                                 }
                             }
                         }
-                        else
-                        {
+                      
                             foreach (Pedido_Prod pedido_Prod in lstPedidoProd)
                             {
 
@@ -316,7 +318,7 @@ namespace Web.Paginas
                                     i++;
                                 }
                             }
-                        }
+                        
                     }
 
                     if (i == 0)

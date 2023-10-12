@@ -90,8 +90,12 @@
                                                   <asp:TemplateField
                                                     ItemStyle-CssClass="GridStl ">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="txtCantidad" CssClass="input--style-tex-grid   text centerText" runat="server" placeholder="Cantidad" MaxLength="4" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==8);;"></asp:TextBox>
-                                                    </ItemTemplate>
+                                                        <asp:TextBox ID="txtCantidad" CssClass="input--style-tex-grid   text centerText" runat="server" placeholder="Cantidad" MaxLength="4" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==8 );"></asp:TextBox>
+                                                          <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
+      ControlToValidate="txtCantidad"
+      ValidationExpression="^[0-9]*$"
+      ErrorMessage="No es un numero valido" />
+                                                    </ItemTemplate>     
                                                 </asp:TemplateField>
 
 

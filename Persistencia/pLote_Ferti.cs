@@ -14,7 +14,7 @@ namespace Persistencia
     {
         
 
-        public List<Lote_Ferti> FertisEnLote(int idGranja, int idProducto, string fchProduccion, string buscar, string ord)
+        public List<Lote_Ferti> FertisEnLote(int idGranja, int idProducto, string fchProduccion)
         {
             List<Lote_Ferti> resultado = new List<Lote_Ferti>();
 
@@ -28,8 +28,7 @@ namespace Persistencia
                     cmd.Parameters.Add(new SqlParameter("@idGranja", idGranja));
                     cmd.Parameters.Add(new SqlParameter("@idProducto", idProducto));
                     cmd.Parameters.Add(new SqlParameter("@fchProduccion", fchProduccion));
-                    cmd.Parameters.Add(new SqlParameter("@buscar", buscar));
-                    cmd.Parameters.Add(new SqlParameter("@ordenar", ord));
+         
 
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -112,6 +111,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@idProducto", loteF.IdProducto));
                 cmd.Parameters.Add(new SqlParameter("@fchProduccion", loteF.FchProduccion));
                 cmd.Parameters.Add(new SqlParameter("@cantidad", loteF.Cantidad));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
 
                 int resBD = cmd.ExecuteNonQuery();

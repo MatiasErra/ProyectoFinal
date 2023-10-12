@@ -13,7 +13,7 @@ namespace Persistencia
     class pLote_Pesti
     {
  
-        public List<Lote_Pesti> PestisEnLote(int idGranja, int idProducto, string fchProduccion, string buscar, string ord)
+        public List<Lote_Pesti> PestisEnLote(int idGranja, int idProducto, string fchProduccion)
         {
             List<Lote_Pesti> resultado = new List<Lote_Pesti>();
 
@@ -27,8 +27,7 @@ namespace Persistencia
                     cmd.Parameters.Add(new SqlParameter("@idGranja", idGranja));
                     cmd.Parameters.Add(new SqlParameter("@idProducto", idProducto));
                     cmd.Parameters.Add(new SqlParameter("@fchProduccion", fchProduccion));
-                    cmd.Parameters.Add(new SqlParameter("@buscar", buscar));
-                    cmd.Parameters.Add(new SqlParameter("@ordenar", ord));
+
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {

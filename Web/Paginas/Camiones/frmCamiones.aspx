@@ -35,14 +35,14 @@
                                     <div class="col-lg-6">
                                         <asp:Label Visible="false" runat="server" ID="lblCarga">
                                             <asp:Label class="text initText" Text="Desde:" runat="server" />
-                                            <asp:TextBox ID="txtCargaMenorBuscar" CssClass="input--style-text-search" runat="server" placeholder="Carga" MaxLength="10" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
+                                            <asp:TextBox ID="txtCargaMenorBuscar" CssClass="input--style-text-search" runat="server" placeholder="Carga" MaxLength="5" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
                                             <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                                                 ControlToValidate="txtCargaMenorBuscar"
                                                 ValidationExpression="^[0-9]*$"
                                                 ErrorMessage="No es un numero valido" />
 
                                             <asp:Label class="text initText" Text="Desde:" runat="server" />
-                                            <asp:TextBox ID="txtCargaMayorBuscar" CssClass="input--style-text-search" runat="server" placeholder="Carga" MaxLength="10" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
+                                            <asp:TextBox ID="txtCargaMayorBuscar" CssClass="input--style-text-search" runat="server" placeholder="Carga" MaxLength="5" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
                                             <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                                                 ControlToValidate="txtCargaMenorBuscar"
                                                 ValidationExpression="^[0-9]*$"
