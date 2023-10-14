@@ -38,14 +38,14 @@
                             <div class="row justify-content-center">
                                 <div class="col-lg-6">
                                     <asp:Label Visible="false" ID="lblCostoMenorBuscar" class="text initText" Text="Desde:" runat="server" />
-                                    <asp:TextBox Visible="false" ID="txtCostoMenorBuscar" CssClass="input--style-text-search" runat="server" placeholder="Carga" MaxLength="6" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
+                                    <asp:TextBox Visible="false" ID="txtCostoMenorBuscar" CssClass="input--style-text-search" runat="server" placeholder="Costo" MaxLength="6" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
                                     <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                                         ControlToValidate="txtCostoMenorBuscar"
                                         ValidationExpression="^[0-9]*$"
                                         ErrorMessage="No es un numero valido" />
 
                                     <asp:Label Visible="false" ID="lblCostoMayorBuscar" class="text initText" Text="Desde:" runat="server" />
-                                    <asp:TextBox Visible="false" ID="txtCostoMayorBuscar" CssClass="input--style-text-search" runat="server" placeholder="Carga" MaxLength="6" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
+                                    <asp:TextBox Visible="false" ID="txtCostoMayorBuscar" CssClass="input--style-text-search" runat="server" placeholder="Costo" MaxLength="6" onkeypress="if(event.keyCode<48 || event.keyCode>57)event.returnValue=false;"></asp:TextBox>
                                     <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                                         ControlToValidate="txtCostoMayorBuscar"
                                         ValidationExpression="^[0-9]*$"

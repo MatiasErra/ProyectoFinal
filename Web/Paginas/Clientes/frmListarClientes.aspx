@@ -33,7 +33,7 @@
 
                                 <asp:TextBox Visible="false" ID="txtEmailBuscar" CssClass="input--style-text-search" runat="server" placeholder="Email" onkeydown="return(event.keyCode!=32);"></asp:TextBox>
 
-               
+
 
                                 <asp:TextBox Visible="false" ID="txtUsuarioBuscar" runat="server" CssClass="input--style-text-search" placeholder="Nombre de Usuario" MaxLength="40" onkeydown="return(!(event.keyCode>=91) && event.keyCode!=32);"> </asp:TextBox>
                                 <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text centerText"
@@ -47,7 +47,7 @@
                                     ValidationExpression="[a-zA-Z 0-9]*$"
                                     ErrorMessage="No es una letra valida" />
 
-                
+
 
                             </div>
                         </div>
@@ -179,7 +179,7 @@
                                         </Columns>
                                     </asp:GridView>
 
-                                       <asp:GridView ID="lstCliProdSel" Width="100%" SelectedIndex="1" AutoGenerateColumns="false" Visible="false"
+                                    <asp:GridView ID="lstCliProdSel" Width="100%" SelectedIndex="1" AutoGenerateColumns="false" Visible="false"
                                         CssClass="table table-bordered table-condensed table-responsive table-hover"
                                         runat="server">
                                         <AlternatingRowStyle BackColor="White" />
@@ -221,7 +221,7 @@
 
 
                                                     <asp:Button ID="btnSelect" CssClass="btnE btn--radius btn--blue" runat="server" Text="Seleccionar" OnClick="btnSelected_Click" />
-                                                 
+
 
 
                                                 </ItemTemplate>
@@ -238,17 +238,17 @@
                         </div>
                     </div>
                 </div>
-               <asp:Label runat="server" ID="lblPaginas" CssClass="text pagStyle">
-                            <div class="text-center">
+                <asp:Label runat="server" ID="lblPaginas" CssClass="text pagStyle">
+                    <div class="text-center">
 
-                                <asp:Label runat="server" ID="txtPaginas" CssClass="text pagStyle" Text="Paginas" />
-                                <div class="text-center">
-                                    <asp:LinkButton ID="lblPaginaAnt" CssClass="text pagTextAct" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
-                                    <asp:Label ID="lblPaginaAct" CssClass="text pagText" runat="server" Text=""></asp:Label>
-                                    <asp:LinkButton ID="lblPaginaSig" CssClass="text pagTextAct" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
-                                </div>
-                            </div>
-                        </asp:Label>
+                        <asp:Label runat="server" ID="txtPaginas" CssClass="text pagStyle" Text="Paginas" />
+                        <div class="text-center">
+                            <asp:LinkButton ID="lblPaginaAnt" CssClass="text pagTextAct" OnClick="lblPaginaAnt_Click" runat="server"></asp:LinkButton>
+                            <asp:Label ID="lblPaginaAct" CssClass="text pagText" runat="server" Text=""></asp:Label>
+                            <asp:LinkButton ID="lblPaginaSig" CssClass="text pagTextAct" OnClick="lblPaginaSig_Click" runat="server"></asp:LinkButton>
+                        </div>
+                    </div>
+                </asp:Label>
 
             </div>
         </div>

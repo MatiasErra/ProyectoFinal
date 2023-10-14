@@ -14,7 +14,7 @@ namespace Web.Paginas
         protected void Page_PreInit(object sender, EventArgs e)
         {
             // System.Web.HttpContext.Current.Session["AdminIniciado"] = 168792794; // admin global 1 
-             System.Web.HttpContext.Current.Session["AdminIniciado"] = 206676677; // admin global 2 
+            // System.Web.HttpContext.Current.Session["AdminIniciado"] = 206676677; // admin global 2 
             // System.Web.HttpContext.Current.Session["ClienteIniciado"] = 1481022565;
 
             if (System.Web.HttpContext.Current.Session["ClienteIniciado"] != null)
@@ -48,6 +48,19 @@ namespace Web.Paginas
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                if(System.Web.HttpContext.Current.Session["ClienteIniciado"] != null || System.Web.HttpContext.Current.Session["AdminIniciado"] != null)
+                {
+                    // Catalogo
+                    Imagen.ImageUrl = "~/Imagenes/image3.png";
+                }
+                else
+                {
+                    // Iniciar sesion
+                    Imagen.ImageUrl = "~/Imagenes/image2.png";
+                }
+            }
         }
 
         /*private List<Producto> obtenerProductos()
@@ -207,6 +220,20 @@ namespace Web.Paginas
         protected void btnVerCat_Click(object sender, EventArgs e)
         {
             Response.Redirect("/Paginas/Catalogo/frmCatalogo");
+        }
+
+        protected void LinkImagen_Click(object sender, EventArgs e)
+        {
+            if (System.Web.HttpContext.Current.Session["ClienteIniciado"] != null || System.Web.HttpContext.Current.Session["AdminIniciado"] != null)
+            {
+                // Catalogo
+                Response.Redirect("/Paginas/Catalogo/frmCatalogo");
+            }
+            else
+            {
+                // Iniciar sesion
+                Response.Redirect("/Paginas/Clientes/iniciarSesion");
+            }
         }
     }
 }

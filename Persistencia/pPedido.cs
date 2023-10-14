@@ -250,7 +250,7 @@ namespace Persistencia
         }
 
 
-        public bool bajaPedido(int IdPedido)
+        public bool bajaPedido(int IdPedido, int idAdmin)
         {
             bool resultado = false;
 
@@ -260,8 +260,8 @@ namespace Persistencia
                 SqlCommand cmd = new SqlCommand("BajaPedido", conect);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add(new SqlParameter("@IdPedido", IdPedido));
-
+                cmd.Parameters.Add(new SqlParameter("@idPedido", IdPedido));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
 
 
@@ -414,7 +414,7 @@ namespace Persistencia
 
 
 
-        public bool cambiarEstadoPed(int idPedido, string estado)
+        public bool cambiarEstadoPed(int idPedido, string estado, int idAdmin)
         {
             bool resultado = false;
 
@@ -426,6 +426,8 @@ namespace Persistencia
 
                 cmd.Parameters.Add(new SqlParameter("@idPedido", idPedido));
                 cmd.Parameters.Add(new SqlParameter("@estado", estado));
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
+
 
                 int resBD = cmd.ExecuteNonQuery();
 

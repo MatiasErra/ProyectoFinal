@@ -58,9 +58,9 @@ namespace Persistencia
             return new pPedido().altaPedido(pedido);
         }
 
-        public bool bajaPedido(int IdPedido)
+        public bool bajaPedido(int IdPedido, int idAdmin)
         {
-            return new pPedido().bajaPedido(IdPedido);
+            return new pPedido().bajaPedido(IdPedido, idAdmin);
         }
 
         public bool altaPedido_Prod(Pedido_Prod pedido, string CantRes, double precio)
@@ -76,9 +76,9 @@ namespace Persistencia
         {
             return new pPedido().altaPedido_Lote(lote_Pedido, CantLote, CantDisp, CantRess, idAdmin);
         }
-       public bool cambiarEstadoPed(int idPedido, string estado)
+       public bool cambiarEstadoPed(int idPedido, string estado, int idAdmin)
         {
-            return new pPedido().cambiarEstadoPed(idPedido, estado);
+            return new pPedido().cambiarEstadoPed(idPedido, estado, idAdmin);
         }
 
         public List<string[]> buscarPedidoProd(int idPedido)

@@ -122,7 +122,9 @@
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Imagenes\Ejemplo.png" />
+    <Content Include="Imagenes\image1.png" />
+    <Content Include="Imagenes\image2.png" />
+    <Content Include="Imagenes\image3.png" />
     <Content Include="Paginas\Admins\frmAdmins.aspx" />
     <Content Include="Paginas\Admins\modAdmin.aspx" />
     <Content Include="Paginas\Camioneros\frmCamioneros.aspx" />

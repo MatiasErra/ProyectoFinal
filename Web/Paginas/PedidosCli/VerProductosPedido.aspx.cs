@@ -415,7 +415,7 @@ namespace Web.Paginas.Pedidos
 
             if (estado == "Confirmado")
             {
-                if (Web.cambiarEstadoPed(idPedido, "Sin confirmar"))
+                if (Web.cambiarEstadoPed(idPedido, "Sin confirmar", 0))
                 {
                     lblMensajes.Text = "Estado modificado a Sin finalizar";
                     System.Web.HttpContext.Current.Session["pedidoMensaje"] = "Estado modificado a Sin finalizar";
@@ -455,7 +455,8 @@ namespace Web.Paginas.Pedidos
                 }
                 if (cont == 0)
                 {
-                    if (Web.cambiarEstadoPed(idPedido, "Finalizado")) lblMensajes.Text = "El pedido ha sido finalizado.";
+                    int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                    if (Web.cambiarEstadoPed(idPedido, "Finalizado", idAdmin)) lblMensajes.Text = "El pedido ha sido finalizado.";
                 }
                 else lblMensajes.Text = "No todos los viajes de este pedido han finalizado.";
             }

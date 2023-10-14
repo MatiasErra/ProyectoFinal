@@ -72,11 +72,11 @@ namespace Web.Paginas.Clientes
                     lstClienteSelect.Visible = true;
                 }
 
-                if (System.Web.HttpContext.Current.Session["GranjaDatosFrm"] != null || System.Web.HttpContext.Current.Session["GranjaDatosMod"] != null)
+                if (System.Web.HttpContext.Current.Session["GranjaDatosFrm"] != null || System.Web.HttpContext.Current.Session["GranjaDatosMod"] != null || System.Web.HttpContext.Current.Session["frmPedido"] != null)
                 {
                     btnVolverFrm.Visible = true;
 
-                   
+
                     lstCliente.Visible = false;
                 }
 
@@ -90,13 +90,13 @@ namespace Web.Paginas.Clientes
                 System.Web.HttpContext.Current.Session["apellidoClienteBuscar"] = null;
                 txtEmailBuscar.Text = System.Web.HttpContext.Current.Session["emailClienteBuscar"] != null ? System.Web.HttpContext.Current.Session["emailClienteBuscar"].ToString() : "";
                 System.Web.HttpContext.Current.Session["emailClienteBuscar"] = null;
-               
+
 
                 txtUsuarioBuscar.Text = System.Web.HttpContext.Current.Session["usuarioClienteBuscar"] != null ? System.Web.HttpContext.Current.Session["usuarioClienteBuscar"].ToString() : "";
                 System.Web.HttpContext.Current.Session["usuarioClienteBuscar"] = null;
                 txtUsuarioBuscar.Text = System.Web.HttpContext.Current.Session["direccionClienteBuscar"] != null ? System.Web.HttpContext.Current.Session["direccionClienteBuscar"].ToString() : "";
                 System.Web.HttpContext.Current.Session["direccionClienteBuscar"] = null;
-       
+
 
                 // Listas
                 listBuscarPor.SelectedValue = System.Web.HttpContext.Current.Session["BuscarLstCliente"] != null ? System.Web.HttpContext.Current.Session["BuscarLstCliente"].ToString() : "Buscar por";
@@ -118,12 +118,12 @@ namespace Web.Paginas.Clientes
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
 
-            string NomCli =  "";
+            string NomCli = "";
             string Estado = "";
             string Viaje = "";
-            int CostoMin =  0 ;
+            int CostoMin = 0;
             int CostoMayor = 99999999;
-            string fchPedidoMenor =  "1000-01-01";
+            string fchPedidoMenor = "1000-01-01";
             string fchPedidoMayor = "3000-12-30";
             string fchEntregaMenor = "1000-01-01";
             string fchEntregaMayor = "3000-12-30";
@@ -133,25 +133,25 @@ namespace Web.Paginas.Clientes
             List<Pedido> lstPedido = Web.BuscarPedidoFiltro(NomCli, Estado, Viaje, CostoMin, CostoMayor, fchPedidoMenor, fchPedidoMayor, fchEntregaMenor, fchEntregaMayor, ordenar);
 
             int i = 0;
-            foreach(Pedido unPedido in lstPedido)
+            foreach (Pedido unPedido in lstPedido)
             {
-                if(unPedido.IdCliente == idCliente)
+                if (unPedido.IdCliente == idCliente)
                 {
                     i++;
                     break;
                 }
             }
 
-            if(i == 0)
+            if (i == 0)
             {
                 return true;
             }
             else
-            return false;
+                return false;
         }
 
 
-          
+
         private void limpiar()
         {
             lblMensajes.Text = "";
@@ -268,7 +268,7 @@ namespace Web.Paginas.Clientes
             }
             else
             {
-                if (System.Web.HttpContext.Current.Session["GranjaDatosFrm"] != null || System.Web.HttpContext.Current.Session["GranjaDatosMod"] != null)
+                if (System.Web.HttpContext.Current.Session["GranjaDatosFrm"] != null || System.Web.HttpContext.Current.Session["GranjaDatosMod"] != null || System.Web.HttpContext.Current.Session["frmPedido"] != null)
                 {
                     int id = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
                     ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
@@ -427,16 +427,11 @@ namespace Web.Paginas.Clientes
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-   
-            
-
-
-                lblPaginaAct.Text = "1";
-                listarPagina();
-        
+            lblPaginaAct.Text = "1";
+            listarPagina();
         }
 
-        
+
 
 
         protected void listBuscarPor_SelectedIndexChanged(object sender, EventArgs e)
@@ -477,6 +472,10 @@ namespace Web.Paginas.Clientes
             {
                 Response.Redirect("/Paginas/Granjas/frmGranjas");
             }
+            else if (System.Web.HttpContext.Current.Session["frmPedido"] != null)
+            {
+                Response.Redirect("/Paginas/PedidosAdm/frmPedido");
+            }
             else if (System.Web.HttpContext.Current.Session["GranjaDatosMod"] != null)
             {
                 Response.Redirect("/Paginas/Granjas/modGranja");
@@ -501,7 +500,7 @@ namespace Web.Paginas.Clientes
                         if (Web.bajaCli(id, idAdmin))
                         {
                             limpiar();
-                            
+
                             lblPaginaAct.Text = "1";
                             listarPagina();
                             lblMensajes.Text = "Se ha borrado el Cliente.";
@@ -535,6 +534,13 @@ namespace Web.Paginas.Clientes
                 }
 
                 Response.Redirect("/Paginas/Granjas/frmGranjas");
+            }
+            else if (System.Web.HttpContext.Current.Session["frmPedido"] != null)
+            {
+                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                Cliente unCli = Web.buscarCli(int.Parse(id));
+                System.Web.HttpContext.Current.Session["CliSelected"] = unCli.User;
+                Response.Redirect("/Paginas/PedidosAdm/frmPedido");
             }
             else if (System.Web.HttpContext.Current.Session["GranjaDatosMod"] != null)
             {

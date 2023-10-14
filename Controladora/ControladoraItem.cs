@@ -125,11 +125,11 @@ namespace Controladoras
         }
 
 
-        public bool bajaPedido(int idPedido)
+        public bool bajaPedido(int idPedido, int idAdmin)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
 
-            if (inst.bajaPedido(idPedido))
+            if (inst.bajaPedido(idPedido, idAdmin))
             {
                 return true;
             }
@@ -191,11 +191,11 @@ namespace Controladoras
 
         }
 
-        public bool cambiarEstadoPed(int idPedido, string estado)
+        public bool cambiarEstadoPed(int idPedido, string estado, int idAdmin)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
 
-            if (inst.cambiarEstadoPed(idPedido, estado))
+            if (inst.cambiarEstadoPed(idPedido, estado, idAdmin))
             {
                 return true;
             }

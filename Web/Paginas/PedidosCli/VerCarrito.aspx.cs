@@ -528,7 +528,7 @@ namespace Web.Paginas.Pedidos
                 if (i == 0)
                 {
                     btnBorrarPedido.Visible = false;
-                    if (web.cambiarEstadoPed(idPedido, estado))
+                    if (web.cambiarEstadoPed(idPedido, estado, 0))
                     {
                         System.Web.HttpContext.Current.Session["PedidoCompra"] = null;
 
@@ -554,7 +554,7 @@ namespace Web.Paginas.Pedidos
         {
             int idPedido = int.Parse(txtIdPedido.Text.ToString());
             ControladoraWeb web = ControladoraWeb.obtenerInstancia();
-            if (web.bajaPedido(idPedido))
+            if (web.bajaPedido(idPedido, 0))
             {
                 lblPaginaAct.Text = "1";
                 listar();

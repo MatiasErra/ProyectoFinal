@@ -3,14 +3,14 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner rounded">
-            <div class="carousel-item active" data-bs-interval="5000">
-                <asp:Image ImageUrl="~/Imagenes/ejemplo.png" CssClass="d-block w-100" runat="server" />
+            <div class="carousel-item active" data-bs-interval="10000">
+                <asp:Image ImageUrl="~/Imagenes/image1.png" CssClass="d-block w-100" runat="server" />
             </div>
-            <div class="carousel-item" data-bs-interval="5000">
-                <asp:Image ImageUrl="~/Imagenes/ejemplo.png" CssClass="d-block w-100" runat="server" />
-            </div>
-            <div class="carousel-item" data-bs-interval="5000">
-                <asp:Image ImageUrl="~/Imagenes/ejemplo.png" CssClass="d-block w-100" runat="server" />
+            <div class="carousel-item" data-bs-interval="3000">
+                <asp:LinkButton ID="LinkImagen" OnClick="LinkImagen_Click" runat="server">
+                    <asp:Image ID="Imagen" ImageUrl="~/Imagenes/image2.png" CssClass="d-block w-100" runat="server" />
+                </asp:LinkButton>
+                
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">

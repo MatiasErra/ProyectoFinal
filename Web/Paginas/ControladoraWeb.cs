@@ -136,11 +136,11 @@ namespace Web.Paginas
 
 
 
-        public bool bajaPedido(int idPedido)
+        public bool bajaPedido(int idPedido, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            if (inst.bajaPedido(idPedido))
+            if (inst.bajaPedido(idPedido, idAdmin))
             {
                 return true;
             }
@@ -199,11 +199,11 @@ namespace Web.Paginas
         }
 
 
-        public bool cambiarEstadoPed(int idPedido, string estado)
+        public bool cambiarEstadoPed(int idPedido, string estado, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            if (inst.cambiarEstadoPed(idPedido, estado))
+            if (inst.cambiarEstadoPed(idPedido, estado, idAdmin))
             {
                 return true;
             }

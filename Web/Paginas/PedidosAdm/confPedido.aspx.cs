@@ -730,7 +730,8 @@ namespace Web.Paginas.PedidosAdm
             if (CompCantIng(idPedido))
             {
                 string estado = "Confirmado";
-                Web.cambiarEstadoPed(idPedido, estado);
+                int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                Web.cambiarEstadoPed(idPedido, estado, idAdmin);
                 
                 lblMensajes.Text = "Pedido confirmado";
 

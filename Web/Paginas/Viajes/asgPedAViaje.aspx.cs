@@ -184,7 +184,7 @@ namespace Web.Paginas.Viajes
                         }
                     }
                 }
-                if(LotPed.Count > i)
+                if(LotPed.Count >= i)
                 {
                     lstPedidoRes.Add(unPedido);
                 }

@@ -561,9 +561,7 @@ namespace Web.Paginas.PedidosADM
                         foreach (string[] unPedi in lstPedi)
                         {
 
-                            if (unProd.IdProducto.ToString().Equals(unPedi[1].ToString())
-                                  && unPedi[0].ToString().Equals(idPedido.ToString())
-                                  )
+                            if (unProd.IdProducto.ToString().Equals(unPedi[1].ToString()) && unPedi[0].ToString().Equals(idPedido.ToString()))
                             {
                                 string[] cantStr = unPedi[6].ToString().Split(' ');
                                 cant += int.Parse(cantStr[0].ToString());
@@ -593,35 +591,19 @@ namespace Web.Paginas.PedidosADM
 
             }
 
-            //if(Estado.ToString() == "Finalizado")
-            //{
 
-            //}
             if (Estado.ToString() == "Confirmado")
             {
-                string cantDisp = "";
-                string cantLote = "";
                 ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                Lote lote = new Lote();
-                lote.IdGranja = 0;
-                lote.IdProducto = 0;
-                lote.IdDeposito = 0;
-                double precioMenorLot = 0;
-                double precioMayorLot = 99999999;
 
-                string fchProduccionMenor = "1000-01-01";
-                string fchProduccionMayor = "3000-12-30";
-                string fchCaducidadMenor = "1000-01-01";
-                string fchCaducidadMayor = "3000-12-30";
-
-
-                List<Lote> lotes = Web.buscarFiltrarLotes(lote, precioMenorLot, precioMayorLot, fchProduccionMenor, fchProduccionMayor, fchCaducidadMenor, fchCaducidadMayor, ordenar);
+                Lote lote = new Lote(0, 0, "", "", "", 0, 0);
+                List<Lote> lotes = Web.buscarFiltrarLotes(lote, 0, 99999999, "1000-01-01", "3000-12-30", "1000-01-01", "3000-12-30", "");
 
                 lstPedi = web.buscarPedidoLote(idPedido);
                 foreach (Producto unProd in productos)
                 {
                     int cantTotal = 0;
-                
+
                     foreach (Lote unLote in lotes)
                     {
                         int idGranja = unLote.IdGranja;
@@ -629,65 +611,49 @@ namespace Web.Paginas.PedidosADM
 
                         if (unProd.IdProducto == unLote.IdProducto)
                         {
-
-
                             int cant = 0;
                             int idProducto = unProd.IdProducto;
 
                             cantRess = unProd.CantRes.ToString();
 
-
                             foreach (string[] unPedi in lstPedi)
                             {
-
                                 if (unProd.IdProducto.ToString().Equals(unPedi[1].ToString())
                                       && unPedi[0].ToString().Equals(idPedido.ToString())
                                       && unPedi[3].ToString().Equals(idGranja.ToString())
-                                        && unPedi[5].ToString().Equals(FchProduccion.ToString())
-                                      )
+                                      && unPedi[5].ToString().Equals(FchProduccion.ToString()))
                                 {
                                     string[] cantStr = unPedi[9].ToString().Split(' ');
                                     cantTotal += int.Parse(cantStr[0].ToString());
                                     cant = int.Parse(cantStr[0].ToString());
                                 }
-
                             }
-
                             string[] cantTotaLot = unProd.CantTotal.ToString().Split(' ');
                             int resultadoDisp = int.Parse(cantTotaLot[0].ToString()) + cantTotal;
 
-
-
-
-
-                            cantDisp = resultadoDisp.ToString() + " " + unProd.TipoVenta.ToString();
+                            string cantDisp = resultadoDisp.ToString() + " " + unProd.TipoVenta.ToString();
 
                             string[] cantLotearr = unLote.Cantidad.ToString().Split(' ');
                             int resultadoLote = int.Parse(cantLotearr[0].ToString()) + cant;
 
-                            cantLote = resultadoLote.ToString() + " " + unProd.TipoVenta.ToString();
+                            string cantLote = resultadoLote.ToString() + " " + unProd.TipoVenta.ToString();
                             int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
-
-
 
                             web.bajaPedidoProd(idPedido, idProducto, cantRess, 0);
 
                             web.bajaLotesPedido(idPedido, idGranja, idProducto, FchProduccion, cantLote, cantDisp, cantRess, idAdmin);
 
                         }
-
-
-
-
                     }
-
-
-
                 }
                 return true;
             }
-            else
-            { return false; }
+            if (Estado.ToString() == "Finalizado")
+            {
+                // Eliminar pedido finalizado
+                return false;
+            }
+            else return false;
 
 
         }
@@ -704,6 +670,7 @@ namespace Web.Paginas.PedidosADM
         private void listBuscarVisibilidad()
         {
             lstCliente.Visible = listBuscarPor.SelectedValue == "Cliente" ? true : false;
+            btnBuscarDueñoBuscar.Visible = listBuscarPor.SelectedValue == "Cliente" ? true : false;
             lstEstados.Visible = listBuscarPor.SelectedValue == "Estado" ? true : false;
             lstViaje.Visible = listBuscarPor.SelectedValue == "Viaje" ? true : false;
             lblFchPedido.Visible = listBuscarPor.SelectedValue == "Fecha pedido" ? true : false;
@@ -817,25 +784,22 @@ namespace Web.Paginas.PedidosADM
 
             // si eesta en viaje noo se puede borrar 
 
-            if (CantActualProd(idPedido, Estado))
+            if (Estado != "En viaje")
             {
-                if (web.bajaPedido(idPedido))
+                if (CantActualProd(idPedido, Estado))
                 {
+                    int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                    if (web.bajaPedido(idPedido, idAdmin))
+                    {
 
-                    listarPagina();
-                    lblMensajes.Text = "Pedido Eliminado";
+                        listarPagina();
+                        lblMensajes.Text = "Pedido Eliminado";
+                    }
+                    else lblMensajes.Text = "No se pudo eliminar el pedido";
                 }
-                else
-                {
-                    lblMensajes.Text = "No se pudo dar de baja el pedido";
-                }
+                else lblMensajes.Text = "No se pudo eliminar el pedido";
             }
-            else
-            {
-                lblMensajes.Text = "No se pudo dar de baja el pedido";
-            }
-
-
+            else lblMensajes.Text = "No se puede eliminar un pedido en viaje.";
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)

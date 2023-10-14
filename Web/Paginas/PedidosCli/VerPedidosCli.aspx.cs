@@ -517,7 +517,7 @@ namespace Web.Paginas.Catalogo
             ControladoraWeb web = ControladoraWeb.obtenerInstancia();
             string estado = "Sin confirmar";
 
-            if (web.cambiarEstadoPed(idPedido, estado))
+            if (web.cambiarEstadoPed(idPedido, estado, 0))
             {
                 System.Web.HttpContext.Current.Session["PedidoCompra"] = null;
                 lblMensajes.Text = "Pedido finalizado";
@@ -573,7 +573,7 @@ namespace Web.Paginas.Catalogo
                 {
 
 
-                    if (web.cambiarEstadoPed(idPedido, estado))
+                    if (web.cambiarEstadoPed(idPedido, estado, 0))
                     {
                         System.Web.HttpContext.Current.Session["PedidoCompra"] = idPedido;
                         lblMensajes.Text = "Pedido modificado a sin finalizar";

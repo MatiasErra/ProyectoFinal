@@ -322,6 +322,7 @@ namespace Web.Paginas.Viajes
             }
             else if (viaje.Estado == "En viaje")
             {
+                dt.Rows.Add(createRow("Confirmado", "Confirmado", dt));
                 dt.Rows.Add(createRow("En viaje", "En viaje", dt));
                 dt.Rows.Add(createRow("Finalizado", "Finalizado", dt));
             }
@@ -409,63 +410,126 @@ namespace Web.Paginas.Viajes
                                 Viaje viaje = Web.buscarViaje(id);
                                 int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
 
-                                if (viaje.Estado == "Confirmado" && estado == "En viaje")
-                                {
-                                    Viaje via = new Viaje(0, 0, "", 0, 0, "");
-                                    List<Viaje> viajes = Web.buscarViajeFiltro(via, 0, 99999999, "1000-01-01", "3000-12-30", "");
 
-                                    int camionNum = 0;
-                                    int camioneroNum = 0;
-                                    foreach (Viaje viajeCam in viajes)
+                                int cont = 0;
+                                if (estado == "En viaje")
+                                {
+                                    if (Convert.ToDateTime(fecha) == DateTime.Today) cont++;
+                                }
+                                else cont++;
+
+                                if (cont == 1)
+                                {
+                                    if ((viaje.Estado == "Confirmado" && estado == "En viaje") || (viaje.Estado == "En viaje" && estado == "Confirmado"))
                                     {
-                                        if (viajeCam.IdViaje != id && viajeCam.Estado == "En viaje")
+                                        Viaje via = new Viaje(0, 0, "", 0, 0, "");
+                                        List<Viaje> viajes = Web.buscarViajeFiltro(via, 0, 99999999, "1000-01-01", "3000-12-30", "");
+
+                                        int camionNum = 0;
+                                        int camioneroNum = 0;
+                                        foreach (Viaje viajeCam in viajes)
                                         {
-                                            if (viajeCam.IdCamion == idCamion)
+                                            if (viajeCam.IdViaje != id && viajeCam.Estado == "En viaje")
                                             {
-                                                camionNum++;
-                                            }
-                                            if (viajeCam.IdCamionero == idCamionero)
-                                            {
-                                                camioneroNum++;
+                                                if (viajeCam.IdCamion == idCamion)
+                                                {
+                                                    camionNum++;
+                                                }
+                                                if (viajeCam.IdCamionero == idCamionero)
+                                                {
+                                                    camioneroNum++;
+                                                }
                                             }
                                         }
-                                    }
 
-                                    if (camionNum > 0)
-                                    {
-                                        lblMensajes.Text = "El camión de este viaje esta en un viaje ahora.";
-                                    }
-                                    else if (camioneroNum > 0)
-                                    {
-                                        lblMensajes.Text = "El camionero de este viaje esta en un viaje ahora.";
+                                        if (camionNum > 0)
+                                        {
+                                            lblMensajes.Text = "El camión de este viaje esta en un viaje ahora.";
+                                        }
+                                        else if (camioneroNum > 0)
+                                        {
+                                            lblMensajes.Text = "El camionero de este viaje esta en un viaje ahora.";
+                                        }
+                                        else
+                                        {
+
+                                            Viaje unViaje = new Viaje(id, costo, fecha, idCamion, idCamionero, estado);
+                                            if (Web.modViaje(unViaje, idAdmin))
+                                            {
+                                                int contador = 0;
+                                                if (unViaje.Estado == "En viaje")
+                                                {
+                                                    List<Viaje_Lot_Ped> viajeLotPed = Web.buscarViajePedLote(0, unViaje.IdViaje);
+                                                    List<Pedido> pedidos = Web.BuscarPedidoFiltro("", "", "", 0, 99999999, "1000-01-01", "3000-12-30", "1000-01-01", "3000-12-30", "");
+
+                                                    foreach (Viaje_Lot_Ped viaLotPed in viajeLotPed)
+                                                    {
+                                                        foreach (Pedido unPedido in pedidos)
+                                                        {
+                                                            if (viaLotPed.IdPedido.Equals(unPedido.IdPedido))
+                                                            {
+                                                                if (unPedido.Estado == "Confirmado")
+                                                                {
+                                                                    if (Web.cambiarEstadoPed(unPedido.IdPedido, "En viaje", idAdmin))
+                                                                    {
+                                                                        System.Web.HttpContext.Current.Session["pedidoMensaje"] = "Viaje modificado con exito y pedido puesto en viaje.";
+                                                                        contador++;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    if(contador == 0)
+                                                    {
+                                                        System.Web.HttpContext.Current.Session["pedidoMensaje"] = "Viaje modificado con exito.";
+                                                    }
+                                                }
+                                                else if (viaje.Estado == "En viaje" && unViaje.Estado == "Confirmado")
+                                                {
+                                                    List<Viaje_Lot_Ped> viajeLotPed = Web.buscarViajePedLote(0, unViaje.IdViaje);
+                                                    List<Pedido> pedidos = Web.BuscarPedidoFiltro("", "", "", 0, 99999999, "1000-01-01", "3000-12-30", "1000-01-01", "3000-12-30", "");
+                                                    
+                                                    foreach (Viaje_Lot_Ped viaLotPed in viajeLotPed)
+                                                    {
+                                                        
+                                                        foreach (Pedido unPedido in pedidos)
+                                                        {
+                                                            if (viaLotPed.IdPedido.Equals(unPedido.IdPedido))
+                                                            {
+                                                                if (unPedido.Estado == "En viaje")
+                                                                {
+                                                                    if (Web.cambiarEstadoPed(unPedido.IdPedido, "Confirmado", idAdmin))
+                                                                    {
+                                                                        System.Web.HttpContext.Current.Session["pedidoMensaje"] = "Viaje modificado con exito y pedido puesto en confirmado.";
+                                                                        contador++;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    if (contador == 0)
+                                                    {
+                                                        System.Web.HttpContext.Current.Session["pedidoMensaje"] = "Viaje modificado con exito.";
+                                                    }
+                                                }
+                                                else System.Web.HttpContext.Current.Session["pedidoMensaje"] = "Viaje modificado con exito.";
+
+                                                limpiarIdSession();
+                                                Response.Redirect("/Paginas/Viajes/frmViajes");
+                                            }
+                                            else
+                                            {
+                                                lblMensajes.Text = "Ocurrio un error al modificar el viaje.";
+                                            }
+                                        }
                                     }
                                     else
                                     {
                                         Viaje unViaje = new Viaje(id, costo, fecha, idCamion, idCamionero, estado);
                                         if (Web.modViaje(unViaje, idAdmin))
                                         {
-                                            if (unViaje.Estado == "En viaje")
-                                            {
-                                                List<Viaje_Lot_Ped> viajeLotPed = Web.buscarViajePedLote(0, unViaje.IdViaje);
-                                                List<Pedido> pedidos = Web.BuscarPedidoFiltro("", "", "", 0, 99999999, "1000-01-01", "3000-12-30", "1000-01-01", "3000-12-30", "");
-
-                                                foreach (Viaje_Lot_Ped viaLotPed in viajeLotPed)
-                                                {
-                                                    foreach (Pedido unPedido in pedidos)
-                                                    {
-                                                        if (viaLotPed.IdPedido.Equals(unPedido.IdPedido))
-                                                        {
-                                                            if (unPedido.Estado == "Confirmado")
-                                                            {
-                                                                if (Web.cambiarEstadoPed(unPedido.IdPedido, "En viaje"))
-                                                                {
-                                                                    System.Web.HttpContext.Current.Session["pedidoMensaje"] = "Viaje modificado con exito y pedido puesto en viaje.";
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }else System.Web.HttpContext.Current.Session["pedidoMensaje"] = "Viaje modificado con exito.";
+                                            limpiar();
+                                            System.Web.HttpContext.Current.Session["pedidoMensaje"] = "Viaje modificado con exito.";
 
                                             limpiarIdSession();
                                             Response.Redirect("/Paginas/Viajes/frmViajes");
@@ -478,19 +542,7 @@ namespace Web.Paginas.Viajes
                                 }
                                 else
                                 {
-                                    Viaje unViaje = new Viaje(id, costo, fecha, idCamion, idCamionero, estado);
-                                    if (Web.modViaje(unViaje, idAdmin))
-                                    {
-                                        limpiar();
-                                        System.Web.HttpContext.Current.Session["pedidoMensaje"] = "Viaje modificado con exito.";
-
-                                        limpiarIdSession();
-                                        Response.Redirect("/Paginas/Viajes/frmViajes");
-                                    }
-                                    else
-                                    {
-                                        lblMensajes.Text = "Ocurrio un error al modificar el viaje.";
-                                    }
+                                    lblMensajes.Text = "La fecha del viaje debe ser el dia de hoy.";
                                 }
                             }
                             else
