@@ -1,0 +1,180 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MCliente.master.cs" Inherits="Web.MCliente" %>
+
+<!DOCTYPE html>
+
+<html lang="es">
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %> - Frutas y Verduras S.A.</title>
+    <link href="~/Content/Estilos.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://drive.google.com/uc?export=view&id=1yTLwNiCZhIdCWolQldwq4spHQkgZDqkG">
+    <script src="https://kit.fontawesome.com/35e140fb72.js" crossorigin="anonymous"></script>
+
+
+
+
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+</head>
+<body class="bodyStyl">
+    <form runat="server">
+        <asp:ScriptManager runat="server">
+
+
+
+
+
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Framework Scripts--%>
+                <asp:ScriptReference Path="~/Scripts/jquery-3.6.0.min.js" />
+                <asp:ScriptReference Path="~/Scripts/bootstrap.min.js" />
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+        <a name="arriba"></a>
+        <nav class="navbar navbar-expand-lg bg-dark">
+
+            <div class="container-fluid">
+                <a class="navbar-brand text-light h1" href="/Paginas/Nav/frmInicio">Frutas y Verduras S.A.</a>
+                <button class="navbar-toggler bg-body-tertiary" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link text-light" aria-current="page" href="/Paginas/Nav/frmInicio">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" aria-current="page" href="/Paginas/Nav/frmQuienesSomos">Quienes somos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" aria-current="page" href="/Paginas/Catalogo/frmCatalogo">Hacer Pedido</a>
+                        </li>
+                    </ul>
+
+
+                    <ul class="navbar-nav mb-2 mb-lg-0">
+                        <li class="nav-item dropdown">
+                            <select name="Gestion" class="nav-link dropdown-toggle text-light bg-dark me-1" onchange="location = this.value;">
+                                <option id="cuenta" style="display: none">Mi cuenta</option>
+                                <option value="/Paginas/PedidosCli/VerCarrito">Ver Carrito</option>
+                                <option value="/Paginas/PedidosCli/VerPedidosCli">Ver Pedidos</option>
+                                <option value="/Paginas/Clientes/frmModificarCuenta">Cambiar Datos</option>
+
+
+                            </select>
+
+
+                            <li class="me-2">
+
+                                <a class="nav-link text-light" aria-current="page"><%= nombre %></a>
+
+                            </li>
+
+
+                        </li>
+
+                        <li class="me-2">
+                            <asp:Button runat="server" CssClass="btn btn-outline-light mb-1" OnClick="btnCerrarSesion_Click" Text="Cerrar sesión" />
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="body-content container">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+        <footer class="myFooter bg-dark text-center text-light fixed-md-bottom">
+            <div class="container-fluid ">
+
+                <a name="contacto"></a>
+                <div class="row">
+                    <div class="col-md-6 col-12">
+                        <div class="row mb-1">
+                            <h5 class="mb-1">Información de Contacto:</h5>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <p class="float-end mb-1"><i class="fas fa-home text-grayish">&nbsp;</i>Rosario, Colonia, Uruguay </p>
+                            </div>
+                            <div class="col-6 ">
+                                <p class="float-start mb-1">
+                                    <i class="fas fa-envelope text-grayish">&nbsp;</i>
+                                    rosario@ctc.edu.uy
+                                </p>
+                            </div>
+                            <div class="col-6">
+                                <p class="float-end mb-1"><i class="fas fa-phone text-grayish">&nbsp;</i> +598 92 039 523</p>
+                            </div>
+                            <div class="col-6">
+                                <p class="float-start mb-1"><i class="fas fa-fax text-grayish">&nbsp;</i> 4531 5623</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12 ">
+                        <div class="row mb-2">
+                            <h5 class="mb-1">Nuestras Redes:</h5>
+                        </div>
+                        <div class="row align-self-center mb-1">
+                            <div class="col-12">
+                                <a class="btnE    m-auto  " href="https://www.linkedin.com" target="_blank">
+                                    <i class="fab fa-linkedin">&nbsp;</i></a>
+
+                                <a class="btnE  m-auto " href="https://www.facebook.com" target="_blank">
+                                    <i class="fab fa-facebook ">&nbsp;</i>
+
+                                </a>
+
+
+                                <a class="btnE  m-auto " href="https://www.instagram.com" target="_blank">
+                                    <i class="fab fa-instagram ">&nbsp;</i>
+
+                                </a>
+
+                                <a class="btnE  m-auto " href="https://www.youtube.com" target="_blank">
+                                    <i class="fab fa-youtube">&nbsp;</i>
+
+                                </a>
+
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </footer>
+    </form>
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/Scripts/bootstrap.js") %>
+    </asp:PlaceHolder>
+</body>
+</html>

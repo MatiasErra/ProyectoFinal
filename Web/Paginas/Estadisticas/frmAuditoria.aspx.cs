@@ -175,14 +175,13 @@ namespace Web.Paginas.Admins
                 lblPaginaSig.Visible = false;
                 lblPaginaAnt.Visible = false;
                 lblPaginaAct.Visible = false;
-                txtPaginas.Text = "";
-                lblMensajes.Text = "No se encontro nade en la Auditoria.";
+                txtPaginas.Visible = false;
+                lblMensajes.Text = "No se encontró nada en la Auditoria.";
                 lstAuditoria.Visible = false;
             }
             else
             {
-                txtPaginas.Text = "Paginas";
-
+                txtPaginas.Visible = true;
                 lblMensajes.Text = "";
                 modificarPagina();
                 lstAuditoria.Visible = true;

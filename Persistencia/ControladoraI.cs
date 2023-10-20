@@ -106,9 +106,9 @@ namespace Persistencia
         }
 
 
-        public bool bajaPedidoProd(int idPedido, int idProducto, string cantRess, double precio)
+        public bool bajaPedidoProd(int idPedido, int idProducto, string cantRess, double precio, int idAdmin)
         {
-            return new pPedido().bajaPedidoProd(idPedido, idProducto, cantRess, precio);
+            return new pPedido().bajaPedidoProd(idPedido, idProducto, cantRess, precio, idAdmin);
         }
 
         public bool bajaLotesPedido(int idPedido, int idGranja, int idProducto, string fchProduccion, string cantLote, string CantDisp, string CantRess, int idAdmin)

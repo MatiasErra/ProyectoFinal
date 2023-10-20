@@ -414,7 +414,7 @@ namespace Web.Paginas.PedidosAdm
 
             if (pagAct == cantPags.ToString() && pagAct == "1")
             {
-                txtPaginasLot.Text = "";
+                txtPaginasLot.Visible = false;
                 lblPaginaActLot.Visible = false;
 
             }

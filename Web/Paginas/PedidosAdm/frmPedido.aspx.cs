@@ -192,7 +192,7 @@ namespace Web.Paginas.PedidosADM
             dt.Rows.Add(createRow("Estado", "Estado", dt));
             dt.Rows.Add(createRow("Viaje", "Viaje", dt));
             dt.Rows.Add(createRow("Costo", "Costo", dt));
-            dt.Rows.Add(createRow("Fecha pedido", "Fecha pedido", dt));
+            dt.Rows.Add(createRow("Fecha de pedido", "Fecha pedido", dt));
             dt.Rows.Add(createRow("Fecha entrega", "Fecha entrega", dt));
 
 
@@ -321,7 +321,7 @@ namespace Web.Paginas.PedidosADM
             listOrdenarPor.SelectedValue = "Ordenar por";
             listBuscarPor.SelectedValue = "Buscar por";
             lstViaje.SelectedValue = "Seleccionar estado del viaje";
-            txtFchEntregaMenor.Text = "";
+            txtFchPedidoMenor.Text = "";
             txtFchPedidoMayor.Text = "";
             txtFchEntregaMenor.Text = "";
             txtFchEntregaMayor.Text = "";
@@ -509,6 +509,26 @@ namespace Web.Paginas.PedidosADM
 
         #endregion
 
+        private bool comprobarViajesLote(int id)
+        {
+
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            int idPedido = 0;
+            int idViaje = 0;
+            List<Viaje_Lot_Ped> viajeLotPed = Web.buscarViajePedLote(idPedido, idViaje);
+            foreach (Viaje_Lot_Ped unLoteVia in viajeLotPed)
+            {
+                if (unLoteVia.IdPedido.Equals(id))
+                {
+                    return false;
+                }
+            }
+            return true;
+
+        }
+
+
+
         private void GuardarDatos()
         {
             System.Web.HttpContext.Current.Session["BuscarLstPed"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : "";
@@ -531,7 +551,7 @@ namespace Web.Paginas.PedidosADM
 
         private bool CantActualProd(int idPedido, string Estado)
         {
-            ControladoraWeb web = ControladoraWeb.obtenerInstancia();
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             List<string[]> lstPedi = new List<string[]>();
             Producto producto = new Producto();
             producto.Nombre = "";
@@ -540,16 +560,16 @@ namespace Web.Paginas.PedidosADM
             int precioMenor = 0;
             int precioMayor = 999999;
             string ordenar = "";
-            List<Producto> productos = web.buscarProductoFiltro(producto, precioMenor, precioMayor, ordenar);
+            List<Producto> productos = Web.buscarProductoFiltro(producto, precioMenor, precioMayor, ordenar);
             string cantRess = "";
 
 
             if (Estado.ToString() == "Sin confirmar" || Estado.ToString() == "Sin finalizar")
             {
-                List<string[]> lstPediLot = web.buscarPedidoLote(idPedido);
+                List<string[]> lstPediLot = Web.buscarPedidoLote(idPedido);
                 if (lstPediLot.Count == 0)
                 {
-                    lstPedi = web.buscarPedidoProd(idPedido);
+                    lstPedi = Web.buscarPedidoProd(idPedido);
 
 
 
@@ -571,9 +591,10 @@ namespace Web.Paginas.PedidosADM
                         string[] cantRessProd = unProd.CantRes.ToString().Split(' ');
                         int resultado = int.Parse(cantRessProd[0].ToString()) - cant;
 
+                        int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
                         cantRess = resultado.ToString() + " " + unProd.TipoVenta.ToString();
 
-                        web.bajaPedidoProd(idPedido, idProducto, cantRess, 0);
+                        Web.bajaPedidoProd(idPedido, idProducto, cantRess, 0, idAdmin);
 
 
 
@@ -594,12 +615,12 @@ namespace Web.Paginas.PedidosADM
 
             if (Estado.ToString() == "Confirmado")
             {
-                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+               
 
                 Lote lote = new Lote(0, 0, "", "", "", 0, 0);
                 List<Lote> lotes = Web.buscarFiltrarLotes(lote, 0, 99999999, "1000-01-01", "3000-12-30", "1000-01-01", "3000-12-30", "");
 
-                lstPedi = web.buscarPedidoLote(idPedido);
+                lstPedi = Web.buscarPedidoLote(idPedido);
                 foreach (Producto unProd in productos)
                 {
                     int cantTotal = 0;
@@ -639,9 +660,9 @@ namespace Web.Paginas.PedidosADM
                             string cantLote = resultadoLote.ToString() + " " + unProd.TipoVenta.ToString();
                             int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
 
-                            web.bajaPedidoProd(idPedido, idProducto, cantRess, 0);
+                            Web.bajaPedidoProd(idPedido, idProducto, cantRess, 0, idAdmin);
 
-                            web.bajaLotesPedido(idPedido, idGranja, idProducto, FchProduccion, cantLote, cantDisp, cantRess, idAdmin);
+                            Web.bajaLotesPedido(idPedido, idGranja, idProducto, FchProduccion, cantLote, cantDisp, cantRess, idAdmin);
 
                         }
                     }
@@ -650,8 +671,44 @@ namespace Web.Paginas.PedidosADM
             }
             if (Estado.ToString() == "Finalizado")
             {
-                // Eliminar pedido finalizado
-                return false;
+
+
+                Lote lote = new Lote(0, 0, "", "", "", 0, 0);
+                List<Lote> lotes = Web.buscarFiltrarLotes(lote, 0, 99999999, "1000-01-01", "3000-12-30", "1000-01-01", "3000-12-30", "");
+
+                lstPedi = Web.buscarPedidoLote(idPedido);
+                foreach (Producto unProd in productos)
+                {
+  
+
+                    foreach (Lote unLote in lotes)
+                    {
+                        int idGranja = unLote.IdGranja;
+                        string FchProduccion = unLote.FchProduccion;
+
+                        if (unProd.IdProducto == unLote.IdProducto)
+                        {
+                            int cant = 0;
+                            int idProducto = unProd.IdProducto;
+
+                            cantRess = unProd.CantRes.ToString();
+
+                            string cantDisp = unProd.CantTotal.ToString();
+
+                            string cantLote = unLote.Cantidad.ToString();
+
+                            
+
+                            int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+
+                            Web.bajaPedidoProd(idPedido, idProducto, cantRess, 0, idAdmin);
+
+                            Web.bajaLotesPedido(idPedido, idGranja, idProducto, FchProduccion, cantLote, cantDisp, cantRess, idAdmin);
+
+                        }
+                    }
+                }
+                return true;
             }
             else return false;
 
@@ -782,22 +839,25 @@ namespace Web.Paginas.PedidosADM
             string Estado = selectedrow.Cells[3].Text;
             ControladoraWeb web = ControladoraWeb.obtenerInstancia();
 
-            // si eesta en viaje noo se puede borrar 
 
             if (Estado != "En viaje")
             {
-                if (CantActualProd(idPedido, Estado))
+                if (comprobarViajesLote(idPedido))
                 {
-                    int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
-                    if (web.bajaPedido(idPedido, idAdmin))
+                    if (CantActualProd(idPedido, Estado))
                     {
+                        int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                        if (web.bajaPedido(idPedido, idAdmin))
+                        {
 
-                        listarPagina();
-                        lblMensajes.Text = "Pedido Eliminado";
+                            listarPagina();
+                            lblMensajes.Text = "Pedido Eliminado";
+                        }
+                        else lblMensajes.Text = "No se pudo eliminar el pedido";
                     }
                     else lblMensajes.Text = "No se pudo eliminar el pedido";
                 }
-                else lblMensajes.Text = "No se pudo eliminar el pedido";
+                else lblMensajes.Text = "No se ha podido eliminar este pedido porque está asociada a un viaje.";
             }
             else lblMensajes.Text = "No se puede eliminar un pedido en viaje.";
         }

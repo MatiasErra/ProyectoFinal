@@ -88,7 +88,7 @@ namespace Web.Paginas.Viajes
                 // Listas
                 lstCamionBuscar.SelectedValue = System.Web.HttpContext.Current.Session["camionViajeBuscar"] != null ? System.Web.HttpContext.Current.Session["camionViajeBuscar"].ToString() : "Seleccionar un Camion";
                 System.Web.HttpContext.Current.Session["camionViajeBuscar"] = null;
-                lstCamioneroBuscar.SelectedValue = System.Web.HttpContext.Current.Session["camioneroViajeBuscar"] != null ? System.Web.HttpContext.Current.Session["camioneroViajeBuscar"].ToString() : "Seleccionar un Camionero";           
+                lstCamioneroBuscar.SelectedValue = System.Web.HttpContext.Current.Session["camioneroViajeBuscar"] != null ? System.Web.HttpContext.Current.Session["camioneroViajeBuscar"].ToString() : "Seleccionar un Camionero";
                 System.Web.HttpContext.Current.Session["camioneroViajeBuscar"] = null;
                 lstEstadoBuscar.SelectedValue = System.Web.HttpContext.Current.Session["estadoViajeBuscar"] != null ? System.Web.HttpContext.Current.Session["estadoViajeBuscar"].ToString() : "Seleccionar un Estado";
                 System.Web.HttpContext.Current.Session["estadoViajeBuscar"] = null;
@@ -171,10 +171,22 @@ namespace Web.Paginas.Viajes
             else return GenerateUniqueId();
         }
 
-        private bool comprobarPedidos(int id)
+        private bool comprobarViajesLote(int id)
         {
-            // Comprobar pedidos con el viaje
-            return false;
+
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            int idPedido = 0;
+            int idViaje = 0;
+            List<Viaje_Lot_Ped> viajeLotPed = Web.buscarViajePedLote(idPedido, idViaje);
+            foreach (Viaje_Lot_Ped unLoteVia in viajeLotPed)
+            {
+                if (unLoteVia.IdViaje.Equals(id))
+                {
+                    return false;
+                }
+            }
+            return true;
+
         }
 
         private void comprobarBuscar()
@@ -205,7 +217,7 @@ namespace Web.Paginas.Viajes
 
         private int PagMax()
         {
-            return 2;
+            return 5;
         }
 
 
@@ -265,13 +277,13 @@ namespace Web.Paginas.Viajes
             {
 
                 txtPaginas.Visible = true;
-                    lblMensajes.Text = "";
-                    modificarPagina();
-                    lstViaje.Visible = true;
-                    lstViaje.DataSource = null;
-                    lstViaje.DataSource = viajesPagina;
-                    lstViaje.DataBind();
-                
+                lblMensajes.Text = "";
+                modificarPagina();
+                lstViaje.Visible = true;
+                lstViaje.DataSource = null;
+                lstViaje.DataSource = ObtenerDatos(viajesPagina);
+                lstViaje.DataBind();
+
             }
         }
 
@@ -556,7 +568,7 @@ namespace Web.Paginas.Viajes
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             Camionero cam = new Camionero(0, "", "", "", "", "", "", "", "");
-            List<Camionero> camioneros = Web.buscarCamioneroFiltro(cam,  "1000-01-01", "3000-12-30", "");
+            List<Camionero> camioneros = Web.buscarCamioneroFiltro(cam, "1000-01-01", "3000-12-30", "");
             List<Camionero> cargar = new List<Camionero>();
 
             foreach (Camionero unCam in camioneros)
@@ -807,14 +819,14 @@ namespace Web.Paginas.Viajes
                         Viaje unViaje = new Viaje(id, costo, fecha, idCamion, idCamionero, "Pendiente");
                         if (Web.altaViaje(unViaje, idAdmin))
                         {
-                           
-                            
-                            
-                                limpiar();
-                                lblPaginaAct.Text = "1";
-                                listarPagina();
-                                lblMensajes.Text = "Viaje dado de alta con éxito.";
-                            
+
+
+
+                            limpiar();
+                            lblPaginaAct.Text = "1";
+                            listarPagina();
+                            lblMensajes.Text = "Viaje dado de alta con éxito.";
+
                         }
                         else lblMensajes.Text = "Ocurrio un error al ingresar el Viaje.";
                     }
@@ -825,7 +837,7 @@ namespace Web.Paginas.Viajes
             else lblMensajes.Text = "Faltan datos.";
         }
 
-        protected void btnVerLotes_Click(object sender , EventArgs e)
+        protected void btnVerLotes_Click(object sender, EventArgs e)
         {
             Button btnConstultar = (Button)sender;
             GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
@@ -845,17 +857,32 @@ namespace Web.Paginas.Viajes
             GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
             int id = int.Parse(HttpUtility.HtmlEncode(selectedrow.Cells[0].Text));
             System.Web.HttpContext.Current.Session["ViajesSelected"] = id;
+            string fecha = HttpUtility.HtmlEncode(selectedrow.Cells[2].Text);
+            DateTime fechaDate = DateTime.ParseExact(fecha, "d/M/yyyy", null);
             string estadoVia = HttpUtility.HtmlEncode(selectedrow.Cells[8].Text);
 
-            if (estadoVia == "Pendiente")
+            string[] Datehoy = DateTime.Now.ToString().Split(' ');
+            DateTime fechaHoy = DateTime.ParseExact(Datehoy[0].ToString(), "d/M/yyyy", null);
+            string[] fechaHoyArry = fechaHoy.ToString().Split(' ');
+
+            if (estadoVia == "Pendiente"
+                || estadoVia == "Confirmado")
             {
-                Response.Redirect("/Paginas/Viajes/asgPedAViaje");
-              
+                if (fechaDate >= fechaHoy)
+                {
+                    Response.Redirect("/Paginas/Viajes/asgPedAViaje");
+                }
+                else
+                {
+                    lblMensajes.Text = "La fecha del viaje debe ser igual o menor a la fecha de hoy " + fechaHoyArry[0].ToString();
+                }
             }
             else
             {
-                lblMensajes.Text = "El pedido tiene que estar en Pendiente para poder asignarle un Lote";
+                lblMensajes.Text = "El pedido tiene que estar en Pendiente o Confirmado para poder asignarle un Lote";
             }
+
+
         }
         protected void btnBaja_Click(object sender, EventArgs e)
         {
@@ -867,12 +894,12 @@ namespace Web.Paginas.Viajes
             Viaje unViaje = Web.buscarViaje(id);
             if (unViaje != null)
             {
-                if (!comprobarPedidos(id))
+                if (comprobarViajesLote(id))
                 {
                     int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
                     if (Web.bajaViaje(id, idAdmin))
                     {
-                        if(unViaje.Estado == "En viaje")
+                        if (unViaje.Estado == "En viaje")
                         {
                             Camion unCamion = Web.buscarCam(unViaje.IdCamion);
                             unCamion.Disponible = "Disponible";
@@ -885,7 +912,7 @@ namespace Web.Paginas.Viajes
                                     limpiar();
                                     lblPaginaAct.Text = "1";
                                     listarPagina();
-                                   
+
                                     CargarListCamiones();
                                     CargarListCamionero();
                                     lblMensajes.Text = "Se ha borrado el viaje y el camión y camionero ahora estan disponibles.";
@@ -902,7 +929,7 @@ namespace Web.Paginas.Viajes
                     }
                     else lblMensajes.Text = "No se ha podido borrar el viaje.";
                 }
-                else lblMensajes.Text = "Este viaje esta asociada a un pedido.";
+                else lblMensajes.Text = "No se ha podido eliminar este viaje porque está asociada a un pedido.";
             }
             else lblMensajes.Text = "El viaje no existe.";
         }

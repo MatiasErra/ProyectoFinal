@@ -1,0 +1,9 @@
+D:\Clases\Proyecto Final\Proyecto\Persistencia\bin\Release\Persistencia.dll
+D:\Clases\Proyecto Final\Proyecto\Persistencia\bin\Release\Persistencia.pdb
+D:\Clases\Proyecto Final\Proyecto\Persistencia\bin\Release\Clases.dll
+D:\Clases\Proyecto Final\Proyecto\Persistencia\bin\Release\Clases.pdb
+D:\Clases\Proyecto Final\Proyecto\Persistencia\obj\Release\Persistencia.csproj.AssemblyReference.cache
+D:\Clases\Proyecto Final\Proyecto\Persistencia\obj\Release\Persistencia.csproj.CoreCompileInputs.cache
+D:\Clases\Proyecto Final\Proyecto\Persistencia\obj\Release\Persistencia.csproj.CopyComplete
+D:\Clases\Proyecto Final\Proyecto\Persistencia\obj\Release\Persistencia.dll
+D:\Clases\Proyecto Final\Proyecto\Persistencia\obj\Release\Persistencia.pdb

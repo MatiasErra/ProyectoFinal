@@ -13,9 +13,9 @@ namespace Web.Paginas
     {
         protected void Page_PreInit(object sender, EventArgs e)
         {
-            // System.Web.HttpContext.Current.Session["AdminIniciado"] = 168792794; // admin global 1 
-            // System.Web.HttpContext.Current.Session["AdminIniciado"] = 206676677; // admin global 2 
-            // System.Web.HttpContext.Current.Session["ClienteIniciado"] = 1481022565;
+            System.Web.HttpContext.Current.Session["AdminIniciado"] = 168792794; // admin global 1 
+            //System.Web.HttpContext.Current.Session["AdminIniciado"] = 206676677; // admin global 2 
+            //System.Web.HttpContext.Current.Session["ClienteIniciado"] = 1481022565;
 
             if (System.Web.HttpContext.Current.Session["ClienteIniciado"] != null)
             {

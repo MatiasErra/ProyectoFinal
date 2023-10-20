@@ -149,11 +149,11 @@ namespace Web.Paginas
         }
 
 
-        public bool bajaPedidoProd(int idPedido, int idProducto, string cantRess, double precio)
+        public bool bajaPedidoProd(int idPedido, int idProducto, string cantRess, double precio, int idAdmin)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();
 
-            if (inst.bajaPedidoProd(idPedido, idProducto, cantRess, precio))
+            if (inst.bajaPedidoProd(idPedido, idProducto, cantRess, precio, idAdmin))
             {
                 return true;
             }

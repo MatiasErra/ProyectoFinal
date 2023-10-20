@@ -87,7 +87,7 @@ namespace Web.Paginas.Viajes
                 }
 
 
-                if (System.Web.HttpContext.Current.Session["ViajesSelected"] != null)
+                 if (System.Web.HttpContext.Current.Session["ViajesSelected"] != null)
                 {
                     int idViaje = int.Parse(System.Web.HttpContext.Current.Session["ViajesSelected"].ToString());
                     listarLotes(idViaje);
@@ -95,7 +95,7 @@ namespace Web.Paginas.Viajes
                 if (System.Web.HttpContext.Current.Session["PedidoCompraSel"] != null)
                 {
                     int idPedido = int.Parse(System.Web.HttpContext.Current.Session["PedidoCompraSel"].ToString());
-                    listarViajes(idPedido);
+                    listarViajesPed(idPedido);
                 }
 
 
@@ -115,10 +115,10 @@ namespace Web.Paginas.Viajes
             return 4;
         }
 
-        private List<Viaje_Lot_Ped> ObtenerLotesViaje(int idViaje)
+        private List<Viaje_Lot_Ped> ObtenerLotesViaje(int idPedido, int idViaje)
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            int idPedido = 0;
+            
 
             List<Viaje_Lot_Ped> viajeLotPed = Web.buscarViajePedLote(idPedido, idViaje);
             return viajeLotPed;
@@ -127,14 +127,14 @@ namespace Web.Paginas.Viajes
 
         private void listarLotes(int idViaje)
         {
-
-
-            List<Viaje_Lot_Ped> viajeLotPed = ObtenerLotesViaje(idViaje);
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            int idPedido = 0;
+            List<Viaje_Lot_Ped> viajeLotPed = ObtenerLotesViaje(idPedido,idViaje);
             List<Viaje_Lot_Ped> viajeLotPedPag = new List<Viaje_Lot_Ped>();
             string p = lblPaginaAct.Text.ToString();
             int pagina = int.Parse(p);
             int cont = 0;
-
+            Viaje unViaje = Web.buscarViaje(idViaje);
             foreach (Viaje_Lot_Ped unLote in viajeLotPed)
             {
                 if (viajeLotPedPag.Count == PagMax())
@@ -156,19 +156,32 @@ namespace Web.Paginas.Viajes
                 lblPaginaAct.Visible = false;
                 txtPaginas.Text = "";
                 lstViajePed.Visible = false;
-
+                lstViajePedElim.Visible = false;
             }
             else
             {
-
-                lblMensajes.Text = "";
-                modificarPagina(idViaje);
-                txtPaginas.Text = "Paginas";
-                lstViajePed.Visible = false;
-                lstViajePed.Visible = true;
-                lstViajePed.DataSource = null;
-                lstViajePed.DataSource = ObtenerViajeLotePedidoDatos(viajeLotPedPag);
-                lstViajePed.DataBind();
+                if (unViaje.Estado == "Confirmado" || unViaje.Estado == "Finalizado")
+                {
+                    lblMensajes.Text = "";
+                    modificarPagina(idViaje);
+                    txtPaginas.Text = "Paginas";
+                    lstViajePedElim.Visible = false;
+                    lstViajePedElim.Visible = true;
+                    lstViajePedElim.DataSource = null;
+                    lstViajePedElim.DataSource = ObtenerViajeLotePedidoDatos(viajeLotPedPag);
+                    lstViajePedElim.DataBind();
+                }
+                else
+                {
+                    lblMensajes.Text = "";
+                    modificarPagina(idViaje);
+                    txtPaginas.Text = "Paginas";
+                    lstViajePed.Visible = false;
+                    lstViajePed.Visible = true;
+                    lstViajePed.DataSource = null;
+                    lstViajePed.DataSource = ObtenerViajeLotePedidoDatos(viajeLotPedPag);
+                    lstViajePed.DataBind();
+                }
 
 
             }
@@ -178,7 +191,8 @@ namespace Web.Paginas.Viajes
 
         private void modificarPagina(int idViaje)
         {
-            List<Viaje_Lot_Ped> viajeLotPed = ObtenerLotesViaje(idViaje);
+            int idPedido = 0;
+            List<Viaje_Lot_Ped> viajeLotPed = ObtenerLotesViaje(idPedido, idViaje);
             double pxp = PagMax();
             double count = viajeLotPed.Count;
             double pags = count / pxp;
@@ -255,60 +269,19 @@ namespace Web.Paginas.Viajes
 
         #region Listar Viajes
 
-        private List<Viaje> ObtenerViajes(int idPedido)
+ 
+
+        private void listarViajesPed(int idPedido)
         {
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-
-            Viaje viaje = new Viaje();
-            int costoMenor = 0;
-            int costoMayor = 99999999;
-            string fchMenor = "1000-01-01";
-            string fchMayor = "3000-12-30";
-            viaje.IdCamion = 0;
-            viaje.IdCamionero = 0;
-            viaje.Estado = "";
-            string ordenar = "";
-
-            List<Viaje> viajes = Web.buscarViajeFiltro(viaje, costoMenor, costoMayor, fchMenor, fchMayor, ordenar);
-
-            List<Viaje> lstViajeRes = new List<Viaje>();
             int idViaje = 0;
 
-            List<Viaje_Lot_Ped> viajeLotPed = Web.buscarViajePedLote(idPedido, idViaje);
-            int i = 0;
-
-            foreach (Viaje unViaje in viajes)
-            {
-                i = 0;
-                foreach (Viaje_Lot_Ped viaje_Lot_Ped in viajeLotPed)
-                {
-                    if (viaje_Lot_Ped.IdViaje.ToString().Equals(unViaje.IdViaje.ToString()))
-                    {
-                        i++;
-                    }
-                }
-
-                if (i > 0)
-                {
-                    lstViajeRes.Add(unViaje);
-                }
-            }
-
-            return lstViajeRes;
-        }
-
-
-        private void listarViajes(int idPedido)
-        {
-
-
-            List<Viaje> viajes = ObtenerViajes(idPedido);
-            List<Viaje> viajesPagina = new List<Viaje>();
+            List<Viaje_Lot_Ped> viajes = ObtenerLotesViaje(idPedido, idViaje);
+            List<Viaje_Lot_Ped> viajesPagina = new List<Viaje_Lot_Ped>();
             string p = lblPaginaAct.Text.ToString();
             int pagina = int.Parse(p);
             int cont = 0;
 
-            foreach (Viaje unLote in viajes)
+            foreach (Viaje_Lot_Ped unLote in viajes)
             {
                 if (viajesPagina.Count == PagMax())
                 {
@@ -351,7 +324,8 @@ namespace Web.Paginas.Viajes
 
         private void modificarPaginaViaje(int idPedido)
         {
-            List<Viaje> viajeLotPed = ObtenerViajes(idPedido);
+            int idViaje = 0;
+            List<Viaje_Lot_Ped> viajeLotPed = ObtenerLotesViaje(idPedido, idViaje);
             double pxp = PagMax();
             double count = viajeLotPed.Count;
             double pags = count / pxp;
@@ -387,26 +361,30 @@ namespace Web.Paginas.Viajes
         }
 
 
-        public DataTable ObtenerViajeDatos(List<Viaje> lstViaje)
+        public DataTable ObtenerViajeDatos(List<Viaje_Lot_Ped> lstViaje)
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             DataTable dt = new DataTable();
-            dt.Columns.AddRange(new DataColumn[3] {
+            dt.Columns.AddRange(new DataColumn[5] {
 
                  new DataColumn("idViaje", typeof(string)),
                 new DataColumn("fchViaje", typeof(string)),
-                new DataColumn("Estado", typeof(string))
-
+                new DataColumn("Estado", typeof(string)),
+              new DataColumn("NombreProducto", typeof(string)),
+                 new DataColumn("CantidadAsg", typeof(string)),
+    
                        });
-            foreach (Viaje unViaje in lstViaje)
+          
+            foreach (Viaje_Lot_Ped unLotViaje in lstViaje)
             {
-
+                Viaje unViaje = Web.buscarViaje(unLotViaje.IdViaje);
 
                 DataRow dr = dt.NewRow();
                 dr["idViaje"] = unViaje.IdViaje.ToString();
                 dr["fchViaje"] = unViaje.Fecha.ToString();
                 dr["Estado"] = unViaje.Estado.ToString();
-
+                dr["NombreProducto"] = unLotViaje.NombreProducto.ToString();
+                dr["CantidadAsg"] = unLotViaje.Cant.ToString();
 
 
                 dt.Rows.Add(dr);
@@ -443,6 +421,66 @@ namespace Web.Paginas.Viajes
             Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
 
+        protected void btnBorrarViaPedLot_Click(object sender, EventArgs e)
+        {
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            Button btnConstultar = (Button)sender;
+            GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
+            GridViewRow row = (GridViewRow)btnConstultar.NamingContainer;
+
+
+
+
+            int idPedido = int.Parse(selectedrow.Cells[0].Text);
+            int idViaje = int.Parse(selectedrow.Cells[1].Text);
+            string nombreGranja = selectedrow.Cells[2].Text;
+            string nombreProducto = selectedrow.Cells[3].Text;
+            string fchProduccion = selectedrow.Cells[4].Text;
+            string[] CantAsg = selectedrow.Cells[5].Text.Split(' ');
+            int intCantAsg = int.Parse(CantAsg[0].ToString());
+
+            int CantAct = 0;
+
+            Viaje_Lot_Ped viaje_Lot_Ped = new Viaje_Lot_Ped();
+            Lote unLote = Web.buscarLote(nombreGranja, nombreProducto, fchProduccion);
+
+            viaje_Lot_Ped.IdViaje = idViaje;
+            viaje_Lot_Ped.IdPedido = idPedido;
+            viaje_Lot_Ped.IdGranja = unLote.IdGranja;
+            viaje_Lot_Ped.IdProducto = unLote.IdProducto;
+            viaje_Lot_Ped.FchProduccion = fchProduccion;
+
+            List<string[]> lstLotePedio = Web.buscarPedidoLote(idPedido);
+            Producto unProd = Web.buscarProducto(unLote.IdProducto);
+            foreach (string[] unLotePedido in lstLotePedio)
+            {
+                if (unLotePedido[0].ToString().Equals(idPedido.ToString())
+                    && unLotePedido[1].ToString().Equals(unLote.IdProducto.ToString())
+                    && unLotePedido[3].ToString().Equals(unLote.IdGranja.ToString())
+                    && unLotePedido[5].ToString().Equals(unLote.FchProduccion.ToString())
+                    )
+                {
+                    string[] CantActArr = unLotePedido[12].ToString().Split(' ');
+                    CantAct = int.Parse(CantActArr[0].ToString());
+
+                }
+            }
+            int CantTotal = CantAct - intCantAsg;
+
+            string strCantTotal = CantTotal.ToString() + " " + unProd.TipoVenta.ToString();
+
+            int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+            if (Web.bajaViajePedido_Lote(viaje_Lot_Ped, strCantTotal, idAdmin))
+            {
+                listarLotes(idViaje);
+                lblMensajes.Text = "Lote eliminado del viaje";
+            }
+            else
+            {
+                lblMensajes.Text = "No se pudo elLote eliminado del viaje";
+            }
+
+        }
 
 
 

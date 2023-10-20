@@ -415,10 +415,12 @@ namespace Web.Paginas.Pedidos
 
             if (estado == "Confirmado")
             {
-                if (Web.cambiarEstadoPed(idPedido, "Sin confirmar", 0))
+                int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+
+                if (Web.cambiarEstadoPed(idPedido, "Sin confirmar", idAdmin))
                 {
-                    lblMensajes.Text = "Estado modificado a Sin finalizar";
-                    System.Web.HttpContext.Current.Session["pedidoMensaje"] = "Estado modificado a Sin finalizar";
+                    lblMensajes.Text = "Estado modificado a Sin confirmar";
+                    System.Web.HttpContext.Current.Session["pedidoMensaje"] = "Estado modificado a Sin confirmar";
 
                     Response.Redirect("/Paginas/PedidosAdm/frmPedido");
                 }
@@ -456,7 +458,12 @@ namespace Web.Paginas.Pedidos
                 if (cont == 0)
                 {
                     int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
-                    if (Web.cambiarEstadoPed(idPedido, "Finalizado", idAdmin)) lblMensajes.Text = "El pedido ha sido finalizado.";
+                    if (Web.cambiarEstadoPed(idPedido, "Finalizado", idAdmin))
+                    {
+                        System.Web.HttpContext.Current.Session["pedidoMensaje"] = "El pedido ha sido finalizado.";
+                        Response.Redirect("/Paginas/PedidosAdm/frmPedido");
+                    
+                    }
                 }
                 else lblMensajes.Text = "No todos los viajes de este pedido han finalizado.";
             }

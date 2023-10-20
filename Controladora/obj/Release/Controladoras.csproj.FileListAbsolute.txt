@@ -1,0 +1,11 @@
+D:\Clases\Proyecto Final\Proyecto\Controladora\bin\Release\Controladora.dll
+D:\Clases\Proyecto Final\Proyecto\Controladora\bin\Release\Controladora.pdb
+D:\Clases\Proyecto Final\Proyecto\Controladora\bin\Release\Clases.dll
+D:\Clases\Proyecto Final\Proyecto\Controladora\bin\Release\Persistencia.dll
+D:\Clases\Proyecto Final\Proyecto\Controladora\bin\Release\Clases.pdb
+D:\Clases\Proyecto Final\Proyecto\Controladora\bin\Release\Persistencia.pdb
+D:\Clases\Proyecto Final\Proyecto\Controladora\obj\Release\Controladoras.csproj.AssemblyReference.cache
+D:\Clases\Proyecto Final\Proyecto\Controladora\obj\Release\Controladoras.csproj.CoreCompileInputs.cache
+D:\Clases\Proyecto Final\Proyecto\Controladora\obj\Release\Controladoras.csproj.CopyComplete
+D:\Clases\Proyecto Final\Proyecto\Controladora\obj\Release\Controladora.dll
+D:\Clases\Proyecto Final\Proyecto\Controladora\obj\Release\Controladora.pdb

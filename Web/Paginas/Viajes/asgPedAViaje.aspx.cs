@@ -184,7 +184,7 @@ namespace Web.Paginas.Viajes
                         }
                     }
                 }
-                if(LotPed.Count >= i)
+                if(LotPed.Count > i)
                 {
                     lstPedidoRes.Add(unPedido);
                 }
@@ -215,6 +215,7 @@ namespace Web.Paginas.Viajes
                 if (lstPedidosCon.SelectedValue != "Seleccione un pedido")
                 {
 
+                    ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
                     int idViaje = int.Parse(System.Web.HttpContext.Current.Session["ViajesSelected"].ToString());
                     string str = lstPedidosCon.SelectedValue.ToString();
                     int idPedido = int.Parse(lstPedidosCon.SelectedValue.ToString());
@@ -222,7 +223,16 @@ namespace Web.Paginas.Viajes
                     lstPedidoLote.Visible = true;
                     lblH5LotePed.Visible = true;
 
+             Viaje unViaje = Web.buscarViaje(idViaje);
 
+                    if (unViaje.Estado =="Pendiente") 
+                    {
+                        btnConfirmarViaje.Visible = true;
+                    }
+                    else
+                    {
+                        btnConfirmarViaje.Visible = false;
+                    }
 
                     listarPedidosLote(idPedido);
                     listarViajePedidosLote(idPedido, idViaje);
@@ -281,7 +291,7 @@ namespace Web.Paginas.Viajes
         private int PagMaxLotePed()
         {
 
-            return 1;
+            return 4;
         }
 
         private List<string[]> ObtenerPedidoLote(int idPedido)
@@ -483,14 +493,14 @@ namespace Web.Paginas.Viajes
                 lblPaginaActViaPed.Visible = false;
                 lblPaginaAntViaPed.Visible = false;
                 lblPaginaSigViaPed.Visible = false;
-                btnConfirmarViaje.Visible = false;
+           
 
 
             }
             else
             {
                 h5ConfViaje.Visible = true;
-                btnConfirmarViaje.Visible = true;
+            
 
                 txtPaginaViaPed.Visible = true;
                 modPaginaViajeLotePed(idPedido, idViaje);
@@ -607,7 +617,9 @@ namespace Web.Paginas.Viajes
             int idPedido = int.Parse(lstPedidosCon.SelectedValue.ToString());
             Viaje viaje = Web.buscarViaje(idViaje);
             string fchViaje = viaje.Fecha.ToString();
+            
             DateTime fechaConvertida = DateTime.ParseExact(fchViaje, "d/M/yyyy", null);
+    
             string fchViajeuwu = fechaConvertida.ToString("yyyy-MM-dd");
             string estado = "Confirmado";
 
@@ -767,6 +779,7 @@ namespace Web.Paginas.Viajes
                     {
                         listBuscarPedLote();
                         lblMensajes.Text = "Se ingreso el pedido lote al viaje";
+             
 
                     }
                     else

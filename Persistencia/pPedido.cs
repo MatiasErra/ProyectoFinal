@@ -696,7 +696,7 @@ namespace Persistencia
 
         }
 
-        public bool bajaPedidoProd(int idPedido, int idProducto, string cantRess, double precio)
+        public bool bajaPedidoProd(int idPedido, int idProducto, string cantRess, double precio, int idAdmin)
         {
             bool resultado = false;
 
@@ -710,7 +710,7 @@ namespace Persistencia
                 cmd.Parameters.Add(new SqlParameter("@idProducto", idProducto));
                 cmd.Parameters.Add(new SqlParameter("@cantRess", cantRess));
                 cmd.Parameters.Add(new SqlParameter("@precio", precio));
-
+                cmd.Parameters.Add(new SqlParameter("@idAdmin", idAdmin));
 
                 int resBD = cmd.ExecuteNonQuery();
 
