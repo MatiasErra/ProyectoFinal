@@ -190,6 +190,7 @@ namespace Web.Paginas
 
 
             List<Producto> productos = Web.buscarProductoCatFiltro(nombre, tipo, tipoVen, precioMenor, precioMayor, ordenar);
+
             foreach (Producto unProducto in productos)
             {
                 string Imagen = "data:image/jpeg;base64,";
@@ -201,16 +202,34 @@ namespace Web.Paginas
                 unProducto.CantDisp = (cant - cantRes).ToString();
             }
 
-            List<Producto> listaOrdenadaXcantDisp = productos.OrderByDescending(Producto => Producto.CantDisp.Equals("0")).ThenBy(Producto => Producto.CantDisp).ToList();
-            listaOrdenadaXcantDisp.Reverse();
+            List<Producto> listaOrdenadaXcantDisp = new List<Producto>(productos);
+
+
+            Producto auxProd;
+
+
+            for (int i = 0; i < listaOrdenadaXcantDisp.Count; i++)
+            {
+                for (int indiceActual = 0; indiceActual < listaOrdenadaXcantDisp.Count - 1; indiceActual++)
+                {
+
+                    if (int.Parse(listaOrdenadaXcantDisp[indiceActual].CantDisp) < int.Parse(listaOrdenadaXcantDisp[indiceActual + 1].CantDisp))
+                    {
+                        auxProd = listaOrdenadaXcantDisp[indiceActual];
+                        listaOrdenadaXcantDisp[indiceActual] = listaOrdenadaXcantDisp[indiceActual + 1];
+                        listaOrdenadaXcantDisp[indiceActual + 1] = auxProd;
+                    }
+                }
+            }
+
             List<Producto> lstResult = listOrdenarPor.SelectedValue == "Cantidad disponible" ? listaOrdenadaXcantDisp : productos;
 
             return lstResult;
-
-
-
-
         }
+
+
+
+   
 
         private void listarPagina()
         {

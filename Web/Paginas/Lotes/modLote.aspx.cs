@@ -60,8 +60,8 @@ namespace Web.Paginas.Lotes
 
                 string nombreGranja = System.Web.HttpContext.Current.Session["nombreGranjaSel"].ToString();
                 string nombreProducto = System.Web.HttpContext.Current.Session["nombreProductoSel"].ToString();
-                string fchProduccion = System.Web.HttpContext.Current.Session["fchProduccionSel"].ToString();
-         //      string fchProduccion = DateTime.Parse(FchX).ToString("yyyy-MM-dd");
+                string fch = System.Web.HttpContext.Current.Session["fchProduccionSel"].ToString();
+                string fchProduccion = DateTime.Parse(fch).ToString("MM/dd/yyyy");
                 ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
                 Lote lote = Web.buscarLote(nombreGranja, nombreProducto, fchProduccion);
 
@@ -144,8 +144,9 @@ namespace Web.Paginas.Lotes
         private void cargarLote(Lote lote)
         {
  
-            txtFchProduccion.Text = lote.FchCaducidad.ToString();
-            txtFchCaducidad.Text = lote.FchCaducidad.ToString();
+            txtFchProduccion.Text = lote.FchProduccion.ToString();
+            string fchProduccion = DateTime.Parse(lote.FchCaducidad.ToString()).ToString("yyyy-MM-dd");
+            txtFchCaducidad.Text = fchProduccion;
             string cantidad = lote.Cantidad.ToString();
             string[] cant = cantidad.Split(' ');
             string count = cant[0].ToString();
@@ -356,14 +357,16 @@ namespace Web.Paginas.Lotes
                         if (double.Parse(txtPrecio.Text) > 0)
                         {
                             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                            string fchProduccion = HttpUtility.HtmlEncode(txtFchProduccion.Text);
+
+                            string fchProduccion = DateTime.Parse(txtFchProduccion.Text).ToString("MM/dd/yyyy");
                             Lote lote = Web.buscarLote(txtNomGranja.Text, txtNomProd.Text, fchProduccion);
 
                             int idGranja = int.Parse(lote.IdGranja.ToString());
                             int idProducto = int.Parse(lote.IdProducto.ToString());
                          
                             Producto producto = Web.buscarProducto(idProducto);
-                            string fchCaducidad = HttpUtility.HtmlEncode(txtFchCaducidad.Text);
+        
+                            string fchCaducidad = DateTime.Parse(txtFchCaducidad.Text).ToString("MM/dd/yyyy");
                             string cantidad = HttpUtility.HtmlEncode(txtCantidad.Text) + " " + producto.TipoVenta.ToString();
                             double precio = double.Parse(HttpUtility.HtmlEncode(txtPrecio.Text));
                             int idDeposito = int.Parse(HttpUtility.HtmlEncode(listDeposito.SelectedValue));
@@ -378,7 +381,7 @@ namespace Web.Paginas.Lotes
                                 limpiar();
                                 lblMensajes.Text = "Lote modificado con éxito.";
                                 limpiarIdSession();
-                                System.Web.HttpContext.Current.Session["LoteMod"] = "si";
+                                System.Web.HttpContext.Current.Session["LoteModMsj"] = "Lote modificado con éxito.";
                                 Response.Redirect("/Paginas/Lotes/frmLotes");
 
                             }

@@ -251,10 +251,11 @@ namespace Web.Paginas.Fertilizantes
             {
                 string nombreGranja = System.Web.HttpContext.Current.Session["nombreGranjaSel"].ToString();
                 string nombreProducto = System.Web.HttpContext.Current.Session["nombreProductoSel"].ToString();
-                string fchProduccion = System.Web.HttpContext.Current.Session["fchProduccionSel"].ToString();
+                string fch = System.Web.HttpContext.Current.Session["fchProduccionSel"].ToString();
+                string fchProduccion = DateTime.Parse(fch).ToString("MM/dd/yyyy");
                 Lote lote = Web.buscarLote(nombreGranja, nombreProducto, fchProduccion);
                 List<Fertilizante> mostrar = new List<Fertilizante>();
-                List<Lote_Ferti> fertisEnLote = Web.FertisEnLote(lote.IdGranja, lote.IdProducto, lote.FchProduccion);
+                List<Lote_Ferti> fertisEnLote = Web.FertisEnLote(lote.IdGranja, lote.IdProducto, fchProduccion);
                 foreach (Fertilizante ferti in fertilizantes)
                 {
                     int cont = 0;

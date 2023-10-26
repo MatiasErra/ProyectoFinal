@@ -77,88 +77,99 @@ namespace Web.Paginas.Admins
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
             List<Pedido> pedidos = Web.BuscarPedidoFiltro("", "", "", 0, 999999, "1000-01-01", "3000-12-30", "1000-01-01", "3000-12-30", "");
             List<Pedido> ganancia = new List<Pedido>();
-            if (pedidos.Count != 0)
+            foreach (Pedido unPedido in pedidos)
             {
-                foreach (Pedido unPedido in pedidos)
+                if (unPedido.Estado == "Finalizado")
                 {
-                    if (unPedido.Estado == "Finalizado")
-                    {
-                        string[] fecha = unPedido.FechaEntre.Split(' ')[0].Split('/');
+                    string[] fecha = unPedido.FechaEntre.Split(' ')[0].Split('/');
 
-                        if (mes == 0)
+                    if (mes == 0)
+                    {
+                        if (int.Parse(fecha[2]) == anio)
                         {
-                            if (int.Parse(fecha[2]) == anio)
-                            {
-                                ganancia.Add(unPedido);
-                            }
+                            ganancia.Add(unPedido);
                         }
-                        else
+                    }
+                    else
+                    {
+                        if (int.Parse(fecha[2]) == anio && int.Parse(fecha[1]) == mes)
                         {
-                            if (int.Parse(fecha[2]) == anio && int.Parse(fecha[1]) == mes)
-                            {
-                                ganancia.Add(unPedido);
-                            }
+                            ganancia.Add(unPedido);
                         }
                     }
                 }
-
-
-                if (ganancia.Count != 0)
-                {
-                    double totalPedido = 0;
-                    double totalProd = 0;
-                    double totalLote = 0;
-                    double totalViaje = 0;
-                    List<int> viajesId = new List<int>();
-
-                    foreach(Pedido unPedido in ganancia)
-                    {
-                        totalPedido += unPedido.Costo;
-                        List<string[]> productos = Web.buscarPedidoLote(unPedido.IdPedido);
-                        foreach (string[] unProductoL in productos)
-                        {
-                            string nomProd = unProductoL[2];
-                            string nomGranja = unProductoL[4];
-                            string fchProd = unProductoL[5];
-
-                            string cant = unProductoL[9].ToString().Split(' ')[0];
-
-                            totalProd += double.Parse(unProductoL[7].ToString()) * double.Parse(cant);
-
-                            Lote unLote = Web.buscarLote(nomGranja, nomProd, fchProd);
-
-                            totalLote += unLote.Precio * double.Parse(cant);
-
-                            Viaje via = new Viaje(0, 0, "", 0, 0, "Finalizado");
-                            List<Viaje> viajes = Web.buscarViajeFiltro(via, 0, 99999, "1000-01-01", "3000-12-30", "");
-
-                            foreach (Viaje unViaje in viajes)
-                            {
-                                List<Viaje_Lot_Ped> vLP = Web.buscarViajePedLote(unPedido.IdPedido, unViaje.IdViaje);
-                                if(vLP != null)
-                                {
-                                    int cont = 0;
-                                    foreach(int unViajeId in viajesId)
-                                    {
-                                        if (unViajeId == unViaje.IdViaje)
-                                        {
-                                            cont++;
-                                        }
-                                    }
-                                    if(cont == 0)
-                                    {
-                                        totalViaje += unViaje.Costo;
-                                    }
-                                }
-                            }
-                            
-                        }
-                    }
-                    lblGanancias.Text = "La ganancia total de esta fecha es de $"+ (totalPedido - (totalProd+totalViaje+totalLote));
-                }
-                else lblMensajes.Text = "No hay ningún pedido ese año/mes.";
             }
-            else lblMensajes.Text = "No hay ningún pedido registrado.";
+
+            double totalPedido = 0;
+            double totalLote = 0;
+            double totalViaje = 0;
+
+            foreach (Pedido unPedido in ganancia)
+            {
+                totalPedido += unPedido.Costo;
+
+            }
+
+            Lote lote = new Lote(0, 0, "", "", "", 0, 0);
+            List<Lote> lotes = Web.buscarFiltrarLotes(lote, 0, 99999999, "1000-01-01", "3000-12-30", "1000-01-01", "3000-12-30", "");
+            foreach (Lote unLote in lotes)
+            {
+                int cont = 0;
+                string[] fchProd = unLote.FchProduccion.Split(' ')[0].Split('/');
+
+                if (mes == 0)
+                {
+                    if (int.Parse(fchProd[2]) == anio)
+                    {
+                        cont++;
+                    }
+                }
+                else
+                {
+                    if (int.Parse(fchProd[2]) == anio && int.Parse(fchProd[1]) == mes)
+                    {
+                        cont++;
+                    }
+                }
+
+                if (cont == 1)
+                {
+                    totalLote += int.Parse(unLote.Cantidad.Split(' ')[0]) * unLote.Precio;
+                }
+
+
+            }
+            Viaje unVia = new Viaje(0, 0, "", 0, 0, "");
+            List<Viaje> viajes = Web.buscarViajeFiltro(unVia, 0, 999999, "1000-01-01", "3000-12-30", "");
+            foreach (Viaje unViaje in viajes)
+            {
+                int cont = 0;
+
+                string[] fchVia = unViaje.Fecha.Split(' ')[0].Split('/');
+
+                if (mes == 0)
+                {
+                    if (int.Parse(fchVia[2]) == anio)
+                    {
+                        cont++;
+                    }
+                }
+                else
+                {
+                    if (int.Parse(fchVia[2]) == anio && int.Parse(fchVia[1]) == mes)
+                    {
+                        cont++;
+                    }
+                }
+
+                if (cont == 1)
+                {
+                    totalViaje += unViaje.Costo;
+                }
+            }
+
+
+            lblGanancias.Text = "La ganancia total de esta fecha es de $" + (totalPedido - (totalViaje + totalLote));
 
         }
 

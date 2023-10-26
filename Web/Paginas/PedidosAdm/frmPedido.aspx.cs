@@ -627,8 +627,9 @@ namespace Web.Paginas.PedidosADM
 
                     foreach (Lote unLote in lotes)
                     {
+                        int i = 0;
                         int idGranja = unLote.IdGranja;
-                        string FchProduccion = unLote.FchProduccion;
+                        string FchProduccion = unLote.FchProduccion; 
 
                         if (unProd.IdProducto == unLote.IdProducto)
                         {
@@ -639,6 +640,10 @@ namespace Web.Paginas.PedidosADM
 
                             foreach (string[] unPedi in lstPedi)
                             {
+                                string z = unPedi[1].ToString();
+                               string a = unPedi[0].ToString();
+                                string b = unPedi[3].ToString();
+                                string c = unPedi[5].ToString();
                                 if (unProd.IdProducto.ToString().Equals(unPedi[1].ToString())
                                       && unPedi[0].ToString().Equals(idPedido.ToString())
                                       && unPedi[3].ToString().Equals(idGranja.ToString())
@@ -647,23 +652,27 @@ namespace Web.Paginas.PedidosADM
                                     string[] cantStr = unPedi[9].ToString().Split(' ');
                                     cantTotal += int.Parse(cantStr[0].ToString());
                                     cant = int.Parse(cantStr[0].ToString());
+                                    i++;
                                 }
                             }
-                            string[] cantTotaLot = unProd.CantTotal.ToString().Split(' ');
-                            int resultadoDisp = int.Parse(cantTotaLot[0].ToString()) + cantTotal;
+                            if (i >= 1)
+                            {
+                                string[] cantTotaLot = unProd.CantTotal.ToString().Split(' ');
+                                int resultadoDisp = int.Parse(cantTotaLot[0].ToString()) + cantTotal;
 
-                            string cantDisp = resultadoDisp.ToString() + " " + unProd.TipoVenta.ToString();
+                                string cantDisp = resultadoDisp.ToString() + " " + unProd.TipoVenta.ToString();
 
-                            string[] cantLotearr = unLote.Cantidad.ToString().Split(' ');
-                            int resultadoLote = int.Parse(cantLotearr[0].ToString()) + cant;
+                                string[] cantLotearr = unLote.Cantidad.ToString().Split(' ');
+                                int resultadoLote = int.Parse(cantLotearr[0].ToString()) + cant;
 
-                            string cantLote = resultadoLote.ToString() + " " + unProd.TipoVenta.ToString();
-                            int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+                                string cantLote = resultadoLote.ToString() + " " + unProd.TipoVenta.ToString();
+                                int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
 
-                            Web.bajaPedidoProd(idPedido, idProducto, cantRess, 0, idAdmin);
+                                Web.bajaPedidoProd(idPedido, idProducto, cantRess, 0, idAdmin);
+                                string fchPRoduSQL = DateTime.Parse(unLote.FchProduccion).ToString("MM/dd/yyyy");
 
-                            Web.bajaLotesPedido(idPedido, idGranja, idProducto, FchProduccion, cantLote, cantDisp, cantRess, idAdmin);
-
+                                Web.bajaLotesPedido(idPedido, idGranja, idProducto, fchPRoduSQL, cantLote, cantDisp, cantRess, idAdmin);
+                            }
                         }
                     }
                 }
@@ -702,8 +711,8 @@ namespace Web.Paginas.PedidosADM
                             int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
 
                             Web.bajaPedidoProd(idPedido, idProducto, cantRess, 0, idAdmin);
-
-                            Web.bajaLotesPedido(idPedido, idGranja, idProducto, FchProduccion, cantLote, cantDisp, cantRess, idAdmin);
+                            string fchPRoduSQL = DateTime.Parse(unLote.FchProduccion).ToString("MM/dd/yyyy");
+                            Web.bajaLotesPedido(idPedido, idGranja, idProducto, fchPRoduSQL, cantLote, cantDisp, cantRess, idAdmin);
 
                         }
                     }

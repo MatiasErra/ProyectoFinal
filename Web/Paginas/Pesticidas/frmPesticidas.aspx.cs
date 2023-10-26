@@ -245,10 +245,11 @@ namespace Web.Paginas.Pesticidas
             {
                 string nombreGranja = System.Web.HttpContext.Current.Session["nombreGranjaSel"].ToString();
                 string nombreProducto = System.Web.HttpContext.Current.Session["nombreProductoSel"].ToString();
-                string fchProduccion = System.Web.HttpContext.Current.Session["fchProduccionSel"].ToString();
+                string fch = System.Web.HttpContext.Current.Session["fchProduccionSel"].ToString();
+                string fchProduccion = DateTime.Parse(fch).ToString("MM/dd/yyyy");
                 Lote lote = Web.buscarLote(nombreGranja, nombreProducto, fchProduccion);
                 List<Pesticida> mostrar = new List<Pesticida>();
-                List<Lote_Pesti> pestisEnLote = Web.PestisEnLote(lote.IdGranja, lote.IdProducto, lote.FchProduccion);
+                List<Lote_Pesti> pestisEnLote = Web.PestisEnLote(lote.IdGranja, lote.IdProducto, fchProduccion);
                 foreach (Pesticida pesti in pesticidas)
                 {
                     int cont = 0;
@@ -303,6 +304,7 @@ namespace Web.Paginas.Pesticidas
                 lblPaginaAct.Visible = false;
                 lblPaginaSig.Visible = false;
                 lstPest.Visible = false;
+                lstPestSelct.Visible = false;
             }
             else
             {

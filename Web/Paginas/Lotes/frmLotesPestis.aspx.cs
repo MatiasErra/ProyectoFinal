@@ -69,8 +69,11 @@ namespace Web.Paginas.Lotes
 
                 string nombreGranja = System.Web.HttpContext.Current.Session["nombreGranjaSel"].ToString();
                 string nombreProducto = System.Web.HttpContext.Current.Session["nombreProductoSel"].ToString();
-                string fchProduccion = System.Web.HttpContext.Current.Session["fchProduccionSel"].ToString();
+                string fch = System.Web.HttpContext.Current.Session["fchProduccionSel"].ToString();
+                string fchProduccion = DateTime.Parse(fch).ToString("MM/dd/yyyy");
                 ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+
+
                 Lote lote = Web.buscarLote(nombreGranja, nombreProducto, fchProduccion);
 
                 if (System.Web.HttpContext.Current.Session["loteDatosMod"] != null)
@@ -86,7 +89,7 @@ namespace Web.Paginas.Lotes
                 {
                     cargarDatos();
                 }
-                CargarLote(nombreGranja, nombreProducto, fchProduccion);
+                CargarLote(nombreGranja, nombreProducto, fch);
                 CargarListPesticida(lote.IdGranja, lote.IdProducto, fchProduccion);
 
 
@@ -472,12 +475,14 @@ namespace Web.Paginas.Lotes
                 if (txtCantidadPesti.Text != "" && int.Parse(txtCantidadPesti.Text) > 0)
                 {
                     ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                    Lote lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
+
+                    string fchProduccion = DateTime.Parse(txtFechProd.Text).ToString("MM/dd/yyyy");
+                    Lote lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, fchProduccion);
 
                     int idPesticida = int.Parse(HttpUtility.HtmlEncode(listPesticida.SelectedValue));
                     int idGranja = lote.IdGranja;
                     int idProducto = lote.IdProducto;
-                    string fchProduccion = lote.FchProduccion;
+                    
 
                     string cantidad = HttpUtility.HtmlEncode(txtCantidadPesti.Text);
 
@@ -515,12 +520,14 @@ namespace Web.Paginas.Lotes
             Button btnConstultar = (Button)sender;
             GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            Lote lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
+
+            string fchProduccion = DateTime.Parse(txtFechProd.Text).ToString("MM/dd/yyyy");
+            Lote lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, fchProduccion);
 
             int idPesticida = int.Parse(HttpUtility.HtmlEncode(selectedrow.Cells[0].Text));
             int idGranja = lote.IdGranja;
             int idProducto = lote.IdProducto;
-            string fchProduccion = lote.FchProduccion;
+            
 
             int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
 
@@ -555,12 +562,14 @@ namespace Web.Paginas.Lotes
             Button btnConstultar = (Button)sender;
             GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            Lote lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
+
+            string fchProduccion = DateTime.Parse(txtFechProd.Text).ToString("MM/dd/yyyy");
+            Lote lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, fchProduccion);
 
             int idPesticida = int.Parse(HttpUtility.HtmlEncode(selectedrow.Cells[0].Text));
             int idGranja = lote.IdGranja;
             int idProducto = lote.IdProducto;
-            string fchProduccion = lote.FchProduccion;
+     
 
             System.Web.HttpContext.Current.Session["idPestiSel"] = idPesticida;
 
@@ -608,12 +617,13 @@ namespace Web.Paginas.Lotes
             if (txtCantidadPesti.Text != "" && int.Parse(txtCantidadPesti.Text) > 0)
             {
                 ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-                Lote lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
+                string fchProduccion = DateTime.Parse(txtFechProd.Text).ToString("MM/dd/yyyy");
+                Lote lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, fchProduccion);
 
                 int idPesticida = (int)System.Web.HttpContext.Current.Session["idPestiSel"];
                 int idGranja = lote.IdGranja;
                 int idProducto = lote.IdProducto;
-                string fchProduccion = lote.FchProduccion;
+             
                 string cantidad = HttpUtility.HtmlEncode(txtCantidadPesti.Text);
 
                 int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
@@ -664,11 +674,12 @@ namespace Web.Paginas.Lotes
             btnModificarCantidadPestiLote.Visible = false;
 
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            Lote lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
+            string fchProduccion = DateTime.Parse(txtFechProd.Text).ToString("MM/dd/yyyy");
+            Lote lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, fchProduccion);
 
             int idGranja = lote.IdGranja;
             int idProducto = lote.IdProducto;
-            string fchProduccion = lote.FchProduccion;
+           
 
             listarPagina(idGranja, idProducto, fchProduccion);
 
@@ -705,7 +716,8 @@ namespace Web.Paginas.Lotes
             lblPaginaAct.Text = "1";
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
 
-            Lote lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
+            string fchProduccion = DateTime.Parse(txtFechProd.Text).ToString("MM/dd/yyyy");
+            Lote lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, fchProduccion);
             listarPagina(lote.IdGranja, lote.IdProducto, lote.FchProduccion);
         }
 
@@ -738,7 +750,8 @@ namespace Web.Paginas.Lotes
             limpiar();
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
 
-            Lote lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
+            string fchProduccion = DateTime.Parse(txtFechProd.Text).ToString("MM/dd/yyyy");
+            Lote lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, fchProduccion);
             listarPagina(lote.IdGranja, lote.IdProducto, lote.FchProduccion);
         }
 
@@ -748,7 +761,8 @@ namespace Web.Paginas.Lotes
             lblPaginaAct.Text = "1";
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
 
-            Lote lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, txtFechProd.Text);
+            string fchProduccion = DateTime.Parse(txtFechProd.Text).ToString("MM/dd/yyyy");
+            Lote lote = Web.buscarLote(txtGranja.Text, txtProducto.Text, fchProduccion);
             listarPagina(lote.IdGranja, lote.IdProducto, lote.FchProduccion);
         }
 

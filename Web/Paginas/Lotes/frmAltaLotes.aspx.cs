@@ -490,7 +490,7 @@ namespace Web.Paginas.Lotes
                                     limpiar();
                                     listProductoUpdate();
                                     lblMensajes.Text = "Lote dado de alta con éxito.";
-                                    System.Web.HttpContext.Current.Session["LoteAlta"] = "si";
+                                    System.Web.HttpContext.Current.Session["LoteModMsj"] = "Lote dado de alta con éxito.";
                                     Response.Redirect("/Paginas/Lotes/frmLotes");
                                 }
                                 else lblMensajes.Text = "No se pudo dar de alta el lote.";

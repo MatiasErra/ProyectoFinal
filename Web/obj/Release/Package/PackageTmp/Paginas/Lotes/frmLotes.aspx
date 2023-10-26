@@ -58,7 +58,7 @@
                                 <div class="col-lg-6">
                                     <asp:Label Visible="false" ID="lblCant" runat="server">
                                         <asp:Label class="text initText" Text="Desde:" runat="server" />
-                                        <asp:TextBox ID="txtCantMenor" runat="server" CssClass="input--style-text-search" placeholder="Cantidad" MaxLength="10" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==8);;"></asp:TextBox>
+                                        <asp:TextBox ID="txtCantMenor" runat="server" CssClass="input--style-text-search" placeholder="Cantidad" MaxLength="8" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==8);;"></asp:TextBox>
                                         <asp:RegularExpressionValidator Display="Dynamic" runat="server"
                                             ControlToValidate="txtCantMenor"
                                             ValidationExpression="^[0-9]+$"
@@ -66,7 +66,7 @@
 
 
                                         <asp:Label class="text initText" Text="Hasta:" runat="server" />
-                                        <asp:TextBox ID="txtCantMayor" runat="server" CssClass="input--style-text-search" placeholder="Cantidad" MaxLength="10" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==8);;"></asp:TextBox>
+                                        <asp:TextBox ID="txtCantMayor" runat="server" CssClass="input--style-text-search" placeholder="Cantidad" MaxLength="8" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==8);;"></asp:TextBox>
                                         <asp:RegularExpressionValidator Display="Dynamic" runat="server"
                                             ControlToValidate="txtCantMayor"
                                             ValidationExpression="^[0-9]+$"
@@ -79,7 +79,7 @@
                                 <div class="col-lg-6">
                                     <asp:Label Visible="false" ID="lblPrecio" runat="server">
                                         <asp:Label class="text initText" Text="Desde:" runat="server" />
-                                        <asp:TextBox ID="txtPrecioMenor" CssClass="input--style-text-search" runat="server" placeholder="Precio" MaxLength="10" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==188 || event.keyCode==8);"></asp:TextBox>
+                                        <asp:TextBox ID="txtPrecioMenor" CssClass="input--style-text-search" runat="server" placeholder="Precio" MaxLength="8" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==188 || event.keyCode==8);"></asp:TextBox>
                                         <asp:RegularExpressionValidator Display="Dynamic" runat="server"
                                             ControlToValidate="txtPrecioMenor"
                                             ValidationExpression="([0-9])[0-9]*[,]?[0-9]*"
@@ -88,7 +88,7 @@
 
 
                                         <asp:Label class="text initText" Text="Hasta:" runat="server" />
-                                        <asp:TextBox ID="txtPrecioMayor" CssClass="input--style-text-search" runat="server" placeholder="Precio" MaxLength="10" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==188 || event.keyCode==8);"></asp:TextBox>
+                                        <asp:TextBox ID="txtPrecioMayor" CssClass="input--style-text-search" runat="server" placeholder="Precio" MaxLength="8" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==188 || event.keyCode==8);"></asp:TextBox>
                                         <asp:RegularExpressionValidator Display="Dynamic" runat="server"
                                             ControlToValidate="txtPrecioMayor"
                                             ValidationExpression="([0-9])[0-9]*[,]?[0-9]*"

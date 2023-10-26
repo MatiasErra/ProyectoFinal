@@ -682,7 +682,8 @@ namespace Web.Paginas.Viajes
             int idViaje = int.Parse(selectedrow.Cells[1].Text);
             string nombreGranja = selectedrow.Cells[2].Text;
             string nombreProducto = selectedrow.Cells[3].Text;
-            string fchProduccion = selectedrow.Cells[4].Text;
+            string fch = selectedrow.Cells[4].Text;
+            string fchProduccion = DateTime.Parse(fch).ToString("MM/dd/yyyy");
             string[] CantAsg = selectedrow.Cells[5].Text.Split(' ');
             int intCantAsg = int.Parse(CantAsg[0].ToString());
 
@@ -723,7 +724,7 @@ namespace Web.Paginas.Viajes
             }
             else
             {
-                lblMensajes.Text = "No se pudo elLote eliminado del viaje";
+                lblMensajes.Text = "No se pudo eliminar el lote del viaje";
             }
 
         }
@@ -740,7 +741,8 @@ namespace Web.Paginas.Viajes
             int idPedido = int.Parse(selectedrow.Cells[0].Text);
             string nombreGranja = selectedrow.Cells[1].Text;
             string nombreProducto = selectedrow.Cells[2].Text;
-            string fchProduccion = selectedrow.Cells[3].Text;
+            string fch = selectedrow.Cells[3].Text;
+            string fchProduccion = DateTime.Parse(fch).ToString("MM/dd/yyyy");
             string[] CantTotal = selectedrow.Cells[4].Text.Split(' ');
             int intCantTotal = int.Parse(CantTotal[0].ToString());
             string[] CantViaje = selectedrow.Cells[5].Text.Split(' ');
@@ -778,13 +780,13 @@ namespace Web.Paginas.Viajes
                     if (Web.altaViajePedido_Lote(viaje_Lot_Ped, stCantViajeAct, idAdmin))
                     {
                         listBuscarPedLote();
-                        lblMensajes.Text = "Se ingreso el pedido lote al viaje";
+                        lblMensajes.Text = "Se ingreso el lote al viaje";
              
 
                     }
                     else
                     {
-                        lblMensajes.Text = "No se pudo ingresar el pedido lote al viaje";
+                        lblMensajes.Text = "No se pudo ingresar el lote al viaje";
                     }
 
                 }

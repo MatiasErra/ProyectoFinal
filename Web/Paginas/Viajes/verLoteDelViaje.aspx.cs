@@ -435,7 +435,9 @@ namespace Web.Paginas.Viajes
             int idViaje = int.Parse(selectedrow.Cells[1].Text);
             string nombreGranja = selectedrow.Cells[2].Text;
             string nombreProducto = selectedrow.Cells[3].Text;
-            string fchProduccion = selectedrow.Cells[4].Text;
+            string fch = selectedrow.Cells[4].Text;
+            string fchProduccion = DateTime.Parse(fch).ToString("MM/dd/yyyy");
+
             string[] CantAsg = selectedrow.Cells[5].Text.Split(' ');
             int intCantAsg = int.Parse(CantAsg[0].ToString());
 
@@ -477,7 +479,7 @@ namespace Web.Paginas.Viajes
             }
             else
             {
-                lblMensajes.Text = "No se pudo elLote eliminado del viaje";
+                lblMensajes.Text = "No se pudo eliminar el lote del viaje";
             }
 
         }

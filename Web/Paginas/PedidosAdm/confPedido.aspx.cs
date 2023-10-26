@@ -753,7 +753,9 @@ namespace Web.Paginas.PedidosAdm
             GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
             string nombreGranja = selectedrow.Cells[0].Text;
             string nombreProducto = selectedrow.Cells[1].Text;
-            string fchProduccion = selectedrow.Cells[2].Text;
+            string fch = selectedrow.Cells[2].Text;
+            string fchProduccion = DateTime.Parse(fch).ToString("MM/dd/yyyy");
+
             string[] cantIngr = selectedrow.Cells[3].Text.Split(' ');
             int cantIntIngr = int.Parse(cantIngr[0].ToString());
 
@@ -820,8 +822,8 @@ namespace Web.Paginas.PedidosAdm
             GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
             string nombreGranja = selectedrow.Cells[0].Text;
             string nombreProducto = selectedrow.Cells[1].Text;
-            string fchProduccion = selectedrow.Cells[2].Text;
-
+            string fch = selectedrow.Cells[2].Text;
+            string fchProduccion = DateTime.Parse(fch).ToString("MM/dd/yyyy");
 
             string CantidadIng = selectedrow.Cells[3].Text.ToString();
             string[] CantArrayIng = CantidadIng.Split(' ');
@@ -922,8 +924,8 @@ namespace Web.Paginas.PedidosAdm
             GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
             string nombreGranja = selectedrow.Cells[0].Text;
             string nombreProducto = selectedrow.Cells[1].Text;
-            string fchProduccion = selectedrow.Cells[2].Text;
-
+            string fch = selectedrow.Cells[2].Text;
+            string fchProduccion = DateTime.Parse(fch).ToString("MM/dd/yyyy");
             string Cantidad = selectedrow.Cells[4].Text.ToString();
             string[] CantArray = Cantidad.Split(' ');
             int Cantidadint = int.Parse(CantArray[0]);
@@ -948,7 +950,7 @@ namespace Web.Paginas.PedidosAdm
                         Lote_Pedido lote_Pedido = new Lote_Pedido();
                         lote_Pedido.IdGranja = unLote.IdGranja;
                         lote_Pedido.IdProducto = unLote.IdProducto;
-                        lote_Pedido.FchProduccion = unLote.FchProduccion;
+                        lote_Pedido.FchProduccion = fchProduccion;
                         lote_Pedido.IdPedido = idPedido;
                         lote_Pedido.Cant = txtCantint.ToString() + " " + CantArray[1].ToString();
 

@@ -63,7 +63,7 @@ namespace Web.Paginas.Lotes
                 System.Web.HttpContext.Current.Session["idGranjaSel"] = null;
                 System.Web.HttpContext.Current.Session["idProductoSel"] = null;
                 System.Web.HttpContext.Current.Session["fchProduccionSel"] = null;
-       
+
 
                 CargarListGranja();
                 CargarListProducto();
@@ -106,17 +106,11 @@ namespace Web.Paginas.Lotes
                 comprobarBuscar();
                 listarPagina();
 
-                if (System.Web.HttpContext.Current.Session["LoteAlta"] != null)
-                {
-                    lblMensajes.Text = "Lote Añadido con éxito";
-                    System.Web.HttpContext.Current.Session["LoteAlta"] = null;
-                }
+               
 
-                if (System.Web.HttpContext.Current.Session["LoteMod"] != null)
-                {
-                    lblMensajes.Text = "Lote Modificado";
-                    System.Web.HttpContext.Current.Session["LoteMod"] = null;
-                }
+                lblMensajes.Text = System.Web.HttpContext.Current.Session["LoteModMsj"] != null ? System.Web.HttpContext.Current.Session["LoteModMsj"].ToString() : "";
+
+
 
             }
         }
@@ -716,7 +710,8 @@ namespace Web.Paginas.Lotes
             GridViewRow selectedrow = (GridViewRow)btnConstultar.NamingContainer;
             string nombreGranja = HttpUtility.HtmlEncode(selectedrow.Cells[0].Text);
             string nombreProducto = HttpUtility.HtmlEncode(selectedrow.Cells[1].Text);
-            string fchProduccion = HttpUtility.HtmlEncode(selectedrow.Cells[2].Text);
+            string fch = HttpUtility.HtmlEncode(selectedrow.Cells[2].Text);
+            string fchProduccion = DateTime.Parse(fch).ToString("MM/dd/yyyy");
             string cantidad = HttpUtility.HtmlEncode(selectedrow.Cells[4].Text);
 
             string CantTotal = CantTotalProd(nombreProducto, cantidad);
