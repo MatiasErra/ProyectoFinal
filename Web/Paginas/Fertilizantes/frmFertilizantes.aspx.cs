@@ -232,7 +232,7 @@ namespace Web.Paginas.Fertilizantes
 
         private int PagMax()
         {
-            return 2;
+            return 6;
         }
 
         private List<Fertilizante> obtenerFertilizantes()

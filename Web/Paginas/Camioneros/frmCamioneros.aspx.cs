@@ -269,7 +269,7 @@ namespace Web.Paginas.Camioneros
 
         private int PagMax()
         {
-            return 2;
+            return 6;
         }
 
 

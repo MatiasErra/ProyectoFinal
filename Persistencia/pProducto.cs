@@ -60,7 +60,7 @@ namespace Persistencia
             return resultado;
         }
 
-        public List<Producto> buscarProductoCatFiltro(string buscar, string tipo, string tipoVen, string ordenar)
+        public List<Producto> buscarProductoCatFiltro(string nombre, string tipo, string tipoVen, int precioMenor, int precioMayor, string ordenar)
         {
             List<Producto> resultado = new List<Producto>();
             try
@@ -73,9 +73,11 @@ namespace Persistencia
                 SqlCommand cmd = new SqlCommand("BuscarProductoCatFiltro", connect);
 
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@buscar", buscar));
+                cmd.Parameters.Add(new SqlParameter("@nombre", nombre));
                 cmd.Parameters.Add(new SqlParameter("@tipo", tipo));
                 cmd.Parameters.Add(new SqlParameter("@tipoVen", tipoVen));
+                cmd.Parameters.Add(new SqlParameter("@precioMenor", precioMenor));
+                cmd.Parameters.Add(new SqlParameter("@precioMayor", precioMayor));
                 cmd.Parameters.Add(new SqlParameter("@ordenar", ordenar));
 
                 using (SqlDataReader reader = cmd.ExecuteReader())

@@ -14,9 +14,9 @@ namespace persistenciaDB
             get
             {
 
-                //return @"Server=DBfrutasYverduras.mssql.somee.com;Database=DBfrutasYverduras; User=MatiasErra_SQLLogin_1; Password=z7xcqlycvx;";
+                return @"Server=DBfrutasYverduras.mssql.somee.com;Database=DBfrutasYverduras; User=MatiasErra_SQLLogin_1; Password=z7xcqlycvx;";
 
-                return @"Server=DESKTOP-PMKO4KD\SQLEXPRESS;Database=Proyecto; User=sa; Password=12;";
+                //return @"Server=DESKTOP-PMKO4KD\SQLEXPRESS;Database=Proyecto; User=sa; Password=12;";
             }
         }
 

@@ -112,7 +112,7 @@ namespace Web.Paginas.Viajes
         private int PagMax()
         {
 
-            return 4;
+            return 8;
         }
 
         private List<Viaje_Lot_Ped> ObtenerLotesViaje(int idPedido, int idViaje)

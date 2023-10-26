@@ -57,9 +57,15 @@ namespace Web.Paginas.Lotes
             if (!IsPostBack)
             {
 
+
                 string nombreGranja = System.Web.HttpContext.Current.Session["nombreGranjaSel"].ToString();
                 string nombreProducto = System.Web.HttpContext.Current.Session["nombreProductoSel"].ToString();
                 string fchProduccion = System.Web.HttpContext.Current.Session["fchProduccionSel"].ToString();
+         //      string fchProduccion = DateTime.Parse(FchX).ToString("yyyy-MM-dd");
+                ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+                Lote lote = Web.buscarLote(nombreGranja, nombreProducto, fchProduccion);
+
+
 
                 txtNomGranja.Text = nombreGranja;
                 txtNomProd.Text = nombreProducto;
@@ -71,7 +77,7 @@ namespace Web.Paginas.Lotes
                 }
                 else
                 {
-                    cargarLote(nombreGranja, nombreProducto, fchProduccion);
+                    cargarLote(lote);
                 }
 
             }
@@ -135,13 +141,11 @@ namespace Web.Paginas.Lotes
             System.Web.HttpContext.Current.Session["fchProduccionSel"] = null;
         }
 
-        private void cargarLote(string nombreGranja, string nombreProducto, string fchProduccion)
+        private void cargarLote(Lote lote)
         {
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            Lote lote = Web.buscarLote(nombreGranja, nombreProducto, fchProduccion);
-
-            txtFchProduccion.Text = DateTime.Parse(lote.FchProduccion).ToString("dd/MM/yyyy");
-            txtFchCaducidad.Text = DateTime.Parse(lote.FchCaducidad).ToString("yyyy-MM-dd");
+ 
+            txtFchProduccion.Text = lote.FchCaducidad.ToString();
+            txtFchCaducidad.Text = lote.FchCaducidad.ToString();
             string cantidad = lote.Cantidad.ToString();
             string[] cant = cantidad.Split(' ');
             string count = cant[0].ToString();

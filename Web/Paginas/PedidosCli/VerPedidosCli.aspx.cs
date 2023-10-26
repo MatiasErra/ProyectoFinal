@@ -265,7 +265,7 @@ namespace Web.Paginas.Catalogo
         private int PagMax()
         {
 
-            return 4;
+            return 6;
         }
 
 

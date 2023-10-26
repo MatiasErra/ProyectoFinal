@@ -22,7 +22,7 @@
 
 
                 <div class="input-group">
-                    <asp:TextBox ID="txtPass" runat="server" CssClass="input--style-tex" TextMode="Password" MaxLength="40" placeholder="Contraseña" onkeydown="event.keyCode!=32);"></asp:TextBox>
+                    <asp:TextBox ID="txtPass" runat="server" CssClass="input--style-tex" TextMode="Password" MaxLength="40" placeholder="Contraseña" onkeydown="return(event.keyCode!=32);"></asp:TextBox>
                     <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                         ControlToValidate="txtPass"
                         ValidationExpression="[a-zA-Z0-9-_.,]*$"

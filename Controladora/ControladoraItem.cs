@@ -347,10 +347,10 @@ namespace Controladoras
             return lst;
         }
 
-        public List<Producto> buscarProductoCatFiltro(string buscar, string tipo, string tipoVen, string ordenar)
+        public List<Producto> buscarProductoCatFiltro(string nombre, string tipo, string tipoVen, int precioMenor, int precioMayor, string ordenar)
         {
             ControladoraI inst = ControladoraI.obtenerInstancia();
-            List<Producto> lst = inst.buscarProductoCatFiltro(buscar, tipo, tipoVen, ordenar);
+            List<Producto> lst = inst.buscarProductoCatFiltro(nombre, tipo, tipoVen, precioMenor, precioMayor, ordenar);
             return lst;
         }
 

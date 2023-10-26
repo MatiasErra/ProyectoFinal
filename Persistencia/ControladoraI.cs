@@ -219,9 +219,9 @@ namespace Persistencia
             return new pProducto().buscarProductoFiltro(producto, precioMenor, precioMayor, ordenar);
         }
 
-        public List<Producto> buscarProductoCatFiltro(string buscar, string tipo, string tipoVen, string ordenar)
+        public List<Producto> buscarProductoCatFiltro(string nombre, string tipo, string tipoVen, int precioMenor, int precioMayor, string ordenar)
         {
-            return new pProducto().buscarProductoCatFiltro(buscar, tipo, tipoVen, ordenar);
+            return new pProducto().buscarProductoCatFiltro(nombre, tipo, tipoVen, precioMenor, precioMayor, ordenar);
         }
 
 

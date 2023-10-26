@@ -213,7 +213,7 @@ namespace Web.Paginas.Camiones
 
         private int PagMax()
         {
-            return 2;
+            return 6;
         }
 
         private void listarPagina()

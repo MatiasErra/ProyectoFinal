@@ -126,7 +126,7 @@ namespace Web.Paginas.Granjass
             txtNombreBuscar.Text = "";
             txtUbicacionBuscar.Text = "";
             lstDueñoBuscar.SelectedValue = "Seleccione un Dueño";
-
+            listDueño.SelectedValue = "Seleccione un Dueño";
             txtNombre.Text = "";
             txtUbicacion.Text = "";
             listBuscarPor.SelectedValue = "Buscar por";
@@ -229,7 +229,7 @@ namespace Web.Paginas.Granjass
 
         private int PagMax()
         {
-            return 2;
+            return 6;
         }
 
 

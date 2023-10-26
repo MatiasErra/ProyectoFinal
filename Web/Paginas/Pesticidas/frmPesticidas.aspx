@@ -38,17 +38,17 @@
                                     <div class="col-lg-6">
                                         <asp:Label Visible="false" runat="server" ID="lblPh">
                                             <asp:Label class="text initText" Text="Desde:" runat="server" />
-                                            <asp:TextBox ID="txtPhMenorBuscar" CssClass="input--style-text-search" runat="server" placeholder="pH" MaxLength="4" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==188 || event.keyCode==8);"></asp:TextBox>
+                                            <asp:TextBox ID="txtPhMenorBuscar" CssClass="input--style-text-search" runat="server" placeholder="pH" MaxLength="4" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==190 || event.keyCode==8);"></asp:TextBox>
                                             <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                                                 ControlToValidate="txtPhMenorBuscar"
-                                                ValidationExpression="([0-9])[0-9]*[,]?[0-9]*"
+                                                ValidationExpression="([0-9])[0-9]*[.]?[0-9]*"
                                                 ErrorMessage="Solo numeros" />
 
                                             <asp:Label class="text initText" Text="Desde:" runat="server" />
-                                            <asp:TextBox ID="txtPhMayorBuscar" CssClass="input--style-text-search" runat="server" placeholder="pH" MaxLength="4" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==188 || event.keyCode==8);"></asp:TextBox>
+                                            <asp:TextBox ID="txtPhMayorBuscar" CssClass="input--style-text-search" runat="server" placeholder="pH" MaxLength="4" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==190 || event.keyCode==8);"></asp:TextBox>
                                             <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                                                 ControlToValidate="txtPhMenorBuscar"
-                                                ValidationExpression="([0-9])[0-9]*[,]?[0-9]*"
+                                                ValidationExpression="([0-9])[0-9]*[.]?[0-9]*"
                                                 ErrorMessage="Solo numeros" />
                                         </asp:Label>
                                     </div>
@@ -114,10 +114,10 @@
 
 
                                     <div class="input-group">
-                                        <asp:TextBox ID="txtPH" CssClass="input--style-tex" MaxLength="4" runat="server" placeholder="PH" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==188 || event.keyCode==8);"></asp:TextBox>
+                                        <asp:TextBox ID="txtPH" CssClass="input--style-tex" MaxLength="4" runat="server" placeholder="PH" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==190 || event.keyCode==8);"></asp:TextBox>
                                         <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                                             ControlToValidate="txtPH"
-                                            ValidationExpression="([0-9])[0-9]*[,]?[0-9]*"
+                                            ValidationExpression="([0-9])[0-9]*[.]?[0-9]*"
                                             ErrorMessage="Solo numeros">
                                         </asp:RegularExpressionValidator>
 

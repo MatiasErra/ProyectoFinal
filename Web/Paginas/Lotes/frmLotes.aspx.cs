@@ -248,7 +248,7 @@ namespace Web.Paginas.Lotes
 
         private int PagMax()
         {
-            return 3;
+            return 6;
         }
 
 

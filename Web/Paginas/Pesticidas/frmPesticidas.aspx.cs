@@ -227,7 +227,7 @@ namespace Web.Paginas.Pesticidas
         private int PagMax()
         {
 
-            return 4;
+            return 6;
         }
 
         private List<Pesticida> obtenerPesticidas()

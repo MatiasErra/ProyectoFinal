@@ -6,7 +6,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-7 col-sm-11 m-3 p-3 text-center backforContent">
                 <div class="row rowLine">
-                    <h2 class="title">Modificar Deposito </h2>
+                    <h2 class="title">Modificar Depósitos</h2>
 
                 </div>
            

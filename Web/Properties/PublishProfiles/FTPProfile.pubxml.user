@@ -7,7 +7,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAPtcy8PZX7kWT6+Mc5cuahAAAAAACAAAAAAAQZgAAAAEAACAAAADhNrlfBi2wrgA5J7Nkmvgs5IgvaC8S3woWn/uZ/kAo5wAAAAAOgAAAAAIAACAAAADLJ9f0GvVgjzNAmNlu60gMYnMkVjuj7JVGHHrnXhjv4SAAAAAXk2GZ223o57V/hRwbiQYuTHtxyoNKz9T3ODHqnnEUNEAAAAC95U1V2BoyUq3bFkBa/U9jB24CxRt0K22R97kA5XqILhk/ruqulCOptYW87nb7DyyEwHgr6N17hlQhoSgo/UU4</EncryptedPassword>
     <_PublishTargetUrl>ftp://198.37.116.30/www.FrutasyVerdurasWeb.somee.com</_PublishTargetUrl>
-    <History>True|2023-10-20T03:11:31.0956607Z;False|2023-10-19T23:55:16.7576120-03:00;False|2023-10-19T23:47:45.7954201-03:00;False|2023-10-19T23:45:45.7685375-03:00;False|2023-10-19T23:43:11.9155176-03:00;False|2023-10-19T23:41:18.0292087-03:00;True|2023-10-19T23:38:57.2073353-03:00;False|2023-10-19T23:25:37.8247349-03:00;False|2023-10-19T23:25:01.3535401-03:00;False|2023-10-19T23:24:36.2037443-03:00;False|2023-10-19T23:23:49.3676175-03:00;False|2023-10-19T23:23:12.9851310-03:00;</History>
+    <History>True|2023-10-25T23:58:59.9165219Z;True|2023-10-25T20:15:37.8800230-03:00;True|2023-10-25T18:30:15.5900239-03:00;True|2023-10-24T16:22:51.2879208-03:00;True|2023-10-23T19:08:21.1452332-03:00;True|2023-10-20T16:54:13.4953307-03:00;True|2023-10-20T00:11:31.0956607-03:00;False|2023-10-19T23:55:16.7576120-03:00;False|2023-10-19T23:47:45.7954201-03:00;False|2023-10-19T23:45:45.7685375-03:00;False|2023-10-19T23:43:11.9155176-03:00;False|2023-10-19T23:41:18.0292087-03:00;True|2023-10-19T23:38:57.2073353-03:00;False|2023-10-19T23:25:37.8247349-03:00;False|2023-10-19T23:25:01.3535401-03:00;False|2023-10-19T23:24:36.2037443-03:00;False|2023-10-19T23:23:49.3676175-03:00;False|2023-10-19T23:23:12.9851310-03:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
@@ -18,10 +18,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/15/2023 15:23:49</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>10/19/2023 23:59:55</publishTime>
+      <publishTime>10/25/2023 20:47:23</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>10/19/2023 23:59:55</publishTime>
+      <publishTime>10/25/2023 20:47:23</publishTime>
     </File>
     <File Include="bin/AspNet.ScriptManager.jQuery.dll">
       <publishTime>10/15/2023 15:23:49</publishTime>
@@ -33,10 +33,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/19/2023 22:36:11</publishTime>
     </File>
     <File Include="bin/Controladora.dll">
-      <publishTime>10/19/2023 22:36:12</publishTime>
+      <publishTime>10/25/2023 18:18:04</publishTime>
     </File>
     <File Include="bin/Controladora.pdb">
-      <publishTime>10/19/2023 22:36:12</publishTime>
+      <publishTime>10/25/2023 18:18:04</publishTime>
     </File>
     <File Include="bin/es/Microsoft.AspNet.FriendlyUrls.resources.dll">
       <publishTime>10/15/2023 15:23:49</publishTime>
@@ -66,10 +66,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/15/2023 15:23:50</publishTime>
     </File>
     <File Include="bin/Persistencia.dll">
-      <publishTime>10/19/2023 22:36:12</publishTime>
+      <publishTime>10/25/2023 18:18:03</publishTime>
     </File>
     <File Include="bin/Persistencia.pdb">
-      <publishTime>10/19/2023 22:36:12</publishTime>
+      <publishTime>10/25/2023 18:18:03</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>10/15/2023 15:23:49</publishTime>
@@ -222,10 +222,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/15/2023 15:23:49</publishTime>
     </File>
     <File Include="bin/Web.dll">
-      <publishTime>10/19/2023 23:59:42</publishTime>
+      <publishTime>10/25/2023 20:46:28</publishTime>
     </File>
     <File Include="bin/Web.pdb">
-      <publishTime>10/19/2023 23:59:42</publishTime>
+      <publishTime>10/25/2023 20:46:28</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>10/15/2023 15:23:50</publishTime>
@@ -330,7 +330,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/15/2023 15:23:49</publishTime>
     </File>
     <File Include="Content/Estilos.css">
-      <publishTime>10/15/2023 15:23:49</publishTime>
+      <publishTime>10/20/2023 16:31:35</publishTime>
     </File>
     <File Include="Content/Site.css">
       <publishTime>10/15/2023 15:23:49</publishTime>
@@ -339,7 +339,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/15/2023 15:23:49</publishTime>
     </File>
     <File Include="Global.asax">
-      <publishTime>10/15/2023 15:23:49</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Imagenes/image1.png">
       <publishTime>10/15/2023 15:23:49</publishTime>
@@ -351,13 +351,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/15/2023 15:23:49</publishTime>
     </File>
     <File Include="Master/AGlobal.Master">
-      <publishTime>10/19/2023 21:50:46</publishTime>
+      <publishTime>10/25/2023 20:34:30</publishTime>
     </File>
     <File Include="Master/APedidos.Master">
-      <publishTime>10/19/2023 21:51:44</publishTime>
+      <publishTime>10/25/2023 20:45:15</publishTime>
     </File>
     <File Include="Master/AProductos.Master">
-      <publishTime>10/19/2023 21:52:20</publishTime>
+      <publishTime>10/25/2023 20:42:51</publishTime>
     </File>
     <File Include="Master/Default.Master">
       <publishTime>10/15/2023 15:23:49</publishTime>
@@ -366,13 +366,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/15/2023 15:23:49</publishTime>
     </File>
     <File Include="Paginas/Admins/frmAdmins.aspx">
-      <publishTime>10/15/2023 15:23:49</publishTime>
+      <publishTime>10/25/2023 20:33:35</publishTime>
     </File>
     <File Include="Paginas/Admins/modAdmin.aspx">
       <publishTime>10/15/2023 15:23:49</publishTime>
     </File>
     <File Include="Paginas/Camioneros/frmCamioneros.aspx">
-      <publishTime>10/15/2023 15:23:49</publishTime>
+      <publishTime>10/25/2023 20:33:36</publishTime>
     </File>
     <File Include="Paginas/Camioneros/modCamionero.aspx">
       <publishTime>10/15/2023 15:23:49</publishTime>
@@ -384,37 +384,37 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/15/2023 15:23:49</publishTime>
     </File>
     <File Include="Paginas/Catalogo/frmCatalogo.aspx">
-      <publishTime>10/15/2023 15:23:49</publishTime>
+      <publishTime>10/24/2023 18:07:44</publishTime>
     </File>
     <File Include="Paginas/Clientes/frmListarClientes.aspx">
       <publishTime>10/15/2023 15:23:49</publishTime>
     </File>
     <File Include="Paginas/Clientes/frmModificarCuenta.aspx">
-      <publishTime>10/15/2023 15:23:49</publishTime>
+      <publishTime>10/25/2023 20:01:01</publishTime>
     </File>
     <File Include="Paginas/Clientes/iniciarSesion.aspx">
-      <publishTime>10/15/2023 15:23:49</publishTime>
+      <publishTime>10/25/2023 20:00:23</publishTime>
     </File>
     <File Include="Paginas/Clientes/RegCliente.aspx">
-      <publishTime>10/15/2023 15:23:49</publishTime>
+      <publishTime>10/25/2023 20:00:43</publishTime>
     </File>
     <File Include="Paginas/Depositos/frmDepositos.aspx">
-      <publishTime>10/15/2023 15:23:49</publishTime>
+      <publishTime>10/24/2023 16:09:40</publishTime>
     </File>
     <File Include="Paginas/Depositos/modDep.aspx">
-      <publishTime>10/15/2023 15:23:49</publishTime>
+      <publishTime>10/25/2023 20:39:14</publishTime>
     </File>
     <File Include="Paginas/Estadisticas/frmAuditoria.aspx">
       <publishTime>10/15/2023 15:23:49</publishTime>
     </File>
     <File Include="Paginas/Estadisticas/frmEstadisticas.aspx">
-      <publishTime>10/15/2023 15:23:49</publishTime>
+      <publishTime>10/25/2023 20:36:58</publishTime>
     </File>
     <File Include="Paginas/Fertilizantes/frmFertilizantes.aspx">
-      <publishTime>10/15/2023 15:23:49</publishTime>
+      <publishTime>10/23/2023 18:55:30</publishTime>
     </File>
     <File Include="Paginas/Fertilizantes/modFert.aspx">
-      <publishTime>10/15/2023 15:23:49</publishTime>
+      <publishTime>10/23/2023 18:55:30</publishTime>
     </File>
     <File Include="Paginas/Granjas/frmGranjas.aspx">
       <publishTime>10/15/2023 15:23:49</publishTime>
@@ -438,7 +438,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/15/2023 15:23:49</publishTime>
     </File>
     <File Include="Paginas/Nav/frmInicio.aspx">
-      <publishTime>10/15/2023 15:23:49</publishTime>
+      <publishTime>10/20/2023 16:31:35</publishTime>
     </File>
     <File Include="Paginas/Nav/frmQuienesSomos.aspx">
       <publishTime>10/15/2023 15:23:49</publishTime>
@@ -459,10 +459,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/15/2023 15:23:49</publishTime>
     </File>
     <File Include="Paginas/Pesticidas/frmPesticidas.aspx">
-      <publishTime>10/15/2023 15:23:49</publishTime>
+      <publishTime>10/23/2023 18:55:30</publishTime>
     </File>
     <File Include="Paginas/Pesticidas/modPest.aspx">
-      <publishTime>10/15/2023 15:23:49</publishTime>
+      <publishTime>10/23/2023 18:55:30</publishTime>
     </File>
     <File Include="Paginas/Productos/frmProductos.aspx">
       <publishTime>10/15/2023 15:23:49</publishTime>
@@ -483,7 +483,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/17/2023 22:03:50</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>10/19/2023 23:59:51</publishTime>
+      <publishTime>10/25/2023 20:47:19</publishTime>
     </File>
     <File Include="Scripts/bootstrap.bundle.js">
       <publishTime>10/15/2023 15:23:49</publishTime>
@@ -612,7 +612,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/15/2023 15:23:49</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>10/19/2023 23:45:19</publishTime>
+      <publishTime>10/23/2023 18:56:39</publishTime>
     </File>
   </ItemGroup>
 </Project>

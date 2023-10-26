@@ -51,7 +51,7 @@
 
                 <div class="input-group">
                     <asp:Label class="text initText" Text="Contraseña actual" runat="server" />
-                    <asp:TextBox ID="txtPassActual" runat="server" CssClass="input--style-tex" TextMode="Password" MaxLength="40" placeholder="Contraseña" onkeydown="event.keyCode!=32);"></asp:TextBox>
+                    <asp:TextBox ID="txtPassActual" runat="server" CssClass="input--style-tex" TextMode="Password" MaxLength="40" placeholder="Contraseña" onkeydown="return(event.keyCode!=32);"></asp:TextBox>
                     <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                         ControlToValidate="txtPassActual"
                         ValidationExpression="[a-zA-Z0-9-_.,]*$"
@@ -69,7 +69,7 @@
 
                 <div class="input-group">
                     <asp:Label class="text initText" Text="Dirección" runat="server" />
-                    <asp:TextBox ID="txtDir" runat="server" CssClass="input--style-tex" placeholder="Dirección" MaxLength="40" onkeydown="return(!(event.keyCode>=90));"> </asp:TextBox>
+                    <asp:TextBox ID="txtDir" runat="server" CssClass="input--style-tex" placeholder="Dirección" MaxLength="40" onkeydown="return(!(event.keyCode>=91));"> </asp:TextBox>
                     <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                         ControlToValidate="txtDir"
                         ValidationExpression="^[a-zA-Z 0-9]*$"

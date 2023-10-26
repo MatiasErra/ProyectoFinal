@@ -9,7 +9,7 @@
 
                     <div class="row text-center">
                         <div class=" col-sm-12">
-                            <asp:DropDownList ID="listEstadisticas" CssClass="lstOrd btn--radius  align-self-center btn--srch" Width="200" AutoPostBack="true" OnSelectedIndexChanged="listEstadisticas_SelectedIndexChanged" runat="server"></asp:DropDownList>
+                            <asp:DropDownList ID="listEstadisticas" CssClass="lstOrd btn--radius  align-self-center btn--srch" Width="200" AutoPostBack="true" Enabled="false" OnSelectedIndexChanged="listEstadisticas_SelectedIndexChanged" runat="server"></asp:DropDownList>
                             <asp:Button ID="btnLimpiar" Class="btnE btn--radius btn--blue align-self-center btn--lst" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" />
                         </div>
                     </div>

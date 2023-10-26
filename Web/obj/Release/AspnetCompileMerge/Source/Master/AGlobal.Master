@@ -109,7 +109,7 @@
                                 </optgroup>
 
                                 <optgroup label="Depositos">
-                                    <option value="/Paginas/Depositos/frmDepositos">Gestión de Depositós</option>
+                                    <option value="/Paginas/Depositos/frmDepositos">Gestión de Depósitos</option>
                                 </optgroup>
                                 <optgroup label="Granjas">
                                     <option value="/Paginas/Granjas/frmGranjas">Gestión de Granjas</option>

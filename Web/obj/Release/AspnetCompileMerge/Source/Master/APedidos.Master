@@ -62,9 +62,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" aria-current="page" href="/Paginas/Nav/frmQuienesSomos">Quienes somos</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" aria-current="page" href="/Paginas/Catalogo/frmCatalogo">Ver productos</a>
-                        </li>
+             
                     </ul>
 
                     <ul class="navbar-nav mb-2 mb-lg-0">
@@ -84,6 +82,12 @@
                                     <option value="/Paginas/Viajes/frmViajes">Gestión de Viajes</option>
                                 </optgroup>
                             </select>
+                        </li>
+
+                        <li class="me-2">
+
+                            <a class="nav-link text-light" aria-current="page"><%= nombre %></a>
+
                         </li>
 
                         <li class="me-2">

@@ -270,7 +270,7 @@ namespace Web.Paginas.PedidosAdm
 
         private int PagMax()
         {
-            return 1;
+            return 4;
         }
 
 

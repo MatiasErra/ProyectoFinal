@@ -214,7 +214,7 @@ namespace Web.Paginas.Clientes
 
         private int PagMax()
         {
-            return 2;
+            return 6;
         }
 
         private List<Cliente> obtenerClientes()

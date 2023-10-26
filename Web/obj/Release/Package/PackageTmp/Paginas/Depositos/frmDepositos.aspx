@@ -176,7 +176,7 @@
                                                 <asp:BoundField DataField="Temperatura"
                                                     HeaderText="Temperatura" ItemStyle-CssClass="GridStl" />
                                                 <asp:BoundField DataField="Condiciones"
-                                                    HeaderText="Condiciones" ItemStyle-CssClass="GridStl" />
+                                                    HeaderText="Humedad" ItemStyle-CssClass="GridStl" />
 
 
                                                 <asp:TemplateField HeaderText="Opciones del administrador"

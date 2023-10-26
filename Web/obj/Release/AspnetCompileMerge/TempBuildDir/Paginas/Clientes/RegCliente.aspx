@@ -61,10 +61,10 @@
 
                 <div class="input-group">
 
-                    <asp:TextBox ID="txtPass" runat="server" CssClass="input--style-tex" TextMode="Password" MaxLength="40" placeholder="Contraseña" onkeydown="event.keyCode!=32);"></asp:TextBox>
+                    <asp:TextBox ID="txtPass" runat="server" CssClass="input--style-tex" TextMode="Password" MaxLength="40" placeholder="Contraseña" onkeydown="return(event.keyCode!=32);"></asp:TextBox>
                     <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                         ControlToValidate="txtPass"
-                        ValidationExpression="[a-zA-Z0-9-_.,]*$"
+                       ValidationExpression="[a-zA-Z0-9-_.,]*$"
                         ErrorMessage="No es una letra valida" />
 
 
@@ -72,7 +72,7 @@
                 </div>
                 <div class="input-group">
 
-                    <asp:TextBox ID="txtDir" runat="server" CssClass="input--style-tex" placeholder="Dirección" MaxLength="40" onkeydown="return(!(event.keyCode>=90));"> </asp:TextBox>
+                    <asp:TextBox ID="txtDir" runat="server" CssClass="input--style-tex" placeholder="Dirección" MaxLength="40" onkeydown="return(!(event.keyCode>=91));"> </asp:TextBox>
                     <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                         ControlToValidate="txtDir"
                         ValidationExpression="^[a-zA-Z 0-9]*$"

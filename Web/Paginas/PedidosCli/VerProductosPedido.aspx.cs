@@ -117,7 +117,7 @@ namespace Web.Paginas.Pedidos
         private int PagMax()
         {
             //Devuelve la cantidad de productos por pagina
-            return 4;
+            return 6;
         }
 
         private List<string[]> obtenerProductos(int idPedido)

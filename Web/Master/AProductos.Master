@@ -61,21 +61,19 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" aria-current="page" href="/Paginas/Nav/frmQuienesSomos">Quienes somos</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" aria-current="page" href="/Paginas/Catalogo/frmCatalogo">Ver productos</a>
-                        </li>
+                    
                     </ul>
 
                     <ul class="navbar-nav mb-2 mb-lg-0">
                         <li class="nav-item dropdown">
                             <select name="Gestion" class="nav-link dropdown-toggle text-light bg-dark me-1" onchange="location = this.value;">
                                 <option style="display: none">Gestión</option>
-                          
+
                                 <optgroup label="Productos">
                                     <option value="/Paginas/Productos/frmProductos">Gestión de Productos</option>
                                 </optgroup>
                                 <optgroup label="Depositos">
-                                    <option value="/Paginas/Depositos/frmDepositos">Gestión de Depositos</option>
+                                    <option value="/Paginas/Depositos/frmDepositos">Gestión de Depósitos</option>
                                 </optgroup>
                                 <optgroup label="Granjas">
                                     <option value="/Paginas/Granjas/frmGranjas">Gestión de Granjas</option>
@@ -92,16 +90,18 @@
                             </select>
                         </li>
 
-
-                        
                         <li class="me-2">
-                            <asp:Button runat="server" CssClass="btn btn-outline-light mb-1" OnClick="btnCerrarSesion_Click" Text="Cerrar sesión" />
+
+                            <a class="nav-link text-light" aria-current="page"><%= nombre %></a>
+
                         </li>
 
 
                         <li class="me-2">
                             <asp:Button runat="server" CssClass="btn btn-outline-light mb-1" OnClick="btnCerrarSesion_Click" Text="Cerrar sesión" />
                         </li>
+
+
 
                     </ul>
                 </div>

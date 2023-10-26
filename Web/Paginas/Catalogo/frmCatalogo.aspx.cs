@@ -61,33 +61,33 @@ namespace Web.Paginas
                     lblPaginaAct.Text = System.Web.HttpContext.Current.Session["PagAct"].ToString();
                     System.Web.HttpContext.Current.Session["PagAct"] = null;
                 }
-
+                CargarListBuscar();
                 CargarListFiltroTipo();
                 CargarListFiltroTipoVen();
                 CargarListOrdenarPor();
-                if (System.Web.HttpContext.Current.Session["Buscar"] != null)
-                {
-                    txtBuscar.Text = System.Web.HttpContext.Current.Session["Buscar"].ToString();
-                    System.Web.HttpContext.Current.Session["Buscar"] = null;
-                }
 
-                if (System.Web.HttpContext.Current.Session["FiltroTipo"] != null)
-                {
-                    listFiltroTipo.SelectedValue = System.Web.HttpContext.Current.Session["FiltroTipo"].ToString();
-                    System.Web.HttpContext.Current.Session["FiltroTipo"] = null;
-                }
 
-                if (System.Web.HttpContext.Current.Session["FiltroTipoVen"] != null)
-                {
-                    listFiltroVen.SelectedValue = System.Web.HttpContext.Current.Session["FiltroTipoVen"].ToString();
-                    System.Web.HttpContext.Current.Session["FiltroTipoVen"] = null;
-                }
 
-                if (System.Web.HttpContext.Current.Session["OrdenarPorCatalogo"] != null)
-                {
-                    listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPorCatalogo"].ToString();
-                    System.Web.HttpContext.Current.Session["OrdenarPorCatalogo"] = null;
-                }
+                // Buscador
+                txtBuscar.Text = System.Web.HttpContext.Current.Session["BuscarCatNomProd"] != null ? System.Web.HttpContext.Current.Session["BuscarCatNomProd"].ToString() : "";
+                System.Web.HttpContext.Current.Session["BuscarCatNomProd"] = null;
+
+                txtPrecioMenorBuscar.Text = System.Web.HttpContext.Current.Session["precioMenorProductoBuscarCat"] != null ? System.Web.HttpContext.Current.Session["precioMenorProductoBuscarCat"].ToString() : "";
+                System.Web.HttpContext.Current.Session["precioMenorProductoBuscarCat"] = null;
+
+                txtPrecioMayorBuscar.Text = System.Web.HttpContext.Current.Session["precioMayorProductoBuscarCat"] != null ? System.Web.HttpContext.Current.Session["precioMayorProductoBuscarCat"].ToString() : "";
+                System.Web.HttpContext.Current.Session["precioMayorProductoBuscarCat"] = null;
+
+                // Listas
+                listFiltroTipo.SelectedValue = System.Web.HttpContext.Current.Session["FiltroTipoProdCat"] != null ? System.Web.HttpContext.Current.Session["FiltroTipoProdCat"].ToString() : "Seleccione un tipo de producto";
+                System.Web.HttpContext.Current.Session["FiltroTipoProdCat"] = null;
+
+                listFiltroVen.SelectedValue = System.Web.HttpContext.Current.Session["FiltroTipoVenCat"] != null ? System.Web.HttpContext.Current.Session["FiltroTipoVenCat"].ToString() : "Seleccione un tipo de venta";
+                System.Web.HttpContext.Current.Session["FiltroTipoVenCat"] = null;
+                listBuscarPor.SelectedValue = System.Web.HttpContext.Current.Session["BuscarLstCat"] != null ? System.Web.HttpContext.Current.Session["BuscarLstCat"].ToString() : "Buscar por";
+                System.Web.HttpContext.Current.Session["BuscarLstCat"] = null;
+                listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPorCatalogo"] != null ? System.Web.HttpContext.Current.Session["OrdenarPorCatalogo"].ToString() : "Ordernar por";
+                System.Web.HttpContext.Current.Session["OrdenarPorCatalogo"] = null;
 
 
 
@@ -99,7 +99,17 @@ namespace Web.Paginas
         }
         #endregion
 
+
         #region Utilidad
+
+        private void comprobarBuscar()
+        {
+            txtBuscar.Visible = listBuscarPor.SelectedValue == "Nombre" ? true : false;
+            listFiltroTipo.Visible = listBuscarPor.SelectedValue == "Tipo" ? true : false;
+            listFiltroVen.Visible = listBuscarPor.SelectedValue == "Tipo venta" ? true : false;
+            lblPrecio.Visible = listBuscarPor.SelectedValue == "Precio" ? true : false;
+        }
+
         static int GenerateUniqueId()
         {
             Guid guid = Guid.NewGuid();
@@ -130,13 +140,33 @@ namespace Web.Paginas
 
         }
 
+        private void guardarBuscar()
+        {
+            System.Web.HttpContext.Current.Session["BuscarCatNomProd"] = txtBuscar.Text;
+            System.Web.HttpContext.Current.Session["FiltroTipoProdCat"] = listFiltroTipo.SelectedValue != "Seleccione un tipo de producto" ? listFiltroTipo.SelectedValue : null ;
+            System.Web.HttpContext.Current.Session["FiltroTipoVenCat"] = listFiltroVen.SelectedValue != "Seleccione un tipo de venta" ? listFiltroVen.SelectedValue : null ; 
+
+
+            System.Web.HttpContext.Current.Session["precioMenorProductoBuscarCat"] = txtPrecioMenorBuscar.Text;
+            System.Web.HttpContext.Current.Session["precioMayorProductoBuscarCat"] = txtPrecioMayorBuscar.Text;
+            System.Web.HttpContext.Current.Session["BuscarLstCat"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["OrdenarPorCatalogo"] = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : null;
+        }
 
 
         private void limpiar()
         {
-            listFiltroVen.SelectedValue = "Filtrar por tipo de venta";
-            listFiltroTipo.SelectedValue = "Filtrar por tipo";
+            lblMensajes.Text = "";
+
+            txtBuscar.Text = "";
+            listFiltroVen.SelectedValue = "Seleccione un tipo de venta";
+            listFiltroTipo.SelectedValue = "Seleccione un tipo de producto";
+
+            txtPrecioMenorBuscar.Text = "";
+            txtPrecioMayorBuscar.Text = "";
+            listBuscarPor.SelectedValue = "Buscar por";
             listOrdenarPor.SelectedValue = "Ordenar por";
+            comprobarBuscar();
             lblPaginaAct.Text = "1";
             listarPagina();
         }
@@ -145,43 +175,41 @@ namespace Web.Paginas
         private int PagMax()
         {
 
-            return 4;
+            return 6;
         }
 
         private List<Producto> obtenerProductos()
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            string buscar = txtBuscar.Text;
-            string tipo = "";
-            string tipoVen = "";
-            string ordenar = "";
-            if (listFiltroTipo.SelectedValue != "Filtrar por tipo")
-            {
-                tipo = listFiltroTipo.SelectedValue;
-            }
+            string nombre = HttpUtility.HtmlEncode(txtBuscar.Text);
+            string tipo = listFiltroTipo.SelectedValue != "Seleccione un tipo de producto" ? listFiltroTipo.SelectedValue : "";
+            string tipoVen = listFiltroVen.SelectedValue != "Seleccione un tipo de venta" ? listFiltroVen.SelectedValue : "";
+            int precioMenor = txtPrecioMenorBuscar.Text == "" ? 0 : int.Parse(txtPrecioMenorBuscar.Text);
+            int precioMayor = txtPrecioMayorBuscar.Text == "" ? 999999 : int.Parse(txtPrecioMayorBuscar.Text);
+            string ordenar = listOrdenarPor.SelectedValue != "Ordenar por" ? listOrdenarPor.SelectedValue : "";
 
 
-            if (listFiltroVen.SelectedValue != "Filtrar por tipo de venta")
-            {
-                tipoVen = listFiltroVen.SelectedValue;
-            }
-
-
-            if (listOrdenarPor.SelectedValue != "Ordenar por")
-            {
-                ordenar = listOrdenarPor.SelectedValue;
-            }
-
-            List<Producto> productos = Web.buscarProductoCatFiltro(buscar, tipo, tipoVen, ordenar);
+            List<Producto> productos = Web.buscarProductoCatFiltro(nombre, tipo, tipoVen, precioMenor, precioMayor, ordenar);
             foreach (Producto unProducto in productos)
             {
                 string Imagen = "data:image/jpeg;base64,";
                 Imagen += unProducto.Imagen;
                 Imagen = $"<img style=\"max-width:100px\" src=\"{Imagen}\">";
                 unProducto.Imagen = Imagen;
+                int cant = int.Parse(unProducto.CantTotal.Split(' ')[0]);
+                int cantRes = int.Parse(unProducto.CantRes.Split(' ')[0]);
+                unProducto.CantDisp = (cant - cantRes).ToString();
             }
 
-            return productos;
+            List<Producto> listaOrdenadaXcantDisp = productos.OrderByDescending(Producto => Producto.CantDisp.Equals("0")).ThenBy(Producto => Producto.CantDisp).ToList();
+            listaOrdenadaXcantDisp.Reverse();
+            List<Producto> lstResult = listOrdenarPor.SelectedValue == "Cantidad disponible" ? listaOrdenadaXcantDisp : productos;
+
+            return lstResult;
+
+
+
+
         }
 
         private void listarPagina()
@@ -330,6 +358,7 @@ namespace Web.Paginas
                         producto.TipoVenta = prod.TipoVenta;
                         producto.Imagen = prod.Imagen;
                         producto.Precio = prod.Precio;
+                        producto.CantDisp = prod.CantDisp;
                         lstProductos.Add(producto);
                     }
 
@@ -355,11 +384,12 @@ namespace Web.Paginas
             DataTable dt = new DataTable();
 
 
-            dt.Columns.AddRange(new DataColumn[5] {
+            dt.Columns.AddRange(new DataColumn[6] {
                 new DataColumn("Nombre", typeof(string)),
                 new DataColumn("Tipo", typeof(string)),
                 new DataColumn("TipoVenta", typeof(string)),
                 new DataColumn("Precio", typeof(string)),
+                new DataColumn("CantDisp", typeof(string)),
                 new DataColumn("Imagen", typeof(string))
 
            });
@@ -371,6 +401,7 @@ namespace Web.Paginas
                 dr["Tipo"] = unProducto.Tipo.ToString();
                 dr["TipoVenta"] = unProducto.TipoVenta.ToString();
                 dr["Precio"] = unProducto.Precio.ToString() + " $";
+                dr["CantDisp"] = unProducto.CantDisp.ToString() + " " + unProducto.TipoVenta.ToString();
                 dr["Imagen"] = unProducto.Imagen.ToString();
 
 
@@ -383,6 +414,47 @@ namespace Web.Paginas
 
 
         #region DropDownBoxes
+
+        #region Buscador
+
+        public void CargarListBuscar()
+        {
+            listBuscarPor.DataSource = null;
+            listBuscarPor.DataSource = createDataSourceBuscar();
+            listBuscarPor.DataTextField = "nombre";
+            listBuscarPor.DataValueField = "id";
+            listBuscarPor.DataBind();
+        }
+
+        ICollection createDataSourceBuscar()
+        {
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("nombre", typeof(String)));
+            dt.Columns.Add(new DataColumn("id", typeof(String)));
+
+            dt.Rows.Add(createRow("Buscar por", "Buscar por", dt));
+            dt.Rows.Add(createRow("Nombre", "Nombre", dt));
+            dt.Rows.Add(createRow("Tipo", "Tipo", dt));
+            dt.Rows.Add(createRow("Tipo venta", "Tipo venta", dt));
+            dt.Rows.Add(createRow("Precio", "Precio", dt));
+            DataView dv = new DataView(dt);
+            return dv;
+        }
+
+        #endregion
+
+        DataRow createRow(String Text, String Value, DataTable dt)
+        {
+            DataRow dr = dt.NewRow();
+
+            dr[0] = Text; dr[1] = Value;
+
+            return dr;
+        }
+
+        #endregion
+
 
         #region Filtro
 
@@ -403,7 +475,7 @@ namespace Web.Paginas
             dt.Columns.Add(new DataColumn("nombre", typeof(String)));
             dt.Columns.Add(new DataColumn("id", typeof(String)));
 
-            dt.Rows.Add(createRow("Filtrar por tipo", "Filtrar por tipo", dt));
+            dt.Rows.Add(createRow("Seleccione un tipo de producto", "Seleccione un tipo de producto", dt));
             dt.Rows.Add(createRow("Fruta", "Fruta", dt));
             dt.Rows.Add(createRow("Verdura", "Verdura", dt));
 
@@ -431,7 +503,7 @@ namespace Web.Paginas
             dt.Columns.Add(new DataColumn("nombre", typeof(String)));
             dt.Columns.Add(new DataColumn("id", typeof(String)));
 
-            dt.Rows.Add(createRow("Filtrar por tipo de venta", "Filtrar por tipo de venta", dt));
+            dt.Rows.Add(createRow("Seleccione un tipo de venta", "Seleccione un tipo de venta", dt));
             dt.Rows.Add(createRow("Kilos", "Kilos", dt));
             dt.Rows.Add(createRow("Unidades", "Unidades", dt));
 
@@ -463,6 +535,8 @@ namespace Web.Paginas
             dt.Rows.Add(createRow("Nombre", "Nombre", dt));
             dt.Rows.Add(createRow("Tipo", "Tipo", dt));
             dt.Rows.Add(createRow("Tipo de venta", "Tipo de venta", dt));
+            dt.Rows.Add(createRow("Precio", "Precio", dt));
+            dt.Rows.Add(createRow("Cantidad disponible", "Cantidad disponible", dt));
 
 
             DataView dv = new DataView(dt);
@@ -471,16 +545,7 @@ namespace Web.Paginas
 
         #endregion
 
-        DataRow createRow(String Text, String Value, DataTable dt)
-        {
-            DataRow dr = dt.NewRow();
-
-            dr[0] = Text;
-            dr[1] = Value;
-
-            return dr;
-        }
-
+  
         #endregion
 
         protected void listFiltroTipo_SelectedIndexChanged(object sender, EventArgs e)
@@ -495,7 +560,6 @@ namespace Web.Paginas
             listarPagina();
         }
 
-        #endregion
 
         #region Botones
 
@@ -653,14 +717,38 @@ namespace Web.Paginas
             }
             else
             {
-                lblMensajes.Text = "Debe iniciar sesión para hacer un pedido";
+                lblMensajes.Text = "Debe iniciar sesión como cliente para hacer un pedido";
             }
         }
 
+
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            lblPaginaAct.Text = "1";
-            listarPagina();
+            int num = 0;
+            try
+            {
+                if (int.Parse(txtPrecioMenorBuscar.Text) <= int.Parse(txtPrecioMayorBuscar.Text)) num++;
+            }
+            catch
+            {
+                num++;
+            }
+
+            if (num == 1)
+            {
+                lblPaginaAct.Text = "1";
+                listarPagina();
+            }
+            else
+            {
+                lblMensajes.Text = "El precio menor es mayor.";
+                listBuscarPor.SelectedValue = "Precio";
+                comprobarBuscar();
+            }
+        }
+        protected void listBuscarPor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            comprobarBuscar();
         }
 
         protected void lblPaginaAnt_Click(object sender, EventArgs e)
@@ -668,11 +756,11 @@ namespace Web.Paginas
             string p = lblPaginaAct.Text.ToString();
             int pagina = int.Parse(p);
             System.Web.HttpContext.Current.Session["PagAct"] = (pagina - 1).ToString();
-            System.Web.HttpContext.Current.Session["Buscar"] = txtBuscar.Text;
-            System.Web.HttpContext.Current.Session["FiltroTipo"] = listFiltroTipo.SelectedValue;
-            System.Web.HttpContext.Current.Session["FiltroTipoVen"] = listFiltroVen.SelectedValue;
-            System.Web.HttpContext.Current.Session["OrdenarPorCatalogo"] = listOrdenarPor.SelectedValue;
+
+            guardarBuscar();
+
             Server.TransferRequest(Request.Url.AbsolutePath, false);
+
         }
 
         protected void lblPaginaSig_Click(object sender, EventArgs e)
@@ -680,10 +768,9 @@ namespace Web.Paginas
             string p = lblPaginaAct.Text.ToString();
             int pagina = int.Parse(p);
             System.Web.HttpContext.Current.Session["PagAct"] = (pagina + 1).ToString();
-            System.Web.HttpContext.Current.Session["Buscar"] = txtBuscar.Text;
-            System.Web.HttpContext.Current.Session["FiltroTipo"] = listFiltroTipo.SelectedValue;
-            System.Web.HttpContext.Current.Session["FiltroTipoVen"] = listFiltroVen.SelectedValue;
-            System.Web.HttpContext.Current.Session["OrdenarPorCatalogo"] = listOrdenarPor.SelectedValue;
+
+            guardarBuscar();
+   
             Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
 
@@ -692,6 +779,7 @@ namespace Web.Paginas
             limpiar();
             listarPagina();
         }
+
 
         #endregion
 

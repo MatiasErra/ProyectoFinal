@@ -217,7 +217,7 @@ namespace Web.Paginas.Viajes
 
         private int PagMax()
         {
-            return 5;
+            return 6;
         }
 
 

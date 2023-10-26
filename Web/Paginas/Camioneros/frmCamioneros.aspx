@@ -106,7 +106,7 @@
 
                                     <div class="input-group">
 
-                                        <asp:TextBox ID="txtEmail" CssClass="input--style-tex" runat="server" placeholder="Email"></asp:TextBox>
+                                        <asp:TextBox ID="txtEmail" CssClass="input--style-tex" runat="server" placeholder="Email"  onkeydown="return(event.keyCode!=32);"></asp:TextBox>
                                         <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                                             ControlToValidate="txtEmail"
                                             ValidationExpression="^\S+@\S+$"

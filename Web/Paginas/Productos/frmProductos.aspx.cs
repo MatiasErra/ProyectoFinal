@@ -84,8 +84,8 @@ namespace Web.Paginas.Productos
                 // Listas
                 lstTipoBuscar.SelectedValue = System.Web.HttpContext.Current.Session["tipoProductoBuscar"] != null ? System.Web.HttpContext.Current.Session["tipoProductoBuscar"].ToString() : "Seleccione un tipo de producto";
                 System.Web.HttpContext.Current.Session["tipoProductoBuscar"] = null;
-                lstTipoVentaBuscar.SelectedValue = System.Web.HttpContext.Current.Session["tipoVentaProductoBuscar"] != null ? System.Web.HttpContext.Current.Session["tipoVentaProductoBuscar"].ToString() : "Seleccione un tipo de venta";
-                System.Web.HttpContext.Current.Session["tipoVentaProductoBuscar"] = null;
+                lstTipoVentaBuscar.SelectedValue = System.Web.HttpContext.Current.Session["tipoVenProductoBuscar"] != null ? System.Web.HttpContext.Current.Session["tipoVenProductoBuscar"].ToString() : "Seleccione un tipo de venta";
+                System.Web.HttpContext.Current.Session["tipoVenProductoBuscar"] = null;
                 listBuscarPor.SelectedValue = System.Web.HttpContext.Current.Session["BuscarLstProducto"] != null ? System.Web.HttpContext.Current.Session["BuscarLstProducto"].ToString() : "Buscar por";
                 System.Web.HttpContext.Current.Session["BuscarLstProducto"] = null;
                 listOrdenarPor.SelectedValue = System.Web.HttpContext.Current.Session["OrdenarPorProducto"] != null ? System.Web.HttpContext.Current.Session["OrdenarPorProducto"].ToString() : "Ordernar por";
@@ -213,7 +213,7 @@ namespace Web.Paginas.Productos
         {
             System.Web.HttpContext.Current.Session["nombreProductoBuscar"] = txtNombreBuscar.Text;
             System.Web.HttpContext.Current.Session["tipoProductoBuscar"] = lstTipoBuscar.SelectedValue != "Seleccione un tipo de producto" ? lstTipoBuscar.SelectedValue : null;
-            System.Web.HttpContext.Current.Session["tipoProductoBuscar"] = lstTipoBuscar.SelectedValue != "Seleccione un tipo de producto" ? lstTipoBuscar.SelectedValue : null;
+            System.Web.HttpContext.Current.Session["tipoVenProductoBuscar"] = lstTipoVentaBuscar.SelectedValue != "Seleccione un tipo de venta" ? lstTipoVentaBuscar.SelectedValue : null;
             System.Web.HttpContext.Current.Session["precioMenorProductoBuscar"] = txtPrecioMenorBuscar.Text;
             System.Web.HttpContext.Current.Session["precioMayorProductoBuscar"] = txtPrecioMayorBuscar.Text;
             System.Web.HttpContext.Current.Session["BuscarLstProducto"] = listBuscarPor.SelectedValue != "Buscar por" ? listBuscarPor.SelectedValue : null;
@@ -225,7 +225,7 @@ namespace Web.Paginas.Productos
         private int PagMax()
         {
             //Devuelve la cantidad de productos por pagina
-            return 4;
+            return 6;
         }
 
         private List<Producto> obtenerProductos()

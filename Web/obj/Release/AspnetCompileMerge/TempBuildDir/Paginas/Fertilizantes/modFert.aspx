@@ -41,10 +41,10 @@
 
                 <div class="input-group">
 
-                    <asp:TextBox ID="txtPH" CssClass="input--style-tex" MaxLength="4" runat="server" placeholder="PH" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==188 || event.keyCode==8);"></asp:TextBox>
+                    <asp:TextBox ID="txtPH" CssClass="input--style-tex" MaxLength="4" runat="server" placeholder="PH" onkeydown="return(((event.keyCode>=48) && (event.keyCode<=57)) || event.keyCode==190 || event.keyCode==8);"></asp:TextBox>
                      <asp:RegularExpressionValidator Display="Dynamic" runat="server" class="text initText"
                                             ControlToValidate="txtPH"
-                                            ValidationExpression="([0-9])[0-9]*[,]?[0-9]*"
+                                            ValidationExpression="([0-9])[0-9]*[.]?[0-9]*"
                                             ErrorMessage="Solo numeros">
                                         </asp:RegularExpressionValidator>
 
