@@ -57,7 +57,13 @@ namespace Web.Paginas
             return lst;
         }
 
+        public Pedido buscarPedido(int idPedido)
+        {
+            ControladoraItem inst = ControladoraItem.obtenerInstancia();
+            Pedido lst = inst.buscarPedido(idPedido);
+            return lst;
 
+        }
         public List<Pedido_Prod> listPedidoCli_Prod(int idProducto)
         {
             ControladoraItem inst = ControladoraItem.obtenerInstancia();

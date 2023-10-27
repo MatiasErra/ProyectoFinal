@@ -91,6 +91,11 @@ namespace Persistencia
             return new pPedido().buscarPedidoLote(idPedido);
         }
 
+        public Pedido buscarPedido (int idPedido)
+        {
+            return new pPedido().buscarPedido(idPedido);
+        }
+
         public string[] buscarProductoClixNom(int idPedido, string nomProd)
         {
             return new pPedido().buscarProductoClixNom(idPedido ,nomProd);

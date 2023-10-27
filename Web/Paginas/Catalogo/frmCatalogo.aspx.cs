@@ -175,7 +175,7 @@ namespace Web.Paginas
         private int PagMax()
         {
 
-            return 6;
+            return 3;
         }
 
         private List<Producto> obtenerProductos()
@@ -703,9 +703,10 @@ namespace Web.Paginas
 
                             if (Web.altaPedido_Prod(pedido_prod, CantRes, Precio))
                             {
-                                lblMensajes.Text = "Pedido realizado";
+                              
                                 lblPaginaAct.Text = "1";
                                 listarPagina();
+                                lblMensajes.Text = "Pedido realizado";
 
                             }
                             else

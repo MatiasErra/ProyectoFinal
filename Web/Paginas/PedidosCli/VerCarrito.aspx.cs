@@ -313,15 +313,15 @@ namespace Web.Paginas.Pedidos
             string resultado = "";
             List<Pedido_Prod> pedido_Prod = Web.listPedidoCli_Prod(idProducto);
             Producto producto = Web.buscarProducto(idProducto);
-
+         
 
             foreach (Pedido_Prod pedidos in pedido_Prod)
             {
-
+                Pedido unPedio = Web.buscarPedido(pedidos.IdPedido);
                 if (pedidos.IdProducto.Equals(producto.IdProducto)
                     && !pedidos.IdPedido.Equals(idPedido)
-
-                    )
+                    && (unPedio.Estado == "Sin confirmar" ||
+                   unPedio.Estado == "Sin finalizar"))
                 {
                     string textCant = pedidos.Cantidad;
                     string[] str = textCant.Split(' ');
@@ -353,12 +353,16 @@ namespace Web.Paginas.Pedidos
 
             foreach (Pedido_Prod pedidos in pedido_Prod)
             {
+                Pedido unPedio = Web.buscarPedido(pedidos.IdPedido);
 
                 if (pedidos.IdProducto.Equals(producto.IdProducto)
                     && !pedidos.IdPedido.Equals(idPedido)
+                    && (unPedio.Estado == "Sin confirmar" ||
+                   unPedio.Estado == "Sin finalizar")
 
                     )
                 {
+                   
                     string textCant = pedidos.Cantidad;
                     string[] str = textCant.Split(' ');
                     textCant = str[0];

@@ -457,7 +457,7 @@ namespace Web.Paginas.Viajes
                                             Viaje unViaje = new Viaje(id, costo, fecha, idCamion, idCamionero, estado);
                                             if (Web.modViaje(unViaje, idAdmin))
                                             {
-                                                int contador = 0;
+                                                
                                                 if (unViaje.Estado == "En viaje")
                                                 {
                                                     List<Viaje_Lot_Ped> viajeLotPed = Web.buscarViajePedLote(0, unViaje.IdViaje);
@@ -465,12 +465,13 @@ namespace Web.Paginas.Viajes
 
                                                     foreach (Pedido unPedido in pedidos)
                                                     {
+                                                        int contador = 0;
                                                         foreach (Viaje_Lot_Ped viaLotPed in viajeLotPed)
                                                         {
 
                                                             if (viaLotPed.IdPedido.Equals(unPedido.IdPedido))
                                                             {
-                                                                if (unPedido.Estado == "Confirmado")
+                                                                if (unPedido.Estado == "Confirmado" && unPedido.Viaje == "Asignado")
                                                                 {
 
                                                                     contador++;
@@ -496,13 +497,14 @@ namespace Web.Paginas.Viajes
                                                     List<Pedido> pedidos = Web.BuscarPedidoFiltro("", "", "", 0, 99999999, "1000-01-01", "3000-12-30", "1000-01-01", "3000-12-30", "");
                                                     foreach (Pedido unPedido in pedidos)
                                                     {
+                                                        int contador = 0;
                                                         foreach (Viaje_Lot_Ped viaLotPed in viajeLotPed)
                                                         {
 
 
                                                             if (viaLotPed.IdPedido.Equals(unPedido.IdPedido))
                                                             {
-                                                                if (unPedido.Estado == "En viaje")
+                                                                if (unPedido.Estado == "En viaje" && unPedido.Viaje == "Asignado")
                                                                 {
 
 

@@ -141,6 +141,15 @@ namespace Web.Paginas.Viajes
         protected global::System.Web.UI.WebControls.LinkButton lblPaginaSigViaPed;
 
         /// <summary>
+        /// Control btnAsignarViajePedido.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAsignarViajePedido;
+
+        /// <summary>
         /// Control btnConfirmarViaje.
         /// </summary>
         /// <remarks>

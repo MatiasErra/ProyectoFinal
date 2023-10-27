@@ -190,6 +190,13 @@ namespace Controladoras
 
 
         }
+        public Pedido buscarPedido(int idPedido)
+        {
+            ControladoraI inst = ControladoraI.obtenerInstancia();
+            Pedido lst = inst.buscarPedido(idPedido);
+            return lst;
+
+        }
 
         public bool cambiarEstadoPed(int idPedido, string estado, int idAdmin)
         {

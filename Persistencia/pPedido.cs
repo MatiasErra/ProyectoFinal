@@ -504,6 +504,38 @@ namespace Persistencia
 
         }
 
+        public Pedido buscarPedido(int idPedido)
+        {
+            Pedido unPedido = new Pedido();
+            using (SqlConnection connect = Conexion.Conectar())
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("BuscarPedido", connect);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new SqlParameter("@idPedido", idPedido));
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            unPedido.IdPedido = int.Parse(reader["IdPedido"].ToString());
+                            unPedido.Estado = reader["estado"].ToString();
+                
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+
+                    return unPedido;
+
+                }
+            }
+            return unPedido;
+        }
+
         public List<string[]> buscarPedidoLote(int idPedido)
         {
             {
@@ -819,6 +851,7 @@ namespace Persistencia
 
             return resultado;
         }
+
 
 
     }

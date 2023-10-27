@@ -302,6 +302,7 @@ namespace Web.Paginas.PedidosAdm
 
             foreach (Lote unLote in lotes)
             {
+               int CantLote = int.Parse(unLote.Cantidad.ToString().Split(' ')[0]);
                 int unique = 0;
                 if (idProducto.ToString().Equals(unLote.IdProducto.ToString()))
                 {
@@ -316,7 +317,9 @@ namespace Web.Paginas.PedidosAdm
 
                         if (unLote.IdProducto.ToString().Equals(unLote_pedido[1].ToString()) &&
                             unLote.IdGranja.ToString().Equals(unLote_pedido[3].ToString()) &&
-                              unLote.FchProduccion.ToString().Equals(unLote_pedido[5].ToString()))
+                              unLote.FchProduccion.ToString().Equals(unLote_pedido[5].ToString()) 
+                              
+                             )
 
 
                         {
@@ -326,8 +329,11 @@ namespace Web.Paginas.PedidosAdm
 
 
                     }
-                    if (unique == 0)
+                    if (unique == 0 &&
+                        CantLote > 0 
+                        )
                     {
+
                         resultado.Add(unLote);
                     }
                 }
