@@ -260,6 +260,7 @@ namespace Web.Paginas.Viajes
                     lblPaginaSigViaPed.Visible = false;
                     txtPaginaViaPed.Visible = false;
 
+                    btnAsignarViajePedido.Visible = false;
                     btnConfirmarViaje.Visible = false;
 
 
@@ -284,13 +285,13 @@ namespace Web.Paginas.Viajes
                 lblPaginaSigViaPed.Visible = false;
                 txtPaginaViaPed.Visible = false;
 
+                btnAsignarViajePedido.Visible = false;
                 btnConfirmarViaje.Visible = false;
                 lstPedidosCon.Visible = false;
 
             }
 
         }
-
         private int PagMaxLotePed()
         {
 
@@ -613,6 +614,47 @@ namespace Web.Paginas.Viajes
 
         }
 
+        protected void btnAsignarViajePedido_Click(object sender, EventArgs e)
+        {
+            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
+            int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
+            int idViaje = int.Parse(System.Web.HttpContext.Current.Session["ViajesSelected"].ToString());
+            List<Viaje_Lot_Ped> lstViajePed = Web.buscarViajePedLote(0, idViaje);
+            List<Pedido> lstPedidos = Web.BuscarPedidoFiltro("", "Confirmado", "", 0, 99999999, "1000-01-01", "3000-12-30", "1000-01-01", "3000-12-30", "");
+            int fallo = 0;
+            foreach (Viaje_Lot_Ped unPeiajePed in lstViajePed)
+            {
+                foreach (Pedido unPedido in lstPedidos)
+                {
+                    if (unPeiajePed.IdPedido == unPedido.IdPedido)
+                    {
+                        if (Web.modPedViajeEst(unPeiajePed.IdPedido, "Confirmado", idAdmin))
+                        {
+
+                        }
+                        else
+                        {
+                            lblMensajes.Text = "No se pudo confirmar el viaje";
+                            fallo++;
+                            break;
+                        }
+                    }
+                }
+
+            }
+            if (fallo == 0)
+            {
+                System.Web.HttpContext.Current.Session["pedidoMensaje"] = "Viaje confirmado";
+                Response.Redirect("/Paginas/Viajes/frmViajes");
+            }
+            else
+            {
+                lblMensajes.Text = "No se pudo confirmar el viaje";
+            }
+
+        }
+
+
         protected void btnConfirmarViaje_Click(object sender, EventArgs e)
         {
             ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
@@ -671,45 +713,7 @@ namespace Web.Paginas.Viajes
             }
         }
 
-        protected void btnAsignarViajePedido_Click(object sender, EventArgs e)
-        {
-            ControladoraWeb Web = ControladoraWeb.obtenerInstancia();
-            int idAdmin = (int)System.Web.HttpContext.Current.Session["AdminIniciado"];
-            int idViaje = int.Parse(System.Web.HttpContext.Current.Session["ViajesSelected"].ToString());
-            List<Viaje_Lot_Ped> lstViajePed = Web.buscarViajePedLote(0, idViaje);
-            List<Pedido> lstPedidos = Web.BuscarPedidoFiltro("", "Confirmado", "", 0, 99999999, "1000-01-01", "3000-12-30", "1000-01-01", "3000-12-30", "");
-            int fallo = 0;
-            foreach (Viaje_Lot_Ped unPeiajePed in lstViajePed)
-            {
-                foreach (Pedido unPedido in lstPedidos)
-                {
-                    if (unPeiajePed.IdPedido == unPedido.IdPedido)
-                    {
-                        if (Web.modPedViajeEst(unPeiajePed.IdPedido, "Confirmado", idAdmin))
-                        {
-
-                        }
-                        else
-                        {
-                            lblMensajes.Text = "No se pudo confirmar el viaje";
-                            fallo++;
-                            break;
-                        }
-                    }
-                }
-
-            }
-            if (fallo == 0)
-            {
-                System.Web.HttpContext.Current.Session["pedidoMensaje"] = "Viaje confirmado";
-                Response.Redirect("/Paginas/Viajes/frmViajes");
-            }
-            else
-            {
-                lblMensajes.Text = "No se pudo confirmar el viaje";
-            }
-
-        }
+      
 
         protected void btnBorrarViaPedLot_Click(object sender, EventArgs e)
         {

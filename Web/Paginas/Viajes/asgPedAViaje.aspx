@@ -212,6 +212,7 @@
                     <div class="col-12">
                         <asp:Button ID="btnAsignarViajePedido" CssClass="btnE btn--radius btn--blue my-2" runat="server" Text="Confirmar viaje" OnClick="btnAsignarViajePedido_Click" />
                         <asp:Button ID="btnConfirmarViaje" CssClass="btnE btn--radius btn--blue my-2" runat="server" Text="Confirmar Viaje" OnClick="btnConfirmarViaje_Click" />
+
                     </div>
 
 

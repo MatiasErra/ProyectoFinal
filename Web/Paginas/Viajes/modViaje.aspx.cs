@@ -457,7 +457,7 @@ namespace Web.Paginas.Viajes
                                             Viaje unViaje = new Viaje(id, costo, fecha, idCamion, idCamionero, estado);
                                             if (Web.modViaje(unViaje, idAdmin))
                                             {
-                                                
+
                                                 if (unViaje.Estado == "En viaje")
                                                 {
                                                     List<Viaje_Lot_Ped> viajeLotPed = Web.buscarViajePedLote(0, unViaje.IdViaje);
@@ -588,5 +588,7 @@ namespace Web.Paginas.Viajes
             }
 
         }
+
+    }
     }
 }
