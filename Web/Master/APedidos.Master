@@ -90,12 +90,6 @@
 
                         </li>
 
-                        <li class="me-2">
-
-                            <a class="nav-link text-light" aria-current="page"><%= nombre %></a>
-
-                        </li>
-
 
                         <li class="me-2">
                             <asp:Button runat="server" CssClass="btn btn-outline-light mb-1" OnClick="btnCerrarSesion_Click" Text="Cerrar sesión" />
